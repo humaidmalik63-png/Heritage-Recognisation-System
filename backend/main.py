@@ -41,7 +41,7 @@ from PIL import Image
 from pydantic import BaseModel, Field
 from transformers import CLIPModel, CLIPProcessor
 
-# Import Calibration and Uncertainty modules
+# Import Calibration, Uncertainty, and Knowledge Engine modules
 from calibration import CalibrationEngine
 from uncertainty import (
     AggregatedCandidate,
@@ -54,6 +54,14 @@ from uncertainty import (
     compute_haversine_distance_km,
     inspect_image_quality,
 )
+from knowledge_schema import (
+    AskKnowledgeRequest,
+    AskKnowledgeResponse,
+    GroundedKnowledgeRecord,
+    HistoricalEvent,
+    SourceCitation,
+)
+from knowledge_engine import GroundedKnowledgeEngine
 
 # Load environment variables
 load_dotenv()
@@ -73,6 +81,7 @@ LABELS_FILE = BASE_DIR / "monument_labels.json"
 METADATA_FILE = BASE_DIR / "monuments_metadata.json"
 EXCEPTIONS_FILE = BASE_DIR / "exceptions_log.json"
 CALIBRATION_CONFIG_FILE = BASE_DIR / "calibration_config.json"
+KNOWLEDGE_SOURCES_FILE = BASE_DIR / "knowledge_sources.json"
 
 MODEL_NAME = "openai/clip-vit-base-patch32"
 GATEKEEPER_SCALE = 18.0
@@ -114,6 +123,7 @@ state: Dict[str, Any] = {
     "gemini_configured": False,
     "calibration_engine": None,
     "uncertainty_engine": None,
+    "knowledge_engine": None,
 }
 
 
@@ -444,13 +454,17 @@ async def lifespan(app: FastAPI):
     with open(METADATA_FILE, "r", encoding="utf-8") as f:
         state["metadata"] = json.load(f)
 
-    # 5. Initialize Confidence Calibration & Uncertainty Engines
+    # 5. Initialize Confidence Calibration, Uncertainty & Knowledge Engines
     calibration_engine = CalibrationEngine(CALIBRATION_CONFIG_FILE)
     uncertainty_engine = UncertaintyEngine(calibration_engine)
     state["calibration_engine"] = calibration_engine
     state["uncertainty_engine"] = uncertainty_engine
 
+    knowledge_engine = GroundedKnowledgeEngine(KNOWLEDGE_SOURCES_FILE)
+    state["knowledge_engine"] = knowledge_engine
+
     logger.info(f"Loaded Confidence Calibration Engine: Status = {calibration_engine.calibration_status}")
+    logger.info(f"Loaded Grounded Knowledge Engine: {len(knowledge_engine.records)} verified records from {KNOWLEDGE_SOURCES_FILE.name}")
 
     # Ensure exceptions file exists
     if not EXCEPTIONS_FILE.exists():
@@ -510,12 +524,14 @@ if DATASET_DIR.exists():
 def get_health():
     """Returns live engine health and diagnostic status."""
     calib = state.get("calibration_engine")
+    ke = state.get("knowledge_engine")
     return {
         "status": "healthy",
         "faiss_vectors_loaded": state["faiss_index"].ntotal if state["faiss_index"] else 0,
         "clip_device": state["device"],
         "gemini_tier2_configured": state["gemini_configured"],
         "monuments_count": len(state["metadata"]),
+        "knowledge_records_count": len(ke.records) if ke else 0,
         "exceptions_count": len(load_exceptions_log()),
         "calibration_status": calib.calibration_status if calib else "UNCALIBRATED",
     }
@@ -528,6 +544,95 @@ def get_monuments_catalog():
         "total": len(state["metadata"]),
         "monuments": state["metadata"],
     }
+
+
+# --- Phase 6.3 Grounded Knowledge Engine Endpoints ---
+
+@app.get("/api/monuments/{monument_id}/knowledge", response_model=GroundedKnowledgeRecord)
+def get_monument_knowledge(monument_id: str):
+    """
+    Phase 6.3: Retrieves authoritative, source-backed historical, architectural,
+    and preservation knowledge for a recognized monument.
+    """
+    engine: GroundedKnowledgeEngine = state.get("knowledge_engine")
+    if not engine:
+        raise HTTPException(status_code=500, detail="Knowledge Engine is not initialized.")
+
+    record = engine.get_knowledge(monument_id)
+    if not record:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Grounded knowledge record for monument '{monument_id}' was not found in the curatorial register."
+        )
+    return record
+
+
+@app.get("/api/monuments/{monument_id}/timeline", response_model=List[HistoricalEvent])
+def get_monument_timeline(monument_id: str):
+    """
+    Phase 6.3: Retrieves verified chronological historical timeline events for a monument.
+    """
+    engine: GroundedKnowledgeEngine = state.get("knowledge_engine")
+    if not engine:
+        raise HTTPException(status_code=500, detail="Knowledge Engine is not initialized.")
+
+    if monument_id not in engine.records:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Monument '{monument_id}' was not found in the historical register."
+        )
+    return engine.get_timeline(monument_id)
+
+
+@app.get("/api/monuments/{monument_id}/sources", response_model=List[SourceCitation])
+def get_monument_sources(monument_id: str):
+    """
+    Phase 6.3: Retrieves primary source citations (ASI, UNESCO, Ministry of Culture, Gazetteers)
+    validating the historical monograph for a monument.
+    """
+    engine: GroundedKnowledgeEngine = state.get("knowledge_engine")
+    if not engine:
+        raise HTTPException(status_code=500, detail="Knowledge Engine is not initialized.")
+
+    if monument_id not in engine.records:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Monument '{monument_id}' was not found in the source register."
+        )
+    return engine.get_sources(monument_id)
+
+
+@app.post("/api/monuments/{monument_id}/ask", response_model=AskKnowledgeResponse)
+def ask_monument_archive(monument_id: str, payload: AskKnowledgeRequest):
+    """
+    Phase 6.3: Retrieval-First 'Ask the Archive' Q&A.
+    Answers inquiries strictly anchored to verified ASI & UNESCO historical excerpts.
+    Explicitly refuses to guess or hallucinate when evidence is insufficient.
+    Operates offline or with Gemini 2.5 Flash when configured.
+    """
+    engine: GroundedKnowledgeEngine = state.get("knowledge_engine")
+    if not engine:
+        raise HTTPException(status_code=500, detail="Knowledge Engine is not initialized.")
+
+    if monument_id not in engine.records:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Monument '{monument_id}' was not found in the knowledge register."
+        )
+
+    clean_question = payload.question.strip()
+    if not clean_question:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Inquiry question cannot be empty or solely whitespace."
+        )
+
+    gemini_client = state.get("gemini_client") if state.get("gemini_configured") else None
+    return engine.ask_archive(
+        monument_id=monument_id,
+        question=clean_question,
+        gemini_client=gemini_client,
+    )
 
 
 @app.get("/api/exceptions")

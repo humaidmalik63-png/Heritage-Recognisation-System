@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import MonumentMap from './MonumentMap';
 import PipelineInspector from './PipelineInspector';
+import GroundedKnowledgeViewer from './GroundedKnowledgeViewer';
 
 export default function MonographResult({ result, imagePreview, onReset }) {
   const [showInspector, setShowInspector] = useState(true);
@@ -834,6 +835,14 @@ export default function MonographResult({ result, imagePreview, onReset }) {
           </div>
         )}
       </div>
+
+      {/* Phase 6.3 Grounded Historical Knowledge Engine */}
+      {monument_key && (
+        <GroundedKnowledgeViewer
+          monumentKey={monument_key}
+          monumentName={monument_name}
+        />
+      )}
 
       {/* Interactive Pipeline Inspector */}
       <AnimatePresence>

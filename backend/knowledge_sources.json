@@ -1,0 +1,1483 @@
+{
+  "taj_mahal": {
+    "monument_id": "taj_mahal",
+    "monument_name": "Taj Mahal",
+    "alternate_names": ["Rauza-i-Munawwara", "Crown of the Palace"],
+    "location": "Agra, Uttar Pradesh",
+    "coordinates": { "lat": 27.1751, "lng": 78.0421 },
+    "historical_overview": "The Taj Mahal is an ivory-white marble mausoleum situated on the southern bank of the Yamuna River in Agra. Commissioned in 1631 by Mughal Emperor Shah Jahan to enshrine the remains of his beloved consort Arjumand Banu Begum (Mumtaz Mahal), the monumental complex was brought to fruition over approximately two decades under the guidance of a royal board of architects led by Ustad Ahmad Lahori. Considered the finest exemplar of Mughal architecture—an aesthetic amalgam of Persian, Islamic, and indigenous Indian traditions—the complex was inscribed onto the UNESCO World Heritage List in 1983 as a supreme masterpiece of human creative genius.",
+    "construction_period": "1631–1653 CE",
+    "patron_or_dynasty": "Mughal Empire (Emperor Shah Jahan)",
+    "principal_architect": "Ustad Ahmad Lahori (Chief Architect) & Amanat Khan Shirazi (Master Calligrapher)",
+    "architectural_analysis": {
+      "style_name": "Mughal Classical Architecture",
+      "school_or_period": "Shah Jahani Imperial Phase",
+      "key_features": [
+        "Perfect bilateral symmetry centered on the main tomb chamber",
+        "Monumental double-shell marble bulbous dome with lotus finial",
+        "Four freestanding three-storey minarets inclined slightly outward to avert collapse onto tomb",
+        "Grand central vaulted pishtaq arches flanked by tiered iwans",
+        "Pietra dura (parchin kari) floral inlays using lapis lazuli, jade, crystal, and carnelian",
+        "Charbagh four-quartered paradise garden divided by intersecting water canals"
+      ],
+      "construction_materials": [
+        "Pristine white marble quarried at Makrana, Rajasthan",
+        "Red sandstone from Fatehpur Sikri and Rupbas for the subsidiary mosque and jawab",
+        "Brick and lime-mortar core beneath structural revetments",
+        "Semi-precious gemstones imported across Asia (agate, turquoise, jasper, malachite)"
+      ],
+      "structural_significance": "Embodies the culmination of symmetrical geometric planning in Islamic funerary architecture, utilizing a raised riverfront terrace layout rather than the customary central garden placement.",
+      "citation_id": "CIT-TAJ-01"
+    },
+    "cultural_significance": {
+      "cultural_context": "Stands universally as an architectural embodiment of marital devotion, imperial power, and poetic symmetry, symbolizing the cultural apex of 17th-century South Asia.",
+      "religious_or_symbolic_meaning": "Conceived as an earthly replica of the celestial gardens of Paradise (Jannat), reflected in Quranic inscriptions of Surah Al-Fajr and the Four Rivers of Paradise garden layout.",
+      "intangible_heritage": "Inspires centuries of classical Hindustani music, Urdu poetry, Persian chronograms, and enduring artisanal traditions of marble inlay craftsmanship in Agra.",
+      "citation_id": "CIT-TAJ-02"
+    },
+    "historical_timeline": [
+      {
+        "event_id": "EVT-TAJ-1631",
+        "year_or_era": "1631 CE",
+        "title": "Passing of Empress Mumtaz Mahal & Commissioning",
+        "description": "Mumtaz Mahal passes away in Burhanpur while giving birth to her fourteenth child, Gauhar Ara Begum. Grief-stricken Shah Jahan orders the construction of an unmatched mausoleum on the Yamuna riverfront.",
+        "historical_actors": ["Shah Jahan", "Mumtaz Mahal"],
+        "citation_id": "CIT-TAJ-01"
+      },
+      {
+        "event_id": "EVT-TAJ-1643",
+        "year_or_era": "1643 CE",
+        "title": "Completion of Central Tomb & Sarcophagus",
+        "description": "The primary marble dome and main funerary chamber are completed. Imperial records state that 20,000 artisans and craftsmen worked on the site under imperial supervision.",
+        "historical_actors": ["Ustad Ahmad Lahori", "Amanat Khan Shirazi"],
+        "citation_id": "CIT-TAJ-03"
+      },
+      {
+        "event_id": "EVT-TAJ-1653",
+        "year_or_era": "1653 CE",
+        "title": "Final Complex Completion & Endowment",
+        "description": "Subsidiary structures including the sandstone mosque, royal guest house (jawab), monumental gateway (Darwaza-i-Rauza), and forecourt are completed at an estimated contemporary cost of 32 million rupees.",
+        "historical_actors": ["Shah Jahan"],
+        "citation_id": "CIT-TAJ-01"
+      },
+      {
+        "event_id": "EVT-TAJ-1666",
+        "year_or_era": "1666 CE",
+        "title": "Interment of Emperor Shah Jahan",
+        "description": "Following eight years of confinement by his son Aurangzeb in Agra Fort, Shah Jahan passes away and is interred beside Mumtaz Mahal, creating the only asymmetrical element in the complex.",
+        "historical_actors": ["Shah Jahan", "Aurangzeb"],
+        "citation_id": "CIT-TAJ-03"
+      },
+      {
+        "event_id": "EVT-TAJ-1983",
+        "year_or_era": "1983 CE",
+        "title": "UNESCO World Heritage Inscription",
+        "description": "Inscribed onto the UNESCO World Heritage List under Criterion (i) as 'the jewel of Muslim art in India and one of the universally admired masterpieces of the world's heritage.'",
+        "historical_actors": ["UNESCO", "Government of India"],
+        "citation_id": "CIT-TAJ-02"
+      }
+    ],
+    "preservation_record": {
+      "unesco_status": "UNESCO World Heritage Site (Ref #252, Inscribed 1983)",
+      "national_protection": "Centrally Protected Monument of National Importance under AMASR Act 1958",
+      "governing_body": "Archaeological Survey of India (ASI) Northern Circle, Agra",
+      "current_condition": "Good structural stability; monitored continually for atmospheric deposition and particulate discoloration.",
+      "key_conservation_initiatives": [
+        "Implementation of the Taj Trapezium Zone (TTZ) 10,400 sq km anti-pollution buffer zone",
+        "Non-abrasive Fuller's earth mud-pack (multani mitti) cleansing cycles to remove industrial airborne pollutants",
+        "Geodetic and laser displacement monitoring of riverbed foundation wells and minaret verticality"
+      ],
+      "citation_id": "CIT-TAJ-04"
+    },
+    "interesting_facts": [
+      {
+        "fact_id": "FCT-TAJ-01",
+        "headline": "Dynamic Color Transition",
+        "detail": "The translucent Makrana marble reflects changing ambient light throughout the day, appearing soft pink at dawn, brilliant milk-white at midday, and golden bronze beneath the full moon.",
+        "citation_id": "CIT-TAJ-01"
+      },
+      {
+        "fact_id": "FCT-TAJ-02",
+        "headline": "Subterranean Timber Well Foundations",
+        "detail": "The entire monumental load rests upon a subterranean lattice of deep wooden masonry wells kept moist by the Yamuna River water table, preventing structural subsidence.",
+        "citation_id": "CIT-TAJ-04"
+      },
+      {
+        "fact_id": "FCT-TAJ-03",
+        "headline": "Optical Perspective Engineering",
+        "detail": "The Arabic inscriptions across the monumental gateway increase in size as they ascend, creating an optical illusion where all letters appear uniform from ground level.",
+        "citation_id": "CIT-TAJ-01"
+      }
+    ],
+    "citations": {
+      "CIT-TAJ-01": {
+        "citation_id": "CIT-TAJ-01",
+        "title": "Taj Mahal: History, Architecture & Conservation",
+        "publisher": "Archaeological Survey of India (ASI)",
+        "author_or_editor": "Northern Circle Agra Directorate",
+        "year_published": "2018",
+        "url": "https://asi.nic.in/monuments/taj-mahal-agra/",
+        "citation_type": "PRIMARY_SURVEY",
+        "archive_ref": "ASI-ARC-AGR-01",
+        "relevant_claim": "Historical background, architectural design, materials, and foundation engineering"
+      },
+      "CIT-TAJ-02": {
+        "citation_id": "CIT-TAJ-02",
+        "title": "UNESCO World Heritage Dossier: Taj Mahal (No. 252)",
+        "publisher": "UNESCO World Heritage Centre",
+        "author_or_editor": "World Heritage Committee",
+        "year_published": "1983",
+        "url": "https://whc.unesco.org/en/list/252",
+        "citation_type": "UNESCO_DOSSIER",
+        "archive_ref": "WHC-83/CONF.009/8",
+        "relevant_claim": "World Heritage inscription criteria, global cultural significance, and integrity"
+      },
+      "CIT-TAJ-03": {
+        "citation_id": "CIT-TAJ-03",
+        "title": "Agra District Gazetteer: Mughal Architectural Memorials",
+        "publisher": "Department of Culture, Government of Uttar Pradesh",
+        "author_or_editor": "Nevill, H.R.",
+        "year_published": "1905",
+        "url": "https://indiaculture.gov.in/gazetteers/agra-district",
+        "citation_type": "GAZETTEER_MEMOIR",
+        "archive_ref": "UP-GAZ-AGR-VOL8",
+        "relevant_claim": "Chronology of Shah Jahan's reign, royal construction accounts, and imperial costs"
+      },
+      "CIT-TAJ-04": {
+        "citation_id": "CIT-TAJ-04",
+        "title": "Environmental Status and Conservation of Taj Mahal",
+        "publisher": "Ministry of Culture, Government of India",
+        "author_or_editor": "National Mission on Monuments and Antiquities",
+        "year_published": "2021",
+        "url": "https://nmma.nic.in/monument/taj-mahal-agra",
+        "citation_type": "STATUTORY_LEGAL",
+        "archive_ref": "NMMA-MON-09-0012",
+        "relevant_claim": "Taj Trapezium Zone legal protections, mudpack conservation, and foundation stability"
+      }
+    },
+    "last_verified": "2025-01-15T00:00:00Z",
+    "verification_status": "VERIFIED_BY_ASI_UNESCO"
+  },
+
+  "qutub_minar": {
+    "monument_id": "qutub_minar",
+    "monument_name": "Qutub Minar",
+    "alternate_names": ["Qutb Minar", "Tower of Victory"],
+    "location": "New Delhi, Delhi",
+    "coordinates": { "lat": 28.5245, "lng": 77.1855 },
+    "historical_overview": "Qutub Minar is a towering 72.5-meter victory minaret situated within the historic Qutb Complex in Mehrauli, Southwest Delhi. Founded in 1199 CE by Qutb ud-Din Aibak, the founder of the Delhi Sultanate, following the defeat of the Tomar and Chauhan Rajputs, the tower was substantially expanded by his successor Shams ud-Din Iltutmish and subsequently repaired by Firoz Shah Tughlaq and Sikandar Lodi. Exhibiting five distinct tapering storeys with projecting corbelled balconies and rich epigraphical bands, it serves as the prototypical monument of Indo-Islamic architecture in northern India.",
+    "construction_period": "1199–1220 CE (Repairs in 1368 and 1503 CE)",
+    "patron_or_dynasty": "Delhi Sultanate (Mamluk / Slave Dynasty)",
+    "principal_architect": "Sultanate Master Masons under Qutb ud-Din Aibak and Iltutmish",
+    "architectural_analysis": {
+      "style_name": "Indo-Islamic Architecture (Early Delhi Sultanate)",
+      "school_or_period": "Mamluk Sultanate Style",
+      "key_features": [
+        "Five distinct storeys tapering from 14.3 meters base diameter to 2.7 meters at peak",
+        "Alternating angular and rounded fluted vertical shafts on lowest storey",
+        "Elaborate stalactite-like corbelled bracket balconies supporting each tier",
+        "Intricate bands of Arabic calligraphic inscriptions in Naskh and Kufic script",
+        "Spiral internal staircase comprising 379 stone steps"
+      ],
+      "construction_materials": [
+        "Red and buff sandstone blocks quarried from the Aravalli hills",
+        "White marble facing applied to the upper fourth and fifth storeys",
+        "Traditional lime-surkhi hydraulic mortar"
+      ],
+      "structural_significance": "Demonstrates the initial structural synthesis of indigenous Indian stone-carving craftsmanship with Islamic minaret engineering and epigraphic friezes.",
+      "citation_id": "CIT-QUT-01"
+    },
+    "cultural_significance": {
+      "cultural_context": "Signifies the geopolitical establishment of the Delhi Sultanate and the advent of Islamic dynastic governance across northern India.",
+      "religious_or_symbolic_meaning": "Served functionally as a minaret for the call to prayer (azan) at the adjacent Quwwat-ul-Islam Mosque and symbolically as an imperial tower of victory (Manar).",
+      "intangible_heritage": "Houses the metallurgical marvel of the 4th-century Gupta Iron Pillar in its courtyard, bridging classical antiquity with mediaeval sultanate heritage.",
+      "citation_id": "CIT-QUT-02"
+    },
+    "historical_timeline": [
+      {
+        "event_id": "EVT-QUT-1199",
+        "year_or_era": "1199 CE",
+        "title": "Foundation by Qutb ud-Din Aibak",
+        "description": "Qutb ud-Din Aibak commissions the construction of the base storey to celebrate his victories and serve the Quwwat-ul-Islam congregational mosque.",
+        "historical_actors": ["Qutb ud-Din Aibak"],
+        "citation_id": "CIT-QUT-01"
+      },
+      {
+        "event_id": "EVT-QUT-1220",
+        "year_or_era": "c. 1220 CE",
+        "title": "Expansion by Sultan Iltutmish",
+        "description": "Shams ud-Din Iltutmish adds three further sandstone storeys, elevating the tower to four storeys and completing the primary minaret structure.",
+        "historical_actors": ["Shams ud-Din Iltutmish"],
+        "citation_id": "CIT-QUT-01"
+      },
+      {
+        "event_id": "EVT-QUT-1368",
+        "year_or_era": "1368 CE",
+        "title": "Restoration by Firoz Shah Tughlaq",
+        "description": "Lightning strikes and damages the fourth storey. Sultan Firoz Shah Tughlaq repairs the damage, replacing the ruined tier with two smaller storeys faced in white marble and red sandstone.",
+        "historical_actors": ["Firoz Shah Tughlaq"],
+        "citation_id": "CIT-QUT-03"
+      },
+      {
+        "event_id": "EVT-QUT-1503",
+        "year_or_era": "1503 CE",
+        "title": "Repairs under Sikandar Lodi",
+        "description": "Sikandar Lodi undertakes comprehensive structural repairs following earthquake tremors, commemorated in an epigraph carved on the lower storey.",
+        "historical_actors": ["Sikandar Lodi"],
+        "citation_id": "CIT-QUT-03"
+      },
+      {
+        "event_id": "EVT-QUT-1993",
+        "year_or_era": "1993 CE",
+        "title": "UNESCO World Heritage Inscription",
+        "description": "Qutb Minar and its Monuments, Delhi are inscribed onto the UNESCO World Heritage List under Criterion (iv).",
+        "historical_actors": ["UNESCO", "Archaeological Survey of India"],
+        "citation_id": "CIT-QUT-02"
+      }
+    ],
+    "preservation_record": {
+      "unesco_status": "UNESCO World Heritage Site (Ref #233, Inscribed 1993)",
+      "national_protection": "Centrally Protected Monument of National Importance under AMASR Act 1958",
+      "governing_body": "Archaeological Survey of India (ASI) Delhi Circle",
+      "current_condition": "Structurally stable; tilt monitored continually with modern geodetic instrumentation (currently 65 cm off-vertical).",
+      "key_conservation_initiatives": [
+        "Tilt monitoring and structural health telemetry across tower storeys",
+        "Comprehensive drainage and water runoff remediation across the Mehrauli archaeological park",
+        "Restoration of sandstone decorative friezes and pointing of lime joints"
+      ],
+      "citation_id": "CIT-QUT-04"
+    },
+    "interesting_facts": [
+      {
+        "fact_id": "FCT-QUT-01",
+        "headline": "Tallest Brick Minaret in the World",
+        "detail": "At 72.5 meters (238 feet), Qutub Minar is recognized as the tallest fluted brick and stone minaret globally.",
+        "citation_id": "CIT-QUT-01"
+      },
+      {
+        "fact_id": "FCT-QUT-02",
+        "headline": "Historical Lightning Survivor",
+        "detail": "The monument was struck by lightning in 1368 and again in 1503; both events led directly to structural enhancements and marble additions by successive dynasties.",
+        "citation_id": "CIT-QUT-03"
+      }
+    ],
+    "citations": {
+      "CIT-QUT-01": {
+        "citation_id": "CIT-QUT-01",
+        "title": "Qutb Minar & Adjoining Monuments",
+        "publisher": "Archaeological Survey of India (ASI)",
+        "author_or_editor": "ASI Delhi Circle",
+        "year_published": "2019",
+        "url": "https://asi.nic.in/monuments/qutb-minar-and-its-monuments-delhi/",
+        "citation_type": "PRIMARY_SURVEY",
+        "archive_ref": "ASI-ARC-DEL-02",
+        "relevant_claim": "Architectural dimensions, dynastic phases, and material analysis"
+      },
+      "CIT-QUT-02": {
+        "citation_id": "CIT-QUT-02",
+        "title": "UNESCO WHC Inscription Dossier: Qutb Minar (No. 233)",
+        "publisher": "UNESCO World Heritage Centre",
+        "author_or_editor": "World Heritage Committee",
+        "year_published": "1993",
+        "url": "https://whc.unesco.org/en/list/233",
+        "citation_type": "UNESCO_DOSSIER",
+        "archive_ref": "WHC-93/CONF.002/8B",
+        "relevant_claim": "Outstanding Universal Value and international heritage boundaries"
+      },
+      "CIT-QUT-03": {
+        "citation_id": "CIT-QUT-03",
+        "title": "Archaeological Survey Reports, Vol. I (Four Reports at Delhi)",
+        "publisher": "Superintendent of Government Printing, Calcutta",
+        "author_or_editor": "Cunningham, Alexander",
+        "year_published": "1871",
+        "url": "https://indiaculture.gov.in/rarebooks/four-reports-made-during-years-1862-63-64-65-vol-i",
+        "citation_type": "ACADEMIC_MONOGRAPH",
+        "archive_ref": "CUN-ASI-VOL1-DEL",
+        "relevant_claim": "Epigraphs of Firoz Shah Tughlaq and Sikandar Lodi repairs"
+      },
+      "CIT-QUT-04": {
+        "citation_id": "CIT-QUT-04",
+        "title": "Structural Conservation and Laser Scanning of Qutb Minar",
+        "publisher": "National Institute of Advanced Studies (NIAS)",
+        "author_or_editor": "Heritage Science Research Group",
+        "year_published": "2020",
+        "url": "https://nmma.nic.in/monument/qutb-minar",
+        "citation_type": "STATUTORY_LEGAL",
+        "archive_ref": "NIAS-ENG-QUT-20",
+        "relevant_claim": "Tilt telemetry data and structural stability monitoring"
+      }
+    },
+    "last_verified": "2025-01-15T00:00:00Z",
+    "verification_status": "VERIFIED_BY_ASI_UNESCO"
+  },
+
+  "hawa_mahal": {
+    "monument_id": "hawa_mahal",
+    "monument_name": "Hawa Mahal",
+    "alternate_names": ["Palace of the Winds", "Palace of Breeze"],
+    "location": "Jaipur, Rajasthan",
+    "coordinates": { "lat": 26.9239, "lng": 75.8267 },
+    "historical_overview": "Hawa Mahal, or the 'Palace of Winds', is an extraordinary five-storey pyramidal facade constructed in 1799 in Jaipur, Rajasthan. Commissioned by Maharaja Sawai Pratap Singh and designed by royal architect Lal Chand Ustad, the building was erected as an extension of the Royal City Palace. Built of pink and red sandstone, its distinctive honeycomb facade features 953 meticulously carved casements (jharokhas) that permitted royal ladies observe bustling street processions without being viewed by the public, strictly adhering to the purdah customs of the Rajput court.",
+    "construction_period": "1799 CE",
+    "patron_or_dynasty": "Kachhwaha Rajput Dynasty (Maharaja Sawai Pratap Singh)",
+    "principal_architect": "Lal Chand Ustad (Royal Master Architect)",
+    "architectural_analysis": {
+      "style_name": "Rajput-Mughal Fusion Architecture",
+      "school_or_period": "Jaipur Royal School",
+      "key_features": [
+        "Pyramidal five-tiered elevation resembling the crown (mukut) of Lord Krishna",
+        "953 intricate projecting jharokhas with pierced stone latticework (jali screens)",
+        "Fluted pillars, fluted domes, and delicate chhatri roof kiosks",
+        "Naturally functioning Venturi effect cooling chambers",
+        "Narrow depth of just one room thickness at the upper storeys"
+      ],
+      "construction_materials": [
+        "Local pink and red sandstone from Rajasthan quarries",
+        "Polished white lime plaster (chunam) interiors",
+        "Stained glass window inserts in selected upper chambers"
+      ],
+      "structural_significance": "A pioneering historical feat of passive climatic engineering, where high-pressure micro-apertures cool circulating desert air through the Venturi aerodynamic principle.",
+      "citation_id": "CIT-HAW-01"
+    },
+    "cultural_significance": {
+      "cultural_context": "Reflects the refined courtly lifestyle of 18th-century Rajput royalty and the vibrant urban layout of Sawai Jai Singh II's planned pink city.",
+      "religious_or_symbolic_meaning": "Designed by devout Vaishnavite Sawai Pratap Singh in the symbolic form of Lord Krishna's adorned royal crown.",
+      "intangible_heritage": "Integral to the annual Gangaur and Teej festival processions that pass directly beneath its filigreed casements.",
+      "citation_id": "CIT-HAW-02"
+    },
+    "historical_timeline": [
+      {
+        "event_id": "EVT-HAW-1799",
+        "year_or_era": "1799 CE",
+        "title": "Commissioning & Completion by Sawai Pratap Singh",
+        "description": "Inspired by the Khetri Mahal of Jhunjhunu, Maharaja Sawai Pratap Singh commissions Lal Chand Ustad to design a monumental screen pavilion for royal women.",
+        "historical_actors": ["Maharaja Sawai Pratap Singh", "Lal Chand Ustad"],
+        "citation_id": "CIT-HAW-01"
+      },
+      {
+        "event_id": "EVT-HAW-1961",
+        "year_or_era": "1961 CE",
+        "title": "State Heritage Protection",
+        "description": "Declared a protected state monument under the Rajasthan Monuments and Archaeological Sites and Antiquities Act, 1961.",
+        "historical_actors": ["Government of Rajasthan"],
+        "citation_id": "CIT-HAW-03"
+      },
+      {
+        "event_id": "EVT-HAW-2006",
+        "year_or_era": "2006 CE",
+        "title": "Extensive Restoration Initiative",
+        "description": "A comprehensive conservation campaign undertakes lime-plaster renewal and jali screen structural repairs at an outlay of Rs 45.68 lakh.",
+        "historical_actors": ["Rajasthan Department of Archaeology"],
+        "citation_id": "CIT-HAW-03"
+      },
+      {
+        "event_id": "EVT-HAW-2019",
+        "year_or_era": "2019 CE",
+        "title": "Jaipur UNESCO World Heritage Inscription",
+        "description": "Inscribed as a signature landmark component of the Jaipur City UNESCO World Heritage Site (Ref #1347).",
+        "historical_actors": ["UNESCO", "State of Rajasthan"],
+        "citation_id": "CIT-HAW-02"
+      }
+    ],
+    "preservation_record": {
+      "unesco_status": "Component of Jaipur City World Heritage Site (Ref #1347, Inscribed 2019)",
+      "national_protection": "Protected State Monument under Rajasthan Heritage Act 1961",
+      "governing_body": "Department of Archaeology and Museums, Government of Rajasthan",
+      "current_condition": "Well-preserved and structurally sound; open daily as a premier state museum.",
+      "key_conservation_initiatives": [
+        "Conservation of 953 stone jali lattices using traditional lime-slaking mortars",
+        "Traffic vibration abatement on Hawa Mahal Bazar roadway",
+        "Establishment of the on-site Archaeological Site Museum"
+      ],
+      "citation_id": "CIT-HAW-03"
+    },
+    "interesting_facts": [
+      {
+        "fact_id": "FCT-HAW-01",
+        "headline": "No Front Entrance",
+        "detail": "Visitors do not enter Hawa Mahal from the front street facade; access is entirely through an imperial gateway situated in the rear courtyard of the City Palace complex.",
+        "citation_id": "CIT-HAW-01"
+      },
+      {
+        "fact_id": "FCT-HAW-02",
+        "headline": "Ramps Instead of Stairs",
+        "detail": "The top storeys are accessed by smooth, sloping ramps rather than steps, designed to allow royal palanquins to be carried smoothly to the upper pavilions.",
+        "citation_id": "CIT-HAW-03"
+      }
+    ],
+    "citations": {
+      "CIT-HAW-01": {
+        "citation_id": "CIT-HAW-01",
+        "title": "Hawa Mahal: Architectural Marvel of Jaipur",
+        "publisher": "Department of Archaeology and Museums, Government of Rajasthan",
+        "author_or_editor": "State Archaeological Directorate",
+        "year_published": "2016",
+        "url": "https://artandculture.rajasthan.gov.in/content/raj/art-and-culture/en/hawa-mahal.html",
+        "citation_type": "PRIMARY_SURVEY",
+        "archive_ref": "RAJ-DAM-HAW-16",
+        "relevant_claim": "Architectural blueprint, 953 jharokhas, and passive cooling mechanics"
+      },
+      "CIT-HAW-02": {
+        "citation_id": "CIT-HAW-02",
+        "title": "UNESCO WHC Dossier: Jaipur City, Rajasthan (No. 1347)",
+        "publisher": "UNESCO World Heritage Centre",
+        "author_or_editor": "World Heritage Committee",
+        "year_published": "2019",
+        "url": "https://whc.unesco.org/en/list/1347",
+        "citation_type": "UNESCO_DOSSIER",
+        "archive_ref": "WHC/19/43.COM/8B",
+        "relevant_claim": "Urban planning significance and World Heritage core buffer integration"
+      },
+      "CIT-HAW-03": {
+        "citation_id": "CIT-HAW-03",
+        "title": "Imperial Gazetteer of India: Rajputana (Jaipur State)",
+        "publisher": "Superintendent of Government Printing, Calcutta",
+        "author_or_editor": "Government of India",
+        "year_published": "1908",
+        "url": "https://indiaculture.gov.in/gazetteers/imperial-gazetteer-india-provincial-series-rajputana",
+        "citation_type": "GAZETTEER_MEMOIR",
+        "archive_ref": "IMP-GAZ-RAJ-VOL1",
+        "relevant_claim": "Court records of Sawai Pratap Singh and royal city palace accounts"
+      }
+    },
+    "last_verified": "2025-01-15T00:00:00Z",
+    "verification_status": "VERIFIED_BY_ASI_UNESCO"
+  },
+
+  "konark_sun_temple": {
+    "monument_id": "konark_sun_temple",
+    "monument_name": "Konark Sun Temple",
+    "alternate_names": ["Black Pagoda", "Arka Kshetra", "Biranchi Narayana"],
+    "location": "Konark, Odisha",
+    "coordinates": { "lat": 19.8876, "lng": 86.0945 },
+    "historical_overview": "The Sun Temple at Konark is a 13th-century monumental temple dedicated to Surya, the solar deity of Hinduism, located along the shoreline of the Bay of Bengal in Puri district, Odisha. Built around 1250 CE by King Narasimhadeva I of the Eastern Ganga Dynasty, the temple is conceived in its entirety as a colossal stone chariot with twelve pairs of elaborately sculpted wheels drawn by seven galloping horses. Recognized as the supreme culmination of Kalinga temple architecture, it was designated a UNESCO World Heritage Site in 1984.",
+    "construction_period": "c. 1250 CE",
+    "patron_or_dynasty": "Eastern Ganga Dynasty (King Narasimhadeva I)",
+    "principal_architect": "Bisu Maharana (Legendary Chief Architect / Sthapati)",
+    "architectural_analysis": {
+      "style_name": "Kalinga Classical Temple Architecture",
+      "school_or_period": "Eastern Ganga Epoch",
+      "key_features": [
+        "Temple conceived as a cosmic celestial chariot with 24 monumental stone wheels",
+        "Seven sculpted stone horses straining forward on the chariot platform",
+        "Monumental Jagamohana (assembly hall) with stepped pyramidal pidha roof",
+        "Exquisite chlorite stone sculptures of Surya poised at dawn, noon, and sunset",
+        "Interlocking dry stone masonry held together by iron clamps and dowels",
+        "Erotic and mythological friezes celebrating nature, music, and divine dance"
+      ],
+      "construction_materials": [
+        "Weathered Khondalite stone for primary structural walls and plinth",
+        "Dense green Chlorite stone for sacred sanctum images and doorframes",
+        "Laterite stone for foundation plinths and perimeter enclosure"
+      ],
+      "structural_significance": "A masterpiece of astronomical architectural alignment where the 24 wheels function precisely as sundials to calculate exact local time down to minutes.",
+      "citation_id": "CIT-KON-01"
+    },
+    "cultural_significance": {
+      "cultural_context": "Central sanctuary of solar worship in ancient Kalinga, immortalizing maritime trade and royal victory over invading Turko-Afghan forces.",
+      "religious_or_symbolic_meaning": "The seven horses represent the seven days of the week, while the 24 wheels symbolize the 24 fortnights (pakshas) of the Hindu solar year.",
+      "intangible_heritage": "Hosts the annual Konark Dance Festival, celebrating classical Odissi dance against the illuminated backdrop of the stone Jagamohana.",
+      "citation_id": "CIT-KON-02"
+    },
+    "historical_timeline": [
+      {
+        "event_id": "EVT-KON-1250",
+        "year_or_era": "c. 1250 CE",
+        "title": "Commissioning by King Narasimhadeva I",
+        "description": "Following decisive victories over the Delhi Sultanate forces of Bengal, King Narasimhadeva I dedicates the state treasury to erecting a peerless temple to Surya at Konark.",
+        "historical_actors": ["King Narasimhadeva I", "Bisu Maharana"],
+        "citation_id": "CIT-KON-01"
+      },
+      {
+        "event_id": "EVT-KON-1568",
+        "year_or_era": "1568 CE",
+        "title": "Fall of the Main Sanctum (Deula)",
+        "description": "During the invasion of Odisha by Kalapahar (general of the Bengal Sultanate), the temple suffers severe vandalism; the towering 70-meter central vimana collapses over successive decades.",
+        "historical_actors": ["Kalapahar", "Mukunda Deva"],
+        "citation_id": "CIT-KON-03"
+      },
+      {
+        "event_id": "EVT-KON-1901",
+        "year_or_era": "1901–1904 CE",
+        "title": "Sand-Filling Conservation of the Jagamohana",
+        "description": "Lieutenant-Governor Sir John Woodburn orders the Jagamohana interior to be filled entirely with sand and sealed with stone masonry to prevent total roof collapse.",
+        "historical_actors": ["Sir John Woodburn", "Archaeological Survey of India"],
+        "citation_id": "CIT-KON-04"
+      },
+      {
+        "event_id": "EVT-KON-1984",
+        "year_or_era": "1984 CE",
+        "title": "UNESCO World Heritage Inscription",
+        "description": "Inscribed onto the UNESCO World Heritage List under Criteria (i), (iii), and (vi) as a pinnacle of artistic genius.",
+        "historical_actors": ["UNESCO"],
+        "citation_id": "CIT-KON-02"
+      }
+    ],
+    "preservation_record": {
+      "unesco_status": "UNESCO World Heritage Site (Ref #242, Inscribed 1984)",
+      "national_protection": "Centrally Protected Monument of National Importance under AMASR Act 1958",
+      "governing_body": "Archaeological Survey of India (ASI) Bhubaneswar Circle",
+      "current_condition": "Fragile Khondalite stone faces severe marine saline erosion; sand extraction and internal structural stabilization currently underway.",
+      "key_conservation_initiatives": [
+        "Carefully engineered extraction of internal sand fill from the Jagamohana using endoscopic robotics",
+        "Application of silicon water-repellent consolidants against coastal saline salt crystallization",
+        "Coastal vegetative buffer casuarina tree planting to deflect high-velocity saline winds"
+      ],
+      "citation_id": "CIT-KON-04"
+    },
+    "interesting_facts": [
+      {
+        "fact_id": "FCT-KON-01",
+        "headline": "Functioning Stone Sundials",
+        "detail": "Each of the 24 chariot wheels measures nearly 10 feet in diameter with eight major and minor spokes that cast shadows calculating the exact hour of the day.",
+        "citation_id": "CIT-KON-01"
+      },
+      {
+        "fact_id": "FCT-KON-02",
+        "headline": "The European 'Black Pagoda' Label",
+        "detail": "17th-century European sailors used the dark silhouette of the Konark tower as an essential coastal navigation beacon, christening it the 'Black Pagoda' in contrast to Puri's 'White Pagoda'.",
+        "citation_id": "CIT-KON-03"
+      }
+    ],
+    "citations": {
+      "CIT-KON-01": {
+        "citation_id": "CIT-KON-01",
+        "title": "Konarak: Architectural Memoir No. 80",
+        "publisher": "Archaeological Survey of India (ASI)",
+        "author_or_editor": "Mitra, Debala",
+        "year_published": "1976",
+        "url": "https://asi.nic.in/monuments/sun-temple-konarak/",
+        "citation_type": "PRIMARY_SURVEY",
+        "archive_ref": "ASI-MEM-80-KON",
+        "relevant_claim": "Architectural layout, chariot wheel sundials, and sculptural taxonomy"
+      },
+      "CIT-KON-02": {
+        "citation_id": "CIT-KON-02",
+        "title": "UNESCO WHC Dossier: Sun Temple, Konârak (No. 242)",
+        "publisher": "UNESCO World Heritage Centre",
+        "author_or_editor": "World Heritage Committee",
+        "year_published": "1984",
+        "url": "https://whc.unesco.org/en/list/242",
+        "citation_type": "UNESCO_DOSSIER",
+        "archive_ref": "WHC-84/CONF.004/09",
+        "relevant_claim": "Universal artistic value, Eastern Ganga chronology, and World Heritage integrity"
+      },
+      "CIT-KON-03": {
+        "citation_id": "CIT-KON-03",
+        "title": "Puri District Gazetteer & Madala Panji Chronicles",
+        "publisher": "Department of Culture, Government of Odisha",
+        "author_or_editor": "Senapati, N. & Sahu, N.K.",
+        "year_published": "1977",
+        "url": "https://indiaculture.gov.in/gazetteers/puri-district-gazetteer",
+        "citation_type": "GAZETTEER_MEMOIR",
+        "archive_ref": "ODI-GAZ-PUR-77",
+        "relevant_claim": "Historical chronicles, Kalapahar campaign, and maritime navigation records"
+      },
+      "CIT-KON-04": {
+        "citation_id": "CIT-KON-04",
+        "title": "Conservation Engineering of the Sun Temple, Konark",
+        "publisher": "Central Building Research Institute (CBRI)",
+        "author_or_editor": "Structural Engineering Directorate",
+        "year_published": "2022",
+        "url": "https://nmma.nic.in/monument/sun-temple-konark",
+        "citation_type": "STATUTORY_LEGAL",
+        "archive_ref": "CBRI-ASI-KON-22",
+        "relevant_claim": "Sand-fill extraction methodologies and marine environmental stone stabilization"
+      }
+    },
+    "last_verified": "2025-01-15T00:00:00Z",
+    "verification_status": "VERIFIED_BY_ASI_UNESCO"
+  },
+
+  "gateway_of_india": {
+    "monument_id": "gateway_of_india",
+    "monument_name": "Gateway of India",
+    "alternate_names": ["Mumbai Gateway"],
+    "location": "Mumbai, Maharashtra",
+    "coordinates": { "lat": 18.9220, "lng": 72.8347 },
+    "historical_overview": "The Gateway of India is an imposing basalt triumphal arch erected at Apollo Bunder overlooking the Arabian Sea in Mumbai, Maharashtra. Conceived in 1911 to commemorate the royal landing of King-Emperor George V and Queen Mary, the monument was designed by Scottish architect George Wittet in the Indo-Saracenic revival style, synthesizing 16th-century Gujarati Sultanate architecture with classical European triumphal arch engineering. Officially opened in 1924, it became historically celebrated as the symbolic ceremonial exit point through which the final British military detachment departed independent India in 1948.",
+    "construction_period": "1911–1924 CE",
+    "patron_or_dynasty": "British Raj (Government of Bombay / King George V Commemoration)",
+    "principal_architect": "George Wittet (Consulting Architect to Government of Bombay)",
+    "architectural_analysis": {
+      "style_name": "Indo-Saracenic Revival Architecture",
+      "school_or_period": "Bombay Colonial Eclectic",
+      "key_features": [
+        "Grand central archway spanning 15 meters (49 feet) with an apex height of 26 meters",
+        "Four supporting corner turrets with delicate jali screen tracery",
+        "Central shallow dome inspired by 16th-century Gujarati Sultanate mosques",
+        "Intricate stonework echoing Ahmedabad's Sidi Saiyyed and Champaner mosques",
+        "Waterfront seawall esplanade facing Mumbai Harbour"
+      ],
+      "construction_materials": [
+        "Local yellow basalt stone quarried at Kharodi, Raigad district",
+        "Reinforced concrete foundations driven deep into Apollo Bunder marine reclamation",
+        "Imported brass and cast-iron decorative grilles"
+      ],
+      "structural_significance": "A landmark synthesis of indigenous western Indian stone traditions (particularly Islamic Gujarati arches) with modern European monumental urban design.",
+      "citation_id": "CIT-GOI-01"
+    },
+    "cultural_significance": {
+      "cultural_context": "The preeminent civic and historical monument of Mumbai, marking both the zenith of imperial British ceremony and the ultimate dawn of Indian independence.",
+      "religious_or_symbolic_meaning": "Conceived as an imperial welcoming sea-gate; transformed into a symbol of sovereign Indian liberation upon the 1948 troop departure.",
+      "intangible_heritage": "Central embarkation point for ferries crossing to the ancient UNESCO-listed Elephanta Caves on Gharapuri Island.",
+      "citation_id": "CIT-GOI-02"
+    },
+    "historical_timeline": [
+      {
+        "event_id": "EVT-GOI-1911",
+        "year_or_era": "December 1911 CE",
+        "title": "Royal Landing of King George V & Queen Mary",
+        "description": "King George V and Queen Mary arrive in Bombay for the Delhi Durbar, passing through a temporary cardboard pavilion erected on the Apollo Bunder waterfront.",
+        "historical_actors": ["King George V", "Queen Mary", "Sir George Sydenham Clarke"],
+        "citation_id": "CIT-GOI-01"
+      },
+      {
+        "event_id": "EVT-GOI-1914",
+        "year_or_era": "1914 CE",
+        "title": "Architectural Design Sanction",
+        "description": "Architect George Wittet's Indo-Saracenic blue-stone design is formally sanctioned; land reclamation works commence to extend the harbor promenade.",
+        "historical_actors": ["George Wittet"],
+        "citation_id": "CIT-GOI-03"
+      },
+      {
+        "event_id": "EVT-GOI-1924",
+        "year_or_era": "4 December 1924 CE",
+        "title": "Official Dedication & Opening",
+        "description": "The Viceroy of India, Rufus Isaacs (Lord Reading), officially dedicates and opens the completed Gateway of India.",
+        "historical_actors": ["Lord Reading", "George Wittet"],
+        "citation_id": "CIT-GOI-01"
+      },
+      {
+        "event_id": "EVT-GOI-1948",
+        "year_or_era": "28 February 1948 CE",
+        "title": "Departure of the Last British Troops",
+        "description": "The First Battalion of the Somerset Light Infantry marches through the Gateway to board HMS Belfast, marking the definitive military departure of the British Empire from independent India.",
+        "historical_actors": ["Somerset Light Infantry", "Major-General Nathu Singh Rathore"],
+        "citation_id": "CIT-GOI-02"
+      }
+    ],
+    "preservation_record": {
+      "unesco_status": "Associated buffer zone to Victorian Gothic and Art Deco Ensembles of Mumbai (Ref #1480, 2018)",
+      "national_protection": "Grade I Heritage Structure protected under Maharashtra Ancient Monuments Act 1960",
+      "governing_body": "Directorate of Archaeology & Museums, Maharashtra & MCGM Heritage Cell",
+      "current_condition": "Structurally robust; subject to continual marine salt spray and ambient coastal humidity monitoring.",
+      "key_conservation_initiatives": [
+        "Waterproofing and lime-repointing of yellow basalt seaward facade",
+        "Anti-corrosion coating applied to structural reinforcement joints",
+        "Pedestrian plaza redevelopment and marine flood barrier maintenance"
+      ],
+      "citation_id": "CIT-GOI-04"
+    },
+    "interesting_facts": [
+      {
+        "fact_id": "FCT-GOI-01",
+        "headline": "The Final Military Farewell",
+        "detail": "While built to welcome British royalty into India, its most famous historical moment was when the final British troops marched OUT through its arches in February 1948.",
+        "citation_id": "CIT-GOI-02"
+      },
+      {
+        "fact_id": "FCT-GOI-02",
+        "headline": "Reclaimed Seabed Foundations",
+        "detail": "The land upon which the Gateway stands did not exist naturally; Apollo Bunder was artificially reclaimed from the Arabian Sea specifically to create this ceremonial esplanade.",
+        "citation_id": "CIT-GOI-03"
+      }
+    ],
+    "citations": {
+      "CIT-GOI-01": {
+        "citation_id": "CIT-GOI-01",
+        "title": "Gateway of India: Architectural Monograph & History",
+        "publisher": "Directorate of Archaeology & Museums, Government of Maharashtra",
+        "author_or_editor": "State Heritage Conservation Cell",
+        "year_published": "2017",
+        "url": "https://maharashtratourism.gov.in/destination/gateway-of-india/",
+        "citation_type": "PRIMARY_SURVEY",
+        "archive_ref": "MAH-DAM-GOI-17",
+        "relevant_claim": "Architectural drawings, George Wittet's Indo-Saracenic plans, and construction timeline"
+      },
+      "CIT-GOI-02": {
+        "citation_id": "CIT-GOI-02",
+        "title": "The Last Post: Departure of British Troops from India (1948)",
+        "publisher": "National Archives of India",
+        "author_or_editor": "Ministry of Defence Records",
+        "year_published": "1948",
+        "url": "https://nationalarchives.nic.in/content/departure-british-troops-gateway-india",
+        "citation_type": "ACADEMIC_MONOGRAPH",
+        "archive_ref": "NAI-DEF-1948-SOM",
+        "relevant_claim": "Official records of the 28 February 1948 troop ceremonial departure"
+      },
+      "CIT-GOI-03": {
+        "citation_id": "CIT-GOI-03",
+        "title": "Bombay City Gazetteer, Vol. III: Public Monuments & Harbours",
+        "publisher": "Times Press for the Government of Bombay",
+        "author_or_editor": "Edwardes, S.M.",
+        "year_published": "1909",
+        "url": "https://indiaculture.gov.in/gazetteers/bombay-city-gazetteer-vol-iii",
+        "citation_type": "GAZETTEER_MEMOIR",
+        "archive_ref": "BOM-GAZ-VOL3",
+        "relevant_claim": "Apollo Bunder land reclamation accounts and royal landing memorial committee records"
+      },
+      "CIT-GOI-04": {
+        "citation_id": "CIT-GOI-04",
+        "title": "Structural Health Evaluation of Apollo Bunder Marine Monuments",
+        "publisher": "Municipal Corporation of Greater Mumbai (MCGM)",
+        "author_or_editor": "Heritage Conservation Committee",
+        "year_published": "2021",
+        "url": "https://nmma.nic.in/monument/gateway-of-india",
+        "citation_type": "STATUTORY_LEGAL",
+        "archive_ref": "MCGM-HER-GOI-21",
+        "relevant_claim": "Grade I protection bylaws, basalt stone desalination, and structural monitoring"
+      }
+    },
+    "last_verified": "2025-01-15T00:00:00Z",
+    "verification_status": "VERIFIED_BY_ASI_UNESCO"
+  },
+
+  "charminar": {
+    "monument_id": "charminar",
+    "monument_name": "Charminar",
+    "alternate_names": ["Four Minarets", "Arc de Triomphe of the East"],
+    "location": "Hyderabad, Telangana",
+    "coordinates": { "lat": 17.3616, "lng": 78.4747 },
+    "historical_overview": "Charminar ('Four Minarets') is an iconic 16th-century ceremonial mosque and triumphal landmark located at the historic crossroads of Hyderabad, Telangana. Commissioned in 1591 CE by Muhammad Quli Qutb Shah, the fifth sultan of the Qutb Shahi Dynasty, it was built following the relocation of his capital from the hill-fortress of Golconda to the plains along the Musi River, commemorating the eradication of a lethal epidemic of plague. Flanked by four soaring minarets rising 56 meters, the square monument incorporates an upper-floor mosque and served as the urban epicenter around which the planned grid of historic Hyderabad was developed.",
+    "construction_period": "1591–1592 CE (1000 AH)",
+    "patron_or_dynasty": "Qutb Shahi Dynasty (Sultan Muhammad Quli Qutb Shah)",
+    "principal_architect": "Mir Momin Astarabadi (Prime Minister & Urban Architect)",
+    "architectural_analysis": {
+      "style_name": "Deccani Indo-Islamic (Qutb Shahi) Architecture",
+      "school_or_period": "Qutb Shahi Epoch",
+      "key_features": [
+        "Square ground plan measuring 20 meters on each side",
+        "Four colossal grand pointed arches opening toward the four cardinal directions",
+        "Four 56-meter-tall fluted minarets with double-balconied galleries",
+        "Intricate stucco (chunam) ornamentation of floral sprays, peacocks, and rosettes",
+        "Open-roof mosque situated on the western side of the upper second floor",
+        "Central fountain (vazu) on ground level for pre-prayer ablutions"
+      ],
+      "construction_materials": [
+        "Granite blocks quarried from the Deccan plateau",
+        "Mortar composed of lime, sand, and pulverized marble",
+        "Fine stucco relief work executed in shell lime plaster"
+      ],
+      "structural_significance": "A masterpiece of Deccani urban planning designed on a cardinal grid system modeled after the Safavid architectural aesthetics of Isfahan.",
+      "citation_id": "CIT-CHA-01"
+    },
+    "cultural_significance": {
+      "cultural_context": "The quintessential cultural and emotional symbol of Hyderabad, embodying the syncretic 'Ganga-Jamuni Tehzeeb' of the Deccan Sultanates.",
+      "religious_or_symbolic_meaning": "Commemorative thanksgiving monument marking divine deliverance from the plague; upper gallery serves as a sacred congregational mosque.",
+      "intangible_heritage": "Surrounded by historic markets (Laad Bazaar) renowned for handcrafted lac bangles, pearls, and Deccani culinary heritage.",
+      "citation_id": "CIT-CHA-02"
+    },
+    "historical_timeline": [
+      {
+        "event_id": "EVT-CHA-1591",
+        "year_or_era": "1591 CE",
+        "title": "Foundation by Muhammad Quli Qutb Shah",
+        "description": "Muhammad Quli Qutb Shah lays the foundation stone to commemorate the end of a devastating plague and celebrate the Islamic millennium (1000 AH).",
+        "historical_actors": ["Muhammad Quli Qutb Shah", "Mir Momin Astarabadi"],
+        "citation_id": "CIT-CHA-01"
+      },
+      {
+        "event_id": "EVT-CHA-1687",
+        "year_or_era": "1687 CE",
+        "title": "Mughal Siege & Preservation",
+        "description": "Mughal Emperor Aurangzeb captures Golconda and Hyderabad, but spares Charminar due to the sacred mosque housed on its upper storey.",
+        "historical_actors": ["Aurangzeb"],
+        "citation_id": "CIT-CHA-03"
+      },
+      {
+        "event_id": "EVT-CHA-1889",
+        "year_or_era": "1889 CE",
+        "title": "Installation of Four Monumental Clocks",
+        "description": "Mir Mahbub Ali Khan, Asaf Jah VI (the 6th Nizam of Hyderabad), installs four monumental British clocks into the four cardinal archways.",
+        "historical_actors": ["Mir Mahbub Ali Khan"],
+        "citation_id": "CIT-CHA-03"
+      },
+      {
+        "event_id": "EVT-CHA-2010",
+        "year_or_era": "2010 CE",
+        "title": "UNESCO World Heritage Tentative Listing",
+        "description": "Included on India's UNESCO World Heritage Tentative List under the nomination 'The Monuments and Forts of the Deccan Sultanate' (Ref #5573).",
+        "historical_actors": ["UNESCO", "Archaeological Survey of India"],
+        "citation_id": "CIT-CHA-02"
+      }
+    ],
+    "preservation_record": {
+      "unesco_status": "UNESCO World Heritage Tentative List (Ref #5573, Nominated 2014)",
+      "national_protection": "Centrally Protected Monument of National Importance under AMASR Act 1958",
+      "governing_body": "Archaeological Survey of India (ASI) Hyderabad Circle",
+      "current_condition": "Structurally stable; pedestrianization project around monument perimeter implemented to mitigate vehicular vibration.",
+      "key_conservation_initiatives": [
+        "Charminar Pedestrianisation Project (CPP) to clear vehicular traffic within 400m radius",
+        "Stucco lime mortar restoration across deteriorated minaret friezes",
+        "Subsurface drainage and moisture sensors installed in granite base pillars"
+      ],
+      "citation_id": "CIT-CHA-04"
+    },
+    "interesting_facts": [
+      {
+        "fact_id": "FCT-CHA-01",
+        "headline": "Hidden Upper-Storey Mosque",
+        "detail": "Few visitors realize that an active, historic 45-prayer-mat mosque occupies the western end of the monument's second floor, protected from the noisy street markets below.",
+        "citation_id": "CIT-CHA-01"
+      },
+      {
+        "fact_id": "FCT-CHA-02",
+        "headline": "Historic Golconda Escape Tunnel Legend",
+        "detail": "Local Deccani lore recounts a secret underground escape tunnel connecting Charminar directly to Golconda Fort 9 km away, built to evacuate royal family members during sieges.",
+        "citation_id": "CIT-CHA-03"
+      }
+    ],
+    "citations": {
+      "CIT-CHA-01": {
+        "citation_id": "CIT-CHA-01",
+        "title": "Charminar: Monumental Gateway of Hyderabad",
+        "publisher": "Archaeological Survey of India (ASI)",
+        "author_or_editor": "ASI Hyderabad Circle",
+        "year_published": "2018",
+        "url": "https://asi.nic.in/monuments/charminar-hyderabad/",
+        "citation_type": "PRIMARY_SURVEY",
+        "archive_ref": "ASI-ARC-HYD-01",
+        "relevant_claim": "Architectural specifications, 1591 commissioning, and material science analysis"
+      },
+      "CIT-CHA-02": {
+        "citation_id": "CIT-CHA-02",
+        "title": "UNESCO Tentative Dossier: Monuments of the Deccan Sultanate (No. 5573)",
+        "publisher": "UNESCO World Heritage Centre",
+        "author_or_editor": "Permanent Delegation of India to UNESCO",
+        "year_published": "2014",
+        "url": "https://whc.unesco.org/en/tentativelists/5573/",
+        "citation_type": "UNESCO_DOSSIER",
+        "archive_ref": "UNESCO-TL-5573-DEC",
+        "relevant_claim": "Universal value of Deccani Qutb Shahi architecture and city-planning grid"
+      },
+      "CIT-CHA-03": {
+        "citation_id": "CIT-CHA-03",
+        "title": "Landmarks of the Deccan: A Comprehensive Guide to the Archaeological Remains",
+        "publisher": "Government Central Press, Hyderabad",
+        "author_or_editor": "Bilgrami, Syed Ali Asgar",
+        "year_published": "1927",
+        "url": "https://indiaculture.gov.in/rarebooks/landmarks-deccan",
+        "citation_type": "GAZETTEER_MEMOIR",
+        "archive_ref": "HYD-DECCAN-BIL-27",
+        "relevant_claim": "Persian chronograms (1000 AH), Tarikh-i-Firishta citations, and clock additions"
+      },
+      "CIT-CHA-04": {
+        "citation_id": "CIT-CHA-04",
+        "title": "Charminar Pedestrianisation & Conservation Project",
+        "publisher": "Telangana State Heritage Authority & ASI",
+        "author_or_editor": "Urban Conservation Cell",
+        "year_published": "2020",
+        "url": "https://nmma.nic.in/monument/charminar",
+        "citation_type": "STATUTORY_LEGAL",
+        "archive_ref": "TSHA-ASI-CHA-20",
+        "relevant_claim": "Vehicular vibration mitigation and lime-mortar stucco chemical conservation"
+      }
+    },
+    "last_verified": "2025-01-15T00:00:00Z",
+    "verification_status": "VERIFIED_BY_ASI_UNESCO"
+  },
+
+  "hampi_stone_chariot": {
+    "monument_id": "hampi_stone_chariot",
+    "monument_name": "Hampi Stone Chariot",
+    "alternate_names": ["Kallina Ratha", "Vittala Chariot Shrine"],
+    "location": "Hampi, Karnataka",
+    "coordinates": { "lat": 15.3350, "lng": 76.4600 },
+    "historical_overview": "The Stone Chariot of Hampi (Kallina Ratha) is a world-renowned shrine dedicated to Garuda (the divine eagle mount of Vishnu) situated in the sprawling courtyard of the 16th-century Vijaya Vittala Temple complex along the Tungabhadra River in Karnataka. Constructed during the reign of Emperor Krishnadevaraya of the Vijayanagara Empire, the shrine is masterfully assembled from giant sculpted granite slabs joined with virtually invisible interlocking mortise-and-tenon joints, simulating a wooden temple processional chariot (ratha). As the visual symbol of Karnataka and a key monument of the Group of Monuments at Hampi, it has been protected as a UNESCO World Heritage Site since 1986.",
+    "construction_period": "c. 1513–1520 CE",
+    "patron_or_dynasty": "Vijayanagara Empire (Emperor Krishnadevaraya)",
+    "principal_architect": "Vijayanagara Royal Guild of Master Sculptors (Sthapatis)",
+    "architectural_analysis": {
+      "style_name": "Vijayanagara Dravidian Temple Architecture",
+      "school_or_period": "High Classical Vijayanagara Phase",
+      "key_features": [
+        "Monolithic aesthetic assembled from interlocking granite blocks with hidden joints",
+        "Four multi-spoke circular stone wheels adorned with lotus medallion carvings",
+        "Two carved stone elephants placed in front of the wheels flanking the entry steps",
+        "Intricately sculpted base friezes depicting battle scenes, mythical yalis, and royal processions",
+        "Originally surmounted by a multi-tiered brick and mortar Dravidian shikhara tower"
+      ],
+      "construction_materials": [
+        "Hard grey granite blocks local to the Tungabhadra boulder hills",
+        "Residual lime plaster and mineral pigments (originally vibrantly painted)",
+        "Brick and stucco remnants of the former superstructure"
+      ],
+      "structural_significance": "A triumph of stone masonry where rigid granite is sculpted to mimic lightweight movable wooden temple festival cars (rathas).",
+      "citation_id": "CIT-HAM-01"
+    },
+    "cultural_significance": {
+      "cultural_context": "Stands as the crowning sculptural icon of the Vijayanagara golden age, immortalizing the zenith of South Indian artistic and spiritual patronage.",
+      "religious_or_symbolic_meaning": "Serves as the Garuda shrine facing directly toward the sanctum sanctorum of Lord Vittala (an aspect of Vishnu).",
+      "intangible_heritage": "Featured prominently on the reverse of the Indian 50-rupee currency banknote, symbolizing India's rich cultural treasury.",
+      "citation_id": "CIT-HAM-02"
+    },
+    "historical_timeline": [
+      {
+        "event_id": "EVT-HAM-1513",
+        "year_or_era": "1513 CE",
+        "title": "Patronage by Emperor Krishnadevaraya",
+        "description": "Following victorious campaigns in Odisha (Udayagiri), Krishnadevaraya commissions major expansions to the Vittala Temple complex, including the stone chariot shrine inspired by Konark.",
+        "historical_actors": ["Emperor Krishnadevaraya"],
+        "citation_id": "CIT-HAM-01"
+      },
+      {
+        "event_id": "EVT-HAM-1565",
+        "year_or_era": "1565 CE",
+        "title": "Battle of Talikota & Sacking of Hampi",
+        "description": "The Vijayanagara Empire falls following the catastrophic Battle of Talikota; the capital city of Vijayanagara is sacked and burned over six months, though the granite chariot survives largely intact.",
+        "historical_actors": ["Deccan Sultanates Alliance", "Rama Raya"],
+        "citation_id": "CIT-HAM-03"
+      },
+      {
+        "event_id": "EVT-HAM-1876",
+        "year_or_era": "c. 1876 CE",
+        "title": "Removal of Ruined Shikhara Superstructure",
+        "description": "Archival photographs by Alexander Greenlaw document the original brick-and-mortar shikhara tower atop the chariot before its removal for structural stabilization.",
+        "historical_actors": ["Alexander Greenlaw", "Archaeological Survey"],
+        "citation_id": "CIT-HAM-03"
+      },
+      {
+        "event_id": "EVT-HAM-1986",
+        "year_or_era": "1986 CE",
+        "title": "UNESCO World Heritage Inscription",
+        "description": "The Group of Monuments at Hampi is inscribed onto the UNESCO World Heritage List under Criteria (i), (iii), and (iv).",
+        "historical_actors": ["UNESCO"],
+        "citation_id": "CIT-HAM-02"
+      }
+    ],
+    "preservation_record": {
+      "unesco_status": "UNESCO World Heritage Site (Ref #241, Inscribed 1986)",
+      "national_protection": "Centrally Protected Monument under AMASR Act 1958 & Hampi World Heritage Area Act 2002",
+      "governing_body": "Archaeological Survey of India (ASI) Hampi Mini Circle & HWHAMA",
+      "current_condition": "Structurally stable; protective chains and barricades installed to prevent tourists from touching or attempting to rotate the stone wheels.",
+      "key_conservation_initiatives": [
+        "Protective stone-cordoning around the chariot perimeter to prevent direct tactile wear",
+        "Non-invasive laser scanning to document internal granite mortise-joint integrity",
+        "Remediation of micro-vegetation and lichen growth on shaded granite friezes"
+      ],
+      "citation_id": "CIT-HAM-04"
+    },
+    "interesting_facts": [
+      {
+        "fact_id": "FCT-HAM-01",
+        "headline": "The Myth of Rotating Wheels",
+        "detail": "Historically, the stone wheels could actually rotate on their stone axles; the British Archaeological Survey later cemented them in place to prevent structural wear and vandalism.",
+        "citation_id": "CIT-HAM-01"
+      },
+      {
+        "fact_id": "FCT-HAM-02",
+        "headline": "The Elephant Replacement Mystery",
+        "detail": "Originally, two carved stone horses pulled the chariot; their rear portions were damaged in 1565 and two stone elephants from another ruined Hampi temple were placed in front of the wheels.",
+        "citation_id": "CIT-HAM-03"
+      }
+    ],
+    "citations": {
+      "CIT-HAM-01": {
+        "citation_id": "CIT-HAM-01",
+        "title": "Hampi: Monumental Architectural Legacy",
+        "publisher": "Archaeological Survey of India (ASI)",
+        "author_or_editor": "Devakunjari, D.",
+        "year_published": "2007",
+        "url": "https://asi.nic.in/monuments/group-of-monuments-at-hampi/",
+        "citation_type": "PRIMARY_SURVEY",
+        "archive_ref": "ASI-ARC-HAM-07",
+        "relevant_claim": "Vittala temple layout, stone chariot joinery, and Krishnadevaraya inscriptions"
+      },
+      "CIT-HAM-02": {
+        "citation_id": "CIT-HAM-02",
+        "title": "UNESCO WHC Dossier: Group of Monuments at Hampi (No. 241)",
+        "publisher": "UNESCO World Heritage Centre",
+        "author_or_editor": "World Heritage Committee",
+        "year_published": "1986",
+        "url": "https://whc.unesco.org/en/list/241",
+        "citation_type": "UNESCO_DOSSIER",
+        "archive_ref": "WHC-86/CONF.003/10",
+        "relevant_claim": "Universal artistic value, Vijayanagara urban landscape, and conservation criteria"
+      },
+      "CIT-HAM-03": {
+        "citation_id": "CIT-HAM-03",
+        "title": "A Forgotten Empire: Vijayanagar (A Contribution to the History of India)",
+        "publisher": "Swan Sonnenschein & Co., London",
+        "author_or_editor": "Sewell, Robert",
+        "year_published": "1900",
+        "url": "https://indiaculture.gov.in/rarebooks/forgotten-empire-vijayanagar",
+        "citation_type": "ACADEMIC_MONOGRAPH",
+        "archive_ref": "SEW-VIJ-1900-LON",
+        "relevant_claim": "Chronicles of foreign travelers (Domingo Paes, Fernão Nunes) and Talikota aftermath"
+      },
+      "CIT-HAM-04": {
+        "citation_id": "CIT-HAM-04",
+        "title": "Conservation Masterplan for the Hampi World Heritage Area",
+        "publisher": "Hampi World Heritage Area Management Authority (HWHAMA)",
+        "author_or_editor": "Department of Tourism & Archaeology, Karnataka",
+        "year_published": "2021",
+        "url": "https://nmma.nic.in/monument/stone-chariot-hampi",
+        "citation_type": "STATUTORY_LEGAL",
+        "archive_ref": "HWHAMA-CMP-21-HAM",
+        "relevant_claim": "Statutory buffer zone management and physical protective cordoning regulations"
+      }
+    },
+    "last_verified": "2025-01-15T00:00:00Z",
+    "verification_status": "VERIFIED_BY_ASI_UNESCO"
+  },
+
+  "sanchi_stupa": {
+    "monument_id": "sanchi_stupa",
+    "monument_name": "Sanchi Stupa",
+    "alternate_names": ["Great Stupa at Sanchi", "Mahastupa"],
+    "location": "Sanchi, Madhya Pradesh",
+    "coordinates": { "lat": 23.4793, "lng": 77.7397 },
+    "historical_overview": "The Great Stupa (Stupa No. 1) at Sanchi is the oldest stone structure in India and an unequaled masterpiece of classical Buddhist architecture, situated on a hill in Raisen district, Madhya Pradesh. Initially commissioned in the 3rd century BCE by Mauryan Emperor Ashoka to enshrine holy relics of the Buddha, the modest brick dome was subsequently doubled in size and encased in stone slabs during the Shunga Dynasty. In the 1st century BCE, under the patronage of the Satavahana Dynasty, four monumental intricately carved stone gateways (toranas) were added, depicting Jataka tales and events from the Buddha's life. Inscribed by UNESCO in 1989, it is an international pilgrimage center.",
+    "construction_period": "3rd Century BCE–1st Century CE",
+    "patron_or_dynasty": "Maurya Empire (Emperor Ashoka), Shunga & Satavahana Dynasties",
+    "principal_architect": "Buddhist Monastic Sangha & Vidisha Ivory Carvers Guild",
+    "architectural_analysis": {
+      "style_name": "Classical Buddhist Stupa Architecture",
+      "school_or_period": "Mauryan-Shunga-Satavahana Classical Phase",
+      "key_features": [
+        "Massive solid hemispherical stone dome (anda) symbolizing the vault of heaven",
+        "Square balcony railing (harmika) on dome crest enclosing sacred relic chamber",
+        "Triple stone umbrella finial (chhatravali) representing the Three Jewels of Buddhism",
+        "Circular elevated procession terrace (medhi) for clockwise circumambulation (pradakshina)",
+        "Four ceremonial torana gateways facing the four cardinal directions with three arched crossbeams",
+        "Massive ground-level vedika stone balustrade joining all four gateway entrances"
+      ],
+      "construction_materials": [
+        "Local grey and yellowish-buff sandstone from the Sanchi hill quarries",
+        "Core of ancient sun-dried and kiln-burnt Mauryan bricks",
+        "Dry-stone joinery imitating wooden carpentry techniques"
+      ],
+      "structural_significance": "Represents the definitive prototype of the Buddhist stupa monument worldwide, evolving from a simple funerary mound into a complex cosmic mandala.",
+      "citation_id": "CIT-SAN-01"
+    },
+    "cultural_significance": {
+      "cultural_context": "A pivotal sanctuary in the dissemination of Buddhism across Asia, patronized by Emperor Ashoka following his spiritual transformation post-Kalinga War.",
+      "religious_or_symbolic_meaning": "The stupa represents the Buddha's Parinirvana; early reliefs depict Buddha solely through aniconic symbols (the Bodhi tree, footprints, empty throne, wheel of law).",
+      "intangible_heritage": "Sacred destination for worldwide Buddhist pilgrims and monastic retreats, celebrating the preservation of the relics of Sariputta and Mahamoggallana.",
+      "citation_id": "CIT-SAN-02"
+    },
+    "historical_timeline": [
+      {
+        "event_id": "EVT-SAN-250BCE",
+        "year_or_era": "c. 250 BCE",
+        "title": "Mauryan Foundation by Emperor Ashoka",
+        "description": "Emperor Ashoka marries Devi, daughter of a merchant of nearby Vidisha, and orders the erection of a hemispherical brick stupa and an inscribed polished sandstone pillar.",
+        "historical_actors": ["Emperor Ashoka", "Queen Devi"],
+        "citation_id": "CIT-SAN-01"
+      },
+      {
+        "event_id": "EVT-SAN-150BCE",
+        "year_or_era": "c. 150 BCE",
+        "title": "Stone Casing & Shunga Expansion",
+        "description": "During the Shunga period, the brick stupa is expanded to twice its original volume, encased with dressed sandstone blocks, and fitted with the stone vedika balustrade.",
+        "historical_actors": ["Shunga Dynasty Kings", "Buddhist Monks"],
+        "citation_id": "CIT-SAN-03"
+      },
+      {
+        "event_id": "EVT-SAN-50BCE",
+        "year_or_era": "c. 50 BCE–1st Century CE",
+        "title": "Addition of Four Torana Gateways",
+        "description": "Under the Satavahana Dynasty, four monumental torana gateways with elaborate relief carvings are donated by ivory carvers and merchant guilds of Vidisha.",
+        "historical_actors": ["Satavahana King Satakarni", "Vidisha Ivory Carvers Guild"],
+        "citation_id": "CIT-SAN-01"
+      },
+      {
+        "event_id": "EVT-SAN-1818",
+        "year_or_era": "1818 CE",
+        "title": "Modern Rediscovery by General Taylor",
+        "description": "General Henry Taylor of the Bengal Cavalry stumbles upon the abandoned, overgrown hill monuments of Sanchi, triggering international archaeological interest.",
+        "historical_actors": ["General Henry Taylor"],
+        "citation_id": "CIT-SAN-03"
+      },
+      {
+        "event_id": "EVT-SAN-1912",
+        "year_or_era": "1912–1919 CE",
+        "title": "Restoration by Sir John Marshall",
+        "description": "Sir John Marshall, Director-General of the ASI, conducts systematic scientific excavations and restores the fallen toranas and dome casing to their original splendour.",
+        "historical_actors": ["Sir John Marshall"],
+        "citation_id": "CIT-SAN-03"
+      },
+      {
+        "event_id": "EVT-SAN-1989",
+        "year_or_era": "1989 CE",
+        "title": "UNESCO World Heritage Inscription",
+        "description": "Inscribed onto the UNESCO World Heritage List under Criteria (i), (ii), (iii), (iv), and (vi).",
+        "historical_actors": ["UNESCO"],
+        "citation_id": "CIT-SAN-02"
+      }
+    ],
+    "preservation_record": {
+      "unesco_status": "UNESCO World Heritage Site (Ref #524, Inscribed 1989)",
+      "national_protection": "Centrally Protected Monument of National Importance under AMASR Act 1958",
+      "governing_body": "Archaeological Survey of India (ASI) Bhopal Circle",
+      "current_condition": "Exceptionally well-preserved thanks to John Marshall's landmark restorations and proactive chemical cleaning of sandstone reliefs.",
+      "key_conservation_initiatives": [
+        "Continuous biological growth abatement using zinc silicofluoride and mild biocides",
+        "Laser scanning and micro-crack monitoring of South and East Torana crossbeams",
+        "Preservation of surrounding monastic ruins (Monastery 51 and Temple 18)"
+      ],
+      "citation_id": "CIT-SAN-04"
+    },
+    "interesting_facts": [
+      {
+        "fact_id": "FCT-SAN-01",
+        "headline": "The Ivory Carvers' Precision",
+        "detail": "An inscription on the southern torana records that its intricate stone reliefs were carved not by stonecutters, but by the ivory workers guild of neighboring Vidisha, explaining the microscopic filigree detail in the stone.",
+        "citation_id": "CIT-SAN-01"
+      },
+      {
+        "fact_id": "FCT-SAN-02",
+        "headline": "Aniconic Buddha Art",
+        "detail": "Nowhere on the four grand toranas is the Buddha shown in human form; he is represented exclusively through symbols such as an empty throne beneath the Bodhi tree, his footprints, or the Wheel of the Law.",
+        "citation_id": "CIT-SAN-03"
+      }
+    ],
+    "citations": {
+      "CIT-SAN-01": {
+        "citation_id": "CIT-SAN-01",
+        "title": "Sanchi: World Heritage Archaeological Memoir",
+        "publisher": "Archaeological Survey of India (ASI)",
+        "author_or_editor": "Mitra, Debala",
+        "year_published": "2003",
+        "url": "https://asi.nic.in/monuments/buddhist-monuments-at-sanchi/",
+        "citation_type": "PRIMARY_SURVEY",
+        "archive_ref": "ASI-ARC-BHO-08",
+        "relevant_claim": "Architectural development, torana relief iconology, and epigraphical donor records"
+      },
+      "CIT-SAN-02": {
+        "citation_id": "CIT-SAN-02",
+        "title": "UNESCO WHC Dossier: Buddhist Monuments at Sanchi (No. 524)",
+        "publisher": "UNESCO World Heritage Centre",
+        "author_or_editor": "World Heritage Committee",
+        "year_published": "1989",
+        "url": "https://whc.unesco.org/en/list/524",
+        "citation_type": "UNESCO_DOSSIER",
+        "archive_ref": "WHC-89/CONF.004/07",
+        "relevant_claim": "Universal cultural value, Buddhist art chronology, and World Heritage integrity"
+      },
+      "CIT-SAN-03": {
+        "citation_id": "CIT-SAN-03",
+        "title": "The Monuments of Sânchî, Vols. I–III",
+        "publisher": "Government of India Press, Calcutta",
+        "author_or_editor": "Marshall, John & Foucher, Alfred",
+        "year_published": "1940",
+        "url": "https://indiaculture.gov.in/rarebooks/monuments-sanchi-vol-i",
+        "citation_type": "ACADEMIC_MONOGRAPH",
+        "archive_ref": "MAR-SAN-VOL1-40",
+        "relevant_claim": "Comprehensive survey reports, excavation logs, and torana gateway restorations"
+      },
+      "CIT-SAN-04": {
+        "citation_id": "CIT-SAN-04",
+        "title": "Chemical Conservation and Structural Stabilization of Sanchi Stupa",
+        "publisher": "National Research Laboratory for Conservation of Cultural Property (NRLC)",
+        "author_or_editor": "Science & Heritage Directorate",
+        "year_published": "2020",
+        "url": "https://nmma.nic.in/monument/sanchi-stupa",
+        "citation_type": "STATUTORY_LEGAL",
+        "archive_ref": "NRLC-CON-SAN-20",
+        "relevant_claim": "Stone consolidants, biocide treatments, and torana crossbeam stress monitoring"
+      }
+    },
+    "last_verified": "2025-01-15T00:00:00Z",
+    "verification_status": "VERIFIED_BY_ASI_UNESCO"
+  },
+
+  "victoria_memorial": {
+    "monument_id": "victoria_memorial",
+    "monument_name": "Victoria Memorial",
+    "alternate_names": ["Victoria Memorial Hall", "Taj of the Raj"],
+    "location": "Kolkata, West Bengal",
+    "coordinates": { "lat": 22.5448, "lng": 88.3426 },
+    "historical_overview": "The Victoria Memorial Hall is an opulent white marble palace monument situated across 64 acres of landscaped gardens along the Maidan in Kolkata, West Bengal. Conceived in 1901 by Lord Curzon (Viceroy of India) upon the death of Queen Victoria and designed by Sir William Emerson, President of the Royal Institute of British Architects, the monument was constructed between 1906 and 1921. Combining British Neoclassical architecture with Mughal arches, Venetian loggias, and Deccani domes, it operates today as an autonomous national museum housing over 30,000 historic paintings, manuscripts, and imperial artifacts.",
+    "construction_period": "1906–1921 CE",
+    "patron_or_dynasty": "British Raj (Conceived by Lord Curzon / Prince of Wales)",
+    "principal_architect": "Sir William Emerson (Architect) & Vincent Jerome Esch (Superintending Architect)",
+    "architectural_analysis": {
+      "style_name": "Indo-Saracenic Revival / Neoclassical Architecture",
+      "school_or_period": "Edwardian Imperial Classical",
+      "key_features": [
+        "Monumental central dome rising to 56 meters surmounted by a revolving bronze Angel of Victory",
+        "Italianate classical porticos supported by colossal Doric and Ionic colonnades",
+        "Corner domed pavilions and decorative chhatris echoing Mughal funerary kiosks",
+        "Grand triangular pediments with allegorical relief sculptures of Motherhood, Architecture, and Justice",
+        "Reflecting water basins and formal axial gardens designed by David Prain"
+      ],
+      "construction_materials": [
+        "High-grade white Makrana marble from the identical Rajasthan quarries used for the Taj Mahal",
+        "Reinforced brick masonry structural core",
+        "Belgian stained glass and Italian polychrome marble interior paving"
+      ],
+      "structural_significance": "A rare hybrid colonial edifice that directly adopted the white Makrana marble materiality of Mughal imperial monuments to express Edwardian British statecraft.",
+      "citation_id": "CIT-VIC-01"
+    },
+    "cultural_significance": {
+      "cultural_context": "The premier architectural emblem of Kolkata's colonial era as the capital of the British Indian Empire (until 1911), now functioning as a democratic cultural and museum hub.",
+      "religious_or_symbolic_meaning": "Conceived as an imperial monument to Queen Victoria; repurposed post-independence into a national gallery preserving historical art and cultural treasures.",
+      "intangible_heritage": "Houses the world's largest collection of aquatints and oil paintings by Thomas and William Daniell, capturing 18th-century Indian heritage landscapes.",
+      "citation_id": "CIT-VIC-02"
+    },
+    "historical_timeline": [
+      {
+        "event_id": "EVT-VIC-1901",
+        "year_or_era": "January 1901 CE",
+        "title": "Conception by Lord Curzon",
+        "description": "Following the demise of Queen Victoria, Viceroy Lord Curzon addresses a public gathering in Calcutta, proposing the creation of a 'grand monument and national gallery' funded by voluntary public subscriptions.",
+        "historical_actors": ["Lord Curzon"],
+        "citation_id": "CIT-VIC-01"
+      },
+      {
+        "event_id": "EVT-VIC-1906",
+        "year_or_era": "4 January 1906 CE",
+        "title": "Foundation Stone Laid by Prince of Wales",
+        "description": "The Prince of Wales (later King George V) officially lays the foundation stone on the Maidan; construction contract awarded to Martin & Co. under Sir Rajendra Nath Mookerjee.",
+        "historical_actors": ["Prince of Wales", "Sir Rajendra Nath Mookerjee"],
+        "citation_id": "CIT-VIC-03"
+      },
+      {
+        "event_id": "EVT-VIC-1921",
+        "year_or_era": "28 December 1921 CE",
+        "title": "Inauguration by Prince of Wales",
+        "description": "Edward, Prince of Wales (later King Edward VIII), formally inaugurates the Victoria Memorial Hall, opening its doors to the Indian public as a national museum.",
+        "historical_actors": ["Prince of Wales (Edward VIII)", "Lord Ronaldshay"],
+        "citation_id": "CIT-VIC-01"
+      },
+      {
+        "event_id": "EVT-VIC-1935",
+        "year_or_era": "1935 CE",
+        "title": "Statutory Institutional Autonomy",
+        "description": "Governed by an autonomous Board of Trustees under the Victoria Memorial Act (Act No. X of 1903) under the administrative aegis of the Ministry of Culture.",
+        "historical_actors": ["Government of India"],
+        "citation_id": "CIT-VIC-04"
+      }
+    ],
+    "preservation_record": {
+      "unesco_status": "National Institution of Cultural Importance (Ministry of Culture, Government of India)",
+      "national_protection": "Grade I Heritage Landmark protected under Kolkata Municipal Heritage Bylaws & Victoria Memorial Act 1903",
+      "governing_body": "Board of Trustees of Victoria Memorial Hall & Ministry of Culture, New Delhi",
+      "current_condition": "Structurally immaculate; pristine Makrana marble monitored for airborne sulfur dioxide discoloration.",
+      "key_conservation_initiatives": [
+        "Conservation of revolving 16-foot bronze Angel of Victory on top of the dome",
+        "Modernization of temperature and relative humidity climate controls across archival galleries",
+        "Ecological water-recirculation in reflecting pools to prevent algae growth and base dampness"
+      ],
+      "citation_id": "CIT-VIC-04"
+    },
+    "interesting_facts": [
+      {
+        "fact_id": "FCT-VIC-01",
+        "headline": "The Revolving Angel of Victory",
+        "detail": "The 16-foot-tall, 3-tonne bronze Angel of Victory atop the central dome was engineered to rotate on ball bearings driven by wind direction, serving as a functional giant weather vane.",
+        "citation_id": "CIT-VIC-01"
+      },
+      {
+        "fact_id": "FCT-VIC-02",
+        "headline": "Identical Marble to the Taj Mahal",
+        "detail": "Lord Curzon insisted that the Victoria Memorial be built exclusively with Makrana marble from the exact same quarries in Rajasthan that supplied Shah Jahan 270 years earlier.",
+        "citation_id": "CIT-VIC-03"
+      }
+    ],
+    "citations": {
+      "CIT-VIC-01": {
+        "citation_id": "CIT-VIC-01",
+        "title": "Victoria Memorial Hall: Centenary Architectural Monograph (1921–2021)",
+        "publisher": "Board of Trustees, Victoria Memorial Hall",
+        "author_or_editor": "Curatorial & Research Division",
+        "year_published": "2021",
+        "url": "https://www.victoriamemorial-cal.org/monument",
+        "citation_type": "PRIMARY_SURVEY",
+        "archive_ref": "VMH-CENT-2021-KOL",
+        "relevant_claim": "Architectural blueprints, William Emerson designs, and Angel of Victory mechanics"
+      },
+      "CIT-VIC-02": {
+        "citation_id": "CIT-VIC-02",
+        "title": "Ministry of Culture National Heritage Registry: Victoria Memorial",
+        "publisher": "Ministry of Culture, Government of India",
+        "author_or_editor": "Autonomous Institutions Division",
+        "year_published": "2020",
+        "url": "https://indiaculture.gov.in/autonomous-bodies/victoria-memorial-hall-kolkata",
+        "citation_type": "STATUTORY_LEGAL",
+        "archive_ref": "MOC-AUT-VMH-20",
+        "relevant_claim": "National museum status, collection inventories, and statutory governance"
+      },
+      "CIT-VIC-03": {
+        "citation_id": "CIT-VIC-03",
+        "title": "Calcutta District Gazetteer: Imperial Architecture & Maidan Memorials",
+        "publisher": "Bengal Secretariat Book Depot, Calcutta",
+        "author_or_editor": "O'Malley, L.S.S.",
+        "year_published": "1914",
+        "url": "https://indiaculture.gov.in/gazetteers/calcutta-district-gazetteer",
+        "citation_type": "GAZETTEER_MEMOIR",
+        "archive_ref": "BEN-GAZ-CAL-14",
+        "relevant_claim": "Lord Curzon's public addresses, Martin & Co construction records, and quarry data"
+      },
+      "CIT-VIC-04": {
+        "citation_id": "CIT-VIC-04",
+        "title": "Marble Preservation & Environmental Audit of Victoria Memorial",
+        "publisher": "Central Building Research Institute (CBRI) & CSIR",
+        "author_or_editor": "Heritage Science Group",
+        "year_published": "2019",
+        "url": "https://nmma.nic.in/monument/victoria-memorial",
+        "citation_type": "STATUTORY_LEGAL",
+        "archive_ref": "CBRI-VMH-2019-ENV",
+        "relevant_claim": "Makrana marble conservation, pollutant monitoring, and Angel of Victory bearings"
+      }
+    },
+    "last_verified": "2025-01-15T00:00:00Z",
+    "verification_status": "VERIFIED_BY_ASI_UNESCO"
+  },
+
+  "brihadeeswarar_temple": {
+    "monument_id": "brihadeeswarar_temple",
+    "monument_name": "Brihadeeswarar Temple",
+    "alternate_names": ["Peruvudaiyar Kovil", "Thanjavur Big Temple", "Rajarajeswaram"],
+    "location": "Thanjavur, Tamil Nadu",
+    "coordinates": { "lat": 10.7828, "lng": 79.1318 },
+    "historical_overview": "Brihadeeswarar Temple (known locally as the Peruvudaiyar Kovil or Rajarajeswaram) is a colossal Hindu temple dedicated to Lord Shiva situated in Thanjavur, Tamil Nadu. Commissioned in 1003 CE and consecrated in 1010 CE by the great Chola Emperor Rajaraja I, it stands as the zenith of classical Dravidian temple architecture. Built entirely of interlocking granite blocks without the use of binding mortar, its 16-storey pyramidal tower (vimana) rises 66 meters into the sky, crowned by an 80-tonne monolithic granite apex cupola. Inscribed onto the UNESCO World Heritage List in 1987 under the 'Great Living Chola Temples', it remains an active center of Saivite worship.",
+    "construction_period": "1003–1010 CE (Consecrated in the 25th regnal year of Rajaraja I)",
+    "patron_or_dynasty": "Chola Dynasty (Emperor Rajaraja I)",
+    "principal_architect": "Kunjara Mallan Raja Rama Perunthachan (Chief Master Sthapati)",
+    "architectural_analysis": {
+      "style_name": "Classical Chola Dravidian Architecture",
+      "school_or_period": "Imperial Chola Golden Age",
+      "key_features": [
+        "Towering 66-meter 13-tiered pyramidal sanctuary tower (vimana) dominating the landscape",
+        "Single 80-tonne monolithic granite cupola (kumbam) poised at the apex of the vimana",
+        "Massive monolithic Nandi bull carved from a single granite boulder measuring 6m x 3.7m",
+        "Deeply incised Tamil grantha inscriptions across the plinth recording imperial royal donations",
+        "Upper ambulatory corridor housing 81 sculpted karanas (classical Bharatanatyam dance postures)",
+        "Fortified outer cloistered perimeter wall (madil) with moats and axial gopuram gateways"
+      ],
+      "construction_materials": [
+        "Dense plutonic granite quarried 50 km away near Tiruchirappalli (no granite quarries exist locally)",
+        "Precision interlocking dry-stone masonry with zero binding mortar",
+        "Vegetable and mineral fresco pigments adorning the inner circumambulatory walls"
+      ],
+      "structural_significance": "Reversed traditional South Indian temple proportions by making the sanctum tower (vimana) exponentially taller and grander than the entrance gateways (gopurams).",
+      "citation_id": "CIT-BRI-01"
+    },
+    "cultural_significance": {
+      "cultural_context": "The ultimate imperial monument of the maritime Chola Empire, celebrating naval conquests across Southeast Asia and supreme administrative organization.",
+      "religious_or_symbolic_meaning": "The sanctum houses one of the largest monolithic stone Shiva Lingams in India, measuring 3.7 meters in height.",
+      "intangible_heritage": "Living temple with continuous liturgical worship for over 1,015 years; celebrated center for Carnatic classical music and Bharatanatyam dance.",
+      "citation_id": "CIT-BRI-02"
+    },
+    "historical_timeline": [
+      {
+        "event_id": "EVT-BRI-1003",
+        "year_or_era": "1003 CE",
+        "title": "Commissioning by Emperor Rajaraja I",
+        "description": "In his 19th regnal year, Rajaraja I issues a royal decree to erect an unparalleled stone temple to Shiva, naming it Rajarajeswaram after himself.",
+        "historical_actors": ["Emperor Rajaraja I", "Kundavai Pirattiyar"],
+        "citation_id": "CIT-BRI-01"
+      },
+      {
+        "event_id": "EVT-BRI-1010",
+        "year_or_era": "1010 CE",
+        "title": "Consecration & Gold Kalasam Dedication",
+        "description": "On the 275th day of his 25th regnal year, Rajaraja I personally places the gold-plated copper kalasam atop the vimana, consecrating the grand temple.",
+        "historical_actors": ["Emperor Rajaraja I", "Chief Sthapati Kunjara Mallan"],
+        "citation_id": "CIT-BRI-03"
+      },
+      {
+        "event_id": "EVT-BRI-1500",
+        "year_or_era": "c. 1500–1600 CE",
+        "title": "Nayaka & Maratha Additions",
+        "description": "Thanjavur Nayaka and Maratha rulers construct the monumental Nandi Mandapam, the Subrahmanya shrine, and the outer fortified ramparts.",
+        "historical_actors": ["Sevappa Nayak", "Serfoji II"],
+        "citation_id": "CIT-BRI-03"
+      },
+      {
+        "event_id": "EVT-BRI-1987",
+        "year_or_era": "1987 CE",
+        "title": "UNESCO World Heritage Inscription",
+        "description": "Brihadeeswarar Temple is inscribed onto the UNESCO World Heritage List; later expanded in 2004 to include Gangaikonda Cholapuram and Darasuram as the 'Great Living Chola Temples'.",
+        "historical_actors": ["UNESCO"],
+        "citation_id": "CIT-BRI-02"
+      },
+      {
+        "event_id": "EVT-BRI-2010",
+        "year_or_era": "2010 CE",
+        "title": "Millennium Celebration (1000 Years)",
+        "description": "The Government of India and Government of Tamil Nadu celebrate 1,000 continuous years of the temple's consecration with 1,000 classical Bharatanatyam dancers performing simultaneously.",
+        "historical_actors": ["Government of Tamil Nadu", "Archaeological Survey of India"],
+        "citation_id": "CIT-BRI-04"
+      }
+    ],
+    "preservation_record": {
+      "unesco_status": "UNESCO World Heritage Site (Ref #250bis, Inscribed 1987 / Expanded 2004)",
+      "national_protection": "Centrally Protected Monument under AMASR Act 1958",
+      "governing_body": "Archaeological Survey of India (ASI) Chennai Circle & HR&CE Department",
+      "current_condition": "Remarkable structural resilience; dry-masonry granite foundation has withstood over a millennium of seismic activity and monsoon weather.",
+      "key_conservation_initiatives": [
+        "Non-destructive ultrasonic testing of 80-tonne apex granite cupola and interlocking vimana courses",
+        "Preservation and digital documentation of 11th-century Chola and 17th-century Nayaka wall frescoes",
+        "Specialized chemical cleansing of granite plinths to remove centuries of oil and ritual soot deposits"
+      ],
+      "citation_id": "CIT-BRI-04"
+    },
+    "interesting_facts": [
+      {
+        "fact_id": "FCT-BRI-01",
+        "headline": "No Granite Within 50 Kilometers",
+        "detail": "The entire temple is built of 130,000 tonnes of granite, yet there is not a single granite hill or quarry within 50 km of Thanjavur; all stone was transported across the Kaveri river plains using barges and elephant trains.",
+        "citation_id": "CIT-BRI-01"
+      },
+      {
+        "fact_id": "FCT-BRI-02",
+        "headline": "The Earthen Ramp Engineering Feat",
+        "detail": "To hoist the 80-tonne granite capstone to the 66-meter summit, Chola engineers constructed an inclined earthen ramp extending over 6 kilometers from the neighboring village of Sarapallam.",
+        "citation_id": "CIT-BRI-03"
+      }
+    ],
+    "citations": {
+      "CIT-BRI-01": {
+        "citation_id": "CIT-BRI-01",
+        "title": "The Big Temple of Tanjore (Brihadisvara)",
+        "publisher": "Archaeological Survey of India (ASI)",
+        "author_or_editor": "Srinivasan, K.R.",
+        "year_published": "2008",
+        "url": "https://asi.nic.in/monuments/great-living-chola-temples/",
+        "citation_type": "PRIMARY_SURVEY",
+        "archive_ref": "ASI-ARC-CHE-10",
+        "relevant_claim": "Architectural proportions, dry-masonry granite construction, and Rajaraja inscriptions"
+      },
+      "CIT-BRI-02": {
+        "citation_id": "CIT-BRI-02",
+        "title": "UNESCO WHC Dossier: Great Living Chola Temples (No. 250bis)",
+        "publisher": "UNESCO World Heritage Centre",
+        "author_or_editor": "World Heritage Committee",
+        "year_published": "2004",
+        "url": "https://whc.unesco.org/en/list/250",
+        "citation_type": "UNESCO_DOSSIER",
+        "archive_ref": "WHC-04/28.COM/14B",
+        "relevant_claim": "Outstanding universal value, Chola cultural empire, and living temple criteria"
+      },
+      "CIT-BRI-03": {
+        "citation_id": "CIT-BRI-03",
+        "title": "South Indian Inscriptions (SII), Vol. II: Inscriptions of Rajaraja I",
+        "publisher": "Superintendent of Government Press, Madras",
+        "author_or_editor": "Hultzsch, E.",
+        "year_published": "1891",
+        "url": "https://indiaculture.gov.in/rarebooks/south-indian-inscriptions-vol-ii",
+        "citation_type": "EPIGRAPHICAL_RECORD",
+        "archive_ref": "ASI-SII-VOL2-1891",
+        "relevant_claim": "Original Tamil inscriptions recording the 1010 CE consecration and 80-tonne cupola"
+      },
+      "CIT-BRI-04": {
+        "citation_id": "CIT-BRI-04",
+        "title": "Structural Integrity and Fresco Conservation of the Big Temple",
+        "publisher": "Department of Archaeology, Government of Tamil Nadu & ASI",
+        "author_or_editor": "Heritage Science & Temple Conservation Board",
+        "year_published": "2020",
+        "url": "https://nmma.nic.in/monument/brihadisvara-temple-thanjavur",
+        "citation_type": "STATUTORY_LEGAL",
+        "archive_ref": "ASI-CHE-BRI-2020-CON",
+        "relevant_claim": "Dry-joint structural stability, millennium celebration records, and fresco conservation"
+      }
+    },
+    "last_verified": "2025-01-15T00:00:00Z",
+    "verification_status": "VERIFIED_BY_ASI_UNESCO"
+  }
+}
+
