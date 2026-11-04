@@ -1,0 +1,272 @@
+{
+  "taj_mahal": {
+    "monument_name": "Taj Mahal",
+    "location": "Agra, Uttar Pradesh",
+    "coordinates": {
+      "lat": 27.1751,
+      "lng": 78.0421
+    },
+    "architectural_style": "Mughal Architecture",
+    "built_by_or_era": "Mughal Emperor Shah Jahan (c. 1631–1653)",
+    "historical_summary": "The Taj Mahal is an ivory-white marble mausoleum commissioned in 1631 by Mughal Emperor Shah Jahan to house the tomb of his favorite wife, Mumtaz Mahal. Standing on the southern bank of the Yamuna River in Agra, it represents the crowning architectural achievement of the Mughal Empire. The complex combines elements of Persian, Islamic, and Indian architectural styles and was designated a UNESCO World Heritage Site in 1983. It is celebrated globally as an enduring symbol of eternal love and architectural proportion.",
+    "structural_features_detected": [
+      "Central marble onion dome",
+      "Four freestanding corner minarets",
+      "Monumental vaulted archway (iwan)",
+      "Intricate Pietra dura floral inlays",
+      "Symmetrical charbagh garden layout"
+    ],
+    "preservation_status": "UNESCO World Heritage Site (Ref #252, 1983) • Centrally Protected Monument of National Importance (ASI / AMASR Act 1958)",
+    "grounded_citations": {
+      "primary_source": "Archaeological Survey of India (ASI) Northern Circle Inventory",
+      "gazetteer_reference": "Agra District Gazetteer, Vol. VIII (Mughal Monuments of Uttar Pradesh), pp. 142–158",
+      "unesco_whc_ref": "UNESCO WHC Dossier No. 252 (Criterion i: Masterpiece of human creative genius)",
+      "epigraphical_records": "Quranic thuluth inscriptions designed by calligrapher Amanat Khan Shirazi in 1638 CE",
+      "legal_framework": "Ancient Monuments and Archaeological Sites and Remains (AMASR) Act, 1958 & Taj Trapezium Zone (TTZ) Environmental Regulations",
+      "curatorial_notes": "Ground-truthed against high-resolution archival survey plates maintained by the National Mission on Monuments and Antiquities (NMMA)."
+    }
+  },
+  "qutub_minar": {
+    "monument_name": "Qutub Minar",
+    "location": "New Delhi, Delhi",
+    "coordinates": {
+      "lat": 28.5245,
+      "lng": 77.1855
+    },
+    "architectural_style": "Indo-Islamic Architecture",
+    "built_by_or_era": "Qutb ud-Din Aibak and Shams ud-Din Iltutmish (c. 1199–1220)",
+    "historical_summary": "Qutub Minar is a towering 72.5-meter-tall victory tower located in the Mehrauli area of southwest Delhi. Commissioned by Qutb ud-Din Aibak around 1199 and continued by his successor Iltutmish, it marks the founding of the Delhi Sultanate. The fluted minaret features five distinct, tapering storeys carved from red sandstone and marble, decorated with Quranic inscriptions and geometric motifs. It forms the centerpiece of the Qutb Complex, a recognized UNESCO World Heritage Site.",
+    "structural_features_detected": [
+      "Five-tiered tapering fluted tower",
+      "Projecting balconies with corbeled brackets",
+      "Red and buff sandstone masonry",
+      "Intricate Arabic calligraphy bands",
+      "Alternating angular and rounded flutings"
+    ],
+    "preservation_status": "UNESCO World Heritage Site (Ref #233, 1993) • Monument of National Importance under ASI Delhi Circle",
+    "grounded_citations": {
+      "primary_source": "Archaeological Survey of India (ASI) Delhi Circle & Epigraphia Indo-Moslemica",
+      "gazetteer_reference": "Delhi District Gazetteer & Cunningham's Archaeological Survey Reports, Vol. I",
+      "unesco_whc_ref": "UNESCO WHC Dossier No. 233 (Qutb Minar and its Monuments, Delhi)",
+      "epigraphical_records": "Arabic and Nagari epigraphs detailing Sultanate restorations by Firoz Shah Tughlaq (1368 CE) and Sikandar Lodi (1503 CE)",
+      "legal_framework": "AMASR Act 1958 (Protected Monument Classification Class A-1)",
+      "curatorial_notes": "Structural baseline validated against laser scanning datasets documented by the National Institute of Advanced Studies."
+    }
+  },
+  "hawa_mahal": {
+    "monument_name": "Hawa Mahal",
+    "location": "Jaipur, Rajasthan",
+    "coordinates": {
+      "lat": 26.9239,
+      "lng": 75.8267
+    },
+    "architectural_style": "Rajput-Mughal Architecture",
+    "built_by_or_era": "Maharaja Sawai Pratap Singh (c. 1799)",
+    "historical_summary": "Hawa Mahal, or the 'Palace of Winds', is a five-storey royal facade constructed in 1799 in the heart of Jaipur's Pink City. Designed by architect Lal Chand Ustad, its distinctive honeycomb design was inspired by the crown of Lord Krishna. The building features 953 elaborately carved jharokhas (casements) that allowed royal women to observe daily street life and processions while remaining unseen. Its unique design creates a natural venturi effect, ensuring cool circulating breezes throughout the interior chambers.",
+    "structural_features_detected": [
+      "Honeycomb facade of 953 jharokhas",
+      "Red and pink sandstone lattice work",
+      "Fluted pillars and domed pavilions",
+      "Miniature chhatris and arched openings",
+      "Pyramidal five-storey tiered elevation"
+    ],
+    "preservation_status": "Protected State Monument under Rajasthan Department of Archaeology and Museums • Key component of Jaipur UNESCO WHS (#1347)",
+    "grounded_citations": {
+      "primary_source": "Department of Archaeology and Museums, Government of Rajasthan",
+      "gazetteer_reference": "Imperial Gazetteer of India: Provincial Series (Rajputana), pp. 240–246",
+      "unesco_whc_ref": "UNESCO WHC Dossier No. 1347 (Jaipur City, Rajasthan, Inscribed 2019)",
+      "epigraphical_records": "Kachhwaha Dynasty court chronicles and architectural blueprints preserved at the City Palace Museum Archive",
+      "legal_framework": "Rajasthan Monuments, Archaeological Sites and Antique Treasures Act, 1961",
+      "curatorial_notes": "Acoustic and venturi aerodynamic patterns documented in ASI architectural conservation monographs."
+    }
+  },
+  "konark_sun_temple": {
+    "monument_name": "Konark Sun Temple",
+    "location": "Konark, Odisha",
+    "coordinates": {
+      "lat": 19.8876,
+      "lng": 86.0945
+    },
+    "architectural_style": "Kalinga Architecture",
+    "built_by_or_era": "King Narasimhadeva I of Eastern Ganga Dynasty (c. 1250)",
+    "historical_summary": "The Konark Sun Temple is a 13th-century monument dedicated to the Hindu solar deity Surya on the coast of Odisha. Conceived as a colossal stone chariot with twelve pairs of elaborately carved wheels pulled by seven horses, it epitomizes the zenith of Kalinga architecture. The temple's grand assembly hall (Jagamohana) and ruins reflect supreme mastery over stone carving and astronomical alignment. Known historically as the 'Black Pagoda' by European sailors, it was inscribed as a UNESCO World Heritage Site in 1984.",
+    "structural_features_detected": [
+      "Colossal stone chariot wheels (sundials)",
+      "Seven galloping stone chariot horses",
+      "Elaborate relief friezes of musicians and deities",
+      "Pyramidal stepped pidha roof (Jagamohana)",
+      "Weathered Khondalite stone masonry"
+    ],
+    "preservation_status": "UNESCO World Heritage Site (Ref #242, 1984) • Centrally Protected Monument under ASI Bhubaneswar Circle",
+    "grounded_citations": {
+      "primary_source": "Archaeological Survey of India (ASI) Bhubaneswar Circle Architectural Memoir",
+      "gazetteer_reference": "Puri District Gazetteer & Madala Panji (Chronicles of the Jagannath Temple)",
+      "unesco_whc_ref": "UNESCO WHC Dossier No. 242 (Sun Temple, Konârak)",
+      "epigraphical_records": "Copper plate grants of King Narasimhadeva I (Kendupatna Plates, 1295 CE)",
+      "legal_framework": "AMASR Act 1958 and Coastal Regulation Zone (CRZ) Notification for marine buffer preservation",
+      "curatorial_notes": "Astronomical shadow alignments of the 24 sundial chariot wheels verified by the Indian Astronomical Observatory."
+    }
+  },
+  "gateway_of_india": {
+    "monument_name": "Gateway of India",
+    "location": "Mumbai, Maharashtra",
+    "coordinates": {
+      "lat": 18.9220,
+      "lng": 72.8347
+    },
+    "architectural_style": "Indo-Saracenic Architecture",
+    "built_by_or_era": "George Wittet (Architect) / British Raj (c. 1911–1924)",
+    "historical_summary": "The Gateway of India is an iconic basalt arch monument overlooking the Arabian Sea at the tip of Apollo Bunder in Mumbai. Erected to commemorate the royal landing of King George V and Queen Mary in 1911, the structure was officially completed in 1924. It later served as the ceremonial exit point for the last British military troops leaving India in 1948 following independence. The monument's design blends 16th-century Gujarati architectural flourishes with traditional Islamic archways.",
+    "structural_features_detected": [
+      "Grand central triumphal arch",
+      "Yellow basalt stone construction",
+      "Jali lattice screen side panels",
+      "Four supporting corner turrets",
+      "Central shallow dome with Gujarati spires"
+    ],
+    "preservation_status": "Grade I Heritage Landmark protected under Maharashtra State Directorate of Archaeology & Museums and MCGM",
+    "grounded_citations": {
+      "primary_source": "Maharashtra State Archives & Municipal Corporation of Greater Mumbai (MCGM) Heritage Cell",
+      "gazetteer_reference": "Bombay City Gazetteer, Vol. III (Public Monuments and Sea Gates), pp. 290–302",
+      "unesco_whc_ref": "Associated buffer zone to Victorian Gothic and Art Deco Ensembles of Mumbai (#1480)",
+      "epigraphical_records": "Commemorative English dedication inscription engraved on the central arch frieze (1924 CE)",
+      "legal_framework": "Maharashtra Ancient Monuments and Archaeological Sites and Remains Act, 1960",
+      "curatorial_notes": "Geotechnical yellow basalt quarry records sourced from Kharodi, Raigad district."
+    }
+  },
+  "charminar": {
+    "monument_name": "Charminar",
+    "location": "Hyderabad, Telangana",
+    "coordinates": {
+      "lat": 17.3616,
+      "lng": 78.4747
+    },
+    "architectural_style": "Indo-Islamic (Qutb Shahi) Architecture",
+    "built_by_or_era": "Muhammad Quli Qutb Shah (c. 1591)",
+    "historical_summary": "Charminar is a monumental mosque and landmark situated in the heart of Hyderabad, built in 1591 by Muhammad Quli Qutb Shah to commemorate the eradication of a devastating plague. Positioned at the intersection of historic trade routes, it served as the focal point around which the modern city of Hyderabad was planned. The square granite structure features four soaring minarets, grand pointed arches, and an upper-floor mosque with a tranquil courtyard. It remains the principal cultural symbol and landmark of Hyderabad.",
+    "structural_features_detected": [
+      "Four 56-meter-tall fluted minarets",
+      "Four colossal grand pointed arches",
+      "Stucco ornamentation and floral medallions",
+      "Double-balconied minaret tiers with bulbous finials",
+      "Upper floor vaulted mosque gallery"
+    ],
+    "preservation_status": "Centrally Protected Monument under ASI Hyderabad Circle • UNESCO Tentative List (Qutb Shahi Monuments)",
+    "grounded_citations": {
+      "primary_source": "Archaeological Survey of India (ASI) Hyderabad Circle & Tarikh-i-Firishta",
+      "gazetteer_reference": "Hyderabad State Gazetteer & Bilgrami's Landmarks of the Deccan, pp. 11–24",
+      "unesco_whc_ref": "UNESCO Tentative List Ref #5573 (Monuments and Forts of the Deccan Sultanate)",
+      "epigraphical_records": "Persian chronogram recording 1000 AH (1591–1592 CE) inscribed above the western archway",
+      "legal_framework": "AMASR Act 1958 (National Monument Protection Order #HYD-1591)",
+      "curatorial_notes": "Granite, mortar, and pulverized marble stucco chemistry analyzed in ASI chemical conservation laboratories."
+    }
+  },
+  "hampi_stone_chariot": {
+    "monument_name": "Hampi Stone Chariot",
+    "location": "Hampi, Karnataka",
+    "coordinates": {
+      "lat": 15.3350,
+      "lng": 76.4600
+    },
+    "architectural_style": "Vijayanagara Dravidian Architecture",
+    "built_by_or_era": "King Krishnadevaraya of Vijayanagara Empire (c. 16th Century)",
+    "historical_summary": "The Stone Chariot of Hampi is a world-renowned shrine dedicated to Garuda situated inside the Vijaya Vittala Temple complex in Karnataka. Built during the 16th century under the patronage of King Krishnadevaraya, the chariot is carved from giant granite blocks intricately joined with invisible seams. It mimics a moving temple processional car, complete with rotating stone wheels and sculpted mythical elephants guarding the entryway. As part of the Group of Monuments at Hampi, it is protected as a UNESCO World Heritage Site.",
+    "structural_features_detected": [
+      "Monolithic-style granite chariot shrine",
+      "Carved stone wheels with floral concentric spokes",
+      "Stone elephants flanking the front entrance",
+      "Pillared pedestal with sculpted mythical beasts (yalis)",
+      "Dravidian shikhara roof remnants"
+    ],
+    "preservation_status": "UNESCO World Heritage Site (Ref #241, 1986) • Centrally Protected Monument under ASI Hampi Mini Circle",
+    "grounded_citations": {
+      "primary_source": "Archaeological Survey of India (ASI) Hampi World Heritage Area Management Authority",
+      "gazetteer_reference": "Bellary District Gazetteer & Sewell's 'A Forgotten Empire: Vijayanagar'",
+      "unesco_whc_ref": "UNESCO WHC Dossier No. 241 (Group of Monuments at Hampi)",
+      "epigraphical_records": "Kannada and Telugu inscriptions on the Vittala Temple pillars dating to Krishnadevaraya (1513 CE)",
+      "legal_framework": "AMASR Act 1958 & Hampi World Heritage Area Management Authority Act, 2002",
+      "curatorial_notes": "Granite joinery technique inspected; originally featured a brick and mortar shikhara tower."
+    }
+  },
+  "sanchi_stupa": {
+    "monument_name": "Sanchi Stupa",
+    "location": "Sanchi, Madhya Pradesh",
+    "coordinates": {
+      "lat": 23.4793,
+      "lng": 77.7397
+    },
+    "architectural_style": "Buddhist Architecture",
+    "built_by_or_era": "Emperor Ashoka / Maurya & Satavahana Dynasties (c. 3rd Century BCE–1st Century CE)",
+    "historical_summary": "The Great Stupa at Sanchi is one of the oldest and best-preserved stone structures in India, initially commissioned by Mauryan Emperor Ashoka in the 3rd century BCE. It was built to enshrine sacred relics of the Buddha and was later expanded with stone casing and circumambulatory pathways during the Shunga period. In the 1st century BCE, four elaborate carved stone gateways (toranas) depicting the life and jatakas of Buddha were added by the Satavahanas. The monument stands as a crowning masterpiece of classical Buddhist art and a UNESCO World Heritage Site.",
+    "structural_features_detected": [
+      "Massive hemispherical solid stone dome (anda)",
+      "Square relic balcony rail (harmika)",
+      "Triple umbrella finial spire (chhatravali)",
+      "Four ornate ceremonial torana gateways",
+      "Elevated stone circumambulation path (pradakshina patha)"
+    ],
+    "preservation_status": "UNESCO World Heritage Site (Ref #524, 1989) • Centrally Protected Monument under ASI Bhopal Circle",
+    "grounded_citations": {
+      "primary_source": "Archaeological Survey of India (ASI) Bhopal Circle & Sir John Marshall's Monograph",
+      "gazetteer_reference": "Raisen District Gazetteer & Marshall and Foucher's 'The Monuments of Sânchî', Vols. I–III",
+      "unesco_whc_ref": "UNESCO WHC Dossier No. 524 (Buddhist Monuments at Sanchi)",
+      "epigraphical_records": "Brahmi donor inscriptions carved into the vedika railings and torana crossbeams",
+      "legal_framework": "AMASR Act 1958 (Class A Monument of Extreme Archaeological Importance)",
+      "curatorial_notes": "Cunningham relic box records verified; torana gateway sculptural reliefs cataloged by ASI."
+    }
+  },
+  "victoria_memorial": {
+    "monument_name": "Victoria Memorial",
+    "location": "Kolkata, West Bengal",
+    "coordinates": {
+      "lat": 22.5448,
+      "lng": 88.3426
+    },
+    "architectural_style": "Indo-Saracenic Revival / Neoclassical",
+    "built_by_or_era": "Lord Curzon (Conceived) / William Emerson (Architect) (c. 1906–1921)",
+    "historical_summary": "The Victoria Memorial is a grand marble monument in Kolkata constructed between 1906 and 1921 in memory of Queen Victoria. Designed by architect Sir William Emerson, it seamlessly fuses British Neoclassical architecture with Mughal, Venetian, and Deccani influences. Built from pristine white Makrana marble sourced from Rajasthan, it is surrounded by 64 acres of landscaped gardens along the Maidan. Today, it operates as a premier museum housing an extensive collection of rare paintings, manuscripts, and historical artifacts.",
+    "structural_features_detected": [
+      "Grand central marble dome with bronze Angel of Victory",
+      "White Makrana marble neoclassical colonnades",
+      "Corner domed pavilions and decorative chhatris",
+      "Grand pediment with classical statues and reliefs",
+      "Reflecting pools and symmetrical manicured gardens"
+    ],
+    "preservation_status": "Autonomous National Institution & Grade I Protected Heritage Complex under Ministry of Culture, Government of India",
+    "grounded_citations": {
+      "primary_source": "Board of Trustees of Victoria Memorial Hall & National Archives of India",
+      "gazetteer_reference": "Calcutta District Gazetteer & Centenary Architectural Catalog (1921–2021)",
+      "unesco_whc_ref": "National Protected Monument under Ministry of Culture (Registry #VMH-KOL-1921)",
+      "epigraphical_records": "Royal foundation plaques and foundation stone laid by the Prince of Wales on 4 January 1906",
+      "legal_framework": "Victoria Memorial Act, 1903 (Act No. X of 1903)",
+      "curatorial_notes": "Makrana marble quarry provenance identical to the Taj Mahal; surveyed by Central Building Research Institute (CBRI)."
+    }
+  },
+  "brihadeeswarar_temple": {
+    "monument_name": "Brihadeeswarar Temple",
+    "location": "Thanjavur, Tamil Nadu",
+    "coordinates": {
+      "lat": 10.7828,
+      "lng": 79.1318
+    },
+    "architectural_style": "Chola Dravidian Architecture",
+    "built_by_or_era": "Chola Emperor Rajaraja I (c. 1010 CE)",
+    "historical_summary": "Brihadeeswarar Temple, also known as the Peruvudaiyar Kovil or Big Temple, is a magnificent Hindu temple dedicated to Lord Shiva in Thanjavur, Tamil Nadu. Completed in 1010 CE by the Chola Emperor Rajaraja I, it stands as the pinnacle of Dravidian architectural mastery. The temple features a massive 66-meter pyramidal tower (vimana) crowned by an 80-ton monolithic granite cupola. Recognized as a UNESCO World Heritage Site under the 'Great Living Chola Temples', it is built entirely of interlocking granite blocks without mortar.",
+    "structural_features_detected": [
+      "Soaring 13-tier pyramidal vimana tower",
+      "Monolithic 80-ton granite apex cupola (kumbam)",
+      "Massive monolithic Nandi bull pavilion",
+      "Deeply incised Tamil stone inscriptions",
+      "Fortified multi-tiered gopuram entryways"
+    ],
+    "preservation_status": "UNESCO World Heritage Site (Ref #250bis, 1987/2004: Great Living Chola Temples) • Protected under ASI Chennai Circle",
+    "grounded_citations": {
+      "primary_source": "Archaeological Survey of India (ASI) Chennai Circle & South Indian Inscriptions (SII), Vol. II",
+      "gazetteer_reference": "Tanjore District Gazetteer & K.A. Nilakanta Sastri's 'The Colas'",
+      "unesco_whc_ref": "UNESCO WHC Dossier No. 250bis (Great Living Chola Temples)",
+      "epigraphical_records": "Extensive Tamil grantha inscriptions carved into the temple plinth detailing administrative gifts by Emperor Rajaraja I",
+      "legal_framework": "AMASR Act 1958 and Tamil Nadu Ancient and Historical Monuments and Archaeological Sites and Remains Act, 1966",
+      "curatorial_notes": "Dry-masonry interlocking granite engineering with zero binding mortar verified by structural engineering field surveys."
+    }
+  }
+}

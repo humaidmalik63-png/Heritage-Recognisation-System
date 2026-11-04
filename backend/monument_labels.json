@@ -1,0 +1,352 @@
+[
+  {
+    "index_id": 0,
+    "monument_key": "brihadeeswarar_temple",
+    "monument_name": "Brihadeeswarar Temple",
+    "source": "brihadeeswarar_temple/img_1.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 1,
+    "monument_key": "brihadeeswarar_temple",
+    "monument_name": "Brihadeeswarar Temple",
+    "source": "brihadeeswarar_temple/img_2.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 2,
+    "monument_key": "brihadeeswarar_temple",
+    "monument_name": "Brihadeeswarar Temple",
+    "source": "brihadeeswarar_temple/img_3.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 3,
+    "monument_key": "brihadeeswarar_temple",
+    "monument_name": "Brihadeeswarar Temple",
+    "source": "brihadeeswarar_temple/img_4.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 4,
+    "monument_key": "brihadeeswarar_temple",
+    "monument_name": "Brihadeeswarar Temple",
+    "source": "brihadeeswarar_temple/centroid",
+    "is_centroid": true
+  },
+  {
+    "index_id": 5,
+    "monument_key": "charminar",
+    "monument_name": "Charminar",
+    "source": "charminar/img_1.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 6,
+    "monument_key": "charminar",
+    "monument_name": "Charminar",
+    "source": "charminar/img_2.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 7,
+    "monument_key": "charminar",
+    "monument_name": "Charminar",
+    "source": "charminar/img_3.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 8,
+    "monument_key": "charminar",
+    "monument_name": "Charminar",
+    "source": "charminar/img_4.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 9,
+    "monument_key": "charminar",
+    "monument_name": "Charminar",
+    "source": "charminar/centroid",
+    "is_centroid": true
+  },
+  {
+    "index_id": 10,
+    "monument_key": "gateway_of_india",
+    "monument_name": "Gateway of India",
+    "source": "gateway_of_india/img_1.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 11,
+    "monument_key": "gateway_of_india",
+    "monument_name": "Gateway of India",
+    "source": "gateway_of_india/img_2.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 12,
+    "monument_key": "gateway_of_india",
+    "monument_name": "Gateway of India",
+    "source": "gateway_of_india/img_3.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 13,
+    "monument_key": "gateway_of_india",
+    "monument_name": "Gateway of India",
+    "source": "gateway_of_india/img_4.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 14,
+    "monument_key": "gateway_of_india",
+    "monument_name": "Gateway of India",
+    "source": "gateway_of_india/centroid",
+    "is_centroid": true
+  },
+  {
+    "index_id": 15,
+    "monument_key": "hampi_stone_chariot",
+    "monument_name": "Hampi Stone Chariot",
+    "source": "hampi_stone_chariot/img_1.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 16,
+    "monument_key": "hampi_stone_chariot",
+    "monument_name": "Hampi Stone Chariot",
+    "source": "hampi_stone_chariot/img_2.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 17,
+    "monument_key": "hampi_stone_chariot",
+    "monument_name": "Hampi Stone Chariot",
+    "source": "hampi_stone_chariot/img_3.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 18,
+    "monument_key": "hampi_stone_chariot",
+    "monument_name": "Hampi Stone Chariot",
+    "source": "hampi_stone_chariot/img_4.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 19,
+    "monument_key": "hampi_stone_chariot",
+    "monument_name": "Hampi Stone Chariot",
+    "source": "hampi_stone_chariot/centroid",
+    "is_centroid": true
+  },
+  {
+    "index_id": 20,
+    "monument_key": "hawa_mahal",
+    "monument_name": "Hawa Mahal",
+    "source": "hawa_mahal/img_1.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 21,
+    "monument_key": "hawa_mahal",
+    "monument_name": "Hawa Mahal",
+    "source": "hawa_mahal/img_2.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 22,
+    "monument_key": "hawa_mahal",
+    "monument_name": "Hawa Mahal",
+    "source": "hawa_mahal/img_3.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 23,
+    "monument_key": "hawa_mahal",
+    "monument_name": "Hawa Mahal",
+    "source": "hawa_mahal/img_4.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 24,
+    "monument_key": "hawa_mahal",
+    "monument_name": "Hawa Mahal",
+    "source": "hawa_mahal/centroid",
+    "is_centroid": true
+  },
+  {
+    "index_id": 25,
+    "monument_key": "konark_sun_temple",
+    "monument_name": "Konark Sun Temple",
+    "source": "konark_sun_temple/img_1.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 26,
+    "monument_key": "konark_sun_temple",
+    "monument_name": "Konark Sun Temple",
+    "source": "konark_sun_temple/img_2.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 27,
+    "monument_key": "konark_sun_temple",
+    "monument_name": "Konark Sun Temple",
+    "source": "konark_sun_temple/img_3.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 28,
+    "monument_key": "konark_sun_temple",
+    "monument_name": "Konark Sun Temple",
+    "source": "konark_sun_temple/img_4.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 29,
+    "monument_key": "konark_sun_temple",
+    "monument_name": "Konark Sun Temple",
+    "source": "konark_sun_temple/centroid",
+    "is_centroid": true
+  },
+  {
+    "index_id": 30,
+    "monument_key": "qutub_minar",
+    "monument_name": "Qutub Minar",
+    "source": "qutub_minar/img_1.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 31,
+    "monument_key": "qutub_minar",
+    "monument_name": "Qutub Minar",
+    "source": "qutub_minar/img_2.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 32,
+    "monument_key": "qutub_minar",
+    "monument_name": "Qutub Minar",
+    "source": "qutub_minar/img_3.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 33,
+    "monument_key": "qutub_minar",
+    "monument_name": "Qutub Minar",
+    "source": "qutub_minar/img_4.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 34,
+    "monument_key": "qutub_minar",
+    "monument_name": "Qutub Minar",
+    "source": "qutub_minar/centroid",
+    "is_centroid": true
+  },
+  {
+    "index_id": 35,
+    "monument_key": "sanchi_stupa",
+    "monument_name": "Sanchi Stupa",
+    "source": "sanchi_stupa/img_1.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 36,
+    "monument_key": "sanchi_stupa",
+    "monument_name": "Sanchi Stupa",
+    "source": "sanchi_stupa/img_2.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 37,
+    "monument_key": "sanchi_stupa",
+    "monument_name": "Sanchi Stupa",
+    "source": "sanchi_stupa/img_3.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 38,
+    "monument_key": "sanchi_stupa",
+    "monument_name": "Sanchi Stupa",
+    "source": "sanchi_stupa/img_4.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 39,
+    "monument_key": "sanchi_stupa",
+    "monument_name": "Sanchi Stupa",
+    "source": "sanchi_stupa/centroid",
+    "is_centroid": true
+  },
+  {
+    "index_id": 40,
+    "monument_key": "taj_mahal",
+    "monument_name": "Taj Mahal",
+    "source": "taj_mahal/img_1.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 41,
+    "monument_key": "taj_mahal",
+    "monument_name": "Taj Mahal",
+    "source": "taj_mahal/img_2.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 42,
+    "monument_key": "taj_mahal",
+    "monument_name": "Taj Mahal",
+    "source": "taj_mahal/img_3.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 43,
+    "monument_key": "taj_mahal",
+    "monument_name": "Taj Mahal",
+    "source": "taj_mahal/img_4.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 44,
+    "monument_key": "taj_mahal",
+    "monument_name": "Taj Mahal",
+    "source": "taj_mahal/centroid",
+    "is_centroid": true
+  },
+  {
+    "index_id": 45,
+    "monument_key": "victoria_memorial",
+    "monument_name": "Victoria Memorial",
+    "source": "victoria_memorial/img_1.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 46,
+    "monument_key": "victoria_memorial",
+    "monument_name": "Victoria Memorial",
+    "source": "victoria_memorial/img_2.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 47,
+    "monument_key": "victoria_memorial",
+    "monument_name": "Victoria Memorial",
+    "source": "victoria_memorial/img_3.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 48,
+    "monument_key": "victoria_memorial",
+    "monument_name": "Victoria Memorial",
+    "source": "victoria_memorial/img_4.jpg",
+    "is_centroid": false
+  },
+  {
+    "index_id": 49,
+    "monument_key": "victoria_memorial",
+    "monument_name": "Victoria Memorial",
+    "source": "victoria_memorial/centroid",
+    "is_centroid": true
+  }
+]

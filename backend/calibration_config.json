@@ -1,0 +1,29 @@
+{
+  "version": "1.0.0",
+  "method": "temperature_scaling",
+  "calibration_status": "UNCALIBRATED",
+  "temperature": 1.0,
+  "confidence_threshold": 0.80,
+  "uncertainty_margin_threshold": 0.05,
+  "gatekeeper_threshold_verified": 0.55,
+  "gatekeeper_threshold_ambiguous": 0.45,
+  "gatekeeper_scale": 18.0,
+  "geo_boost_distance_km": 5.0,
+  "geo_conflict_distance_km": 150.0,
+  "image_quality": {
+    "min_dimension": 200,
+    "min_total_pixels": 60000,
+    "blur_laplacian_threshold": 35.0,
+    "exposure_low_threshold": 25.0,
+    "exposure_high_threshold": 230.0
+  },
+  "metrics": {
+    "dataset_size": 40,
+    "calibration_samples": 0,
+    "test_samples": 0,
+    "ece": null,
+    "brier_score": null,
+    "notes": "Insufficient held-out non-leakage samples to guarantee robust temperature optimization. Operational status set to UNCALIBRATED with conservative heuristic decision gates. Cosine similarities are preserved as heuristic vector evidence and are never misrepresented as probabilities."
+  }
+}
+

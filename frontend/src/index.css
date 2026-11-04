@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #F7F5F0;
+    color: #18181B;
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+}
+
+/* Curatorial Archival & Liquid Glass Utilities */
+.double-border-bottom {
+  border-bottom: 3px double #E2DDD5;
+}
+
+.double-border-top {
+  border-top: 3px double #E2DDD5;
+}
+
+.liquid-glass {
+  background: rgba(253, 251, 247, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 221, 213, 0.9);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+}
+
+.archival-stamp {
+  position: relative;
+  border: 1.5px solid #9E3B24;
+  padding: 3px 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  color: #9E3B24;
+  text-transform: uppercase;
+  background: rgba(158, 59, 36, 0.04);
+  box-shadow: 0 0 0 1px rgba(158, 59, 36, 0.12);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.archival-stamp-tier2 {
+  position: relative;
+  border: 1.5px solid #B4833E;
+  padding: 3px 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  color: #B4833E;
+  text-transform: uppercase;
+  background: rgba(180, 131, 62, 0.05);
+  box-shadow: 0 0 0 1px rgba(180, 131, 62, 0.12);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.archival-stamp-rejected {
+  position: relative;
+  border: 1.5px solid #71717A;
+  padding: 3px 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  color: #52525B;
+  text-transform: uppercase;
+  background: rgba(113, 113, 122, 0.05);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Scanning Reticle Animation */
+@keyframes scanline {
+  0% {
+    top: 2%;
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    top: 98%;
+    opacity: 0.4;
+  }
+}
+
+.scanner-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #9E3B24 40%, #9E3B24 60%, transparent);
+  box-shadow: 0 0 14px 3px rgba(158, 59, 36, 0.65);
+  animation: scanline 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+}
+
+/* Skeletal Shimmer Reflection */
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+  background-color: #EFECE6;
+}
+
+.skeleton-shimmer::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 1.8s infinite;
+  content: '';
+}
+
+/* Leaflet Container styling fix */
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  z-index: 10 !important;
+  background: #EFECE6;
+}
