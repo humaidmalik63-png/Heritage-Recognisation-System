@@ -175,6 +175,9 @@ export function AuthProvider({ children }) {
       historical_summary: scanResult.historical_summary,
       structural_features_detected: scanResult.structural_features_detected || [],
       pipeline_telemetry: scanResult.pipeline_telemetry,
+      uncertainty: scanResult.uncertainty,
+      grounded_citations: scanResult.grounded_citations,
+      preservation_status: scanResult.preservation_status,
     };
 
     setHistory((prev) => {

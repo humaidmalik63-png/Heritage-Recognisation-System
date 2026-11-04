@@ -173,7 +173,9 @@ export default function History() {
                     </span>
                   </div>
                   <div className="absolute bottom-2.5 right-2.5 font-mono text-[10px] bg-archive-charcoal/85 text-white px-2 py-0.5 rounded backdrop-blur-sm">
-                    {item.confidence_score}% MATCH
+                    {item.uncertainty?.calibrated_probability
+                      ? `${(item.uncertainty.calibrated_probability * 100).toFixed(0)}% CALIBRATED PROB`
+                      : `${item.confidence_score}% VECTOR ALIGNMENT`}
                   </div>
                 </div>
 
@@ -250,6 +252,9 @@ export default function History() {
                   historical_summary: selectedScan.historical_summary,
                   structural_features_detected: selectedScan.structural_features_detected,
                   pipeline_telemetry: selectedScan.pipeline_telemetry,
+                  uncertainty: selectedScan.uncertainty,
+                  grounded_citations: selectedScan.grounded_citations,
+                  preservation_status: selectedScan.preservation_status,
                 }}
                 imagePreview={selectedScan.thumbnail}
                 onReset={() => setSelectedScan(null)}

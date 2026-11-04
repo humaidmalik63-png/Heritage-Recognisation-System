@@ -1,0 +1,100 @@
+{
+  "condition_1_different_angle": {
+    "image": "taj_mahal/img_3.jpg",
+    "decision": "VERIFIED_MATCH",
+    "monument_name": "Taj Mahal",
+    "top1_similarity": 1.0,
+    "top2_similarity": 0.7845,
+    "similarity_margin": 0.2155,
+    "gatekeeper_score": 0.7555,
+    "calibrated_probability": null,
+    "reason_codes": [
+      "UNCALIBRATED_MODEL",
+      "MISSING_GPS",
+      "HIGH_CONFIDENCE_MATCH"
+    ],
+    "requires_human_review": false,
+    "exception_id": null
+  },
+  "condition_2_partial_occlusion": {
+    "image": "charminar/img_1.jpg (35% occluded)",
+    "decision": "UNCERTAIN_MATCH",
+    "monument_name": "Charminar",
+    "top1_similarity": 0.8485,
+    "top2_similarity": 0.8078,
+    "similarity_margin": 0.0407,
+    "gatekeeper_score": 0.6432,
+    "calibrated_probability": null,
+    "reason_codes": [
+      "UNCALIBRATED_MODEL",
+      "MISSING_GPS",
+      "AMBIGUOUS_TOP_CANDIDATES"
+    ],
+    "requires_human_review": true,
+    "exception_id": "EXC-6C1B9863"
+  },
+  "condition_3_unusual_lighting": {
+    "image": "hawa_mahal/img_2.jpg (extreme contrast/warmth)",
+    "decision": "VERIFIED_MATCH",
+    "monument_name": "Hawa Mahal",
+    "top1_similarity": 0.9084,
+    "top2_similarity": 0.757,
+    "similarity_margin": 0.1514,
+    "gatekeeper_score": 0.7493,
+    "calibrated_probability": null,
+    "reason_codes": [
+      "UNCALIBRATED_MODEL",
+      "MISSING_GPS",
+      "HIGH_CONFIDENCE_MATCH"
+    ],
+    "requires_human_review": false,
+    "exception_id": null
+  },
+  "condition_4_unindexed_monument": {
+    "image": "unindexed_dravidian_temple.jpg",
+    "decision": "UNKNOWN_HERITAGE_SPECIMEN",
+    "verification_status": "UNKNOWN_HERITAGE_SPECIMEN",
+    "is_monument": false,
+    "top1_similarity": 0.6461,
+    "top2_similarity": 0.6407,
+    "similarity_margin": 0.0054,
+    "gatekeeper_score": 0.5449,
+    "reason_codes": [
+      "UNCALIBRATED_MODEL",
+      "MISSING_GPS",
+      "LOW_RETRIEVAL_SIMILARITY"
+    ],
+    "requires_human_review": true,
+    "exception_id": "EXC-D72E1401"
+  },
+  "condition_5_non_monument": {
+    "image": "desk_invoice.jpg",
+    "decision": "NON_MONUMENT_REJECTED",
+    "verification_status": "NON_MONUMENT_REJECTED",
+    "is_monument": false,
+    "top1_similarity": 0.5224,
+    "gatekeeper_score": 0.354,
+    "reason_codes": [
+      "UNCALIBRATED_MODEL",
+      "LOW_IMAGE_QUALITY",
+      "MISSING_GPS",
+      "LOW_GATEKEEPER_CONFIDENCE"
+    ],
+    "requires_human_review": false
+  },
+  "condition_6_blurry_monument": {
+    "image": "qutub_minar/img_1.jpg (Gaussian blur radius=22)",
+    "decision": "REVIEW_REQUIRED",
+    "verification_status": "REVIEW_REQUIRED",
+    "blur_score": 1.26,
+    "is_blurry": true,
+    "passed_quality_check": false,
+    "reason_codes": [
+      "UNCALIBRATED_MODEL",
+      "LOW_IMAGE_QUALITY",
+      "MISSING_GPS"
+    ],
+    "requires_human_review": true,
+    "exception_id": "EXC-FA5C3E94"
+  }
+}
