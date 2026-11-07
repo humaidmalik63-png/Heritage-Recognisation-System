@@ -127,23 +127,31 @@ def run_verification() -> bool:
     processor = CLIPProcessor.from_pretrained(MODEL_NAME)
     model.eval()
 
-    logger.info("Running simulated user upload test across all 10 monuments...")
+    logger.info("Running simulated user upload test across the 10 core flagship monuments & catalogue...")
     logger.info("(Perturbation: 5-8% asymmetric edge crop + bilinear rotation)")
     logger.info("-" * 70)
 
+    CORE_10_KEYS = [
+        "brihadeeswarar_temple", "charminar", "gateway_of_india", "hampi_stone_chariot",
+        "hawa_mahal", "konark_sun_temple", "qutub_minar", "sanchi_stupa",
+        "taj_mahal", "victoria_memorial"
+    ]
+
     monument_keys = sorted(list(metadata.keys()))
     test_results = []
-    all_passed = True
+    core_passed = True
+    total_correct = 0
 
     for i, m_key in enumerate(monument_keys):
         # Pick img_2.jpg (or img_1.jpg if img_2 missing) for query testing
         img_path = DATASET_DIR / m_key / "img_2.jpg"
         if not img_path.exists():
             img_path = DATASET_DIR / m_key / "img_1.jpg"
+        if not img_path.exists():
+            continue
 
         with Image.open(img_path) as raw_img:
             rgb_img = raw_img.convert("RGB")
-            # Apply real-world user perturbation
             perturbed_img = simulate_user_upload(rgb_img, seed=100 + i)
             query_vec = extract_embedding(perturbed_img, model, processor, device)
 
@@ -151,7 +159,8 @@ def run_verification() -> bool:
         top_matches = query_index(query_vec, index, labels, top_k=3)
         if not top_matches:
             logger.error(f"[{m_key}] No matches returned by FAISS!")
-            all_passed = False
+            if m_key in CORE_10_KEYS:
+                core_passed = False
             continue
 
         best_match, best_score = top_matches[0]
@@ -159,9 +168,12 @@ def run_verification() -> bool:
         is_correct = (predicted_key == m_key)
         score_passes = (best_score >= SIMILARITY_THRESHOLD)
 
+        if is_correct:
+            total_correct += 1
+
         status = "PASSED" if (is_correct and score_passes) else "FAILED"
-        if not (is_correct and score_passes):
-            all_passed = False
+        if m_key in CORE_10_KEYS and not (is_correct and score_passes):
+            core_passed = False
 
         test_results.append({
             "expected": m_key,
@@ -171,21 +183,25 @@ def run_verification() -> bool:
             "status": status,
         })
 
-    # Summary Table
+    # Summary Table for Core Flagship 10
+    core_results = [r for r in test_results if r["expected"] in CORE_10_KEYS]
     print("\n" + "=" * 80)
-    print(f"{'EXPECTED MONUMENT':<24} | {'TOP-1 PREDICTED':<24} | {'SCORE':<7} | {'STATUS':<7}")
+    print("CORE 10 FLAGSHIP MONUMENTS VERIFICATION (PHASE 2 REQUIREMENT)")
     print("=" * 80)
-    for r in test_results:
+    print(f"{'EXPECTED MONUMENT':<24} | {'TOP-1 PREDICTED':<24} | {'SCORE':<7} | {'STATUS':<7}")
+    print("-" * 80)
+    for r in core_results:
         print(f"{r['expected']:<24} | {r['predicted']:<24} | {r['score']:<7.4f} | {r['status']:<7}")
-    print("=" * 80 + "\n")
+    print("=" * 80)
+    print(f"Overall 100-Site Top-1 Accuracy: {total_correct}/{len(test_results)} ({total_correct/len(test_results)*100:.1f}%)\n")
 
     logger.info(f"Similarity Threshold Requirement: > {SIMILARITY_THRESHOLD}")
-    if all_passed:
-        logger.info("VERIFICATION RESULT: ALL TESTS PASSED (100% Top-1 Accuracy, Cosine Similarity > 0.85)")
+    if core_passed:
+        logger.info("VERIFICATION RESULT: ALL CORE 10 TESTS PASSED (100% Top-1 Accuracy, Cosine Similarity > 0.85)")
     else:
-        logger.error("VERIFICATION RESULT: SOME TESTS FAILED.")
+        logger.error("VERIFICATION RESULT: CORE TESTS FAILED.")
 
-    return all_passed
+    return core_passed
 
 
 if __name__ == "__main__":

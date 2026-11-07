@@ -1,0 +1,1030 @@
+{
+  "title": "Phase 8.2 Comprehensive Adaptive Recognition & Robustness Benchmark",
+  "timestamp_utc": "2026-11-05T08:14:56Z",
+  "architectural_configuration": {
+    "global_encoder": "openai/clip-vit-base-patch32",
+    "vector_index": "FAISS IndexFlatIP (210 vectors)",
+    "calibrator": "Platt Scaling (A=4.2622, B=-3.5748)",
+    "local_features": "Multi-region Local CLIP + Quality-gated SIFT/RANSAC",
+    "fastpath_enabled": true,
+    "conservative_non_override_rule": true
+  },
+  "independent_test_dataset_v2": {
+    "dataset_size": 55,
+    "results_by_configuration": {
+      "global_only": {
+        "top1_accuracy": 0.7778,
+        "top3_accuracy": 0.8889,
+        "mrr": 0.8333,
+        "false_acceptance_rate": 0.0,
+        "rejection_rate": 0.4737,
+        "human_review_rate": 0.0364,
+        "catalog_specimens": 36,
+        "distractor_specimens": 19,
+        "total_specimens": 55,
+        "latency": {
+          "mean_ms": 152.24,
+          "median_ms": 142.04,
+          "p95_ms": 214.86
+        },
+        "execution_profile": {
+          "decisive_fastpath_rate": 0.1636,
+          "local_clip_triggered_rate": 0.0,
+          "sift_triggered_rate": 0.0,
+          "override_rate": 0.0
+        },
+        "per_monument": {
+          "brihadeeswarar_temple": {
+            "total": 2,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          },
+          "charminar": {
+            "total": 2,
+            "top1_accuracy": 0.5,
+            "top3_accuracy": 1.0
+          },
+          "gateway_of_india": {
+            "total": 2,
+            "top1_accuracy": 0.0,
+            "top3_accuracy": 1.0
+          },
+          "hampi_stone_chariot": {
+            "total": 3,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          },
+          "hawa_mahal": {
+            "total": 4,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          },
+          "konark_sun_temple": {
+            "total": 4,
+            "top1_accuracy": 0.75,
+            "top3_accuracy": 1.0
+          },
+          "qutub_minar": {
+            "total": 4,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          },
+          "sanchi_stupa": {
+            "total": 4,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          },
+          "taj_mahal": {
+            "total": 10,
+            "top1_accuracy": 0.6,
+            "top3_accuracy": 0.6
+          },
+          "victoria_memorial": {
+            "total": 1,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          }
+        },
+        "condition_breakdown": {
+          "architectural_detail": {
+            "total": 10,
+            "accuracy_or_rejection": 1.0,
+            "mean_latency_ms": 162.39
+          },
+          "night_view": {
+            "total": 2,
+            "accuracy_or_rejection": 0.5,
+            "mean_latency_ms": 127.15
+          },
+          "front_view": {
+            "total": 4,
+            "accuracy_or_rejection": 0.5,
+            "mean_latency_ms": 135.12
+          },
+          "side_view": {
+            "total": 7,
+            "accuracy_or_rejection": 1.0,
+            "mean_latency_ms": 158.41
+          },
+          "full_structure": {
+            "total": 3,
+            "accuracy_or_rejection": 0.6667,
+            "mean_latency_ms": 151.39
+          },
+          "non_monument_distractor": {
+            "total": 10,
+            "accuracy_or_rejection": 0.8,
+            "mean_latency_ms": 165.83
+          },
+          "close_up_carving": {
+            "total": 4,
+            "accuracy_or_rejection": 1.0,
+            "mean_latency_ms": 142.55
+          },
+          "rear_view": {
+            "total": 4,
+            "accuracy_or_rejection": 0.0,
+            "mean_latency_ms": 122.34
+          },
+          "distant_view": {
+            "total": 2,
+            "accuracy_or_rejection": 1.0,
+            "mean_latency_ms": 156.19
+          },
+          "out_of_catalog_heritage": {
+            "total": 9,
+            "accuracy_or_rejection": 0.1111,
+            "mean_latency_ms": 151.26
+          }
+        }
+      },
+      "conditional_local_clip": {
+        "top1_accuracy": 0.7778,
+        "top3_accuracy": 0.8889,
+        "mrr": 0.8333,
+        "false_acceptance_rate": 0.0,
+        "rejection_rate": 0.4737,
+        "human_review_rate": 0.0364,
+        "catalog_specimens": 36,
+        "distractor_specimens": 19,
+        "total_specimens": 55,
+        "latency": {
+          "mean_ms": 450.61,
+          "median_ms": 519.2,
+          "p95_ms": 672.93
+        },
+        "execution_profile": {
+          "decisive_fastpath_rate": 0.1636,
+          "local_clip_triggered_rate": 0.7455,
+          "sift_triggered_rate": 0.0,
+          "override_rate": 0.0
+        },
+        "per_monument": {
+          "brihadeeswarar_temple": {
+            "total": 2,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          },
+          "charminar": {
+            "total": 2,
+            "top1_accuracy": 0.5,
+            "top3_accuracy": 1.0
+          },
+          "gateway_of_india": {
+            "total": 2,
+            "top1_accuracy": 0.0,
+            "top3_accuracy": 1.0
+          },
+          "hampi_stone_chariot": {
+            "total": 3,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          },
+          "hawa_mahal": {
+            "total": 4,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          },
+          "konark_sun_temple": {
+            "total": 4,
+            "top1_accuracy": 0.75,
+            "top3_accuracy": 1.0
+          },
+          "qutub_minar": {
+            "total": 4,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          },
+          "sanchi_stupa": {
+            "total": 4,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          },
+          "taj_mahal": {
+            "total": 10,
+            "top1_accuracy": 0.6,
+            "top3_accuracy": 0.6
+          },
+          "victoria_memorial": {
+            "total": 1,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          }
+        },
+        "condition_breakdown": {
+          "architectural_detail": {
+            "total": 10,
+            "accuracy_or_rejection": 1.0,
+            "mean_latency_ms": 482.56
+          },
+          "night_view": {
+            "total": 2,
+            "accuracy_or_rejection": 0.5,
+            "mean_latency_ms": 546.26
+          },
+          "front_view": {
+            "total": 4,
+            "accuracy_or_rejection": 0.5,
+            "mean_latency_ms": 334.96
+          },
+          "side_view": {
+            "total": 7,
+            "accuracy_or_rejection": 1.0,
+            "mean_latency_ms": 442.66
+          },
+          "full_structure": {
+            "total": 3,
+            "accuracy_or_rejection": 0.6667,
+            "mean_latency_ms": 545.98
+          },
+          "non_monument_distractor": {
+            "total": 10,
+            "accuracy_or_rejection": 0.8,
+            "mean_latency_ms": 378.56
+          },
+          "close_up_carving": {
+            "total": 4,
+            "accuracy_or_rejection": 1.0,
+            "mean_latency_ms": 433.43
+          },
+          "rear_view": {
+            "total": 4,
+            "accuracy_or_rejection": 0.0,
+            "mean_latency_ms": 509.48
+          },
+          "distant_view": {
+            "total": 2,
+            "accuracy_or_rejection": 1.0,
+            "mean_latency_ms": 156.19
+          },
+          "out_of_catalog_heritage": {
+            "total": 9,
+            "accuracy_or_rejection": 0.1111,
+            "mean_latency_ms": 546.59
+          }
+        }
+      },
+      "conditional_sift": {
+        "top1_accuracy": 0.7778,
+        "top3_accuracy": 0.8889,
+        "mrr": 0.8333,
+        "false_acceptance_rate": 0.0,
+        "rejection_rate": 0.4737,
+        "human_review_rate": 0.0364,
+        "catalog_specimens": 36,
+        "distractor_specimens": 19,
+        "total_specimens": 55,
+        "latency": {
+          "mean_ms": 374.49,
+          "median_ms": 387.97,
+          "p95_ms": 624.71
+        },
+        "execution_profile": {
+          "decisive_fastpath_rate": 0.1636,
+          "local_clip_triggered_rate": 0.0,
+          "sift_triggered_rate": 0.7455,
+          "override_rate": 0.0
+        },
+        "per_monument": {
+          "brihadeeswarar_temple": {
+            "total": 2,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          },
+          "charminar": {
+            "total": 2,
+            "top1_accuracy": 0.5,
+            "top3_accuracy": 1.0
+          },
+          "gateway_of_india": {
+            "total": 2,
+            "top1_accuracy": 0.0,
+            "top3_accuracy": 1.0
+          },
+          "hampi_stone_chariot": {
+            "total": 3,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          },
+          "hawa_mahal": {
+            "total": 4,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          },
+          "konark_sun_temple": {
+            "total": 4,
+            "top1_accuracy": 0.75,
+            "top3_accuracy": 1.0
+          },
+          "qutub_minar": {
+            "total": 4,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          },
+          "sanchi_stupa": {
+            "total": 4,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          },
+          "taj_mahal": {
+            "total": 10,
+            "top1_accuracy": 0.6,
+            "top3_accuracy": 0.6
+          },
+          "victoria_memorial": {
+            "total": 1,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          }
+        },
+        "condition_breakdown": {
+          "architectural_detail": {
+            "total": 10,
+            "accuracy_or_rejection": 1.0,
+            "mean_latency_ms": 368.49
+          },
+          "night_view": {
+            "total": 2,
+            "accuracy_or_rejection": 0.5,
+            "mean_latency_ms": 399.58
+          },
+          "front_view": {
+            "total": 4,
+            "accuracy_or_rejection": 0.5,
+            "mean_latency_ms": 259.01
+          },
+          "side_view": {
+            "total": 7,
+            "accuracy_or_rejection": 1.0,
+            "mean_latency_ms": 381.16
+          },
+          "full_structure": {
+            "total": 3,
+            "accuracy_or_rejection": 0.6667,
+            "mean_latency_ms": 482.4
+          },
+          "non_monument_distractor": {
+            "total": 10,
+            "accuracy_or_rejection": 0.8,
+            "mean_latency_ms": 312.29
+          },
+          "close_up_carving": {
+            "total": 4,
+            "accuracy_or_rejection": 1.0,
+            "mean_latency_ms": 407.32
+          },
+          "rear_view": {
+            "total": 4,
+            "accuracy_or_rejection": 0.0,
+            "mean_latency_ms": 326.15
+          },
+          "distant_view": {
+            "total": 2,
+            "accuracy_or_rejection": 1.0,
+            "mean_latency_ms": 156.19
+          },
+          "out_of_catalog_heritage": {
+            "total": 9,
+            "accuracy_or_rejection": 0.1111,
+            "mean_latency_ms": 510.29
+          }
+        }
+      },
+      "full_adaptive": {
+        "top1_accuracy": 0.7778,
+        "top3_accuracy": 0.8889,
+        "mrr": 0.8333,
+        "false_acceptance_rate": 0.0,
+        "rejection_rate": 0.4737,
+        "human_review_rate": 0.0364,
+        "catalog_specimens": 36,
+        "distractor_specimens": 19,
+        "total_specimens": 55,
+        "latency": {
+          "mean_ms": 480.23,
+          "median_ms": 550.25,
+          "p95_ms": 707.93
+        },
+        "execution_profile": {
+          "decisive_fastpath_rate": 0.1636,
+          "local_clip_triggered_rate": 0.7455,
+          "sift_triggered_rate": 0.0,
+          "override_rate": 0.0
+        },
+        "per_monument": {
+          "brihadeeswarar_temple": {
+            "total": 2,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          },
+          "charminar": {
+            "total": 2,
+            "top1_accuracy": 0.5,
+            "top3_accuracy": 1.0
+          },
+          "gateway_of_india": {
+            "total": 2,
+            "top1_accuracy": 0.0,
+            "top3_accuracy": 1.0
+          },
+          "hampi_stone_chariot": {
+            "total": 3,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          },
+          "hawa_mahal": {
+            "total": 4,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          },
+          "konark_sun_temple": {
+            "total": 4,
+            "top1_accuracy": 0.75,
+            "top3_accuracy": 1.0
+          },
+          "qutub_minar": {
+            "total": 4,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          },
+          "sanchi_stupa": {
+            "total": 4,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          },
+          "taj_mahal": {
+            "total": 10,
+            "top1_accuracy": 0.6,
+            "top3_accuracy": 0.6
+          },
+          "victoria_memorial": {
+            "total": 1,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          }
+        },
+        "condition_breakdown": {
+          "architectural_detail": {
+            "total": 10,
+            "accuracy_or_rejection": 1.0,
+            "mean_latency_ms": 527.3
+          },
+          "night_view": {
+            "total": 2,
+            "accuracy_or_rejection": 0.5,
+            "mean_latency_ms": 551.55
+          },
+          "front_view": {
+            "total": 4,
+            "accuracy_or_rejection": 0.5,
+            "mean_latency_ms": 352.32
+          },
+          "side_view": {
+            "total": 7,
+            "accuracy_or_rejection": 1.0,
+            "mean_latency_ms": 469.35
+          },
+          "full_structure": {
+            "total": 3,
+            "accuracy_or_rejection": 0.6667,
+            "mean_latency_ms": 636.53
+          },
+          "non_monument_distractor": {
+            "total": 10,
+            "accuracy_or_rejection": 0.8,
+            "mean_latency_ms": 395.34
+          },
+          "close_up_carving": {
+            "total": 4,
+            "accuracy_or_rejection": 1.0,
+            "mean_latency_ms": 449.82
+          },
+          "rear_view": {
+            "total": 4,
+            "accuracy_or_rejection": 0.0,
+            "mean_latency_ms": 521.58
+          },
+          "distant_view": {
+            "total": 2,
+            "accuracy_or_rejection": 1.0,
+            "mean_latency_ms": 156.19
+          },
+          "out_of_catalog_heritage": {
+            "total": 9,
+            "accuracy_or_rejection": 0.1111,
+            "mean_latency_ms": 586.73
+          }
+        }
+      }
+    }
+  },
+  "calibration_expansion_dataset_v3": {
+    "dataset_size": 265,
+    "results_by_configuration": {
+      "global_only": {
+        "top1_accuracy": 0.5427,
+        "top3_accuracy": 0.7136,
+        "mrr": 0.6156,
+        "false_acceptance_rate": 0.0152,
+        "rejection_rate": 0.5303,
+        "human_review_rate": 0.0226,
+        "catalog_specimens": 199,
+        "distractor_specimens": 66,
+        "total_specimens": 265,
+        "latency": {
+          "mean_ms": 205.74,
+          "median_ms": 197.3,
+          "p95_ms": 308.26
+        },
+        "execution_profile": {
+          "decisive_fastpath_rate": 0.0415,
+          "local_clip_triggered_rate": 0.0,
+          "sift_triggered_rate": 0.0,
+          "override_rate": 0.0
+        },
+        "per_monument": {
+          "taj_mahal": {
+            "total": 33,
+            "top1_accuracy": 0.2727,
+            "top3_accuracy": 0.3939
+          },
+          "qutub_minar": {
+            "total": 15,
+            "top1_accuracy": 0.4667,
+            "top3_accuracy": 0.8
+          },
+          "konark_sun_temple": {
+            "total": 23,
+            "top1_accuracy": 0.8261,
+            "top3_accuracy": 0.9565
+          },
+          "gateway_of_india": {
+            "total": 26,
+            "top1_accuracy": 0.5,
+            "top3_accuracy": 0.9615
+          },
+          "hampi_stone_chariot": {
+            "total": 22,
+            "top1_accuracy": 0.6364,
+            "top3_accuracy": 0.8636
+          },
+          "sanchi_stupa": {
+            "total": 8,
+            "top1_accuracy": 0.625,
+            "top3_accuracy": 0.625
+          },
+          "victoria_memorial": {
+            "total": 33,
+            "top1_accuracy": 0.2121,
+            "top3_accuracy": 0.2424
+          },
+          "hawa_mahal": {
+            "total": 8,
+            "top1_accuracy": 0.625,
+            "top3_accuracy": 1.0
+          },
+          "charminar": {
+            "total": 25,
+            "top1_accuracy": 0.92,
+            "top3_accuracy": 0.96
+          },
+          "brihadeeswarar_temple": {
+            "total": 6,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          }
+        },
+        "condition_breakdown": {
+          "night_time": {
+            "total": 19,
+            "accuracy_or_rejection": 0.6316,
+            "mean_latency_ms": 172.1
+          },
+          "low_light": {
+            "total": 26,
+            "accuracy_or_rejection": 0.3077,
+            "mean_latency_ms": 184.61
+          },
+          "architectural_carving": {
+            "total": 47,
+            "accuracy_or_rejection": 0.4681,
+            "mean_latency_ms": 196.52
+          },
+          "distant_monument": {
+            "total": 34,
+            "accuracy_or_rejection": 0.5882,
+            "mean_latency_ms": 232.81
+          },
+          "unusual_angle": {
+            "total": 6,
+            "accuracy_or_rejection": 0.3333,
+            "mean_latency_ms": 189.81
+          },
+          "partial_monument": {
+            "total": 22,
+            "accuracy_or_rejection": 0.4091,
+            "mean_latency_ms": 204.71
+          },
+          "occluded_monument": {
+            "total": 1,
+            "accuracy_or_rejection": 0.0,
+            "mean_latency_ms": 217.72
+          },
+          "out_of_catalog_heritage": {
+            "total": 25,
+            "accuracy_or_rejection": 0.04,
+            "mean_latency_ms": 239.87
+          },
+          "non_monument_distractor": {
+            "total": 25,
+            "accuracy_or_rejection": 0.92,
+            "mean_latency_ms": 202.94
+          },
+          "general_photograph": {
+            "total": 60,
+            "accuracy_or_rejection": 0.7667,
+            "mean_latency_ms": 206.15
+          }
+        }
+      },
+      "conditional_local_clip": {
+        "top1_accuracy": 0.5427,
+        "top3_accuracy": 0.7136,
+        "mrr": 0.6156,
+        "false_acceptance_rate": 0.0152,
+        "rejection_rate": 0.5303,
+        "human_review_rate": 0.0226,
+        "catalog_specimens": 199,
+        "distractor_specimens": 66,
+        "total_specimens": 265,
+        "latency": {
+          "mean_ms": 578.09,
+          "median_ms": 702.09,
+          "p95_ms": 967.52
+        },
+        "execution_profile": {
+          "decisive_fastpath_rate": 0.0415,
+          "local_clip_triggered_rate": 0.6453,
+          "sift_triggered_rate": 0.0,
+          "override_rate": 0.0
+        },
+        "per_monument": {
+          "taj_mahal": {
+            "total": 33,
+            "top1_accuracy": 0.2727,
+            "top3_accuracy": 0.3939
+          },
+          "qutub_minar": {
+            "total": 15,
+            "top1_accuracy": 0.4667,
+            "top3_accuracy": 0.8
+          },
+          "konark_sun_temple": {
+            "total": 23,
+            "top1_accuracy": 0.8261,
+            "top3_accuracy": 0.9565
+          },
+          "gateway_of_india": {
+            "total": 26,
+            "top1_accuracy": 0.5,
+            "top3_accuracy": 0.9615
+          },
+          "hampi_stone_chariot": {
+            "total": 22,
+            "top1_accuracy": 0.6364,
+            "top3_accuracy": 0.8636
+          },
+          "sanchi_stupa": {
+            "total": 8,
+            "top1_accuracy": 0.625,
+            "top3_accuracy": 0.625
+          },
+          "victoria_memorial": {
+            "total": 33,
+            "top1_accuracy": 0.2121,
+            "top3_accuracy": 0.2424
+          },
+          "hawa_mahal": {
+            "total": 8,
+            "top1_accuracy": 0.625,
+            "top3_accuracy": 1.0
+          },
+          "charminar": {
+            "total": 25,
+            "top1_accuracy": 0.92,
+            "top3_accuracy": 0.96
+          },
+          "brihadeeswarar_temple": {
+            "total": 6,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          }
+        },
+        "condition_breakdown": {
+          "night_time": {
+            "total": 19,
+            "accuracy_or_rejection": 0.6316,
+            "mean_latency_ms": 430.37
+          },
+          "low_light": {
+            "total": 26,
+            "accuracy_or_rejection": 0.3077,
+            "mean_latency_ms": 465.02
+          },
+          "architectural_carving": {
+            "total": 47,
+            "accuracy_or_rejection": 0.4681,
+            "mean_latency_ms": 480.37
+          },
+          "distant_monument": {
+            "total": 34,
+            "accuracy_or_rejection": 0.5882,
+            "mean_latency_ms": 661.87
+          },
+          "unusual_angle": {
+            "total": 6,
+            "accuracy_or_rejection": 0.3333,
+            "mean_latency_ms": 557.4
+          },
+          "partial_monument": {
+            "total": 22,
+            "accuracy_or_rejection": 0.4091,
+            "mean_latency_ms": 531.51
+          },
+          "occluded_monument": {
+            "total": 1,
+            "accuracy_or_rejection": 0.0,
+            "mean_latency_ms": 217.72
+          },
+          "out_of_catalog_heritage": {
+            "total": 25,
+            "accuracy_or_rejection": 0.04,
+            "mean_latency_ms": 849.05
+          },
+          "non_monument_distractor": {
+            "total": 25,
+            "accuracy_or_rejection": 0.92,
+            "mean_latency_ms": 361.41
+          },
+          "general_photograph": {
+            "total": 60,
+            "accuracy_or_rejection": 0.7667,
+            "mean_latency_ms": 705.48
+          }
+        }
+      },
+      "conditional_sift": {
+        "top1_accuracy": 0.5427,
+        "top3_accuracy": 0.7136,
+        "mrr": 0.6156,
+        "false_acceptance_rate": 0.0152,
+        "rejection_rate": 0.5303,
+        "human_review_rate": 0.0226,
+        "catalog_specimens": 199,
+        "distractor_specimens": 66,
+        "total_specimens": 265,
+        "latency": {
+          "mean_ms": 422.03,
+          "median_ms": 447.28,
+          "p95_ms": 772.94
+        },
+        "execution_profile": {
+          "decisive_fastpath_rate": 0.0415,
+          "local_clip_triggered_rate": 0.0,
+          "sift_triggered_rate": 0.6453,
+          "override_rate": 0.0
+        },
+        "per_monument": {
+          "taj_mahal": {
+            "total": 33,
+            "top1_accuracy": 0.2727,
+            "top3_accuracy": 0.3939
+          },
+          "qutub_minar": {
+            "total": 15,
+            "top1_accuracy": 0.4667,
+            "top3_accuracy": 0.8
+          },
+          "konark_sun_temple": {
+            "total": 23,
+            "top1_accuracy": 0.8261,
+            "top3_accuracy": 0.9565
+          },
+          "gateway_of_india": {
+            "total": 26,
+            "top1_accuracy": 0.5,
+            "top3_accuracy": 0.9615
+          },
+          "hampi_stone_chariot": {
+            "total": 22,
+            "top1_accuracy": 0.6364,
+            "top3_accuracy": 0.8636
+          },
+          "sanchi_stupa": {
+            "total": 8,
+            "top1_accuracy": 0.625,
+            "top3_accuracy": 0.625
+          },
+          "victoria_memorial": {
+            "total": 33,
+            "top1_accuracy": 0.2121,
+            "top3_accuracy": 0.2424
+          },
+          "hawa_mahal": {
+            "total": 8,
+            "top1_accuracy": 0.625,
+            "top3_accuracy": 1.0
+          },
+          "charminar": {
+            "total": 25,
+            "top1_accuracy": 0.92,
+            "top3_accuracy": 0.96
+          },
+          "brihadeeswarar_temple": {
+            "total": 6,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          }
+        },
+        "condition_breakdown": {
+          "night_time": {
+            "total": 19,
+            "accuracy_or_rejection": 0.6316,
+            "mean_latency_ms": 307.62
+          },
+          "low_light": {
+            "total": 26,
+            "accuracy_or_rejection": 0.3077,
+            "mean_latency_ms": 350.68
+          },
+          "architectural_carving": {
+            "total": 47,
+            "accuracy_or_rejection": 0.4681,
+            "mean_latency_ms": 395.83
+          },
+          "distant_monument": {
+            "total": 34,
+            "accuracy_or_rejection": 0.5882,
+            "mean_latency_ms": 531.65
+          },
+          "unusual_angle": {
+            "total": 6,
+            "accuracy_or_rejection": 0.3333,
+            "mean_latency_ms": 307.94
+          },
+          "partial_monument": {
+            "total": 22,
+            "accuracy_or_rejection": 0.4091,
+            "mean_latency_ms": 378.23
+          },
+          "occluded_monument": {
+            "total": 1,
+            "accuracy_or_rejection": 0.0,
+            "mean_latency_ms": 217.72
+          },
+          "out_of_catalog_heritage": {
+            "total": 25,
+            "accuracy_or_rejection": 0.04,
+            "mean_latency_ms": 592.44
+          },
+          "non_monument_distractor": {
+            "total": 25,
+            "accuracy_or_rejection": 0.92,
+            "mean_latency_ms": 282.35
+          },
+          "general_photograph": {
+            "total": 60,
+            "accuracy_or_rejection": 0.7667,
+            "mean_latency_ms": 465.67
+          }
+        }
+      },
+      "full_adaptive": {
+        "top1_accuracy": 0.5427,
+        "top3_accuracy": 0.7136,
+        "mrr": 0.6156,
+        "false_acceptance_rate": 0.0152,
+        "rejection_rate": 0.5303,
+        "human_review_rate": 0.0226,
+        "catalog_specimens": 199,
+        "distractor_specimens": 66,
+        "total_specimens": 265,
+        "latency": {
+          "mean_ms": 511.55,
+          "median_ms": 607.91,
+          "p95_ms": 858.48
+        },
+        "execution_profile": {
+          "decisive_fastpath_rate": 0.0415,
+          "local_clip_triggered_rate": 0.6453,
+          "sift_triggered_rate": 0.0,
+          "override_rate": 0.0
+        },
+        "per_monument": {
+          "taj_mahal": {
+            "total": 33,
+            "top1_accuracy": 0.2727,
+            "top3_accuracy": 0.3939
+          },
+          "qutub_minar": {
+            "total": 15,
+            "top1_accuracy": 0.4667,
+            "top3_accuracy": 0.8
+          },
+          "konark_sun_temple": {
+            "total": 23,
+            "top1_accuracy": 0.8261,
+            "top3_accuracy": 0.9565
+          },
+          "gateway_of_india": {
+            "total": 26,
+            "top1_accuracy": 0.5,
+            "top3_accuracy": 0.9615
+          },
+          "hampi_stone_chariot": {
+            "total": 22,
+            "top1_accuracy": 0.6364,
+            "top3_accuracy": 0.8636
+          },
+          "sanchi_stupa": {
+            "total": 8,
+            "top1_accuracy": 0.625,
+            "top3_accuracy": 0.625
+          },
+          "victoria_memorial": {
+            "total": 33,
+            "top1_accuracy": 0.2121,
+            "top3_accuracy": 0.2424
+          },
+          "hawa_mahal": {
+            "total": 8,
+            "top1_accuracy": 0.625,
+            "top3_accuracy": 1.0
+          },
+          "charminar": {
+            "total": 25,
+            "top1_accuracy": 0.92,
+            "top3_accuracy": 0.96
+          },
+          "brihadeeswarar_temple": {
+            "total": 6,
+            "top1_accuracy": 1.0,
+            "top3_accuracy": 1.0
+          }
+        },
+        "condition_breakdown": {
+          "night_time": {
+            "total": 19,
+            "accuracy_or_rejection": 0.6316,
+            "mean_latency_ms": 372.98
+          },
+          "low_light": {
+            "total": 26,
+            "accuracy_or_rejection": 0.3077,
+            "mean_latency_ms": 423.16
+          },
+          "architectural_carving": {
+            "total": 47,
+            "accuracy_or_rejection": 0.4681,
+            "mean_latency_ms": 440.37
+          },
+          "distant_monument": {
+            "total": 34,
+            "accuracy_or_rejection": 0.5882,
+            "mean_latency_ms": 583.05
+          },
+          "unusual_angle": {
+            "total": 6,
+            "accuracy_or_rejection": 0.3333,
+            "mean_latency_ms": 458.95
+          },
+          "partial_monument": {
+            "total": 22,
+            "accuracy_or_rejection": 0.4091,
+            "mean_latency_ms": 446.68
+          },
+          "occluded_monument": {
+            "total": 1,
+            "accuracy_or_rejection": 0.0,
+            "mean_latency_ms": 217.72
+          },
+          "out_of_catalog_heritage": {
+            "total": 25,
+            "accuracy_or_rejection": 0.04,
+            "mean_latency_ms": 686.04
+          },
+          "non_monument_distractor": {
+            "total": 25,
+            "accuracy_or_rejection": 0.92,
+            "mean_latency_ms": 331.83
+          },
+          "general_photograph": {
+            "total": 60,
+            "accuracy_or_rejection": 0.7667,
+            "mean_latency_ms": 645.08
+          }
+        }
+      }
+    }
+  }
+}

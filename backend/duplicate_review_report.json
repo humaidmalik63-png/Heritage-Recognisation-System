@@ -1,0 +1,80 @@
+{
+  "timestamp_utc": "2026-11-05T04:20:04.730981+00:00",
+  "evaluation_leakage_prevented": [],
+  "exact_duplicates_rejected": [
+    {
+      "monument_key": "charminar",
+      "title": "File:Charminar Hyderabad 1.jpg",
+      "sha256": "e3dd43604e3f92fa418836af056444e3f18b13f04b761afef122ac106d3c54f4"
+    }
+  ],
+  "near_duplicates_rejected": [
+    {
+      "monument_key": "konark_sun_temple",
+      "title": "File:13th Century sculptures at Konark Sun Temple Puri district, Odisha, India.jpg",
+      "matched_file": "ref_02.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "monument_key": "charminar",
+      "title": "File:Charminar, Hyderabad, 11-12-2022.jpg",
+      "matched_file": "ref_01.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "monument_key": "charminar",
+      "title": "File:Charminar, Hyderabad, Telangana.jpg",
+      "matched_file": "ref_02.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "monument_key": "charminar",
+      "title": "File:Charminar, Mecca Masjid.jpg",
+      "matched_file": "ref_03.jpg",
+      "hamming_distance": 1
+    },
+    {
+      "monument_key": "charminar",
+      "title": "File:Charminar, hyderabad (89594).jpg",
+      "matched_file": "ref_04.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "monument_key": "hampi_stone_chariot",
+      "title": "File:Hampi Garuda stone chariot.jpg",
+      "matched_file": "ref_01.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "monument_key": "hampi_stone_chariot",
+      "title": "File:Hampi Stone Chariot with Sky.jpg",
+      "matched_file": "ref_03.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "monument_key": "sanchi_stupa",
+      "title": "File:Ashoka\u2019s Pillar at Sanchi Stup (2).jpg",
+      "matched_file": "ref_01.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "monument_key": "sanchi_stupa",
+      "title": "File:Buddha Statue, Sanchi 01.jpg",
+      "matched_file": "ref_02.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "monument_key": "sanchi_stupa",
+      "title": "File:Gilded replica of Sanchi Stupa Northern Torana at The Great Hall of Vajradhamma, Muang Boran, Thailand.jpg",
+      "matched_file": "ref_03.jpg",
+      "hamming_distance": 0
+    },
+    {
+      "monument_key": "sanchi_stupa",
+      "title": "File:Great Budhha Sanchi Stupa.jpg",
+      "matched_file": "ref_04.jpg",
+      "hamming_distance": 2
+    }
+  ],
+  "quality_failures_rejected": []
+}

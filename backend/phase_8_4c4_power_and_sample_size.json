@@ -1,0 +1,77 @@
+{
+  "phase": "8.4C.4",
+  "title": "Statistical Power, Cluster Sample Size Estimation, and Dataset Diversity Recommendations",
+  "timestamp_utc": "2026-11-07T14:55:00Z",
+  "current_experimental_basis": {
+    "independent_specimen_clusters_m": 12,
+    "repeated_blocks_k": 5,
+    "nominal_requests_per_condition_n": 60,
+    "observed_normal_mean_diff_ms": 7.78,
+    "observed_sample_std_diff_ms": 149.93,
+    "observed_clustered_se_ms": 15.822,
+    "current_statistical_power_at_20ms_margin": 0.252
+  },
+  "sample_size_projections": {
+    "mathematical_model": "Two One-Sided Tests (TOST) with clustered sampling: M >= (z_{alpha} + z_{beta})^2 * sigma_cluster^2 / (Delta - |mu_D|)^2",
+    "parameters": {
+      "alpha": 0.05,
+      "z_alpha": 1.645,
+      "p50_equivalence_margin_delta_ms": 20.0,
+      "observed_mean_diff_mu_ms": 7.78,
+      "effective_margin_delta_minus_mu_ms": 12.22
+    },
+    "scenarios": {
+      "power_80_percent": {
+        "target_power": 0.80,
+        "z_beta": 0.842,
+        "z_sum": 2.487,
+        "required_clustered_se_ms": 4.914,
+        "required_independent_specimen_clusters": 125,
+        "recommended_total_specimens": 150
+      },
+      "power_90_percent": {
+        "target_power": 0.90,
+        "z_beta": 1.282,
+        "z_sum": 2.927,
+        "required_clustered_se_ms": 4.175,
+        "required_independent_specimen_clusters": 172,
+        "recommended_total_specimens": 200
+      }
+    }
+  },
+  "methodological_invariance_rules": {
+    "pseudoreplication_warning": "Replaying the same 12 images repeatedly (e.g. 100 times) reduces measurement error of those specific 12 images, but does NOT increase specimen cluster count M. Statistical inference regarding monument diversity requires distinct physical photographs.",
+    "no_threshold_tuning": "Prospective datasets must be used strictly for empirical validation and performance verification, NOT for retrospective threshold or temperature calibration tuning."
+  },
+  "prospective_validation_dataset_specification": {
+    "target_sample_size": 200,
+    "composition": {
+      "catalog_monuments": 120,
+      "out_of_catalog_heritage": 40,
+      "non_monument_distractors": 40
+    },
+    "diversity_axes": [
+      {
+        "axis": "Viewpoint & Angle",
+        "description": "Frontal elevations, oblique 45-degree angles, worm's-eye architectural details, aerial/drone perspectives"
+      },
+      {
+        "axis": "Illumination & Atmosphere",
+        "description": "Full noon sunlight, golden hour / sunrise / sunset, overcast diffuse lighting, twilight, artificial night floodlighting"
+      },
+      {
+        "axis": "Scale & Composition",
+        "description": "Wide landscape establishing shots, medium architectural facades, close-up relief carvings and stone textures"
+      },
+      {
+        "axis": "Occlusion & Clutter",
+        "description": "Foreground foliage/trees, tourist crowds, scaffolding/renovation netting, architectural fencing"
+      },
+      {
+        "axis": "Distractor Robustness",
+        "description": "Non-monument heritage artifacts (paintings, coins, textiles) and everyday non-monuments (city streets, office scenes, foliage)"
+      }
+    ]
+  }
+}
+

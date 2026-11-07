@@ -1,0 +1,88 @@
+{
+  "phase": "8.4C.2",
+  "title": "Paired Latency Statistical Comparison",
+  "timestamp_utc": "2026-11-07T14:29:22Z",
+  "paired_comparisons": {
+    "normal_vs_disabled": {
+      "sample_size": 60,
+      "mean_diff_ms": -13.16,
+      "median_diff_ms": 6.86,
+      "std_diff_ms": 108.86,
+      "standard_error_ms": 14.053,
+      "ci_95_percent": {
+        "lower_ms": -41.28,
+        "upper_ms": 14.96,
+        "margin_of_error_ms": 28.12
+      },
+      "percentage_difference": -3.42,
+      "tail_differences_ms": {
+        "p50_diff": 21.0,
+        "p90_diff": -62.16,
+        "p95_diff": -34.75,
+        "p99_diff": -91.82
+      },
+      "acceptance_criteria_met": false,
+      "budget_thresholds": {
+        "max_mean_diff_ms": 25.0,
+        "max_percent_diff": 25.0,
+        "max_p99_ms": 450.0
+      }
+    },
+    "slow_vs_disabled": {
+      "sample_size": 60,
+      "mean_diff_ms": -2.45,
+      "median_diff_ms": 7.01,
+      "std_diff_ms": 92.85,
+      "standard_error_ms": 11.986,
+      "ci_95_percent": {
+        "lower_ms": -26.43,
+        "upper_ms": 21.54,
+        "margin_of_error_ms": 23.98
+      },
+      "percentage_difference": -0.64,
+      "tail_differences_ms": {
+        "p50_diff": 12.35,
+        "p90_diff": -23.31,
+        "p95_diff": -6.07,
+        "p99_diff": -47.87
+      },
+      "acceptance_criteria_met": false,
+      "budget_thresholds": {
+        "max_mean_diff_ms": 25.0,
+        "max_percent_diff": 25.0,
+        "max_p99_ms": 450.0
+      }
+    },
+    "saturated_vs_disabled": {
+      "sample_size": 60,
+      "mean_diff_ms": -9.7,
+      "median_diff_ms": 14.01,
+      "std_diff_ms": 134.93,
+      "standard_error_ms": 17.419,
+      "ci_95_percent": {
+        "lower_ms": -44.56,
+        "upper_ms": 25.16,
+        "margin_of_error_ms": 34.86
+      },
+      "percentage_difference": -2.52,
+      "tail_differences_ms": {
+        "p50_diff": 25.44,
+        "p90_diff": -287.14,
+        "p95_diff": -16.98,
+        "p99_diff": -63.56
+      },
+      "acceptance_criteria_met": false,
+      "budget_thresholds": {
+        "max_mean_diff_ms": 25.0,
+        "max_percent_diff": 25.0,
+        "max_p99_ms": 450.0
+      }
+    }
+  },
+  "acceptance_verdict": {
+    "normal_condition_pass": false,
+    "slow_condition_pass": false,
+    "saturated_condition_pass": false,
+    "overall_latency_budget_satisfied": false
+  }
+}

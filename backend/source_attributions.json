@@ -1,0 +1,1604 @@
+{
+  "attributions": [
+    {
+      "image_id": "ref_taj_mahal_01",
+      "monument_name": "Taj Mahal",
+      "file_name": "ref_01.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/taj_mahal/img_1.jpg"
+    },
+    {
+      "image_id": "ref_taj_mahal_02",
+      "monument_name": "Taj Mahal",
+      "file_name": "ref_02.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/taj_mahal/img_2.jpg"
+    },
+    {
+      "image_id": "ref_taj_mahal_03",
+      "monument_name": "Taj Mahal",
+      "file_name": "ref_03.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/taj_mahal/img_3.jpg"
+    },
+    {
+      "image_id": "ref_taj_mahal_04",
+      "monument_name": "Taj Mahal",
+      "file_name": "ref_04.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/taj_mahal/img_4.jpg"
+    },
+    {
+      "image_id": "ref_qutub_minar_01",
+      "monument_name": "Qutub Minar",
+      "file_name": "ref_01.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/qutub_minar/img_1.jpg"
+    },
+    {
+      "image_id": "ref_qutub_minar_02",
+      "monument_name": "Qutub Minar",
+      "file_name": "ref_02.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/qutub_minar/img_2.jpg"
+    },
+    {
+      "image_id": "ref_qutub_minar_03",
+      "monument_name": "Qutub Minar",
+      "file_name": "ref_03.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/qutub_minar/img_3.jpg"
+    },
+    {
+      "image_id": "ref_qutub_minar_04",
+      "monument_name": "Qutub Minar",
+      "file_name": "ref_04.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/qutub_minar/img_4.jpg"
+    },
+    {
+      "image_id": "ref_hawa_mahal_01",
+      "monument_name": "Hawa Mahal",
+      "file_name": "ref_01.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/hawa_mahal/img_1.jpg"
+    },
+    {
+      "image_id": "ref_hawa_mahal_02",
+      "monument_name": "Hawa Mahal",
+      "file_name": "ref_02.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/hawa_mahal/img_2.jpg"
+    },
+    {
+      "image_id": "ref_hawa_mahal_03",
+      "monument_name": "Hawa Mahal",
+      "file_name": "ref_03.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/hawa_mahal/img_3.jpg"
+    },
+    {
+      "image_id": "ref_hawa_mahal_04",
+      "monument_name": "Hawa Mahal",
+      "file_name": "ref_04.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/hawa_mahal/img_4.jpg"
+    },
+    {
+      "image_id": "ref_konark_sun_temple_01",
+      "monument_name": "Konark Sun Temple",
+      "file_name": "ref_01.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/konark_sun_temple/img_1.jpg"
+    },
+    {
+      "image_id": "ref_konark_sun_temple_02",
+      "monument_name": "Konark Sun Temple",
+      "file_name": "ref_02.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/konark_sun_temple/img_2.jpg"
+    },
+    {
+      "image_id": "ref_konark_sun_temple_03",
+      "monument_name": "Konark Sun Temple",
+      "file_name": "ref_03.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/konark_sun_temple/img_3.jpg"
+    },
+    {
+      "image_id": "ref_konark_sun_temple_04",
+      "monument_name": "Konark Sun Temple",
+      "file_name": "ref_04.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/konark_sun_temple/img_4.jpg"
+    },
+    {
+      "image_id": "ref_gateway_of_india_01",
+      "monument_name": "Gateway of India",
+      "file_name": "ref_01.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/gateway_of_india/img_1.jpg"
+    },
+    {
+      "image_id": "ref_gateway_of_india_02",
+      "monument_name": "Gateway of India",
+      "file_name": "ref_02.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/gateway_of_india/img_2.jpg"
+    },
+    {
+      "image_id": "ref_gateway_of_india_03",
+      "monument_name": "Gateway of India",
+      "file_name": "ref_03.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/gateway_of_india/img_3.jpg"
+    },
+    {
+      "image_id": "ref_gateway_of_india_04",
+      "monument_name": "Gateway of India",
+      "file_name": "ref_04.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/gateway_of_india/img_4.jpg"
+    },
+    {
+      "image_id": "ref_charminar_01",
+      "monument_name": "Charminar",
+      "file_name": "ref_01.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/charminar/img_1.jpg"
+    },
+    {
+      "image_id": "ref_charminar_02",
+      "monument_name": "Charminar",
+      "file_name": "ref_02.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/charminar/img_2.jpg"
+    },
+    {
+      "image_id": "ref_charminar_03",
+      "monument_name": "Charminar",
+      "file_name": "ref_03.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/charminar/img_3.jpg"
+    },
+    {
+      "image_id": "ref_charminar_04",
+      "monument_name": "Charminar",
+      "file_name": "ref_04.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/charminar/img_4.jpg"
+    },
+    {
+      "image_id": "ref_hampi_stone_chariot_01",
+      "monument_name": "Hampi Stone Chariot",
+      "file_name": "ref_01.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/hampi_stone_chariot/img_1.jpg"
+    },
+    {
+      "image_id": "ref_hampi_stone_chariot_02",
+      "monument_name": "Hampi Stone Chariot",
+      "file_name": "ref_02.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/hampi_stone_chariot/img_2.jpg"
+    },
+    {
+      "image_id": "ref_hampi_stone_chariot_03",
+      "monument_name": "Hampi Stone Chariot",
+      "file_name": "ref_03.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/hampi_stone_chariot/img_3.jpg"
+    },
+    {
+      "image_id": "ref_hampi_stone_chariot_04",
+      "monument_name": "Hampi Stone Chariot",
+      "file_name": "ref_04.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/hampi_stone_chariot/img_4.jpg"
+    },
+    {
+      "image_id": "ref_sanchi_stupa_01",
+      "monument_name": "Sanchi Stupa",
+      "file_name": "ref_01.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/sanchi_stupa/img_1.jpg"
+    },
+    {
+      "image_id": "ref_sanchi_stupa_02",
+      "monument_name": "Sanchi Stupa",
+      "file_name": "ref_02.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/sanchi_stupa/img_2.jpg"
+    },
+    {
+      "image_id": "ref_sanchi_stupa_03",
+      "monument_name": "Sanchi Stupa",
+      "file_name": "ref_03.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/sanchi_stupa/img_3.jpg"
+    },
+    {
+      "image_id": "ref_sanchi_stupa_04",
+      "monument_name": "Sanchi Stupa",
+      "file_name": "ref_04.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/sanchi_stupa/img_4.jpg"
+    },
+    {
+      "image_id": "ref_victoria_memorial_01",
+      "monument_name": "Victoria Memorial",
+      "file_name": "ref_01.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/victoria_memorial/img_1.jpg"
+    },
+    {
+      "image_id": "ref_victoria_memorial_02",
+      "monument_name": "Victoria Memorial",
+      "file_name": "ref_02.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/victoria_memorial/img_2.jpg"
+    },
+    {
+      "image_id": "ref_victoria_memorial_03",
+      "monument_name": "Victoria Memorial",
+      "file_name": "ref_03.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/victoria_memorial/img_3.jpg"
+    },
+    {
+      "image_id": "ref_victoria_memorial_04",
+      "monument_name": "Victoria Memorial",
+      "file_name": "ref_04.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/victoria_memorial/img_4.jpg"
+    },
+    {
+      "image_id": "ref_brihadeeswarar_temple_01",
+      "monument_name": "Brihadeeswarar Temple",
+      "file_name": "ref_01.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/brihadeeswarar_temple/img_1.jpg"
+    },
+    {
+      "image_id": "ref_brihadeeswarar_temple_02",
+      "monument_name": "Brihadeeswarar Temple",
+      "file_name": "ref_02.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/brihadeeswarar_temple/img_2.jpg"
+    },
+    {
+      "image_id": "ref_brihadeeswarar_temple_03",
+      "monument_name": "Brihadeeswarar Temple",
+      "file_name": "ref_03.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/brihadeeswarar_temple/img_3.jpg"
+    },
+    {
+      "image_id": "ref_brihadeeswarar_temple_04",
+      "monument_name": "Brihadeeswarar Temple",
+      "file_name": "ref_04.jpg",
+      "author": "Archaeological Survey of India / Wikimedia Commons Curators",
+      "license": "Creative Commons / Educational Fair Use",
+      "source_url": "local://backend/dataset/brihadeeswarar_temple/img_4.jpg"
+    },
+    {
+      "image_id": "ref_taj_mahal_05",
+      "monument_name": "Taj Mahal",
+      "file_name": "ref_05.jpg",
+      "author": "Adam Jones from Kelowna, BC, Canada",
+      "license": "CC BY-SA 2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ADetail_of_Facade_-_Taj_Mahal_-_Agra_-_Uttar_Pradesh_-_India_-_01_%2812650415983%29.jpg"
+    },
+    {
+      "image_id": "ref_taj_mahal_06",
+      "monument_name": "Taj Mahal",
+      "file_name": "ref_06.jpg",
+      "author": "Habeeb from Hyderabad, India",
+      "license": "CC BY 2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AFacade_of_Taj_Mahal_%284718894898%29.jpg"
+    },
+    {
+      "image_id": "ref_taj_mahal_07",
+      "monument_name": "Taj Mahal",
+      "file_name": "ref_07.jpg",
+      "author": "Biswarup Ganguly",
+      "license": "CC BY 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ATaj_Mahal_-_South_Facade_-_Agra_2014-05-14_3762-3764_Compress.JPG"
+    },
+    {
+      "image_id": "ref_taj_mahal_08",
+      "monument_name": "Taj Mahal",
+      "file_name": "ref_08.jpg",
+      "author": "Biswarup Ganguly",
+      "license": "CC BY 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ATaj_Mahal_-_South_Facade_-_Agra_2014-05-14_3766.JPG"
+    },
+    {
+      "image_id": "ref_taj_mahal_09",
+      "monument_name": "Taj Mahal",
+      "file_name": "ref_09.jpg",
+      "author": "Biswarup Ganguly",
+      "license": "CC BY 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ATaj_Mahal_-_South_Facade_-_Agra_2014-05-14_3767.JPG"
+    },
+    {
+      "image_id": "ref_taj_mahal_10",
+      "monument_name": "Taj Mahal",
+      "file_name": "ref_10.jpg",
+      "author": "Biswarup Ganguly",
+      "license": "CC BY 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ATaj_Mahal_-_South_Facade_-_Agra_2014-05-14_3786-3790_Compress.JPG"
+    },
+    {
+      "image_id": "ref_taj_mahal_11",
+      "monument_name": "Taj Mahal",
+      "file_name": "ref_11.jpg",
+      "author": "Biswarup Ganguly",
+      "license": "CC BY 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ATaj_Mahal_-_South_Facade_-_Agra_2014-05-14_3955.JPG"
+    },
+    {
+      "image_id": "ref_taj_mahal_12",
+      "monument_name": "Taj Mahal",
+      "file_name": "ref_12.jpg",
+      "author": "Biswarup Ganguly",
+      "license": "CC BY 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ATaj_Mahal_-_South_Facade_-_Agra_2014-05-14_3966-3968_Compress.JPG"
+    },
+    {
+      "image_id": "ref_taj_mahal_13",
+      "monument_name": "Taj Mahal",
+      "file_name": "ref_13.jpg",
+      "author": "Biswarup Ganguly",
+      "license": "CC BY 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ATaj_Mahal_-_South_Facade_-_Agra_2014-05-14_3970.JPG"
+    },
+    {
+      "image_id": "ref_taj_mahal_14",
+      "monument_name": "Taj Mahal",
+      "file_name": "ref_14.jpg",
+      "author": "Biswarup Ganguly",
+      "license": "CC BY 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ATaj_Mahal_-_South_Facade_-_Agra_2014-05-14_3972.JPG"
+    },
+    {
+      "image_id": "ref_taj_mahal_15",
+      "monument_name": "Taj Mahal",
+      "file_name": "ref_15.jpg",
+      "author": "Biswarup Ganguly",
+      "license": "CC BY 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ATaj_Mahal_-_South_Facade_-_Agra_2014-05-14_3973.JPG"
+    },
+    {
+      "image_id": "ref_taj_mahal_16",
+      "monument_name": "Taj Mahal",
+      "file_name": "ref_16.jpg",
+      "author": "Biswarup Ganguly",
+      "license": "CC BY 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ATaj_Mahal_-_South_Facade_-_Agra_2014-05-14_3974.JPG"
+    },
+    {
+      "image_id": "ref_taj_mahal_17",
+      "monument_name": "Taj Mahal",
+      "file_name": "ref_17.jpg",
+      "author": "Biswarup Ganguly",
+      "license": "CC BY 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ATaj_Mahal_-_South_Facade_-_Agra_2014-05-14_3988-3993_Compress.JPG"
+    },
+    {
+      "image_id": "ref_taj_mahal_18",
+      "monument_name": "Taj Mahal",
+      "file_name": "ref_18.jpg",
+      "author": "DesiBoy101",
+      "license": "CC BY 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ATaj_Mahal_Palace_Hotel_facade.jpg"
+    },
+    {
+      "image_id": "ref_taj_mahal_19",
+      "monument_name": "Taj Mahal",
+      "file_name": "ref_19.jpg",
+      "author": "Muhammad Mahdi Karim, Stitching assisted by Benh",
+      "license": "GFDL 1.2",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ATaj_Mahal_Sunset.jpg"
+    },
+    {
+      "image_id": "ref_taj_mahal_20",
+      "monument_name": "Taj Mahal",
+      "file_name": "ref_20.jpg",
+      "author": "Srinath G M",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AAgra%2CUttar_Pradesh%2CIndia_%288%29.jpg"
+    },
+    {
+      "image_id": "ref_qutub_minar_05",
+      "monument_name": "Qutub Minar",
+      "file_name": "ref_05.jpg",
+      "author": "Syed Sajidul Islam",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AInside_of_Azan_Tower_at_Qutb_Minar_Complex.jpg"
+    },
+    {
+      "image_id": "ref_qutub_minar_06",
+      "monument_name": "Qutub Minar",
+      "file_name": "ref_06.jpg",
+      "author": "Aashaa",
+      "license": "CC0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3APremises_at_Qutb_Minar_%282%29.jpg"
+    },
+    {
+      "image_id": "ref_qutub_minar_07",
+      "monument_name": "Qutub Minar",
+      "file_name": "ref_07.jpg",
+      "author": "Aashaa",
+      "license": "CC0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3APremises_at_Qutb_Minar_%283%29.jpg"
+    },
+    {
+      "image_id": "ref_qutub_minar_08",
+      "monument_name": "Qutub Minar",
+      "file_name": "ref_08.jpg",
+      "author": "Aashaa",
+      "license": "CC0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3APremises_at_Qutb_Minar_%286%29.jpg"
+    },
+    {
+      "image_id": "ref_qutub_minar_09",
+      "monument_name": "Qutub Minar",
+      "file_name": "ref_09.jpg",
+      "author": "Yadhu Krishna BP",
+      "license": "CC BY 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AQutb_Minar_2.jpg"
+    },
+    {
+      "image_id": "ref_qutub_minar_10",
+      "monument_name": "Qutub Minar",
+      "file_name": "ref_10.jpg",
+      "author": "Ond\u0159ej \u017dv\u00e1\u010dek",
+      "license": "CC BY 2.5",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AQutb_Minar_tower.jpg"
+    },
+    {
+      "image_id": "ref_qutub_minar_11",
+      "monument_name": "Qutub Minar",
+      "file_name": "ref_11.jpg",
+      "author": "Virusism",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AQutub_Minar_or_Qutb_Minar_or_Qutab_Minar_1.jpg"
+    },
+    {
+      "image_id": "ref_qutub_minar_12",
+      "monument_name": "Qutub Minar",
+      "file_name": "ref_12.jpg",
+      "author": "Virusism",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AQutub_Minar_or_Qutb_Minar_or_Qutab_Minar_10.jpg"
+    },
+    {
+      "image_id": "ref_qutub_minar_13",
+      "monument_name": "Qutub Minar",
+      "file_name": "ref_13.jpg",
+      "author": "Virusism",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AQutub_Minar_or_Qutb_Minar_or_Qutab_Minar_2.jpg"
+    },
+    {
+      "image_id": "ref_qutub_minar_14",
+      "monument_name": "Qutub Minar",
+      "file_name": "ref_14.jpg",
+      "author": "Virusism",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AQutub_Minar_or_Qutb_Minar_or_Qutab_Minar_3.jpg"
+    },
+    {
+      "image_id": "ref_qutub_minar_15",
+      "monument_name": "Qutub Minar",
+      "file_name": "ref_15.jpg",
+      "author": "Virusism",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AQutub_Minar_or_Qutb_Minar_or_Qutab_Minar_4.jpg"
+    },
+    {
+      "image_id": "ref_qutub_minar_16",
+      "monument_name": "Qutub Minar",
+      "file_name": "ref_16.jpg",
+      "author": "Virusism",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AQutub_Minar_or_Qutb_Minar_or_Qutab_Minar_5.jpg"
+    },
+    {
+      "image_id": "ref_qutub_minar_17",
+      "monument_name": "Qutub Minar",
+      "file_name": "ref_17.jpg",
+      "author": "Virusism",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AQutub_Minar_or_Qutb_Minar_or_Qutab_Minar_6.jpg"
+    },
+    {
+      "image_id": "ref_qutub_minar_18",
+      "monument_name": "Qutub Minar",
+      "file_name": "ref_18.jpg",
+      "author": "Virusism",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AQutub_Minar_or_Qutb_Minar_or_Qutab_Minar_7.jpg"
+    },
+    {
+      "image_id": "ref_qutub_minar_19",
+      "monument_name": "Qutub Minar",
+      "file_name": "ref_19.jpg",
+      "author": "Virusism",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AQutub_Minar_or_Qutb_Minar_or_Qutab_Minar_8.jpg"
+    },
+    {
+      "image_id": "ref_qutub_minar_20",
+      "monument_name": "Qutub Minar",
+      "file_name": "ref_20.jpg",
+      "author": "Virusism",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AQutub_Minar_or_Qutb_Minar_or_Qutab_Minar_9.jpg"
+    },
+    {
+      "image_id": "ref_hawa_mahal_05",
+      "monument_name": "Hawa Mahal",
+      "file_name": "ref_05.jpg",
+      "author": "Chainwit.",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AEast_facade_Hawa_Mahal_Jaipur_from_ground_level_%28July_2022%29_-_img_01.jpg"
+    },
+    {
+      "image_id": "ref_hawa_mahal_06",
+      "monument_name": "Hawa Mahal",
+      "file_name": "ref_06.jpg",
+      "author": "Chainwit.",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AEast_facade_Hawa_Mahal_Jaipur_from_ground_level_%28July_2022%29_-_img_02.jpg"
+    },
+    {
+      "image_id": "ref_hawa_mahal_07",
+      "monument_name": "Hawa Mahal",
+      "file_name": "ref_07.jpg",
+      "author": "Chainwit.",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AEast_facade_Hawa_Mahal_Jaipur_from_ground_level_%28July_2022%29_-_img_03.jpg"
+    },
+    {
+      "image_id": "ref_hawa_mahal_08",
+      "monument_name": "Hawa Mahal",
+      "file_name": "ref_08.jpg",
+      "author": "Chainwit.",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AEast_facade_Hawa_Mahal_Jaipur_from_ground_level_%28July_2022%29_-_img_04.jpg"
+    },
+    {
+      "image_id": "ref_hawa_mahal_09",
+      "monument_name": "Hawa Mahal",
+      "file_name": "ref_09.jpg",
+      "author": "Dudva",
+      "license": "CC0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AEast_facade_of_the_Hawa_Mahal%2C_Jaipur.jpg"
+    },
+    {
+      "image_id": "ref_hawa_mahal_10",
+      "monument_name": "Hawa Mahal",
+      "file_name": "ref_10.jpg",
+      "author": "Dudva",
+      "license": "CC0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AEast_facade_of_the_Hawa_Mahal.jpg"
+    },
+    {
+      "image_id": "ref_hawa_mahal_11",
+      "monument_name": "Hawa Mahal",
+      "file_name": "ref_11.jpg",
+      "author": "Adityaoberai",
+      "license": "CC BY 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AHawa_Mahal%27s_external_facade.jpg"
+    },
+    {
+      "image_id": "ref_hawa_mahal_12",
+      "monument_name": "Hawa Mahal",
+      "file_name": "ref_12.jpg",
+      "author": "Manudavb",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AHawa_Mahal_Final_1.jpg"
+    },
+    {
+      "image_id": "ref_hawa_mahal_13",
+      "monument_name": "Hawa Mahal",
+      "file_name": "ref_13.jpg",
+      "author": "Chainwit.",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AHawa_Mahal_east_facade_%2814-07-2022%29.jpg"
+    },
+    {
+      "image_id": "ref_hawa_mahal_14",
+      "monument_name": "Hawa Mahal",
+      "file_name": "ref_14.jpg",
+      "author": "Chainwit.",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AHawa_Mahal_east_facade_%2814-07-2022%29_cropped.jpg"
+    },
+    {
+      "image_id": "ref_hawa_mahal_15",
+      "monument_name": "Hawa Mahal",
+      "file_name": "ref_15.jpg",
+      "author": "ADARSH23456789",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AHawa_Mahal_from_the_street_in_Jaipur.jpg"
+    },
+    {
+      "image_id": "ref_hawa_mahal_16",
+      "monument_name": "Hawa Mahal",
+      "file_name": "ref_16.jpg",
+      "author": "LBM1948",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AJaipur%2C_Hawa_Mahal_%282002%29_02.jpg"
+    },
+    {
+      "image_id": "ref_hawa_mahal_17",
+      "monument_name": "Hawa Mahal",
+      "file_name": "ref_17.jpg",
+      "author": "LBM1948",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AJaipur%2C_Hawa_Mahal_%282002%29_03.jpg"
+    },
+    {
+      "image_id": "ref_hawa_mahal_18",
+      "monument_name": "Hawa Mahal",
+      "file_name": "ref_18.jpg",
+      "author": "LBM1948",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AJaipur%2C_Hawa_Mahal_%282002%29_04.jpg"
+    },
+    {
+      "image_id": "ref_hawa_mahal_19",
+      "monument_name": "Hawa Mahal",
+      "file_name": "ref_19.jpg",
+      "author": "LBM1948",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AJaipur%2C_Hawa_Mahal_%282002%29_05.jpg"
+    },
+    {
+      "image_id": "ref_hawa_mahal_20",
+      "monument_name": "Hawa Mahal",
+      "file_name": "ref_20.jpg",
+      "author": "LBM1948",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AJaipur%2C_Hawa_Mahal_%282002%29_06.jpg"
+    },
+    {
+      "image_id": "ref_konark_sun_temple_05",
+      "monument_name": "Konark Sun Temple",
+      "file_name": "ref_05.jpg",
+      "author": "Subhrajyoti07",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ACloseup_of_the_center_of_a_stone_wheel_-_Konark_Sun_Temple%2C_Orissa%2C_India.jpg"
+    },
+    {
+      "image_id": "ref_konark_sun_temple_06",
+      "monument_name": "Konark Sun Temple",
+      "file_name": "ref_06.jpg",
+      "author": "Pico Traveller",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AKonark_Sun_Temple%2C_Odisha%2C_India.jpg"
+    },
+    {
+      "image_id": "ref_konark_sun_temple_07",
+      "monument_name": "Konark Sun Temple",
+      "file_name": "ref_07.jpg",
+      "author": "Pico Traveller",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AKonark_Sun_Temple%2C_Odisha%2C_India_2.jpg"
+    },
+    {
+      "image_id": "ref_konark_sun_temple_08",
+      "monument_name": "Konark Sun Temple",
+      "file_name": "ref_08.jpg",
+      "author": "Pico Traveller",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AKonark_Sun_Temple%2C_Odisha%2C_India_3.jpg"
+    },
+    {
+      "image_id": "ref_konark_sun_temple_09",
+      "monument_name": "Konark Sun Temple",
+      "file_name": "ref_09.jpg",
+      "author": "Pico Traveller",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AKonark_Sun_Temple%2C_Odisha%2C_India_4.jpg"
+    },
+    {
+      "image_id": "ref_konark_sun_temple_10",
+      "monument_name": "Konark Sun Temple",
+      "file_name": "ref_10.jpg",
+      "author": "Vinayaraj",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AKonark_Sun_Temple_-_IRCTC_2017_%2833%29.jpg"
+    },
+    {
+      "image_id": "ref_konark_sun_temple_11",
+      "monument_name": "Konark Sun Temple",
+      "file_name": "ref_11.jpg",
+      "author": "Vinayaraj",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AKonark_Sun_Temple_-_IRCTC_2017_%2865%29.jpg"
+    },
+    {
+      "image_id": "ref_konark_sun_temple_12",
+      "monument_name": "Konark Sun Temple",
+      "file_name": "ref_12.jpg",
+      "author": "Vinayaraj",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AKonark_Sun_Temple_-_IRCTC_2017_%2872%29.jpg"
+    },
+    {
+      "image_id": "ref_konark_sun_temple_13",
+      "monument_name": "Konark Sun Temple",
+      "file_name": "ref_13.jpg",
+      "author": "Vinayaraj",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AKonark_Sun_Temple_-_IRCTC_2017_%2880%29.jpg"
+    },
+    {
+      "image_id": "ref_konark_sun_temple_14",
+      "monument_name": "Konark Sun Temple",
+      "file_name": "ref_14.jpg",
+      "author": "Dhruv Raj Kashyap",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AKonark_Sun_Temple_Architecture9.jpg"
+    },
+    {
+      "image_id": "ref_konark_sun_temple_15",
+      "monument_name": "Konark Sun Temple",
+      "file_name": "ref_15.jpg",
+      "author": "Maina Tudu",
+      "license": "CC0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AKonark_Sun_Temple_backside.jpg"
+    },
+    {
+      "image_id": "ref_konark_sun_temple_16",
+      "monument_name": "Konark Sun Temple",
+      "file_name": "ref_16.jpg",
+      "author": "WikiSantaClaus",
+      "license": "CC BY 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AKonark_Sun_Temple_on_a_October_morning_in_2024.png"
+    },
+    {
+      "image_id": "ref_konark_sun_temple_17",
+      "monument_name": "Konark Sun Temple",
+      "file_name": "ref_17.jpg",
+      "author": "Alfrieak",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AKonark_Sun_temple_view_13.jpg"
+    },
+    {
+      "image_id": "ref_konark_sun_temple_18",
+      "monument_name": "Konark Sun Temple",
+      "file_name": "ref_18.jpg",
+      "author": "Subhrajyoti07",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AStone_wheel_engraved_in_the_13th_century_built_Konark_Sun_Temple_in_Orissa%2C_India.jpg"
+    },
+    {
+      "image_id": "ref_konark_sun_temple_19",
+      "monument_name": "Konark Sun Temple",
+      "file_name": "ref_19.jpg",
+      "author": "Bernard Gagnon",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ASun_Temple%2C_Modhera_-_Sabha_Mandap_01.jpg"
+    },
+    {
+      "image_id": "ref_konark_sun_temple_20",
+      "monument_name": "Konark Sun Temple",
+      "file_name": "ref_20.jpg",
+      "author": "Maina Tudu",
+      "license": "CC0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ASun_Temple_Konark_Odisha.jpg"
+    },
+    {
+      "image_id": "ref_gateway_of_india_05",
+      "monument_name": "Gateway of India",
+      "file_name": "ref_05.jpg",
+      "author": "Anvesh Jadav",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AAn_HDR_image_of_Kirti_Toran_-_Vadnagar.jpg"
+    },
+    {
+      "image_id": "ref_gateway_of_india_06",
+      "monument_name": "Gateway of India",
+      "file_name": "ref_06.jpg",
+      "author": "Daniel Limma",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AArch_of_Gateway_of_India.jpg"
+    },
+    {
+      "image_id": "ref_gateway_of_india_07",
+      "monument_name": "Gateway of India",
+      "file_name": "ref_07.jpg",
+      "author": "\u00a9 ShadesofIndia",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AGateway_of_India%2C_Mumbai%2C_India.jpg"
+    },
+    {
+      "image_id": "ref_gateway_of_india_08",
+      "monument_name": "Gateway of India",
+      "file_name": "ref_08.jpg",
+      "author": "Apurba003",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AGateway_of_India%2C_Mumbai_%E2%80%93_Front_View_in_Daylight.jpg"
+    },
+    {
+      "image_id": "ref_gateway_of_india_09",
+      "monument_name": "Gateway of India",
+      "file_name": "ref_09.jpg",
+      "author": "Elroy Serrao",
+      "license": "CC BY-SA 2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AGateway_of_India_%282994942497%29.jpg"
+    },
+    {
+      "image_id": "ref_gateway_of_india_10",
+      "monument_name": "Gateway of India",
+      "file_name": "ref_10.jpg",
+      "author": "Sachinyadav99990",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AGateway_of_India_%2C_Mumbai%2C_India.jpg"
+    },
+    {
+      "image_id": "ref_gateway_of_india_11",
+      "monument_name": "Gateway of India",
+      "file_name": "ref_11.jpg",
+      "author": "Unnikannan7",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AGateway_of_India_2024_jan.jpg"
+    },
+    {
+      "image_id": "ref_gateway_of_india_12",
+      "monument_name": "Gateway of India",
+      "file_name": "ref_12.jpg",
+      "author": "Vampirevin",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AGateway_of_India_at_Mumbai..JPG"
+    },
+    {
+      "image_id": "ref_gateway_of_india_13",
+      "monument_name": "Gateway of India",
+      "file_name": "ref_13.jpg",
+      "author": "Kalyankarp",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AGateway_of_India_in_Mumbai%2C_India.jpg"
+    },
+    {
+      "image_id": "ref_gateway_of_india_14",
+      "monument_name": "Gateway of India",
+      "file_name": "ref_14.jpg",
+      "author": "Boffin1992",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AGreat_Gateway_of_India_Mumbai.jpg"
+    },
+    {
+      "image_id": "ref_gateway_of_india_15",
+      "monument_name": "Gateway of India",
+      "file_name": "ref_15.jpg",
+      "author": "G\u00fcldem \u00dcst\u00fcn from Istanbul, TURKEY",
+      "license": "CC BY 2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AIndia_%28Mumbai%29_Gateway_of_India%2C_Indo-Saracenic_triumphal_arch%2C_with_colorful_people_%2831924510414%29.jpg"
+    },
+    {
+      "image_id": "ref_gateway_of_india_16",
+      "monument_name": "Gateway of India",
+      "file_name": "ref_16.jpg",
+      "author": "Abhishek Sukhadia",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AKirti_Torana_1.jpg"
+    },
+    {
+      "image_id": "ref_gateway_of_india_17",
+      "monument_name": "Gateway of India",
+      "file_name": "ref_17.jpg",
+      "author": "Abhishek Sukhadia",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AKirti_Torana_2.jpg"
+    },
+    {
+      "image_id": "ref_gateway_of_india_18",
+      "monument_name": "Gateway of India",
+      "file_name": "ref_18.jpg",
+      "author": "Abhishek Sukhadia",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AKirti_Torana_3.jpg"
+    },
+    {
+      "image_id": "ref_gateway_of_india_19",
+      "monument_name": "Gateway of India",
+      "file_name": "ref_19.jpg",
+      "author": "Kishor Kumar Mishra, 787/A, Jayadev Vihar, Bhubaneswar-751013, Odisha, India",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AKkm_Gateway_of_India_Mumbai.jpg"
+    },
+    {
+      "image_id": "ref_gateway_of_india_20",
+      "monument_name": "Gateway of India",
+      "file_name": "ref_20.jpg",
+      "author": "Neha Aggarwal",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AThe_Gateway_of_India_during_night.JPG"
+    },
+    {
+      "image_id": "ref_charminar_05",
+      "monument_name": "Charminar",
+      "file_name": "ref_05.jpg",
+      "author": "Apar Singh Bataan",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ACharminar%2C_Hyderabad_2012.jpg"
+    },
+    {
+      "image_id": "ref_charminar_06",
+      "monument_name": "Charminar",
+      "file_name": "ref_06.jpg",
+      "author": "Rashid Jorvee",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ACharminar-Hyderabad-Monument.jpg"
+    },
+    {
+      "image_id": "ref_charminar_07",
+      "monument_name": "Charminar",
+      "file_name": "ref_07.jpg",
+      "author": "Mdyasser",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ACharminar-Hyderabad.jpg"
+    },
+    {
+      "image_id": "ref_charminar_08",
+      "monument_name": "Charminar",
+      "file_name": "ref_08.jpg",
+      "author": "Gopikrishna Narla",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ACharminar-Pride_of_Hyderabad.jpg"
+    },
+    {
+      "image_id": "ref_charminar_09",
+      "monument_name": "Charminar",
+      "file_name": "ref_09.jpg",
+      "author": "Aadhi13",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ACharminar-hyderabad-telangana.jpg"
+    },
+    {
+      "image_id": "ref_charminar_10",
+      "monument_name": "Charminar",
+      "file_name": "ref_10.jpg",
+      "author": "Joydeep",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ACharminar_12032013.jpg"
+    },
+    {
+      "image_id": "ref_charminar_11",
+      "monument_name": "Charminar",
+      "file_name": "ref_11.jpg",
+      "author": "DidierTais",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ACharminar_Hyderabad_1.jpg"
+    },
+    {
+      "image_id": "ref_charminar_12",
+      "monument_name": "Charminar",
+      "file_name": "ref_12.jpg",
+      "author": "Joydeep",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ACharminar_Hyderabad_111.jpg"
+    },
+    {
+      "image_id": "ref_charminar_13",
+      "monument_name": "Charminar",
+      "file_name": "ref_13.jpg",
+      "author": "Ganesh boddu",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ACharminar_monument_in_Hyderabad%2CTelangana%2CIndia.jpg"
+    },
+    {
+      "image_id": "ref_charminar_14",
+      "monument_name": "Charminar",
+      "file_name": "ref_14.jpg",
+      "author": "Girish Gopi",
+      "license": "CC BY-SA 2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ACharminar_seen_from_Mecca_Masjid%2C_Hyderabad_India.jpg"
+    },
+    {
+      "image_id": "ref_charminar_15",
+      "monument_name": "Charminar",
+      "file_name": "ref_15.jpg",
+      "author": "Thangarajan Dakshinamoorthy",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AInner_courtyard_in_Charminar.jpg"
+    },
+    {
+      "image_id": "ref_charminar_16",
+      "monument_name": "Charminar",
+      "file_name": "ref_16.jpg",
+      "author": "Joydeep",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AMinaret_of_charminar_12032012.jpg"
+    },
+    {
+      "image_id": "ref_charminar_17",
+      "monument_name": "Charminar",
+      "file_name": "ref_17.jpg",
+      "author": "CosmicCodex",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ANight_life_at_Charminar%2C_Hyderabad.jpg"
+    },
+    {
+      "image_id": "ref_charminar_18",
+      "monument_name": "Charminar",
+      "file_name": "ref_18.jpg",
+      "author": "Saishna96",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ACharminar_Evening_View_Hyderabad.jpg"
+    },
+    {
+      "image_id": "ref_charminar_19",
+      "monument_name": "Charminar",
+      "file_name": "ref_19.jpg",
+      "author": "Julia Gross",
+      "license": "CC BY 2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ACharminar_Hyderabad_view_in_2011.jpg"
+    },
+    {
+      "image_id": "ref_charminar_20",
+      "monument_name": "Charminar",
+      "file_name": "ref_20.jpg",
+      "author": "ReetiSingh14",
+      "license": "CC BY 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ACharminar_Night_View_with_Bustling_Street_Hyderabad.jpg"
+    },
+    {
+      "image_id": "ref_hampi_stone_chariot_05",
+      "monument_name": "Hampi Stone Chariot",
+      "file_name": "ref_05.jpg",
+      "author": "Reema Jalihal",
+      "license": "CC0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AFamous_Stone_Chariot_of_Hampi.jpg"
+    },
+    {
+      "image_id": "ref_hampi_stone_chariot_06",
+      "monument_name": "Hampi Stone Chariot",
+      "file_name": "ref_06.jpg",
+      "author": "Sachin.ramsagar",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AStone_Chariot%2C_Hampi_1.jpg"
+    },
+    {
+      "image_id": "ref_hampi_stone_chariot_07",
+      "monument_name": "Hampi Stone Chariot",
+      "file_name": "ref_07.jpg",
+      "author": "Ajayreddykalavalli",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AStone_Chariot%2C_Hampi_2.jpg"
+    },
+    {
+      "image_id": "ref_hampi_stone_chariot_08",
+      "monument_name": "Hampi Stone Chariot",
+      "file_name": "ref_08.jpg",
+      "author": "Prabhachatterji",
+      "license": "Public domain",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AStone_Chariot%2C_Hampi_3.jpg"
+    },
+    {
+      "image_id": "ref_hampi_stone_chariot_09",
+      "monument_name": "Hampi Stone Chariot",
+      "file_name": "ref_09.jpg",
+      "author": "Ankit Darsi",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AStone_Chariot%2C_Hampi_4.jpg"
+    },
+    {
+      "image_id": "ref_hampi_stone_chariot_10",
+      "monument_name": "Hampi Stone Chariot",
+      "file_name": "ref_10.jpg",
+      "author": "Sujay GR",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AStone_Chariot%2C_Hampi_5.jpg"
+    },
+    {
+      "image_id": "ref_hampi_stone_chariot_11",
+      "monument_name": "Hampi Stone Chariot",
+      "file_name": "ref_11.jpg",
+      "author": "Sclickp",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AStone_Chariot-Hampi_01.jpg"
+    },
+    {
+      "image_id": "ref_hampi_stone_chariot_12",
+      "monument_name": "Hampi Stone Chariot",
+      "file_name": "ref_12.jpg",
+      "author": "Sclickp",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AStone_Chariot-Hampi_02.jpg"
+    },
+    {
+      "image_id": "ref_hampi_stone_chariot_13",
+      "monument_name": "Hampi Stone Chariot",
+      "file_name": "ref_13.jpg",
+      "author": "Swapnil Varhade",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AStone_Chariot_Hampi%28Karnataka%29.jpg"
+    },
+    {
+      "image_id": "ref_hampi_stone_chariot_14",
+      "monument_name": "Hampi Stone Chariot",
+      "file_name": "ref_14.jpg",
+      "author": "Abhishek Kesarkar",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AStone_Chariot_Hampi_-_IN.jpg"
+    },
+    {
+      "image_id": "ref_hampi_stone_chariot_15",
+      "monument_name": "Hampi Stone Chariot",
+      "file_name": "ref_15.jpg",
+      "author": "Abhinandan Patil",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AStone_Chariot_at_Hampi%2C_Karnataka.jpg"
+    },
+    {
+      "image_id": "ref_hampi_stone_chariot_16",
+      "monument_name": "Hampi Stone Chariot",
+      "file_name": "ref_16.jpg",
+      "author": "Mohit Prasad",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AStone_Chariot_at_Hampi_2.jpg"
+    },
+    {
+      "image_id": "ref_hampi_stone_chariot_17",
+      "monument_name": "Hampi Stone Chariot",
+      "file_name": "ref_17.jpg",
+      "author": "Indrajit Das",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AStone_Chariot_in_Hampi_01.jpg"
+    },
+    {
+      "image_id": "ref_hampi_stone_chariot_18",
+      "monument_name": "Hampi Stone Chariot",
+      "file_name": "ref_18.jpg",
+      "author": "Ravibhalli",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AStone_chariot_hampi_1.jpg"
+    },
+    {
+      "image_id": "ref_hampi_stone_chariot_19",
+      "monument_name": "Hampi Stone Chariot",
+      "file_name": "ref_19.jpg",
+      "author": "MalluDas",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AThe_Stone_Chariot%2C_Hampi%2C_2025.jpg"
+    },
+    {
+      "image_id": "ref_hampi_stone_chariot_20",
+      "monument_name": "Hampi Stone Chariot",
+      "file_name": "ref_20.jpg",
+      "author": "Raki_Man",
+      "license": "CC BY 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AThe_Stone_Chariot%2C_Hampi_-_panoramio.jpg"
+    },
+    {
+      "image_id": "ref_sanchi_stupa_05",
+      "monument_name": "Sanchi Stupa",
+      "file_name": "ref_05.jpg",
+      "author": "Rohit Sharma",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AEastern_Gateway_of_The_Great_stupa%2C_Sanchi_02.jpg"
+    },
+    {
+      "image_id": "ref_sanchi_stupa_06",
+      "monument_name": "Sanchi Stupa",
+      "file_name": "ref_06.jpg",
+      "author": "Suyash Dwivedi",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AGreat_Sanchi_Stupa_%283%29.jpg"
+    },
+    {
+      "image_id": "ref_sanchi_stupa_07",
+      "monument_name": "Sanchi Stupa",
+      "file_name": "ref_07.jpg",
+      "author": "Suyash Dwivedi",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AGreat_Sanchi_Stupa_Gallery_%281%29.jpg"
+    },
+    {
+      "image_id": "ref_sanchi_stupa_08",
+      "monument_name": "Sanchi Stupa",
+      "file_name": "ref_08.jpg",
+      "author": "SpeakingArch",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AInscribed_Panel_from_the_Great_Stupa_at_Sanchi.jpg"
+    },
+    {
+      "image_id": "ref_sanchi_stupa_09",
+      "monument_name": "Sanchi Stupa",
+      "file_name": "ref_09.jpg",
+      "author": "Bernard Gagnon",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ANorth_Torana%2C_Sanchi_02.jpg"
+    },
+    {
+      "image_id": "ref_sanchi_stupa_10",
+      "monument_name": "Sanchi Stupa",
+      "file_name": "ref_10.jpg",
+      "author": "Suyash Dwivedi",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ASanchi_Stupa_No_3.jpg"
+    },
+    {
+      "image_id": "ref_sanchi_stupa_11",
+      "monument_name": "Sanchi Stupa",
+      "file_name": "ref_11.jpg",
+      "author": "Suyash Dwivedi",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ASanchi_Stupa_TORANAS_Entry_Gate3.jpg"
+    },
+    {
+      "image_id": "ref_sanchi_stupa_12",
+      "monument_name": "Sanchi Stupa",
+      "file_name": "ref_12.jpg",
+      "author": "Bernard Gagnon",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AStupa_1%2C_Sanchi_01.jpg"
+    },
+    {
+      "image_id": "ref_sanchi_stupa_13",
+      "monument_name": "Sanchi Stupa",
+      "file_name": "ref_13.jpg",
+      "author": "Bernard Gagnon",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AStupa_1%2C_Sanchi_02.jpg"
+    },
+    {
+      "image_id": "ref_sanchi_stupa_14",
+      "monument_name": "Sanchi Stupa",
+      "file_name": "ref_14.jpg",
+      "author": "Bernard Gagnon",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AStupa_1%2C_Sanchi_03.jpg"
+    },
+    {
+      "image_id": "ref_sanchi_stupa_15",
+      "monument_name": "Sanchi Stupa",
+      "file_name": "ref_15.jpg",
+      "author": "Sharvarism",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AThe_Eastern_Gateway_of_the_Sanchi_Stupa_No._1.jpg"
+    },
+    {
+      "image_id": "ref_sanchi_stupa_16",
+      "monument_name": "Sanchi Stupa",
+      "file_name": "ref_16.jpg",
+      "author": "RohitChohan25",
+      "license": "CC0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AThe_Great_Stupa_at_Sanchi_in_Madhya_Pradesh.jpg"
+    },
+    {
+      "image_id": "ref_sanchi_stupa_17",
+      "monument_name": "Sanchi Stupa",
+      "file_name": "ref_17.jpg",
+      "author": "SpeakingArch",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AToran_Embellishments%2C_Great_Stupa%2C_Sanchi.jpg"
+    },
+    {
+      "image_id": "ref_sanchi_stupa_18",
+      "monument_name": "Sanchi Stupa",
+      "file_name": "ref_18.jpg",
+      "author": "SpeakingArch",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AToran_embellishments%2C_the_Great_Stupa%2C_Sanchi.jpg"
+    },
+    {
+      "image_id": "ref_sanchi_stupa_19",
+      "monument_name": "Sanchi Stupa",
+      "file_name": "ref_19.jpg",
+      "author": "Bernard Gagnon",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AEast_Torana%2C_Sanchi_01.jpg"
+    },
+    {
+      "image_id": "ref_sanchi_stupa_20",
+      "monument_name": "Sanchi Stupa",
+      "file_name": "ref_20.jpg",
+      "author": "Bernard Gagnon",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AEast_Torana%2C_Sanchi_02.jpg"
+    },
+    {
+      "image_id": "ref_victoria_memorial_05",
+      "monument_name": "Victoria Memorial",
+      "file_name": "ref_05.jpg",
+      "author": "Winniekapoor123V",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ABack_side_facade_of_Victoria_Memorial_Hall_%2CKolkata.JPG"
+    },
+    {
+      "image_id": "ref_victoria_memorial_06",
+      "monument_name": "Victoria Memorial",
+      "file_name": "ref_06.jpg",
+      "author": "Adam Jones from Kelowna, BC, Canada",
+      "license": "CC BY-SA 2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AFacade_of_Victoria_Memorial_-_Kolkata_-_India_-_01_%2812249086185%29.jpg"
+    },
+    {
+      "image_id": "ref_victoria_memorial_07",
+      "monument_name": "Victoria Memorial",
+      "file_name": "ref_07.jpg",
+      "author": "Adam Jones from Kelowna, BC, Canada",
+      "license": "CC BY-SA 2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AFacade_of_Victoria_Memorial_-_Kolkata_-_India_-_02_%2812249079945%29.jpg"
+    },
+    {
+      "image_id": "ref_victoria_memorial_08",
+      "monument_name": "Victoria Memorial",
+      "file_name": "ref_08.jpg",
+      "author": "Adam Jones",
+      "license": "CC BY-SA 2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3APanorama_of_Facade_of_Victoria_Memorial_-_Kolkata.jpg"
+    },
+    {
+      "image_id": "ref_victoria_memorial_09",
+      "monument_name": "Victoria Memorial",
+      "file_name": "ref_09.jpg",
+      "author": "Adam Jones",
+      "license": "CC BY-SA 2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3APanorama_of_Facade_of_Victoria_Memorial_-_Kolkata_%282%29.jpg"
+    },
+    {
+      "image_id": "ref_victoria_memorial_10",
+      "monument_name": "Victoria Memorial",
+      "file_name": "ref_10.jpg",
+      "author": "Srijitdutta.10",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AReflection_of_Modernity.jpg"
+    },
+    {
+      "image_id": "ref_victoria_memorial_11",
+      "monument_name": "Victoria Memorial",
+      "file_name": "ref_11.jpg",
+      "author": "Bernard Gagnon",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AVictoria_Memorial%2C_Kolkata_-_West_facade_01.jpg"
+    },
+    {
+      "image_id": "ref_victoria_memorial_12",
+      "monument_name": "Victoria Memorial",
+      "file_name": "ref_12.jpg",
+      "author": "Bernard Gagnon",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AVictoria_Memorial%2C_Kolkata_-_West_facade_02.jpg"
+    },
+    {
+      "image_id": "ref_victoria_memorial_13",
+      "monument_name": "Victoria Memorial",
+      "file_name": "ref_13.jpg",
+      "author": "Anupam Roy Bardhan",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AVictoria_Memorial%2C_Kolkata_India_Facade_from_the_Southern_End.jpg"
+    },
+    {
+      "image_id": "ref_victoria_memorial_14",
+      "monument_name": "Victoria Memorial",
+      "file_name": "ref_14.jpg",
+      "author": "Vyacheslav Argenberg",
+      "license": "CC BY 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AVictoria_Memorial%2C_The_Facade%2C_Kolkata%2C_India.jpg"
+    },
+    {
+      "image_id": "ref_victoria_memorial_15",
+      "monument_name": "Victoria Memorial",
+      "file_name": "ref_15.jpg",
+      "author": "This Image was created by User:PlaneMad. If you are using the image under the creative commons share",
+      "license": "CC BY-SA 2.5",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AVictoria_Memorial_Kolkata_panorama.jpg"
+    },
+    {
+      "image_id": "ref_victoria_memorial_16",
+      "monument_name": "Victoria Memorial",
+      "file_name": "ref_16.jpg",
+      "author": "Ratman001",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AVictoria_Memorial_West_Fa%C3%A7ade.jpg"
+    },
+    {
+      "image_id": "ref_victoria_memorial_17",
+      "monument_name": "Victoria Memorial",
+      "file_name": "ref_17.jpg",
+      "author": "Anik4life",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AVictoria_memorial_kolkata_india.jpg"
+    },
+    {
+      "image_id": "ref_victoria_memorial_18",
+      "monument_name": "Victoria Memorial",
+      "file_name": "ref_18.jpg",
+      "author": "Victoria Stauffenberg",
+      "license": "Public domain",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AA_memorial_with_the_56_signatures_on_the_Declaration_of_Independence_is_located_on_a_small_island_in_the_lake._%2866ef86ba-482d-423e-b714-1ff48ca9650d%29.jpg"
+    },
+    {
+      "image_id": "ref_victoria_memorial_19",
+      "monument_name": "Victoria Memorial",
+      "file_name": "ref_19.jpg",
+      "author": "Daniel Bourne",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AAcross_the_lake_from_Victoria_Memorial.jpg"
+    },
+    {
+      "image_id": "ref_victoria_memorial_20",
+      "monument_name": "Victoria Memorial",
+      "file_name": "ref_20.jpg",
+      "author": "Sandeepparekh9",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AAlfred_Nicholas_Memorial_Gardens.jpg"
+    },
+    {
+      "image_id": "ref_brihadeeswarar_temple_05",
+      "monument_name": "Brihadeeswarar Temple",
+      "file_name": "ref_05.jpg",
+      "author": "Original: Rainer Halama Derivative work: UnpetitproleX",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ABrihadisvara_Temple_during_Maha_Shivaratri-WUS03611_%28edit%29.jpg"
+    },
+    {
+      "image_id": "ref_brihadeeswarar_temple_06",
+      "monument_name": "Brihadeeswarar Temple",
+      "file_name": "ref_06.jpg",
+      "author": "L Ram Vidya Sagar",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ABrihadisvara_Temple_of_Thanjavur_02.jpg"
+    },
+    {
+      "image_id": "ref_brihadeeswarar_temple_07",
+      "monument_name": "Brihadeeswarar Temple",
+      "file_name": "ref_07.jpg",
+      "author": "L Ram Vidya Sagar",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ABrihadisvara_Temple_of_Thanjavur_03.jpg"
+    },
+    {
+      "image_id": "ref_brihadeeswarar_temple_08",
+      "monument_name": "Brihadeeswarar Temple",
+      "file_name": "ref_08.jpg",
+      "author": "L Ram Vidya Sagar",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ABrihadisvara_Temple_of_Thanjavur_04.jpg"
+    },
+    {
+      "image_id": "ref_brihadeeswarar_temple_09",
+      "monument_name": "Brihadeeswarar Temple",
+      "file_name": "ref_09.jpg",
+      "author": "L Ram Vidya Sagar",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ABrihadisvara_Temple_of_Thanjavur_06.jpg"
+    },
+    {
+      "image_id": "ref_brihadeeswarar_temple_10",
+      "monument_name": "Brihadeeswarar Temple",
+      "file_name": "ref_10.jpg",
+      "author": "L Ram Vidya Sagar",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ABrihadisvara_Temple_of_Thanjavur_13.jpg"
+    },
+    {
+      "image_id": "ref_brihadeeswarar_temple_11",
+      "monument_name": "Brihadeeswarar Temple",
+      "file_name": "ref_11.jpg",
+      "author": "L Ram Vidya Sagar",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ABrihadisvara_Temple_of_Thanjavur_14.jpg"
+    },
+    {
+      "image_id": "ref_brihadeeswarar_temple_12",
+      "monument_name": "Brihadeeswarar Temple",
+      "file_name": "ref_12.jpg",
+      "author": "L Ram Vidya Sagar",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ABrihadisvara_Temple_of_Thanjavur_19.jpg"
+    },
+    {
+      "image_id": "ref_brihadeeswarar_temple_13",
+      "monument_name": "Brihadeeswarar Temple",
+      "file_name": "ref_13.jpg",
+      "author": "L Ram Vidya Sagar",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ABrihadisvara_Temple_of_Thanjavur_21.jpg"
+    },
+    {
+      "image_id": "ref_brihadeeswarar_temple_14",
+      "monument_name": "Brihadeeswarar Temple",
+      "file_name": "ref_14.jpg",
+      "author": "L Ram Vidya Sagar",
+      "license": "CC BY-SA 3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ABrihadisvara_Temple_of_Thanjavur_23.jpg"
+    },
+    {
+      "image_id": "ref_brihadeeswarar_temple_15",
+      "monument_name": "Brihadeeswarar Temple",
+      "file_name": "ref_15.jpg",
+      "author": "Jesmi Johnson",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ABrihadisvara_temple-Thanjavur-Tamilnadu.jpg"
+    },
+    {
+      "image_id": "ref_brihadeeswarar_temple_16",
+      "monument_name": "Brihadeeswarar Temple",
+      "file_name": "ref_16.jpg",
+      "author": "simianwolverine",
+      "license": "CC BY 2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3ATop_of_Brihadisvara_Temple%2C_Thanjavur.jpg"
+    },
+    {
+      "image_id": "ref_brihadeeswarar_temple_17",
+      "monument_name": "Brihadeeswarar Temple",
+      "file_name": "ref_17.jpg",
+      "author": "Nandhinikandhasamy",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AVimana_of_the_Brihadisvara_Temple%2C_Thanjavur%2C_Tamil_Nadu%2C_India_%282016%29.jpg"
+    },
+    {
+      "image_id": "ref_brihadeeswarar_temple_18",
+      "monument_name": "Brihadeeswarar Temple",
+      "file_name": "ref_18.jpg",
+      "author": "Nandhinikandhasamy",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AVimana_of_the_Brihadisvara_Temple%2C_Thanjavur%2C_Tamil_Nadu%2C_India_%282016%29_1.jpg"
+    },
+    {
+      "image_id": "ref_brihadeeswarar_temple_19",
+      "monument_name": "Brihadeeswarar Temple",
+      "file_name": "ref_19.jpg",
+      "author": "Nandhinikandhasamy",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AVimana_of_the_Brihadisvara_Temple%2C_Thanjavur%2C_Tamil_Nadu%2C_India_%282016%29_2.jpg"
+    },
+    {
+      "image_id": "ref_brihadeeswarar_temple_20",
+      "monument_name": "Brihadeeswarar Temple",
+      "file_name": "ref_20.jpg",
+      "author": "Nandhinikandhasamy",
+      "license": "CC BY-SA 4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File%3AVimana_of_the_Brihadisvara_Temple%2C_Thanjavur%2C_Tamil_Nadu%2C_India_%282016%29_3.jpg"
+    }
+  ]
+}

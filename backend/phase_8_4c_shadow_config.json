@@ -1,0 +1,46 @@
+{
+  "title": "Phase 8.4C Shadow Staging Configuration & Invariant Specification",
+  "version": "1.0.0",
+  "environment": "staging_shadow",
+  "authoritative_policy": "Policy_A_Baseline",
+  "candidate_policy": "Policy_D_Conservative_Hybrid",
+  "enabled_by_default": false,
+  "kill_switch": {
+    "environment_variable": "ENABLE_SHADOW_CANDIDATE_POLICY_D",
+    "runtime_configurable": true,
+    "default_state": "DISABLED",
+    "malformed_fallback": "DISABLED"
+  },
+  "concurrency_and_resources": {
+    "max_workers": 2,
+    "max_queue_size": 10,
+    "timeout_seconds": 0.500,
+    "timeout_ms": 500,
+    "admission_control_policy": "DROP_ON_QUEUE_FULL",
+    "dropped_status_code": "SHADOW_SKIPPED_CAPACITY",
+    "thread_name_prefix": "policy_d_shadow_worker"
+  },
+  "telemetry": {
+    "format": "JSONL",
+    "destination": "backend/telemetry/shadow_staging_audit.jsonl",
+    "relative_path": "telemetry/shadow_staging_audit.jsonl",
+    "log_raw_images": false,
+    "log_image_bytes": false,
+    "log_api_keys": false,
+    "thread_safe": true,
+    "non_blocking_on_response": true
+  },
+  "frozen_platform_hashes": {
+    "faiss_index_sha256": "519620C2B6C9EDAF3A91D5C67D05F8FBDD5DE344E629065CA8BBC46E5E55C603",
+    "calibration_config_sha256": "214FBB0366AB076F5150DCEB45BEA9234C869DD5BC0E61E3410587DD7CB4957F",
+    "model_name": "openai/clip-vit-base-patch32"
+  },
+  "safeguards": {
+    "policy_a_authoritative_isolation": true,
+    "zero_user_facing_latency_impact": true,
+    "zero_user_facing_response_alteration": true,
+    "zero_gemini_override": true,
+    "clean_shutdown_registered": true
+  }
+}
+

@@ -1,0 +1,173 @@
+{
+  "phase": "8.4C.1",
+  "title": "Shadow Runtime Safety and Concurrency Audit Report",
+  "timestamp_utc": "2026-11-07T16:18:07Z",
+  "total_audit_tests": 10,
+  "passed": true,
+  "passed_tests": 10,
+  "failed_tests": 0,
+  "test_results": [
+    {
+      "test_number": 1,
+      "test_name": "Concurrent submissions exceeding capacity (bounded queue saturation)",
+      "passed": true,
+      "duration_ms": 64.38,
+      "details": {
+        "total_submitted": 20,
+        "accepted_count": 10,
+        "dropped_count": 10,
+        "queue_capacity": 10,
+        "max_workers": 2
+      }
+    },
+    {
+      "test_number": 2,
+      "test_name": "Multiple simultaneous API requests under shadow execution",
+      "passed": true,
+      "duration_ms": 11654.73,
+      "details": {
+        "requests_sent": 5,
+        "all_http_200": true,
+        "response_statuses": [
+          "UNKNOWN_HERITAGE_SPECIMEN",
+          "UNKNOWN_HERITAGE_SPECIMEN",
+          "UNKNOWN_HERITAGE_SPECIMEN",
+          "UNKNOWN_HERITAGE_SPECIMEN",
+          "UNKNOWN_HERITAGE_SPECIMEN"
+        ]
+      }
+    },
+    {
+      "test_number": 3,
+      "test_name": "Worker starvation resilience after repeated timeouts",
+      "passed": true,
+      "duration_ms": 415.51,
+      "details": {
+        "consecutive_timeouts": 4,
+        "subsequent_task_executed": true
+      }
+    },
+    {
+      "test_number": 4,
+      "test_name": "Kill switch during concurrent multi-threaded submission",
+      "passed": true,
+      "duration_ms": 80.7,
+      "details": {
+        "total_submissions": 25,
+        "disabled_seen": true,
+        "final_submission_result": "SHADOW_DISABLED"
+      }
+    },
+    {
+      "test_number": 5,
+      "test_name": "Clean shutdown during active shadow execution",
+      "passed": true,
+      "duration_ms": 43.63,
+      "details": {
+        "task_started": true,
+        "post_shutdown_submission": "SHADOW_DISABLED"
+      }
+    },
+    {
+      "test_number": 6,
+      "test_name": "Late completion handling after recorded timeout",
+      "passed": true,
+      "duration_ms": 8.95,
+      "details": {
+        "total_records": 2,
+        "timeout_recorded": true,
+        "late_marked_properly": true
+      }
+    },
+    {
+      "test_number": 7,
+      "test_name": "Telemetry write-failure counter increments accurately",
+      "passed": true,
+      "duration_ms": 19.51,
+      "details": {
+        "recorded_failures": 3,
+        "health_healthy": false
+      }
+    },
+    {
+      "test_number": 8,
+      "test_name": "Telemetry recovery after write failure",
+      "passed": true,
+      "duration_ms": 12.26,
+      "details": {
+        "success_after_failure": true,
+        "total_writes": 1,
+        "failures": 1
+      }
+    },
+    {
+      "test_number": 9,
+      "test_name": "No duplicate completion events (telemetry deduplication)",
+      "passed": true,
+      "duration_ms": 23.79,
+      "details": {
+        "records_on_disk": 1,
+        "duplicates_suppressed": 2
+      }
+    },
+    {
+      "test_number": 10,
+      "test_name": "Policy A responsiveness during shadow queue saturation",
+      "passed": true,
+      "duration_ms": 312.81,
+      "details": {
+        "api_latency_ms": 303.3,
+        "expected_max_ms": 800.0,
+        "status_code": 200
+      }
+    }
+  ],
+  "concurrency_guarantees_verified": {
+    "queue_capacity_strictly_bounded": true,
+    "maximum_active_system_tasks": 10,
+    "maximum_worker_threads": 2,
+    "admission_control_drop_on_saturation": true,
+    "hard_timeout_budget_enforced_ms": 500,
+    "worker_starvation_prevention": true,
+    "kill_switch_race_free": true,
+    "shutdown_race_free": true,
+    "policy_a_zero_latency_regression": true
+  },
+  "empirical_benchmarks": {
+    "mode_1_disabled": {
+      "policy_a_latency_p50_ms": 195.11,
+      "policy_a_latency_p99_ms": 358.98,
+      "shadow_tasks_executed": 0,
+      "shadow_timeouts": 0,
+      "shadow_dropped": 0,
+      "telemetry_write_failures": 0
+    },
+    "mode_2_normal": {
+      "policy_a_latency_p50_ms": 189.23,
+      "policy_a_latency_p99_ms": 225.22,
+      "shadow_tasks_executed": 5,
+      "shadow_timeouts": 0,
+      "shadow_dropped": 0,
+      "telemetry_write_failures": 0
+    },
+    "mode_3_slow_timeout": {
+      "policy_a_latency_p50_ms": 179.93,
+      "policy_a_latency_p99_ms": 214.87,
+      "shadow_tasks_executed": 3,
+      "shadow_timeouts": 3,
+      "shadow_dropped": 0,
+      "telemetry_write_failures": 0
+    },
+    "mode_4_saturated": {
+      "policy_a_latency_p50_ms": 138.8,
+      "policy_a_latency_p99_ms": 158.98,
+      "shadow_tasks_dropped": 3,
+      "queue_occupancy_max": 0,
+      "telemetry_write_failures": 0
+    }
+  },
+  "memory_audit_mb": {
+    "current_mb": 13.18,
+    "peak_mb": 27.35
+  }
+}

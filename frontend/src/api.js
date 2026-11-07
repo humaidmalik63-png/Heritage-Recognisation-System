@@ -65,3 +65,45 @@ export async function resolveException(id, status, curatorNotes) {
 
   return response.json();
 }
+
+export async function fetchGeminiTelemetry() {
+  const response = await fetch(`${API_BASE_URL}/api/telemetry/gemini`);
+  if (!response.ok) {
+    throw new Error(`Failed to load Gemini telemetry: ${response.status}`);
+  }
+  return response.json();
+}
+
+export async function explainMonumentArchitecture(monumentId, file) {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const response = await fetch(`${API_BASE_URL}/api/monuments/${monumentId}/explain-architecture`, {
+    method: 'POST',
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.detail || `Architecture explanation failed (${response.status})`);
+  }
+
+  return response.json();
+}
+
+export async function analyzeLocalFeatures(file) {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const response = await fetch(`${API_BASE_URL}/api/recognition/local-features`, {
+    method: 'POST',
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.detail || `Local feature analysis failed (${response.status})`);
+  }
+
+  return response.json();
+}

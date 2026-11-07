@@ -1,0 +1,1545 @@
+{
+  "benchmark_metadata": {
+    "title": "Phase 8.0B Advanced Local Architectural Feature Benchmark",
+    "timestamp_utc": "2026-11-05T05:07:04Z",
+    "total_specimens_evaluated": 24,
+    "monument_specimens": 22,
+    "non_monument_distractors": 2,
+    "device": "cpu",
+    "clip_model": "openai/clip-vit-base-patch32",
+    "classical_detector": "OpenCV SIFT (600 features) + RANSAC (5.0px reproj)"
+  },
+  "methods_comparison": {
+    "Global_CLIP_FAISS": {
+      "top1_accuracy_pct": 54.55,
+      "top3_accuracy_pct": 68.18,
+      "mean_reciprocal_rank": 0.6297,
+      "mean_similarity_margin": 0.1747,
+      "mean_latency_ms": 177.94,
+      "p95_latency_ms": 267.24,
+      "per_category_accuracy": {
+        "close_up_carving": {
+          "total": 5,
+          "correct_top1": 4,
+          "top1_accuracy_pct": 80.0
+        },
+        "architectural_detail": {
+          "total": 10,
+          "correct_top1": 5,
+          "top1_accuracy_pct": 50.0
+        },
+        "partial_structure": {
+          "total": 4,
+          "correct_top1": 1,
+          "top1_accuracy_pct": 25.0
+        },
+        "full_structure": {
+          "total": 1,
+          "correct_top1": 1,
+          "top1_accuracy_pct": 100.0
+        },
+        "low_resolution": {
+          "total": 1,
+          "correct_top1": 1,
+          "top1_accuracy_pct": 100.0
+        },
+        "occluded_photograph": {
+          "total": 1,
+          "correct_top1": 0,
+          "top1_accuracy_pct": 0.0
+        },
+        "non_monument_distractor": {
+          "total": 2,
+          "correct_top1": 0,
+          "top1_accuracy_pct": 0.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "Local_CLIP_Regions": {
+      "top1_accuracy_pct": 50.0,
+      "top3_accuracy_pct": 54.55,
+      "mean_reciprocal_rank": 0.5227,
+      "mean_similarity_margin": 0.5481,
+      "mean_latency_ms": 640.23,
+      "p95_latency_ms": 843.33,
+      "per_category_accuracy": {
+        "close_up_carving": {
+          "total": 5,
+          "correct_top1": 4,
+          "top1_accuracy_pct": 80.0
+        },
+        "architectural_detail": {
+          "total": 10,
+          "correct_top1": 5,
+          "top1_accuracy_pct": 50.0
+        },
+        "partial_structure": {
+          "total": 4,
+          "correct_top1": 1,
+          "top1_accuracy_pct": 25.0
+        },
+        "full_structure": {
+          "total": 1,
+          "correct_top1": 1,
+          "top1_accuracy_pct": 100.0
+        },
+        "low_resolution": {
+          "total": 1,
+          "correct_top1": 0,
+          "top1_accuracy_pct": 0.0
+        },
+        "occluded_photograph": {
+          "total": 1,
+          "correct_top1": 0,
+          "top1_accuracy_pct": 0.0
+        },
+        "non_monument_distractor": {
+          "total": 2,
+          "correct_top1": 0,
+          "top1_accuracy_pct": 0.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3,
+          0
+        ],
+        [
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "Classical_SIFT_RANSAC": {
+      "top1_accuracy_pct": 36.36,
+      "top3_accuracy_pct": 59.09,
+      "mean_reciprocal_rank": 0.4773,
+      "mean_similarity_margin": 4.4349,
+      "mean_latency_ms": 1342.63,
+      "p95_latency_ms": 2336.66,
+      "per_category_accuracy": {
+        "close_up_carving": {
+          "total": 5,
+          "correct_top1": 1,
+          "top1_accuracy_pct": 20.0
+        },
+        "architectural_detail": {
+          "total": 10,
+          "correct_top1": 4,
+          "top1_accuracy_pct": 40.0
+        },
+        "partial_structure": {
+          "total": 4,
+          "correct_top1": 1,
+          "top1_accuracy_pct": 25.0
+        },
+        "full_structure": {
+          "total": 1,
+          "correct_top1": 1,
+          "top1_accuracy_pct": 100.0
+        },
+        "low_resolution": {
+          "total": 1,
+          "correct_top1": 1,
+          "top1_accuracy_pct": 100.0
+        },
+        "occluded_photograph": {
+          "total": 1,
+          "correct_top1": 0,
+          "top1_accuracy_pct": 0.0
+        },
+        "non_monument_distractor": {
+          "total": 2,
+          "correct_top1": 0,
+          "top1_accuracy_pct": 0.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          2,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "Hybrid_Tier1C": {
+      "top1_accuracy_pct": 50.0,
+      "top3_accuracy_pct": 63.64,
+      "mean_reciprocal_rank": 0.5933,
+      "mean_similarity_margin": 0.3564,
+      "mean_latency_ms": 818.26,
+      "p95_latency_ms": 1047.72,
+      "per_category_accuracy": {
+        "close_up_carving": {
+          "total": 5,
+          "correct_top1": 4,
+          "top1_accuracy_pct": 80.0
+        },
+        "architectural_detail": {
+          "total": 10,
+          "correct_top1": 5,
+          "top1_accuracy_pct": 50.0
+        },
+        "partial_structure": {
+          "total": 4,
+          "correct_top1": 1,
+          "top1_accuracy_pct": 25.0
+        },
+        "full_structure": {
+          "total": 1,
+          "correct_top1": 1,
+          "top1_accuracy_pct": 100.0
+        },
+        "low_resolution": {
+          "total": 1,
+          "correct_top1": 0,
+          "top1_accuracy_pct": 0.0
+        },
+        "occluded_photograph": {
+          "total": 1,
+          "correct_top1": 0,
+          "top1_accuracy_pct": 0.0
+        },
+        "non_monument_distractor": {
+          "total": 2,
+          "correct_top1": 0,
+          "top1_accuracy_pct": 0.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3,
+          0
+        ],
+        [
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    }
+  },
+  "geometric_verification_statistics": {
+    "mean_sift_inliers": 14.0,
+    "max_sift_inliers": 83,
+    "geometric_verification_success_rate_pct": 4.17
+  },
+  "specimen_records": [
+    {
+      "specimen_id": "feat_konark_wheel_01",
+      "monument_key": "konark_sun_temple",
+      "category": "close_up_carving",
+      "feature": "stone_chariot_wheel",
+      "predictions": {
+        "Global_CLIP_FAISS": {
+          "top1_predicted": "konark_sun_temple",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.1219,
+          "latency_ms": 267.65
+        },
+        "Local_CLIP_Regions": {
+          "top1_predicted": "konark_sun_temple",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.9258,
+          "latency_ms": 486.02
+        },
+        "Classical_SIFT_RANSAC": {
+          "top1_predicted": "sanchi_stupa",
+          "top1_correct": false,
+          "rank": 2,
+          "margin": 0.0,
+          "latency_ms": 1965.61
+        },
+        "Hybrid_Tier1C": {
+          "top1_predicted": "konark_sun_temple",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.4333,
+          "latency_ms": 753.67
+        }
+      }
+    },
+    {
+      "specimen_id": "feat_konark_frieze_02",
+      "monument_key": "konark_sun_temple",
+      "category": "architectural_detail",
+      "feature": "stone_frieze_sculpture",
+      "predictions": {
+        "Global_CLIP_FAISS": {
+          "top1_predicted": "konark_sun_temple",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.1229,
+          "latency_ms": 166.47
+        },
+        "Local_CLIP_Regions": {
+          "top1_predicted": "konark_sun_temple",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.1645,
+          "latency_ms": 651.89
+        },
+        "Classical_SIFT_RANSAC": {
+          "top1_predicted": "konark_sun_temple",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.9286,
+          "latency_ms": 1844.21
+        },
+        "Hybrid_Tier1C": {
+          "top1_predicted": "konark_sun_temple",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.4238,
+          "latency_ms": 818.36
+        }
+      }
+    },
+    {
+      "specimen_id": "feat_taj_pietradura_01",
+      "monument_key": "taj_mahal",
+      "category": "close_up_carving",
+      "feature": "pietra_dura_marble_inlay",
+      "predictions": {
+        "Global_CLIP_FAISS": {
+          "top1_predicted": "taj_mahal",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.8877,
+          "latency_ms": 142.79
+        },
+        "Local_CLIP_Regions": {
+          "top1_predicted": "taj_mahal",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.0705,
+          "latency_ms": 500.15
+        },
+        "Classical_SIFT_RANSAC": {
+          "top1_predicted": "taj_mahal",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 5.4167,
+          "latency_ms": 521.11
+        },
+        "Hybrid_Tier1C": {
+          "top1_predicted": "taj_mahal",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.6317,
+          "latency_ms": 642.94
+        }
+      }
+    },
+    {
+      "specimen_id": "feat_taj_jali_02",
+      "monument_key": "taj_mahal",
+      "category": "architectural_detail",
+      "feature": "carved_marble_jali",
+      "predictions": {
+        "Global_CLIP_FAISS": {
+          "top1_predicted": "taj_mahal",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.0182,
+          "latency_ms": 162.31
+        },
+        "Local_CLIP_Regions": {
+          "top1_predicted": "taj_mahal",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.0379,
+          "latency_ms": 599.4
+        },
+        "Classical_SIFT_RANSAC": {
+          "top1_predicted": "hawa_mahal",
+          "top1_correct": false,
+          "rank": 2,
+          "margin": 0.0,
+          "latency_ms": 1019.74
+        },
+        "Hybrid_Tier1C": {
+          "top1_predicted": "taj_mahal",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.0551,
+          "latency_ms": 761.71
+        }
+      }
+    },
+    {
+      "specimen_id": "feat_qutub_calligraphy_01",
+      "monument_key": "qutub_minar",
+      "category": "close_up_carving",
+      "feature": "kufic_calligraphy_band",
+      "predictions": {
+        "Global_CLIP_FAISS": {
+          "top1_predicted": "qutub_minar",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.0583,
+          "latency_ms": 264.88
+        },
+        "Local_CLIP_Regions": {
+          "top1_predicted": "qutub_minar",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.0098,
+          "latency_ms": 655.97
+        },
+        "Classical_SIFT_RANSAC": {
+          "top1_predicted": "konark_sun_temple",
+          "top1_correct": false,
+          "rank": 2,
+          "margin": 1.2121,
+          "latency_ms": 1871.64
+        },
+        "Hybrid_Tier1C": {
+          "top1_predicted": "qutub_minar",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.0918,
+          "latency_ms": 920.86
+        }
+      }
+    },
+    {
+      "specimen_id": "feat_qutub_balcony_02",
+      "monument_key": "qutub_minar",
+      "category": "architectural_detail",
+      "feature": "corbelled_stalactite_bracket",
+      "predictions": {
+        "Global_CLIP_FAISS": {
+          "top1_predicted": "qutub_minar",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.0199,
+          "latency_ms": 116.24
+        },
+        "Local_CLIP_Regions": {
+          "top1_predicted": "hawa_mahal",
+          "top1_correct": false,
+          "rank": null,
+          "margin": 0.854,
+          "latency_ms": 474.58
+        },
+        "Classical_SIFT_RANSAC": {
+          "top1_predicted": "qutub_minar",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.0303,
+          "latency_ms": 2402.13
+        },
+        "Hybrid_Tier1C": {
+          "top1_predicted": "hawa_mahal",
+          "top1_correct": false,
+          "rank": 5,
+          "margin": 0.2872,
+          "latency_ms": 590.82
+        }
+      }
+    },
+    {
+      "specimen_id": "feat_hawa_jharokha_01",
+      "monument_key": "hawa_mahal",
+      "category": "architectural_detail",
+      "feature": "jharokha_lattice_window",
+      "predictions": {
+        "Global_CLIP_FAISS": {
+          "top1_predicted": "hawa_mahal",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.9334,
+          "latency_ms": 120.93
+        },
+        "Local_CLIP_Regions": {
+          "top1_predicted": "hawa_mahal",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.8958,
+          "latency_ms": 453.74
+        },
+        "Classical_SIFT_RANSAC": {
+          "top1_predicted": "hawa_mahal",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 6.75,
+          "latency_ms": 653.65
+        },
+        "Hybrid_Tier1C": {
+          "top1_predicted": "hawa_mahal",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.9502,
+          "latency_ms": 574.66
+        }
+      }
+    },
+    {
+      "specimen_id": "feat_hawa_tier_02",
+      "monument_key": "hawa_mahal",
+      "category": "partial_structure",
+      "feature": "pyramidal_tier_chhatri",
+      "predictions": {
+        "Global_CLIP_FAISS": {
+          "top1_predicted": "hawa_mahal",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.9121,
+          "latency_ms": 103.91
+        },
+        "Local_CLIP_Regions": {
+          "top1_predicted": "hawa_mahal",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.9189,
+          "latency_ms": 388.26
+        },
+        "Classical_SIFT_RANSAC": {
+          "top1_predicted": "hawa_mahal",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 83.7905,
+          "latency_ms": 556.87
+        },
+        "Hybrid_Tier1C": {
+          "top1_predicted": "hawa_mahal",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.9645,
+          "latency_ms": 492.16
+        }
+      }
+    },
+    {
+      "specimen_id": "feat_hampi_wheel_01",
+      "monument_key": "hampi_stone_chariot",
+      "category": "close_up_carving",
+      "feature": "granite_chariot_wheel",
+      "predictions": {
+        "Global_CLIP_FAISS": {
+          "top1_predicted": "hampi_stone_chariot",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.0597,
+          "latency_ms": 115.31
+        },
+        "Local_CLIP_Regions": {
+          "top1_predicted": "hampi_stone_chariot",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.0661,
+          "latency_ms": 537.98
+        },
+        "Classical_SIFT_RANSAC": {
+          "top1_predicted": "konark_sun_temple",
+          "top1_correct": false,
+          "rank": 2,
+          "margin": 0.8333,
+          "latency_ms": 1468.58
+        },
+        "Hybrid_Tier1C": {
+          "top1_predicted": "hampi_stone_chariot",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.3967,
+          "latency_ms": 655.3
+        }
+      }
+    },
+    {
+      "specimen_id": "feat_hampi_elephant_02",
+      "monument_key": "hampi_stone_chariot",
+      "category": "architectural_detail",
+      "feature": "elephant_sculpture_balustrade",
+      "predictions": {
+        "Global_CLIP_FAISS": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": false,
+          "rank": null,
+          "margin": 0.0002,
+          "latency_ms": 205.7
+        },
+        "Local_CLIP_Regions": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": false,
+          "rank": null,
+          "margin": 0.6606,
+          "latency_ms": 522.81
+        },
+        "Classical_SIFT_RANSAC": {
+          "top1_predicted": "qutub_minar",
+          "top1_correct": false,
+          "rank": null,
+          "margin": 0.0,
+          "latency_ms": 1184.18
+        },
+        "Hybrid_Tier1C": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": false,
+          "rank": null,
+          "margin": 0.2614,
+          "latency_ms": 728.51
+        }
+      }
+    },
+    {
+      "specimen_id": "feat_sanchi_torana_01",
+      "monument_key": "sanchi_stupa",
+      "category": "close_up_carving",
+      "feature": "torana_architrave_relief",
+      "predictions": {
+        "Global_CLIP_FAISS": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": false,
+          "rank": 7,
+          "margin": 0.0017,
+          "latency_ms": 154.33
+        },
+        "Local_CLIP_Regions": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": false,
+          "rank": null,
+          "margin": 0.6608,
+          "latency_ms": 455.97
+        },
+        "Classical_SIFT_RANSAC": {
+          "top1_predicted": "qutub_minar",
+          "top1_correct": false,
+          "rank": null,
+          "margin": 0.0,
+          "latency_ms": 1062.35
+        },
+        "Hybrid_Tier1C": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": false,
+          "rank": 7,
+          "margin": 0.2624,
+          "latency_ms": 610.3
+        }
+      }
+    },
+    {
+      "specimen_id": "feat_sanchi_bracket_02",
+      "monument_key": "sanchi_stupa",
+      "category": "architectural_detail",
+      "feature": "torana_bracket_figure",
+      "predictions": {
+        "Global_CLIP_FAISS": {
+          "top1_predicted": "sanchi_stupa",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.0201,
+          "latency_ms": 199.05
+        },
+        "Local_CLIP_Regions": {
+          "top1_predicted": "sanchi_stupa",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.8881,
+          "latency_ms": 780.16
+        },
+        "Classical_SIFT_RANSAC": {
+          "top1_predicted": "sanchi_stupa",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 1.225,
+          "latency_ms": 2574.12
+        },
+        "Hybrid_Tier1C": {
+          "top1_predicted": "sanchi_stupa",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.3539,
+          "latency_ms": 979.21
+        }
+      }
+    },
+    {
+      "specimen_id": "feat_brih_vimana_tier_01",
+      "monument_key": "brihadeeswarar_temple",
+      "category": "architectural_detail",
+      "feature": "granite_vimana_sculpture_tier",
+      "predictions": {
+        "Global_CLIP_FAISS": {
+          "top1_predicted": "qutub_minar",
+          "top1_correct": false,
+          "rank": null,
+          "margin": 0.0065,
+          "latency_ms": 181.49
+        },
+        "Local_CLIP_Regions": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": false,
+          "rank": null,
+          "margin": 0.6553,
+          "latency_ms": 739.11
+        },
+        "Classical_SIFT_RANSAC": {
+          "top1_predicted": "qutub_minar",
+          "top1_correct": false,
+          "rank": null,
+          "margin": 0.0,
+          "latency_ms": 1370.5
+        },
+        "Hybrid_Tier1C": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": false,
+          "rank": null,
+          "margin": 0.2551,
+          "latency_ms": 920.6
+        }
+      }
+    },
+    {
+      "specimen_id": "feat_brih_pillar_02",
+      "monument_key": "brihadeeswarar_temple",
+      "category": "architectural_detail",
+      "feature": "chola_mandapam_pillar",
+      "predictions": {
+        "Global_CLIP_FAISS": {
+          "top1_predicted": "qutub_minar",
+          "top1_correct": false,
+          "rank": null,
+          "margin": 0.004,
+          "latency_ms": 166.56
+        },
+        "Local_CLIP_Regions": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": false,
+          "rank": null,
+          "margin": 0.6607,
+          "latency_ms": 652.4
+        },
+        "Classical_SIFT_RANSAC": {
+          "top1_predicted": "qutub_minar",
+          "top1_correct": false,
+          "rank": null,
+          "margin": 0.0,
+          "latency_ms": 1328.59
+        },
+        "Hybrid_Tier1C": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": false,
+          "rank": null,
+          "margin": 0.2586,
+          "latency_ms": 818.96
+        }
+      }
+    },
+    {
+      "specimen_id": "feat_charminar_stucco_01",
+      "monument_key": "charminar",
+      "category": "architectural_detail",
+      "feature": "stucco_arch_medallion",
+      "predictions": {
+        "Global_CLIP_FAISS": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": false,
+          "rank": 5,
+          "margin": 0.0005,
+          "latency_ms": 262.4
+        },
+        "Local_CLIP_Regions": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": false,
+          "rank": null,
+          "margin": 0.6608,
+          "latency_ms": 629.73
+        },
+        "Classical_SIFT_RANSAC": {
+          "top1_predicted": "qutub_minar",
+          "top1_correct": false,
+          "rank": null,
+          "margin": 0.0,
+          "latency_ms": 1407.92
+        },
+        "Hybrid_Tier1C": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": false,
+          "rank": 5,
+          "margin": 0.2616,
+          "latency_ms": 892.14
+        }
+      }
+    },
+    {
+      "specimen_id": "feat_gateway_fretwork_01",
+      "monument_key": "gateway_of_india",
+      "category": "architectural_detail",
+      "feature": "basalt_archway_fretwork",
+      "predictions": {
+        "Global_CLIP_FAISS": {
+          "top1_predicted": "qutub_minar",
+          "top1_correct": false,
+          "rank": 2,
+          "margin": 0.0024,
+          "latency_ms": 139.21
+        },
+        "Local_CLIP_Regions": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.0411,
+          "latency_ms": 598.18
+        },
+        "Classical_SIFT_RANSAC": {
+          "top1_predicted": "qutub_minar",
+          "top1_correct": false,
+          "rank": 2,
+          "margin": 0.0,
+          "latency_ms": 1374.76
+        },
+        "Hybrid_Tier1C": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.0428,
+          "latency_ms": 737.39
+        }
+      }
+    },
+    {
+      "specimen_id": "feat_victoria_colonnade_01",
+      "monument_key": "victoria_memorial",
+      "category": "partial_structure",
+      "feature": "marble_colonnade_columns",
+      "predictions": {
+        "Global_CLIP_FAISS": {
+          "top1_predicted": "qutub_minar",
+          "top1_correct": false,
+          "rank": 3,
+          "margin": 0.0069,
+          "latency_ms": 180.33
+        },
+        "Local_CLIP_Regions": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": false,
+          "rank": null,
+          "margin": 0.6397,
+          "latency_ms": 805.71
+        },
+        "Classical_SIFT_RANSAC": {
+          "top1_predicted": "qutub_minar",
+          "top1_correct": false,
+          "rank": null,
+          "margin": 0.0,
+          "latency_ms": 1170.84
+        },
+        "Hybrid_Tier1C": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": false,
+          "rank": 3,
+          "margin": 0.2494,
+          "latency_ms": 986.04
+        }
+      }
+    },
+    {
+      "specimen_id": "feat_taj_full_03",
+      "monument_key": "taj_mahal",
+      "category": "full_structure",
+      "feature": "central_dome_mausoleum",
+      "predictions": {
+        "Global_CLIP_FAISS": {
+          "top1_predicted": "taj_mahal",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.9762,
+          "latency_ms": 170.26
+        },
+        "Local_CLIP_Regions": {
+          "top1_predicted": "taj_mahal",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.9324,
+          "latency_ms": 791.49
+        },
+        "Classical_SIFT_RANSAC": {
+          "top1_predicted": "taj_mahal",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 6.25,
+          "latency_ms": 722.41
+        },
+        "Hybrid_Tier1C": {
+          "top1_predicted": "taj_mahal",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.9909,
+          "latency_ms": 961.75
+        }
+      }
+    },
+    {
+      "specimen_id": "feat_qutub_lowres_03",
+      "monument_key": "qutub_minar",
+      "category": "low_resolution",
+      "feature": "fluted_minaret_shaft",
+      "predictions": {
+        "Global_CLIP_FAISS": {
+          "top1_predicted": "qutub_minar",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.0007,
+          "latency_ms": 137.71
+        },
+        "Local_CLIP_Regions": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": false,
+          "rank": 2,
+          "margin": 0.0927,
+          "latency_ms": 641.76
+        },
+        "Classical_SIFT_RANSAC": {
+          "top1_predicted": "qutub_minar",
+          "top1_correct": true,
+          "rank": 1,
+          "margin": 0.0,
+          "latency_ms": 1257.38
+        },
+        "Hybrid_Tier1C": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": false,
+          "rank": 2,
+          "margin": 0.062,
+          "latency_ms": 779.47
+        }
+      }
+    },
+    {
+      "specimen_id": "feat_charminar_occluded_02",
+      "monument_key": "charminar",
+      "category": "occluded_photograph",
+      "feature": "archway_street_view",
+      "predictions": {
+        "Global_CLIP_FAISS": {
+          "top1_predicted": "qutub_minar",
+          "top1_correct": false,
+          "rank": 5,
+          "margin": 0.0049,
+          "latency_ms": 157.22
+        },
+        "Local_CLIP_Regions": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": false,
+          "rank": null,
+          "margin": 0.6604,
+          "latency_ms": 955.13
+        },
+        "Classical_SIFT_RANSAC": {
+          "top1_predicted": "qutub_minar",
+          "top1_correct": false,
+          "rank": null,
+          "margin": 0.0,
+          "latency_ms": 1216.77
+        },
+        "Hybrid_Tier1C": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": false,
+          "rank": 5,
+          "margin": 0.258,
+          "latency_ms": 1112.35
+        }
+      }
+    },
+    {
+      "specimen_id": "feat_sanchi_partial_03",
+      "monument_key": "sanchi_stupa",
+      "category": "partial_structure",
+      "feature": "stupa_dome_torana_side",
+      "predictions": {
+        "Global_CLIP_FAISS": {
+          "top1_predicted": "qutub_minar",
+          "top1_correct": false,
+          "rank": 7,
+          "margin": 0.0079,
+          "latency_ms": 162.95
+        },
+        "Local_CLIP_Regions": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": false,
+          "rank": null,
+          "margin": 0.6606,
+          "latency_ms": 747.3
+        },
+        "Classical_SIFT_RANSAC": {
+          "top1_predicted": "qutub_minar",
+          "top1_correct": false,
+          "rank": null,
+          "margin": 0.0,
+          "latency_ms": 1179.64
+        },
+        "Hybrid_Tier1C": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": false,
+          "rank": 7,
+          "margin": 0.2561,
+          "latency_ms": 910.25
+        }
+      }
+    },
+    {
+      "specimen_id": "feat_victoria_dome_02",
+      "monument_key": "victoria_memorial",
+      "category": "partial_structure",
+      "feature": "marble_dome_angel_finial",
+      "predictions": {
+        "Global_CLIP_FAISS": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": false,
+          "rank": 3,
+          "margin": 0.0,
+          "latency_ms": 160.51
+        },
+        "Local_CLIP_Regions": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": false,
+          "rank": null,
+          "margin": 0.6549,
+          "latency_ms": 766.58
+        },
+        "Classical_SIFT_RANSAC": {
+          "top1_predicted": "qutub_minar",
+          "top1_correct": false,
+          "rank": null,
+          "margin": 0.0,
+          "latency_ms": 1290.6
+        },
+        "Hybrid_Tier1C": {
+          "top1_predicted": "gateway_of_india",
+          "top1_correct": false,
+          "rank": 3,
+          "margin": 0.2592,
+          "latency_ms": 927.1
+        }
+      }
+    },
+    {
+      "specimen_id": "feat_nonmon_glass_01",
+      "monument_key": "non_monument",
+      "category": "non_monument_distractor",
+      "feature": "curtain_wall_glass",
+      "predictions": {
+        "Global_CLIP_FAISS": {
+          "top1_predicted": "gateway_of_india",
+          "is_distractor": true,
+          "margin": 0.015,
+          "latency_ms": 373.21
+        },
+        "Local_CLIP_Regions": {
+          "top1_predicted": "gateway_of_india",
+          "is_distractor": true,
+          "margin": 0.6712,
+          "latency_ms": 681.32
+        },
+        "Classical_SIFT_RANSAC": {
+          "top1_predicted": "qutub_minar",
+          "is_distractor": true,
+          "margin": 0.0,
+          "latency_ms": 1519.87
+        },
+        "Hybrid_Tier1C": {
+          "top1_predicted": "gateway_of_india",
+          "is_distractor": true,
+          "margin": 0.2747,
+          "latency_ms": 1054.53
+        }
+      }
+    },
+    {
+      "specimen_id": "feat_nonmon_rock_02",
+      "monument_key": "non_monument",
+      "category": "non_monument_distractor",
+      "feature": "natural_granite_boulder",
+      "predictions": {
+        "Global_CLIP_FAISS": {
+          "top1_predicted": "gateway_of_india",
+          "is_distractor": true,
+          "margin": 0.0124,
+          "latency_ms": 159.16
+        },
+        "Local_CLIP_Regions": {
+          "top1_predicted": "gateway_of_india",
+          "is_distractor": true,
+          "margin": 0.6712,
+          "latency_ms": 849.96
+        },
+        "Classical_SIFT_RANSAC": {
+          "top1_predicted": "qutub_minar",
+          "is_distractor": true,
+          "margin": 0.0,
+          "latency_ms": 1259.68
+        },
+        "Hybrid_Tier1C": {
+          "top1_predicted": "gateway_of_india",
+          "is_distractor": true,
+          "margin": 0.273,
+          "latency_ms": 1009.12
+        }
+      }
+    }
+  ]
+}

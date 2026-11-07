@@ -1,0 +1,32 @@
+{
+  "engine_name": "Phase 8.0B Local Architectural Feature Engine",
+  "version": "1.0.0",
+  "classical_matching": {
+    "sift_n_features": 600,
+    "orb_n_features": 600,
+    "lowe_ratio_threshold": 0.75,
+    "ransac_reproj_threshold": 5.0,
+    "min_good_matches": 8,
+    "min_inliers_for_verification": 12,
+    "min_inlier_ratio": 0.25
+  },
+  "region_proposal": {
+    "max_proposed_regions": 4,
+    "min_region_area_pct": 0.05,
+    "max_region_area_pct": 0.95,
+    "canonical_divisions_enabled": true,
+    "gradient_saliency_enabled": true
+  },
+  "local_clip": {
+    "embedding_dim": 512,
+    "similarity_threshold": 0.75,
+    "top_k_regions": 3
+  },
+  "hybrid_aggregation": {
+    "global_weight": 0.65,
+    "local_weight": 0.35,
+    "agreement_boost_max": 0.03,
+    "disagreement_penalty": 0.05
+  }
+}
+

@@ -1,0 +1,165 @@
+{
+  "evaluation_title": "Geometric Evidence & SIFT/RANSAC Architectural Reliability Audit",
+  "objective": "Audit false geometric correspondence risks across structural and textural twins",
+  "pair_sample_summary": {
+    "total_positive_pairs_evaluated": 120,
+    "total_negative_pairs_evaluated": 240,
+    "evaluation_rule": "Do not interpret zero observed false matches as zero real-world risk."
+  },
+  "hazard_categories": [
+    {
+      "category_name": "Repeated Stone Carvings & Friezes",
+      "exemplar_pair": "Brihadeeswarar Temple (Thanjavur) vs Konark Sun Temple",
+      "positive_pairs_tested": 20,
+      "negative_pairs_tested": 40,
+      "structural_mechanism": "Tiered horizontal stone plinths, kirtimukha faces, and repetitive floral moldings with identical spatial frequencies",
+      "positive_pairs": {
+        "mean_inliers": 16.4,
+        "mean_inlier_ratio": 0.42,
+        "mean_reprojection_error_px": 2.15,
+        "spatial_bounding_box_dispersion": 0.58
+      },
+      "negative_pairs": {
+        "max_accidental_inliers": 8,
+        "mean_accidental_inliers": 4.8,
+        "mean_inlier_ratio": 0.18,
+        "mean_reprojection_error_px": 3.82,
+        "spatial_bounding_box_dispersion": 0.12,
+        "false_matches_at_inliers_6": 6,
+        "false_matches_at_inliers_8": 2,
+        "false_matches_at_inliers_10": 0
+      },
+      "risk_assessment": "HIGH RISK at inlier threshold < 10. Accidental affine correspondences cluster in local 80x80px carving patches."
+    },
+    {
+      "category_name": "Arches and Columns",
+      "exemplar_pair": "Charminar (Hyderabad) vs Gateway of India (Mumbai)",
+      "positive_pairs_tested": 20,
+      "negative_pairs_tested": 40,
+      "structural_mechanism": "Indo-Islamic and Indo-Saracenic voussoir arch curvature, flanking columns, and dentil cornices",
+      "positive_pairs": {
+        "mean_inliers": 24.2,
+        "mean_inlier_ratio": 0.51,
+        "mean_reprojection_error_px": 1.84,
+        "spatial_bounding_box_dispersion": 0.72
+      },
+      "negative_pairs": {
+        "max_accidental_inliers": 7,
+        "mean_accidental_inliers": 3.6,
+        "mean_inlier_ratio": 0.14,
+        "mean_reprojection_error_px": 4.1,
+        "spatial_bounding_box_dispersion": 0.16,
+        "false_matches_at_inliers_6": 3,
+        "false_matches_at_inliers_8": 0,
+        "false_matches_at_inliers_10": 0
+      },
+      "risk_assessment": "MEDIUM RISK. Isolated arch close-ups lack minarets or ocean context, producing voussoir matches."
+    },
+    {
+      "category_name": "Temple Wheels & Circular Geometry",
+      "exemplar_pair": "Hampi Stone Chariot vs Konark Sun Temple (Chariot Wheels)",
+      "positive_pairs_tested": 20,
+      "negative_pairs_tested": 40,
+      "structural_mechanism": "Monolithic radial spokes, circular rims, central axle hubs, and surrounding friezes",
+      "positive_pairs": {
+        "mean_inliers": 18.6,
+        "mean_inlier_ratio": 0.44,
+        "mean_reprojection_error_px": 2.05,
+        "spatial_bounding_box_dispersion": 0.61
+      },
+      "negative_pairs": {
+        "max_accidental_inliers": 8,
+        "mean_accidental_inliers": 5.1,
+        "mean_inlier_ratio": 0.22,
+        "mean_reprojection_error_px": 3.75,
+        "spatial_bounding_box_dispersion": 0.19,
+        "false_matches_at_inliers_6": 7,
+        "false_matches_at_inliers_8": 2,
+        "false_matches_at_inliers_10": 0
+      },
+      "risk_assessment": "HIGH RISK at inlier threshold < 10. Radial symmetry allows circular keypoints to pass homography under moderate deformation."
+    },
+    {
+      "category_name": "Jali Patterns & Honeycombed Screens",
+      "exemplar_pair": "Hawa Mahal (Jaipur) vs Taj Mahal Cenotaph Screens",
+      "positive_pairs_tested": 20,
+      "negative_pairs_tested": 40,
+      "structural_mechanism": "Periodic hexagonal and floral pierced marble/sandstone latticework",
+      "positive_pairs": {
+        "mean_inliers": 21.0,
+        "mean_inlier_ratio": 0.46,
+        "mean_reprojection_error_px": 1.95,
+        "spatial_bounding_box_dispersion": 0.65
+      },
+      "negative_pairs": {
+        "max_accidental_inliers": 6,
+        "mean_accidental_inliers": 3.2,
+        "mean_inlier_ratio": 0.12,
+        "mean_reprojection_error_px": 4.25,
+        "spatial_bounding_box_dispersion": 0.11,
+        "false_matches_at_inliers_6": 1,
+        "false_matches_at_inliers_8": 0,
+        "false_matches_at_inliers_10": 0
+      },
+      "risk_assessment": "MEDIUM RISK. Periodic lattices generate ambiguous SIFT descriptors, occasionally matching repetitive grids."
+    },
+    {
+      "category_name": "Weathered Stone Textures",
+      "exemplar_pair": "Konark Sun Temple Sandstone vs Qutub Minar Red Sandstone",
+      "positive_pairs_tested": 20,
+      "negative_pairs_tested": 40,
+      "structural_mechanism": "Granular weathered sandstone surfaces, lichen stains, and erosion channels",
+      "positive_pairs": {
+        "mean_inliers": 15.2,
+        "mean_inlier_ratio": 0.38,
+        "mean_reprojection_error_px": 2.3,
+        "spatial_bounding_box_dispersion": 0.52
+      },
+      "negative_pairs": {
+        "max_accidental_inliers": 5,
+        "mean_accidental_inliers": 2.8,
+        "mean_inlier_ratio": 0.1,
+        "mean_reprojection_error_px": 4.4,
+        "spatial_bounding_box_dispersion": 0.08,
+        "false_matches_at_inliers_6": 0,
+        "false_matches_at_inliers_8": 0,
+        "false_matches_at_inliers_10": 0
+      },
+      "risk_assessment": "LOW RISK. Random texture does not form coherent affine homographies."
+    },
+    {
+      "category_name": "Symmetrical Architectural Facades",
+      "exemplar_pair": "Victoria Memorial (Kolkata) vs Taj Mahal (Agra)",
+      "positive_pairs_tested": 20,
+      "negative_pairs_tested": 40,
+      "structural_mechanism": "White Makrana marble, grand central domes, corner kiosks, and arched entrance portals",
+      "positive_pairs": {
+        "mean_inliers": 17.5,
+        "mean_inlier_ratio": 0.39,
+        "mean_reprojection_error_px": 2.1,
+        "spatial_bounding_box_dispersion": 0.68
+      },
+      "negative_pairs": {
+        "max_accidental_inliers": 5,
+        "mean_accidental_inliers": 2.4,
+        "mean_inlier_ratio": 0.09,
+        "mean_reprojection_error_px": 4.6,
+        "spatial_bounding_box_dispersion": 0.14,
+        "false_matches_at_inliers_6": 0,
+        "false_matches_at_inliers_8": 0,
+        "false_matches_at_inliers_10": 0
+      },
+      "risk_assessment": "LOW RISK for SIFT due to feature sparsity on smooth marble domes; HIGH RISK for Global CLIP semantic space."
+    }
+  ],
+  "safe_geometric_acceptance_criteria": {
+    "minimum_inliers": 10,
+    "minimum_inlier_ratio": 0.25,
+    "maximum_mean_reprojection_error_px": 3.5,
+    "minimum_spatial_bounding_box_dispersion": 0.2,
+    "homography_determinant_limits": [
+      0.1,
+      10.0
+    ]
+  }
+}

@@ -1,0 +1,442 @@
+[
+  {
+    "specimen_id": "test2_brihadeeswarar_temple_001",
+    "ground_truth": "brihadeeswarar_temple",
+    "pred_monument": "brihadeeswarar_temple",
+    "top1_sim": 0.9339,
+    "is_correct": 1,
+    "author": "BOMBMAN"
+  },
+  {
+    "specimen_id": "test2_brihadeeswarar_temple_002",
+    "ground_truth": "brihadeeswarar_temple",
+    "pred_monument": "brihadeeswarar_temple",
+    "top1_sim": 0.9264,
+    "is_correct": 1,
+    "author": "Praveenelayi"
+  },
+  {
+    "specimen_id": "test2_charminar_003",
+    "ground_truth": "charminar",
+    "pred_monument": "charminar",
+    "top1_sim": 0.801,
+    "is_correct": 1,
+    "author": "Rashid Jorvee"
+  },
+  {
+    "specimen_id": "test2_charminar_004",
+    "ground_truth": "charminar",
+    "pred_monument": "gateway_of_india",
+    "top1_sim": 0.6688,
+    "is_correct": 0,
+    "author": "\u0c30\u0c39\u0c4d\u0c2e\u0c3e\u0c28\u0c41\u0c26\u0c4d\u0c26\u0c40\u0c28\u0c4d"
+  },
+  {
+    "specimen_id": "test2_gateway_of_india_005",
+    "ground_truth": "gateway_of_india",
+    "pred_monument": "victoria_memorial",
+    "top1_sim": 0.8053,
+    "is_correct": 0,
+    "author": "Vijaykothare"
+  },
+  {
+    "specimen_id": "test2_gateway_of_india_006",
+    "ground_truth": "gateway_of_india",
+    "pred_monument": "taj_mahal",
+    "top1_sim": 0.7274,
+    "is_correct": 0,
+    "author": "Vijaykothare"
+  },
+  {
+    "specimen_id": "test2_hampi_stone_chariot_007",
+    "ground_truth": "hampi_stone_chariot",
+    "pred_monument": "hampi_stone_chariot",
+    "top1_sim": 0.8896,
+    "is_correct": 1,
+    "author": "VasuVR"
+  },
+  {
+    "specimen_id": "test2_hampi_stone_chariot_008",
+    "ground_truth": "hampi_stone_chariot",
+    "pred_monument": "hampi_stone_chariot",
+    "top1_sim": 0.8914,
+    "is_correct": 1,
+    "author": "VasuVR"
+  },
+  {
+    "specimen_id": "test2_hampi_stone_chariot_009",
+    "ground_truth": "hampi_stone_chariot",
+    "pred_monument": "hampi_stone_chariot",
+    "top1_sim": 0.9048,
+    "is_correct": 1,
+    "author": "VasuVR"
+  },
+  {
+    "specimen_id": "test2_hawa_mahal_010",
+    "ground_truth": "hawa_mahal",
+    "pred_monument": "hawa_mahal",
+    "top1_sim": 0.8913,
+    "is_correct": 1,
+    "author": "Ajit Kumar Majhi"
+  },
+  {
+    "specimen_id": "test2_hawa_mahal_011",
+    "ground_truth": "hawa_mahal",
+    "pred_monument": "hawa_mahal",
+    "top1_sim": 0.9977,
+    "is_correct": 1,
+    "author": "Chainwit."
+  },
+  {
+    "specimen_id": "test2_hawa_mahal_012",
+    "ground_truth": "hawa_mahal",
+    "pred_monument": "hawa_mahal",
+    "top1_sim": 0.9948,
+    "is_correct": 1,
+    "author": "Chainwit."
+  },
+  {
+    "specimen_id": "test2_hawa_mahal_013",
+    "ground_truth": "hawa_mahal",
+    "pred_monument": "hawa_mahal",
+    "top1_sim": 0.9039,
+    "is_correct": 1,
+    "author": "DEEPANKOR BORAH"
+  },
+  {
+    "specimen_id": "test2_konark_sun_temple_014",
+    "ground_truth": "konark_sun_temple",
+    "pred_monument": "brihadeeswarar_temple",
+    "top1_sim": 0.8609,
+    "is_correct": 0,
+    "author": "Cornish, William Henry (1892)"
+  },
+  {
+    "specimen_id": "test2_konark_sun_temple_015",
+    "ground_truth": "konark_sun_temple",
+    "pred_monument": "konark_sun_temple",
+    "top1_sim": 0.8817,
+    "is_correct": 1,
+    "author": "Ritu20"
+  },
+  {
+    "specimen_id": "test2_konark_sun_temple_016",
+    "ground_truth": "konark_sun_temple",
+    "pred_monument": "konark_sun_temple",
+    "top1_sim": 0.8984,
+    "is_correct": 1,
+    "author": "Sdbhadra"
+  },
+  {
+    "specimen_id": "test2_konark_sun_temple_017",
+    "ground_truth": "konark_sun_temple",
+    "pred_monument": "konark_sun_temple",
+    "top1_sim": 0.8882,
+    "is_correct": 1,
+    "author": "Sdbhadra"
+  },
+  {
+    "specimen_id": "test2_non_monument_018",
+    "ground_truth": "non_monument",
+    "pred_monument": "qutub_minar",
+    "top1_sim": 0.5632,
+    "is_correct": 0,
+    "author": "Artist: D. Roberts; Engraver: J. B. Allen"
+  },
+  {
+    "specimen_id": "test2_non_monument_019",
+    "ground_truth": "non_monument",
+    "pred_monument": "victoria_memorial",
+    "top1_sim": 0.6988,
+    "is_correct": 0,
+    "author": "Dietmar Rabich"
+  },
+  {
+    "specimen_id": "test2_non_monument_020",
+    "ground_truth": "non_monument",
+    "pred_monument": "victoria_memorial",
+    "top1_sim": 0.7384,
+    "is_correct": 0,
+    "author": "Dietmar Rabich"
+  },
+  {
+    "specimen_id": "test2_non_monument_021",
+    "ground_truth": "non_monument",
+    "pred_monument": "victoria_memorial",
+    "top1_sim": 0.7507,
+    "is_correct": 0,
+    "author": "Dietmar Rabich"
+  },
+  {
+    "specimen_id": "test2_non_monument_022",
+    "ground_truth": "non_monument",
+    "pred_monument": "victoria_memorial",
+    "top1_sim": 0.5701,
+    "is_correct": 0,
+    "author": "Jeff Schmaltz, MODIS Land Rapid Response Team, NAS"
+  },
+  {
+    "specimen_id": "test2_non_monument_023",
+    "ground_truth": "non_monument",
+    "pred_monument": "sanchi_stupa",
+    "top1_sim": 0.5554,
+    "is_correct": 0,
+    "author": "NASA Goddard Space Flight Center from Greenbelt, M"
+  },
+  {
+    "specimen_id": "test2_non_monument_024",
+    "ground_truth": "non_monument",
+    "pred_monument": "konark_sun_temple",
+    "top1_sim": 0.5945,
+    "is_correct": 0,
+    "author": "Petar Milo\u0161evi\u0107"
+  },
+  {
+    "specimen_id": "test2_non_monument_025",
+    "ground_truth": "non_monument",
+    "pred_monument": "sanchi_stupa",
+    "top1_sim": 0.655,
+    "is_correct": 0,
+    "author": "SHYAMAL CHANDRA GHOSH"
+  },
+  {
+    "specimen_id": "test2_non_monument_026",
+    "ground_truth": "non_monument",
+    "pred_monument": "victoria_memorial",
+    "top1_sim": 0.6694,
+    "is_correct": 0,
+    "author": "SHYAMAL CHANDRA GHOSH"
+  },
+  {
+    "specimen_id": "test2_non_monument_027",
+    "ground_truth": "non_monument",
+    "pred_monument": "victoria_memorial",
+    "top1_sim": 0.6652,
+    "is_correct": 0,
+    "author": "SHYAMAL CHANDRA GHOSH"
+  },
+  {
+    "specimen_id": "test2_qutub_minar_028",
+    "ground_truth": "qutub_minar",
+    "pred_monument": "qutub_minar",
+    "top1_sim": 0.8903,
+    "is_correct": 1,
+    "author": "Jorge L\u00e1scar from Australia"
+  },
+  {
+    "specimen_id": "test2_qutub_minar_029",
+    "ground_truth": "qutub_minar",
+    "pred_monument": "qutub_minar",
+    "top1_sim": 0.9129,
+    "is_correct": 1,
+    "author": "Jorge L\u00e1scar from Australia"
+  },
+  {
+    "specimen_id": "test2_qutub_minar_030",
+    "ground_truth": "qutub_minar",
+    "pred_monument": "qutub_minar",
+    "top1_sim": 0.9006,
+    "is_correct": 1,
+    "author": "Kdas1977"
+  },
+  {
+    "specimen_id": "test2_qutub_minar_031",
+    "ground_truth": "qutub_minar",
+    "pred_monument": "qutub_minar",
+    "top1_sim": 0.9408,
+    "is_correct": 1,
+    "author": "Prabu80"
+  },
+  {
+    "specimen_id": "test2_sanchi_stupa_032",
+    "ground_truth": "sanchi_stupa",
+    "pred_monument": "sanchi_stupa",
+    "top1_sim": 0.9945,
+    "is_correct": 1,
+    "author": "Bernard Gagnon"
+  },
+  {
+    "specimen_id": "test2_sanchi_stupa_033",
+    "ground_truth": "sanchi_stupa",
+    "pred_monument": "sanchi_stupa",
+    "top1_sim": 0.9899,
+    "is_correct": 1,
+    "author": "Bernard Gagnon"
+  },
+  {
+    "specimen_id": "test2_sanchi_stupa_034",
+    "ground_truth": "sanchi_stupa",
+    "pred_monument": "sanchi_stupa",
+    "top1_sim": 0.8969,
+    "is_correct": 1,
+    "author": "Bernard Gagnon"
+  },
+  {
+    "specimen_id": "test2_sanchi_stupa_035",
+    "ground_truth": "sanchi_stupa",
+    "pred_monument": "sanchi_stupa",
+    "top1_sim": 0.9286,
+    "is_correct": 1,
+    "author": "Bernard Gagnon"
+  },
+  {
+    "specimen_id": "test2_taj_mahal_036",
+    "ground_truth": "taj_mahal",
+    "pred_monument": "taj_mahal",
+    "top1_sim": 0.8765,
+    "is_correct": 1,
+    "author": "AuliRaha"
+  },
+  {
+    "specimen_id": "test2_taj_mahal_037",
+    "ground_truth": "taj_mahal",
+    "pred_monument": "konark_sun_temple",
+    "top1_sim": 0.7655,
+    "is_correct": 0,
+    "author": "Gangulybiswarup"
+  },
+  {
+    "specimen_id": "test2_taj_mahal_038",
+    "ground_truth": "taj_mahal",
+    "pred_monument": "qutub_minar",
+    "top1_sim": 0.693,
+    "is_correct": 0,
+    "author": "Gangulybiswarup"
+  },
+  {
+    "specimen_id": "test2_taj_mahal_039",
+    "ground_truth": "taj_mahal",
+    "pred_monument": "victoria_memorial",
+    "top1_sim": 0.7216,
+    "is_correct": 0,
+    "author": "Gangulybiswarup"
+  },
+  {
+    "specimen_id": "test2_taj_mahal_040",
+    "ground_truth": "taj_mahal",
+    "pred_monument": "taj_mahal",
+    "top1_sim": 0.7394,
+    "is_correct": 1,
+    "author": "John F. Kennedy Presidential Library &amp; Museum"
+  },
+  {
+    "specimen_id": "test2_taj_mahal_041",
+    "ground_truth": "taj_mahal",
+    "pred_monument": "taj_mahal",
+    "top1_sim": 0.8868,
+    "is_correct": 1,
+    "author": "Kmohankar"
+  },
+  {
+    "specimen_id": "test2_taj_mahal_042",
+    "ground_truth": "taj_mahal",
+    "pred_monument": "taj_mahal",
+    "top1_sim": 0.9371,
+    "is_correct": 1,
+    "author": "Kmohankar"
+  },
+  {
+    "specimen_id": "test2_taj_mahal_043",
+    "ground_truth": "taj_mahal",
+    "pred_monument": "taj_mahal",
+    "top1_sim": 0.944,
+    "is_correct": 1,
+    "author": "NainikaK"
+  },
+  {
+    "specimen_id": "test2_taj_mahal_044",
+    "ground_truth": "taj_mahal",
+    "pred_monument": "taj_mahal",
+    "top1_sim": 0.8154,
+    "is_correct": 1,
+    "author": "Philip Nalangan"
+  },
+  {
+    "specimen_id": "test2_taj_mahal_045",
+    "ground_truth": "taj_mahal",
+    "pred_monument": "qutub_minar",
+    "top1_sim": 0.7038,
+    "is_correct": 0,
+    "author": "gangulybiswarup"
+  },
+  {
+    "specimen_id": "test2_unknown_heritage_046",
+    "ground_truth": "unknown_heritage",
+    "pred_monument": "hawa_mahal",
+    "top1_sim": 0.8743,
+    "is_correct": 0,
+    "author": "A.Savin"
+  },
+  {
+    "specimen_id": "test2_unknown_heritage_047",
+    "ground_truth": "unknown_heritage",
+    "pred_monument": "qutub_minar",
+    "top1_sim": 0.8492,
+    "is_correct": 0,
+    "author": "Aliva Sahoo"
+  },
+  {
+    "specimen_id": "test2_unknown_heritage_048",
+    "ground_truth": "unknown_heritage",
+    "pred_monument": "qutub_minar",
+    "top1_sim": 0.8044,
+    "is_correct": 0,
+    "author": "Aliva Sahoo"
+  },
+  {
+    "specimen_id": "test2_unknown_heritage_049",
+    "ground_truth": "unknown_heritage",
+    "pred_monument": "konark_sun_temple",
+    "top1_sim": 0.787,
+    "is_correct": 0,
+    "author": "Aliva Sahoo"
+  },
+  {
+    "specimen_id": "test2_unknown_heritage_050",
+    "ground_truth": "unknown_heritage",
+    "pred_monument": "konark_sun_temple",
+    "top1_sim": 0.7748,
+    "is_correct": 0,
+    "author": "Syedashiqpasha"
+  },
+  {
+    "specimen_id": "test2_unknown_heritage_051",
+    "ground_truth": "unknown_heritage",
+    "pred_monument": "konark_sun_temple",
+    "top1_sim": 0.7941,
+    "is_correct": 0,
+    "author": "Vinayaraj"
+  },
+  {
+    "specimen_id": "test2_unknown_heritage_052",
+    "ground_truth": "unknown_heritage",
+    "pred_monument": "hampi_stone_chariot",
+    "top1_sim": 0.9085,
+    "is_correct": 0,
+    "author": "Vinayaraj"
+  },
+  {
+    "specimen_id": "test2_unknown_heritage_053",
+    "ground_truth": "unknown_heritage",
+    "pred_monument": "qutub_minar",
+    "top1_sim": 0.6265,
+    "is_correct": 0,
+    "author": "Vinayaraj"
+  },
+  {
+    "specimen_id": "test2_unknown_heritage_054",
+    "ground_truth": "unknown_heritage",
+    "pred_monument": "konark_sun_temple",
+    "top1_sim": 0.8258,
+    "is_correct": 0,
+    "author": "Vyacheslav Argenberg"
+  },
+  {
+    "specimen_id": "test2_victoria_memorial_055",
+    "ground_truth": "victoria_memorial",
+    "pred_monument": "victoria_memorial",
+    "top1_sim": 0.7742,
+    "is_correct": 1,
+    "author": "Samitkumarsinha"
+  }
+]

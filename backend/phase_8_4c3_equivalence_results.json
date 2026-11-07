@@ -1,0 +1,204 @@
+{
+  "phase": "8.4C.3",
+  "title": "Two One-Sided Test (TOST) Equivalence Results",
+  "timestamp_utc": "2026-11-07T14:41:36Z",
+  "total_requests": 240,
+  "independent_specimen_clusters": 12,
+  "experimental_blocks": 5,
+  "pre_registered_margins": {
+    "p50_delta_ms": 20.0,
+    "p95_delta_ms": 100.0,
+    "p99_delta_ms": 150.0,
+    "api_error_rate": 0.0,
+    "rss_memory_mb": 100.0,
+    "cpu_util_percent": 40.0
+  },
+  "per_condition_distributions": {
+    "disabled": {
+      "count": 60,
+      "mean": 402.62,
+      "std_dev": 422.71,
+      "median": 206.68,
+      "p50": 206.68,
+      "p90": 1254.22,
+      "p95": 1351.75,
+      "p99": 1572.35,
+      "min": 120.12,
+      "max": 1664.28,
+      "api_error_rate_percent": 0.0
+    },
+    "normal": {
+      "count": 60,
+      "mean": 410.4,
+      "std_dev": 451.53,
+      "median": 212.83,
+      "p50": 212.83,
+      "p90": 1322.72,
+      "p95": 1491.04,
+      "p99": 1599.84,
+      "min": 131.8,
+      "max": 1620.37,
+      "api_error_rate_percent": 0.0
+    },
+    "slow": {
+      "count": 60,
+      "mean": 409.96,
+      "std_dev": 477.32,
+      "median": 197.42,
+      "p50": 197.42,
+      "p90": 1411.11,
+      "p95": 1511.07,
+      "p99": 1711.64,
+      "min": 98.29,
+      "max": 1844.57,
+      "api_error_rate_percent": 0.0
+    },
+    "saturated": {
+      "count": 60,
+      "mean": 410.15,
+      "std_dev": 435.58,
+      "median": 218.58,
+      "p50": 218.58,
+      "p90": 1262.48,
+      "p95": 1387.78,
+      "p99": 1641.45,
+      "min": 106.03,
+      "max": 1647.61,
+      "api_error_rate_percent": 0.0
+    }
+  },
+  "equivalence_by_condition": {
+    "normal": {
+      "sample_size_nominal": 60,
+      "independent_specimen_clusters": 12,
+      "experimental_blocks": 5,
+      "mean_diff_ms": 7.78,
+      "median_diff_ms": -1.28,
+      "std_diff_ms": 149.93,
+      "clustered_standard_error_ms": 15.822,
+      "percentage_difference": 1.93,
+      "clustered_bootstrap_ci_90": {
+        "lower_ms": -17.17,
+        "upper_ms": 34.64
+      },
+      "clustered_bootstrap_ci_95": {
+        "lower_ms": -21.77,
+        "upper_ms": 41.4
+      },
+      "tost_equivalence_p50": {
+        "equivalence_margin_delta": 20.0,
+        "t1_stat": 1.756,
+        "p1_value": 0.05345,
+        "t2_stat": 0.772,
+        "p2_value": 0.22809,
+        "tost_p_value": 0.22809,
+        "alpha": 0.05,
+        "ci_90_inside_margin": false,
+        "is_equivalent": false,
+        "conclusion": "NOT_EQUIVALENT_DEGRADATION"
+      },
+      "tail_percentile_comparison": {
+        "p50_diff_ms": 6.15,
+        "p50_margin_ms": 20.0,
+        "p50_within_margin": true,
+        "p95_diff_ms": 139.29,
+        "p95_margin_ms": 100.0,
+        "p95_within_margin": false,
+        "p99_diff_ms": 27.49,
+        "p99_margin_ms": 150.0,
+        "p99_within_margin": true
+      },
+      "overall_statistical_equivalence_declared": false
+    },
+    "slow": {
+      "sample_size_nominal": 60,
+      "independent_specimen_clusters": 12,
+      "experimental_blocks": 5,
+      "mean_diff_ms": 7.34,
+      "median_diff_ms": 4.44,
+      "std_diff_ms": 156.87,
+      "clustered_standard_error_ms": 22.5,
+      "percentage_difference": 1.82,
+      "clustered_bootstrap_ci_90": {
+        "lower_ms": -27.09,
+        "upper_ms": 48.61
+      },
+      "clustered_bootstrap_ci_95": {
+        "lower_ms": -32.55,
+        "upper_ms": 56.67
+      },
+      "tost_equivalence_p50": {
+        "equivalence_margin_delta": 20.0,
+        "t1_stat": 1.215,
+        "p1_value": 0.12486,
+        "t2_stat": 0.563,
+        "p2_value": 0.29251,
+        "tost_p_value": 0.29251,
+        "alpha": 0.05,
+        "ci_90_inside_margin": false,
+        "is_equivalent": false,
+        "conclusion": "NOT_EQUIVALENT_DEGRADATION"
+      },
+      "tail_percentile_comparison": {
+        "p50_diff_ms": -9.26,
+        "p50_margin_ms": 20.0,
+        "p50_within_margin": true,
+        "p95_diff_ms": 159.32,
+        "p95_margin_ms": 100.0,
+        "p95_within_margin": false,
+        "p99_diff_ms": 139.29,
+        "p99_margin_ms": 150.0,
+        "p99_within_margin": true
+      },
+      "overall_statistical_equivalence_declared": false
+    },
+    "saturated": {
+      "sample_size_nominal": 60,
+      "independent_specimen_clusters": 12,
+      "experimental_blocks": 5,
+      "mean_diff_ms": 7.53,
+      "median_diff_ms": 5.73,
+      "std_diff_ms": 146.27,
+      "clustered_standard_error_ms": 13.577,
+      "percentage_difference": 1.87,
+      "clustered_bootstrap_ci_90": {
+        "lower_ms": -14.02,
+        "upper_ms": 31.15
+      },
+      "clustered_bootstrap_ci_95": {
+        "lower_ms": -17.93,
+        "upper_ms": 35.48
+      },
+      "tost_equivalence_p50": {
+        "equivalence_margin_delta": 20.0,
+        "t1_stat": 2.028,
+        "p1_value": 0.03377,
+        "t2_stat": 0.919,
+        "p2_value": 0.189,
+        "tost_p_value": 0.189,
+        "alpha": 0.05,
+        "ci_90_inside_margin": false,
+        "is_equivalent": false,
+        "conclusion": "NOT_EQUIVALENT_DEGRADATION"
+      },
+      "tail_percentile_comparison": {
+        "p50_diff_ms": 11.9,
+        "p50_margin_ms": 20.0,
+        "p50_within_margin": true,
+        "p95_diff_ms": 36.03,
+        "p95_margin_ms": 100.0,
+        "p95_within_margin": true,
+        "p99_diff_ms": 69.1,
+        "p99_margin_ms": 150.0,
+        "p99_within_margin": true
+      },
+      "overall_statistical_equivalence_declared": false
+    }
+  },
+  "policy_a_functional_invariance_percent": 100.0,
+  "warmup_summary": {
+    "total_warmup_requests": 24,
+    "mean_warmup_latency_ms": 367.59,
+    "excluded_from_statistical_metrics": true
+  }
+}

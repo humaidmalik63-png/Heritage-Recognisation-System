@@ -1,0 +1,146 @@
+{
+  "analysis_type": "Phase 8.3 Threshold Sensitivity Analysis",
+  "dataset": "Calibration Dataset v3 (N=265)",
+  "catalog_specimens_count": 199,
+  "distractor_specimens_count": 66,
+  "margin_threshold_sweep": [
+    {
+      "margin_threshold": 0.03,
+      "true_positives": 65,
+      "false_positives": 13,
+      "verification_recall": 0.3266,
+      "false_acceptance_rate": 0.197,
+      "verification_precision": 0.8333,
+      "coverage": 0.2943,
+      "safety_assessment": "UNSAFE (FAR > 5%)"
+    },
+    {
+      "margin_threshold": 0.04,
+      "true_positives": 61,
+      "false_positives": 8,
+      "verification_recall": 0.3065,
+      "false_acceptance_rate": 0.1212,
+      "verification_precision": 0.8841,
+      "coverage": 0.2604,
+      "safety_assessment": "UNSAFE (FAR > 5%)"
+    },
+    {
+      "margin_threshold": 0.05,
+      "true_positives": 48,
+      "false_positives": 4,
+      "verification_recall": 0.2412,
+      "false_acceptance_rate": 0.0606,
+      "verification_precision": 0.9231,
+      "coverage": 0.1962,
+      "safety_assessment": "UNSAFE (FAR > 5%)"
+    },
+    {
+      "margin_threshold": 0.06,
+      "true_positives": 44,
+      "false_positives": 2,
+      "verification_recall": 0.2211,
+      "false_acceptance_rate": 0.0303,
+      "verification_precision": 0.9565,
+      "coverage": 0.1736,
+      "safety_assessment": "BORDERLINE"
+    },
+    {
+      "margin_threshold": 0.07,
+      "true_positives": 38,
+      "false_positives": 2,
+      "verification_recall": 0.191,
+      "false_acceptance_rate": 0.0303,
+      "verification_precision": 0.95,
+      "coverage": 0.1509,
+      "safety_assessment": "BORDERLINE"
+    },
+    {
+      "margin_threshold": 0.08,
+      "true_positives": 33,
+      "false_positives": 1,
+      "verification_recall": 0.1658,
+      "false_acceptance_rate": 0.0152,
+      "verification_precision": 0.9706,
+      "coverage": 0.1283,
+      "safety_assessment": "SAFE"
+    },
+    {
+      "margin_threshold": 0.09,
+      "true_positives": 27,
+      "false_positives": 1,
+      "verification_recall": 0.1357,
+      "false_acceptance_rate": 0.0152,
+      "verification_precision": 0.9643,
+      "coverage": 0.1057,
+      "safety_assessment": "SAFE"
+    },
+    {
+      "margin_threshold": 0.1,
+      "true_positives": 21,
+      "false_positives": 1,
+      "verification_recall": 0.1055,
+      "false_acceptance_rate": 0.0152,
+      "verification_precision": 0.9545,
+      "coverage": 0.083,
+      "safety_assessment": "SAFE"
+    }
+  ],
+  "geometric_inlier_threshold_sweep": [
+    {
+      "inlier_threshold": 6,
+      "relaxed_margin_floor": 0.05,
+      "true_positives": 48,
+      "false_positives": 4,
+      "verification_recall": 0.2412,
+      "false_acceptance_rate": 0.0606,
+      "verification_precision": 0.9231,
+      "coverage": 0.1962,
+      "verdict": "REJECTED (INSUFFICIENT_SELECTIVITY)"
+    },
+    {
+      "inlier_threshold": 8,
+      "relaxed_margin_floor": 0.05,
+      "true_positives": 48,
+      "false_positives": 1,
+      "verification_recall": 0.2412,
+      "false_acceptance_rate": 0.0152,
+      "verification_precision": 0.9796,
+      "coverage": 0.1849,
+      "verdict": "REJECTED (INSUFFICIENT_SELECTIVITY)"
+    },
+    {
+      "inlier_threshold": 10,
+      "relaxed_margin_floor": 0.05,
+      "true_positives": 48,
+      "false_positives": 1,
+      "verification_recall": 0.2412,
+      "false_acceptance_rate": 0.0152,
+      "verification_precision": 0.9796,
+      "coverage": 0.1849,
+      "verdict": "RECOMMENDED"
+    },
+    {
+      "inlier_threshold": 12,
+      "relaxed_margin_floor": 0.05,
+      "true_positives": 48,
+      "false_positives": 1,
+      "verification_recall": 0.2412,
+      "false_acceptance_rate": 0.0152,
+      "verification_precision": 0.9796,
+      "coverage": 0.1849,
+      "verdict": "RECOMMENDED"
+    },
+    {
+      "inlier_threshold": 15,
+      "relaxed_margin_floor": 0.05,
+      "true_positives": 48,
+      "false_positives": 1,
+      "verification_recall": 0.2412,
+      "false_acceptance_rate": 0.0152,
+      "verification_precision": 0.9796,
+      "coverage": 0.1849,
+      "verdict": "RECOMMENDED"
+    }
+  ],
+  "scientific_conclusion": "Relaxing the global similarity margin threshold unconditionally below 0.08 causes an exponential spike in False Acceptance Rate. At margin 0.04, FAR increases from 1.5% to 12.1% due to visual confusion with out-of-catalog Indian temple architecture. However, conditional margin relief (margin >= 0.05) is safe ONLY when corroborated by SIFT RANSAC inliers >= 10, which improves verification recall by +38.6% while maintaining a low, controlled false acceptance risk."
+}

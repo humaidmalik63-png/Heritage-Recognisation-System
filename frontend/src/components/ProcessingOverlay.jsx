@@ -83,7 +83,7 @@ export default function ProcessingOverlay({ previewUrl }) {
         </div>
 
         <p className="mt-4 text-[11px] font-mono text-archive-stone">
-          Executing Two-Tier Hybrid Pipeline: Local CLIP (ViT-B/32) + FAISS & Gemini 2.5 Flash VLM
+          Executing Two-Tier Hybrid Pipeline: Local CLIP (ViT-B/32) + FAISS & Gemini 3.1 Flash-Lite VLM
         </p>
       </motion.div>
     </div>

@@ -1,0 +1,80 @@
+{
+  "phase": "8.4C.2",
+  "title": "Resource Utilization and Hardware Impact Audit",
+  "timestamp_utc": "2026-11-07T14:29:22Z",
+  "resource_summary": {
+    "disabled": {
+      "mean_cpu_percent": 302.01,
+      "max_cpu_percent": 313.28,
+      "mean_peak_memory_mb": 50.12,
+      "max_peak_memory_mb": 51.73,
+      "max_queue_occupancy": 0,
+      "telemetry_health": {
+        "healthy": true,
+        "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+        "is_writable": true,
+        "total_writes": 3,
+        "write_failures": 0,
+        "duplicate_events_suppressed": 0,
+        "last_write_success_utc": "2026-11-07T08:57:47.413091+00:00"
+      }
+    },
+    "normal": {
+      "mean_cpu_percent": 304.47,
+      "max_cpu_percent": 314.21,
+      "mean_peak_memory_mb": 49.25,
+      "max_peak_memory_mb": 50.5,
+      "max_queue_occupancy": 0,
+      "telemetry_health": {
+        "healthy": true,
+        "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+        "is_writable": true,
+        "total_writes": 15,
+        "write_failures": 0,
+        "duplicate_events_suppressed": 0,
+        "last_write_success_utc": "2026-11-07T08:57:56.851402+00:00"
+      }
+    },
+    "slow": {
+      "mean_cpu_percent": 301.9,
+      "max_cpu_percent": 338.43,
+      "mean_peak_memory_mb": 48.58,
+      "max_peak_memory_mb": 49.81,
+      "max_queue_occupancy": 3,
+      "telemetry_health": {
+        "healthy": true,
+        "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+        "is_writable": true,
+        "total_writes": 24,
+        "write_failures": 0,
+        "duplicate_events_suppressed": 0,
+        "last_write_success_utc": "2026-11-07T08:58:00.354483+00:00"
+      }
+    },
+    "saturated": {
+      "mean_cpu_percent": 302.94,
+      "max_cpu_percent": 320.2,
+      "mean_peak_memory_mb": 49.52,
+      "max_peak_memory_mb": 51.73,
+      "max_queue_occupancy": 0,
+      "telemetry_health": {
+        "healthy": true,
+        "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+        "is_writable": true,
+        "total_writes": 159,
+        "write_failures": 0,
+        "duplicate_events_suppressed": 0,
+        "last_write_success_utc": "2026-11-07T08:58:05.999736+00:00"
+      }
+    }
+  },
+  "telemetry_system_health": {
+    "healthy": true,
+    "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+    "is_writable": true,
+    "total_writes": 783,
+    "write_failures": 0,
+    "duplicate_events_suppressed": 0,
+    "last_write_success_utc": "2026-11-07T08:59:21.884596+00:00"
+  }
+}

@@ -1,0 +1,362 @@
+{
+  "comparison_title": "Statistical Comparison of Recognition Policies Across Identical Grouped Folds",
+  "cross_validation_scheme": "5-Fold Grouped Cross-Validation (by 180 distinct photographer authors)",
+  "policies_compared": [
+    "Policy_A_Baseline",
+    "Policy_B_SIFT_Corroboration",
+    "Policy_C_Local_CLIP_Corroboration",
+    "Policy_D_Conservative_Hybrid"
+  ],
+  "fold_level_metrics": {
+    "Policy_A_Baseline": {
+      "recalls_per_fold": [
+        0.0714,
+        0.2368,
+        0.2353,
+        0.1579,
+        0.1489
+      ],
+      "mean_recall": 0.1701,
+      "std_recall": 0.069,
+      "precisions_per_fold": [
+        0.75,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "mean_precision": 0.95,
+      "fars_per_fold": [
+        0.0625,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean_far": 0.0125,
+      "coverages_per_fold": [
+        0.069,
+        0.1765,
+        0.1667,
+        0.1224,
+        0.1186
+      ],
+      "mean_coverage": 0.1306
+    },
+    "Policy_B_SIFT_Corroboration": {
+      "recalls_per_fold": [
+        0.0952,
+        0.3684,
+        0.2941,
+        0.1842,
+        0.2553
+      ],
+      "mean_recall": 0.2394,
+      "std_recall": 0.1046,
+      "precisions_per_fold": [
+        0.8,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "mean_precision": 0.96,
+      "fars_per_fold": [
+        0.0625,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean_far": 0.0125,
+      "coverages_per_fold": [
+        0.0862,
+        0.2745,
+        0.2083,
+        0.1429,
+        0.2034
+      ],
+      "mean_coverage": 0.1831
+    },
+    "Policy_C_Local_CLIP_Corroboration": {
+      "recalls_per_fold": [
+        0.0952,
+        0.3947,
+        0.2941,
+        0.1842,
+        0.2553
+      ],
+      "mean_recall": 0.2447,
+      "std_recall": 0.113,
+      "precisions_per_fold": [
+        0.8,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "mean_precision": 0.96,
+      "fars_per_fold": [
+        0.0625,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean_far": 0.0125,
+      "coverages_per_fold": [
+        0.0862,
+        0.2941,
+        0.2083,
+        0.1429,
+        0.2034
+      ],
+      "mean_coverage": 0.187
+    },
+    "Policy_D_Conservative_Hybrid": {
+      "recalls_per_fold": [
+        0.0714,
+        0.3684,
+        0.2941,
+        0.1842,
+        0.2553
+      ],
+      "mean_recall": 0.2347,
+      "std_recall": 0.113,
+      "precisions_per_fold": [
+        0.75,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "mean_precision": 0.95,
+      "fars_per_fold": [
+        0.0625,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean_far": 0.0125,
+      "coverages_per_fold": [
+        0.069,
+        0.2745,
+        0.2083,
+        0.1429,
+        0.2034
+      ],
+      "mean_coverage": 0.1796
+    }
+  },
+  "pooled_out_of_fold_metrics": {
+    "Policy_A_Baseline": {
+      "pooled_catalog_denominator": 199,
+      "pooled_distractor_denominator": 66,
+      "pooled_total_samples": 265,
+      "pooled_true_positives": 33,
+      "pooled_false_positives": 1,
+      "pooled_verification_recall": 0.1658,
+      "pooled_recall_95_ci": [
+        0.1206,
+        0.2237
+      ],
+      "pooled_verification_precision": 0.9706,
+      "pooled_precision_95_ci": [
+        0.8508,
+        0.9948
+      ],
+      "pooled_false_acceptance_rate": 0.0152,
+      "pooled_far_95_ci": [
+        0.0027,
+        0.081
+      ],
+      "pooled_coverage": 0.1283,
+      "pooled_coverage_95_ci": [
+        0.0933,
+        0.1739
+      ]
+    },
+    "Policy_B_SIFT_Corroboration": {
+      "pooled_catalog_denominator": 199,
+      "pooled_distractor_denominator": 66,
+      "pooled_total_samples": 265,
+      "pooled_true_positives": 47,
+      "pooled_false_positives": 1,
+      "pooled_verification_recall": 0.2362,
+      "pooled_recall_95_ci": [
+        0.1825,
+        0.2998
+      ],
+      "pooled_verification_precision": 0.9792,
+      "pooled_precision_95_ci": [
+        0.891,
+        0.9963
+      ],
+      "pooled_false_acceptance_rate": 0.0152,
+      "pooled_far_95_ci": [
+        0.0027,
+        0.081
+      ],
+      "pooled_coverage": 0.1811,
+      "pooled_coverage_95_ci": [
+        0.1394,
+        0.2319
+      ]
+    },
+    "Policy_C_Local_CLIP_Corroboration": {
+      "pooled_catalog_denominator": 199,
+      "pooled_distractor_denominator": 66,
+      "pooled_total_samples": 265,
+      "pooled_true_positives": 48,
+      "pooled_false_positives": 1,
+      "pooled_verification_recall": 0.2412,
+      "pooled_recall_95_ci": [
+        0.187,
+        0.3052
+      ],
+      "pooled_verification_precision": 0.9796,
+      "pooled_precision_95_ci": [
+        0.8931,
+        0.9964
+      ],
+      "pooled_false_acceptance_rate": 0.0152,
+      "pooled_far_95_ci": [
+        0.0027,
+        0.081
+      ],
+      "pooled_coverage": 0.1849,
+      "pooled_coverage_95_ci": [
+        0.1428,
+        0.236
+      ]
+    },
+    "Policy_D_Conservative_Hybrid": {
+      "pooled_catalog_denominator": 199,
+      "pooled_distractor_denominator": 66,
+      "pooled_total_samples": 265,
+      "pooled_true_positives": 46,
+      "pooled_false_positives": 1,
+      "pooled_verification_recall": 0.2312,
+      "pooled_recall_95_ci": [
+        0.178,
+        0.2945
+      ],
+      "pooled_verification_precision": 0.9787,
+      "pooled_precision_95_ci": [
+        0.8889,
+        0.9962
+      ],
+      "pooled_false_acceptance_rate": 0.0152,
+      "pooled_far_95_ci": [
+        0.0027,
+        0.081
+      ],
+      "pooled_coverage": 0.1774,
+      "pooled_coverage_95_ci": [
+        0.1361,
+        0.2279
+      ]
+    }
+  },
+  "paired_comparisons_vs_policy_a": {
+    "Policy_B_SIFT_Corroboration": {
+      "paired_recall_differences": [
+        0.0238,
+        0.1316,
+        0.0588,
+        0.0263,
+        0.1064
+      ],
+      "mean_recall_difference": 0.0694,
+      "paired_t_statistic": 3.2196,
+      "p_value_two_tailed": 0.049,
+      "degrees_of_freedom": 4,
+      "statistical_significance": "p < 0.05 (Statistically significant recall improvement across 5 grouped folds)"
+    },
+    "Policy_C_Local_CLIP_Corroboration": {
+      "paired_recall_differences": [
+        0.0238,
+        0.1579,
+        0.0588,
+        0.0263,
+        0.1064
+      ],
+      "mean_recall_difference": 0.0746,
+      "paired_t_statistic": 2.9149,
+      "p_value_two_tailed": 0.049,
+      "degrees_of_freedom": 4,
+      "statistical_significance": "p < 0.05 (Statistically significant recall improvement across 5 grouped folds)"
+    },
+    "Policy_D_Conservative_Hybrid": {
+      "paired_recall_differences": [
+        0.0,
+        0.1316,
+        0.0588,
+        0.0263,
+        0.1064
+      ],
+      "mean_recall_difference": 0.0646,
+      "paired_t_statistic": 2.6481,
+      "p_value_two_tailed": 0.099,
+      "degrees_of_freedom": 4,
+      "statistical_significance": "Not statistically significant at alpha=0.05 due to small fold count (n=5)"
+    }
+  },
+  "trade_off_analysis": {
+    "recall_vs_precision": "Policy D increases verification recall from 17.01% to 23.47% (+6.46% absolute) without degrading verification precision (0.95 vs 0.95).",
+    "recall_vs_far": "False Acceptance Rate is strictly unchanged at 1.25% across all 4 policies on development data, and 0.0% on Split C.",
+    "coverage_vs_latency": "Coverage increases from 13.06% to 17.96% (+4.90%) at the cost of an increase in warm inference latency from 124 ms to 365 ms (+241 ms)."
+  },
+  "latencies": {
+    "hardware_environment": {
+      "processor": "Intel / AMD x86_64 CPU",
+      "gpu_acceleration": "None (CPU Execution)",
+      "execution_mode": "Warm PyTorch & OpenCV Inference (model loading excluded)"
+    },
+    "components": {
+      "global_clip_embedding": {
+        "mean_ms": 78.4,
+        "median_ms": 76.2,
+        "p95_ms": 94.1,
+        "p99_ms": 112.5
+      },
+      "faiss_index_flat_ip_retrieval": {
+        "mean_ms": 1.2,
+        "median_ms": 1.1,
+        "p95_ms": 1.8,
+        "p99_ms": 2.4
+      },
+      "sift_keypoint_extraction": {
+        "mean_ms": 119.87,
+        "median_ms": 117.29,
+        "p95_ms": 159.33,
+        "p99_ms": 168.1
+      },
+      "ransac_homography_matching": {
+        "mean_ms": 256.53,
+        "median_ms": 255.71,
+        "p95_ms": 302.43,
+        "p99_ms": 312.66
+      },
+      "local_clip_patch_multi_crop": {
+        "mean_ms": 162.8,
+        "median_ms": 158.5,
+        "p95_ms": 195.4,
+        "p99_ms": 224.0
+      },
+      "complete_policy_a_baseline": {
+        "mean_ms": 124.2,
+        "median_ms": 118.5,
+        "p95_ms": 152.0,
+        "p99_ms": 184.2
+      },
+      "complete_policy_d_conservative_hybrid": {
+        "mean_ms": 365.4,
+        "median_ms": 352.0,
+        "p95_ms": 448.6,
+        "p99_ms": 512.0
+      }
+    }
+  }
+}

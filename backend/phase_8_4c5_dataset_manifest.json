@@ -1,0 +1,17 @@
+{
+  "phase": "8.4C.5",
+  "title": "Prospective Validation Pilot Dataset Manifest (50 Specimens)",
+  "created_at_utc": "2026-11-07T09:46:52Z",
+  "total_specimens": 0,
+  "target_specimens": 50,
+  "class_breakdown": {
+    "catalog_monuments": 0,
+    "out_of_catalog_heritage": 0,
+    "non_monument_distractors": 0
+  },
+  "modality_breakdown": {
+    "photograph": 0,
+    "diagram_or_plan": 0
+  },
+  "records": []
+}

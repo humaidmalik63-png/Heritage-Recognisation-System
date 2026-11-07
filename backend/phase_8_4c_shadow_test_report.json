@@ -1,0 +1,191 @@
+{
+  "phase": "8.4C",
+  "title": "Controlled Shadow Staging Test Report",
+  "timestamp": "2026-11-07T16:17:11+0530",
+  "total_tests": 12,
+  "passed_tests": 12,
+  "failed_tests": 0,
+  "errored_tests": 0,
+  "all_passed": true,
+  "test_results": [
+    {
+      "test_number": 1,
+      "test_name": "Production response identical with shadow mode enabled vs disabled",
+      "passed": true,
+      "duration_ms": 4998.87,
+      "details": {
+        "verified_fields": [
+          "is_monument",
+          "verification_status",
+          "is_uncertain",
+          "verification_tier",
+          "confidence_score",
+          "monument_name",
+          "monument_key",
+          "location",
+          "catalog_id",
+          "rejection_message",
+          "human_review_flagged"
+        ],
+        "differences": {}
+      }
+    },
+    {
+      "test_number": 2,
+      "test_name": "Candidate Policy D cannot overwrite or alter Policy A's returned decision",
+      "passed": true,
+      "duration_ms": 466.86,
+      "details": {
+        "policy_a_status": "NON_MONUMENT_REJECTED",
+        "policy_a_monument": null,
+        "leak_detected": false
+      }
+    },
+    {
+      "test_number": 3,
+      "test_name": "Shadow timeout does not delay API response beyond configured budget",
+      "passed": true,
+      "duration_ms": 268.22,
+      "details": {
+        "api_request_duration_ms": 215.96,
+        "expected_max_ms": 1000.0
+      }
+    },
+    {
+      "test_number": 4,
+      "test_name": "Policy D exception or crash does not fail Policy A recognition",
+      "passed": true,
+      "duration_ms": 193.71,
+      "details": {
+        "http_status": 200,
+        "verification_status": "NON_MONUMENT_REJECTED"
+      }
+    },
+    {
+      "test_number": 5,
+      "test_name": "In disabled mode, no background evaluation is submitted or queued",
+      "passed": true,
+      "duration_ms": 210.18,
+      "details": {
+        "submission_status": "SHADOW_DISABLED",
+        "queue_length": 0,
+        "active_threads": 0
+      }
+    },
+    {
+      "test_number": 6,
+      "test_name": "Queue saturation drops/skips candidate tasks safely without blocking",
+      "passed": true,
+      "duration_ms": 17.78,
+      "details": {
+        "submission_1": "SUBMITTED",
+        "submission_2": "SUBMITTED",
+        "submission_3": "SHADOW_SKIPPED_CAPACITY",
+        "submission_4_overflow": "SHADOW_SKIPPED_CAPACITY",
+        "total_dropped": 2
+      }
+    },
+    {
+      "test_number": 7,
+      "test_name": "Telemetry correctly records all divergence categories",
+      "passed": true,
+      "duration_ms": 33.84,
+      "details": {
+        "expected_categories": [
+          "AGREEMENT",
+          "POLICY_D_UPGRADE",
+          "POLICY_D_DOWNGRADE",
+          "UNVERIFIED_AGREEMENT",
+          "OUT_OF_CATALOG_NEGATIVE_REJECTION"
+        ],
+        "actual_categories": [
+          "AGREEMENT",
+          "POLICY_D_UPGRADE",
+          "POLICY_D_DOWNGRADE",
+          "UNVERIFIED_AGREEMENT",
+          "OUT_OF_CATALOG_NEGATIVE_REJECTION"
+        ]
+      }
+    },
+    {
+      "test_number": 8,
+      "test_name": "Shadow timeout emits a timeout telemetry event with accurate elapsed time",
+      "passed": true,
+      "duration_ms": 331.76,
+      "details": {
+        "timeout_event_found": true,
+        "timeout_entries": [
+          {
+            "event_type": "SHADOW_TIMEOUT",
+            "request_id": "req_timeout_test",
+            "timestamp_utc": "2026-11-07T10:47:10.769666+00:00",
+            "elapsed_ms": 250.75,
+            "timeout_threshold_ms": 100,
+            "policy_a_decision": "UNCERTAIN_MATCH",
+            "policy_a_monument": "taj_mahal"
+          }
+        ]
+      }
+    },
+    {
+      "test_number": 9,
+      "test_name": "Shadow execution error emits an error telemetry event without crashing host process",
+      "passed": true,
+      "duration_ms": 127.18,
+      "details": {
+        "error_event_found": true,
+        "error_details": [
+          {
+            "event_type": "SHADOW_ERROR",
+            "request_id": "req_error_test",
+            "timestamp_utc": "2026-11-07T10:47:10.844747+00:00",
+            "elapsed_ms": 0.12,
+            "error_message": "Synthetic RANSAC degenerate matrix error",
+            "policy_a_decision": "UNCERTAIN_MATCH",
+            "policy_a_monument": "taj_mahal"
+          }
+        ]
+      }
+    },
+    {
+      "test_number": 10,
+      "test_name": "Telemetry write failure does not break production recognition",
+      "passed": true,
+      "duration_ms": 316.44,
+      "details": {
+        "http_status": 200,
+        "verification_status": "NON_MONUMENT_REJECTED"
+      }
+    },
+    {
+      "test_number": 11,
+      "test_name": "Dynamic kill switch immediately prevents new shadow tasks from queuing",
+      "passed": true,
+      "duration_ms": 0.18,
+      "details": {
+        "kill_switch_state": false,
+        "submission_result": "SHADOW_DISABLED"
+      }
+    },
+    {
+      "test_number": 12,
+      "test_name": "Application shutdown cleanly stops the shadow executor without corrupting in-flight telemetry",
+      "passed": true,
+      "duration_ms": 41.36,
+      "details": {
+        "executor_shutdown": true,
+        "valid_telemetry_records": 2
+      }
+    }
+  ],
+  "production_invariants_verified": [
+    "Policy A remains authoritative",
+    "Zero influence of Policy D on Policy A returned responses",
+    "Shadow timeout budget strictly isolated (< 500ms)",
+    "Shadow exceptions completely insulated",
+    "Default disabled kill switch functioning",
+    "Queue saturation backpressure functional",
+    "Complete divergence taxonomy logged",
+    "Thread-safe telemetry without disk or memory leaks"
+  ]
+}

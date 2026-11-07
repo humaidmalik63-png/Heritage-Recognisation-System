@@ -1,0 +1,44 @@
+{
+  "timestamp_utc": "2026-11-05T05:52:14Z",
+  "total_harvested_authentic": 102,
+  "development_specimens": 47,
+  "independent_test_v2_specimens": 55,
+  "reference_gallery_specimens": 200,
+  "holdout_v1_specimens": 20,
+  "leakage_checks": {
+    "dev_vs_reference_gallery_collisions": 0,
+    "test_v2_vs_reference_gallery_collisions": 0,
+    "dev_vs_test_v2_collisions": 0,
+    "zero_leakage_verified": true
+  },
+  "monument_distribution": {
+    "development": {
+      "brihadeeswarar_temple": 1,
+      "charminar": 1,
+      "gateway_of_india": 1,
+      "hampi_stone_chariot": 4,
+      "hawa_mahal": 7,
+      "konark_sun_temple": 5,
+      "non_monument": 7,
+      "qutub_minar": 2,
+      "sanchi_stupa": 4,
+      "taj_mahal": 5,
+      "unknown_heritage": 9,
+      "victoria_memorial": 1
+    },
+    "independent_test_v2": {
+      "brihadeeswarar_temple": 2,
+      "charminar": 2,
+      "gateway_of_india": 2,
+      "hampi_stone_chariot": 3,
+      "hawa_mahal": 4,
+      "konark_sun_temple": 4,
+      "non_monument": 10,
+      "qutub_minar": 4,
+      "sanchi_stupa": 4,
+      "taj_mahal": 10,
+      "unknown_heritage": 9,
+      "victoria_memorial": 1
+    }
+  }
+}

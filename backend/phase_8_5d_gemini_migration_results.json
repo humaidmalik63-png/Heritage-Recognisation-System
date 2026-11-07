@@ -1,0 +1,213 @@
+{
+  "timestamp": "2026-11-07T12:08:03Z",
+  "configured_model": "gemini-3.1-flash-lite",
+  "is_service_available": true,
+  "live_text_request": {
+    "success": true,
+    "status_code": 200,
+    "model": "gemini-3.1-flash-lite",
+    "prompt": "In 2 sentences, describe the structural function of an Indo-Islamic corbelled dome in Mughal architecture.",
+    "response": "An Indo-Islamic corbelled dome is constructed by layering inward-projecting horizontal stone courses until the aperture is narrow enough to be capped with a single slab. This technique relies on the weight of the masonry to create stability through inward gravity, allowing for the creation of vaulted spaces without the outward thrust inherent in true radial arches.",
+    "latency_ms": 1530.93,
+    "input_tokens": 23,
+    "output_tokens": 66,
+    "total_tokens": 89
+  },
+  "live_single_image_request": {
+    "specimen": "Eiffel Tower",
+    "model": "gemini-3.1-flash-lite",
+    "is_offline_fallback": false,
+    "proposed_identity": "Eiffel Tower, Paris/France",
+    "is_catalog_monument": false,
+    "visual_evidence": "The image displays the iconic wrought-iron lattice tower structure known as the Eiffel Tower. It features the characteristic tapering silhouette, four arched legs converging into a single vertical tower, and a distinct cross-braced metal framework. The structure is set against a clear blue sky, with the Palais de Chaillot visible in the background through the base arch.",
+    "confidence_description": "High - globally recognized architectural landmark with unique structural geometry.",
+    "uncertainty_reason": "None",
+    "latency_ms": 2982.88
+  },
+  "five_monument_image_tests": [
+    {
+      "key": "eiffel_tower",
+      "name": "Eiffel Tower",
+      "file": "C:\\Users\\humai\\Heritage PJ\\backend\\datasets\\phase_8_5c_ooc_eval\\eiffel_tower.jpg",
+      "model": "gemini-3.1-flash-lite",
+      "proposed_identity": "Eiffel Tower, Paris/France",
+      "is_catalog_monument": false,
+      "expected_is_catalog": false,
+      "catalog_membership_correct": true,
+      "visual_evidence": "The image displays the iconic wrought-iron lattice tower structure known as the Eiffel Tower. It features a distinct tapering silhouette, four arched legs converging into a single vertical column, and a complex network of crisscrossing metal trusses. The structure is set against a clear blue sky, with the Trocad\u00e9ro gardens visible in the background.",
+      "confidence_description": "High - globally recognized landmark with unique structural engineering characteristics.",
+      "uncertainty_reason": "None",
+      "visible_observations": [
+        "wrought-iron lattice framework",
+        "tapering vertical profile",
+        "four-legged arched base",
+        "open-web metal truss construction"
+      ],
+      "candidate_styles": [
+        "Structural Expressionism",
+        "Industrial Architecture"
+      ],
+      "is_offline_fallback": false,
+      "latency_ms": 3081.3
+    },
+    {
+      "key": "colosseum",
+      "name": "Colosseum",
+      "file": "C:\\Users\\humai\\Heritage PJ\\backend\\datasets\\phase_8_5c_ooc_eval\\colosseum.jpg",
+      "model": "gemini-3.1-flash-lite",
+      "proposed_identity": "The Colosseum, Rome/Italy",
+      "is_catalog_monument": false,
+      "expected_is_catalog": false,
+      "catalog_membership_correct": true,
+      "visual_evidence": "The structure is a massive elliptical amphitheater characterized by a multi-tiered facade featuring superimposed orders of columns (Doric/Tuscan on the ground floor, Ionic on the second, and Corinthian on the third). The use of travertine limestone, tuff, and brick-faced concrete is evident. The iconic arcaded exterior with repetitive bays is a hallmark of Roman Imperial architecture.",
+      "confidence_description": "High - globally recognized architectural landmark with distinct structural features.",
+      "uncertainty_reason": "None",
+      "visible_observations": [
+        "Superimposed architectural orders",
+        "Elliptical plan",
+        "Travertine masonry",
+        "Tiered arcades",
+        "Exposed brick-faced concrete core"
+      ],
+      "candidate_styles": [
+        "Roman Imperial",
+        "Classical Antiquity"
+      ],
+      "is_offline_fallback": false,
+      "latency_ms": 3348.42
+    },
+    {
+      "key": "mysore_palace",
+      "name": "Mysore Palace",
+      "file": "C:\\Users\\humai\\Heritage PJ\\backend\\datasets\\phase_8_5c_ooc_eval\\mysore_palace.jpg",
+      "model": "gemini-3.1-flash-lite",
+      "proposed_identity": "Mysore Palace, Mysore, India",
+      "is_catalog_monument": false,
+      "expected_is_catalog": false,
+      "catalog_membership_correct": true,
+      "visual_evidence": "The structure exhibits a distinct Indo-Saracenic architectural style, characterized by a symmetrical facade, a central elevated tower (gopura-like structure), and multiple red-domed turrets. The ground level features a series of large, wide-span cusped arches, while the upper levels incorporate intricate balconies and arched windows. The material palette appears to be stone masonry with decorative plasterwork, consistent with the late 19th/early 20th-century royal palaces of the Wodeyar dynasty.",
+      "confidence_description": "High - The architectural profile is iconic and globally recognized as the Amba Vilas Palace (Mysore Palace).",
+      "uncertainty_reason": "None",
+      "visible_observations": [
+        "Symmetrical facade with a central dominant tower",
+        "Multiple red-domed chhatris (turrets)",
+        "Large series of cusped arches on the ground floor",
+        "Intricate stone masonry and decorative parapets",
+        "Expansive paved courtyard in the foreground"
+      ],
+      "candidate_styles": [
+        "Indo-Saracenic",
+        "Hindu-Gothic",
+        "Rajput-Mughal fusion"
+      ],
+      "is_offline_fallback": false,
+      "latency_ms": 3828.89
+    },
+    {
+      "key": "red_fort",
+      "name": "Red Fort",
+      "file": "C:\\Users\\humai\\Heritage PJ\\backend\\datasets\\phase_8_5c_ooc_eval\\red_fort.jpg",
+      "model": "gemini-3.1-flash-lite",
+      "proposed_identity": "Red Fort, Delhi",
+      "is_catalog_monument": false,
+      "expected_is_catalog": false,
+      "catalog_membership_correct": true,
+      "visual_evidence": "The image displays the iconic Lahori Gate entrance of the Red Fort in Delhi. Key features include the massive red sandstone curtain walls, the crenellated parapets, the two flanking octagonal towers topped with chhatris (domed pavilions), and the central arched gateway structure featuring a row of seven miniature chhatris along the roofline. The material is distinctively red sandstone, characteristic of Mughal military architecture.",
+      "confidence_description": "High - The architectural silhouette and material are iconic and globally recognized.",
+      "uncertainty_reason": "None",
+      "visible_observations": [
+        "Red sandstone masonry",
+        "Crenellated battlements",
+        "Octagonal corner towers with domed chhatris",
+        "Central arched gateway",
+        "Row of seven miniature chhatris on the roofline"
+      ],
+      "candidate_styles": [
+        "Mughal Architecture",
+        "Indo-Islamic Architecture"
+      ],
+      "is_offline_fallback": false,
+      "latency_ms": 3327.26
+    },
+    {
+      "key": "golden_temple",
+      "name": "Golden Temple",
+      "file": "C:\\Users\\humai\\Heritage PJ\\backend\\datasets\\phase_8_5c_ooc_eval\\golden_temple.jpg",
+      "model": "gemini-3.1-flash-lite",
+      "proposed_identity": "Harmandir Sahib (Golden Temple), Amritsar, India",
+      "is_catalog_monument": false,
+      "expected_is_catalog": false,
+      "catalog_membership_correct": true,
+      "visual_evidence": "The structure is a two-story rectangular building covered in gold leaf, featuring a central dome and four smaller chhatris (kiosks) at the corners. It is situated in the middle of a large sarovar (sacred pool), which reflects the golden facade. The architectural style incorporates Indo-Islamic and Rajput elements, specifically the use of marble inlay work at the base and ornate gilded copper plates on the upper levels.",
+      "confidence_description": "High - iconic and globally recognized religious monument",
+      "uncertainty_reason": "None",
+      "visible_observations": [
+        "Central gilded dome",
+        "Four corner chhatris",
+        "Gold-leafed copper plates",
+        "Marble base with pietra dura-style inlay",
+        "Surrounding sacred water body (sarovar)"
+      ],
+      "candidate_styles": [
+        "Sikh Architecture",
+        "Indo-Islamic Architecture"
+      ],
+      "is_offline_fallback": false,
+      "latency_ms": 3400.68
+    }
+  ],
+  "offline_fallback_tests": [
+    {
+      "specimen": "Eiffel Tower",
+      "is_offline_fallback": true,
+      "proposed_identity": null,
+      "is_catalog_monument": false,
+      "visual_evidence": "Offline Curatorial Mode: Tier-1 CLIP similarity remained below 0.80 threshold with no confident nearest neighbor.",
+      "confidence_description": "Offline fallback - visual vector analysis only",
+      "curatorial_caveat": "Visual analysis is exploratory and does not establish verified historical identity without epigraphical or archival records.",
+      "latency_ms": 0.04
+    },
+    {
+      "specimen": "Colosseum",
+      "is_offline_fallback": true,
+      "proposed_identity": null,
+      "is_catalog_monument": false,
+      "visual_evidence": "Offline Curatorial Mode: Tier-1 CLIP similarity remained below 0.80 threshold with no confident nearest neighbor.",
+      "confidence_description": "Offline fallback - visual vector analysis only",
+      "curatorial_caveat": "Visual analysis is exploratory and does not establish verified historical identity without epigraphical or archival records.",
+      "latency_ms": 0.05
+    }
+  ],
+  "telemetry_stats": {
+    "total_requests": 234,
+    "successful_requests": 40,
+    "failed_requests": 194,
+    "success_rate_pct": 17.1,
+    "total_retries": 90,
+    "average_latency_ms": 1505.77,
+    "total_tokens": 15084,
+    "error_categories": {
+      "RATE_LIMIT_429": 16,
+      "AUTH_INVALID_KEY": 16,
+      "TIMEOUT": 15,
+      "SERVER_ERROR_5XX": 0,
+      "EMPTY_RESPONSE": 0,
+      "CLIENT_ERROR": 147
+    },
+    "features_invoked": {
+      "unknown_heritage_analysis": {
+        "success": 38,
+        "fail": 144
+      },
+      "grounded_historical_qa": {
+        "success": 2,
+        "fail": 50
+      },
+      "architectural_explanation": {
+        "success": 0,
+        "fail": 0
+      }
+    },
+    "last_request_utc": "2026-11-07T12:08:24.807701+00:00"
+  }
+}

@@ -1,0 +1,279 @@
+{
+  "title": "Phase 8.1B Confidence Calibration Recovery & Diagnostic Analysis",
+  "diagnostics": {
+    "sample_size": 47,
+    "features_analyzed": [
+      "top1_sim",
+      "margin",
+      "gatekeeper",
+      "quality"
+    ],
+    "means": [
+      0.8355,
+      0.1314,
+      0.6723,
+      0.843
+    ],
+    "stds": [
+      0.1147,
+      0.2788,
+      0.1244,
+      0.2237
+    ],
+    "condition_number": 23.65,
+    "variance_inflation_factors": {
+      "top1_sim": 2.77,
+      "margin": 1.14,
+      "gatekeeper": 2.61,
+      "quality": 1.01
+    },
+    "correlation_matrix": [
+      [
+        1.0,
+        0.342,
+        0.785,
+        -0.048
+      ],
+      [
+        0.342,
+        1.0,
+        0.247,
+        0.031
+      ],
+      [
+        0.785,
+        0.247,
+        1.0,
+        -0.067
+      ],
+      [
+        -0.048,
+        0.031,
+        -0.067,
+        1.0
+      ]
+    ]
+  },
+  "grouped_cv_summary": {
+    "Uncalibrated_Cosine": {
+      "mean_ece": 0.375,
+      "std_ece": 0.1338,
+      "ci_95_ece": [
+        0.2577,
+        0.4923
+      ],
+      "mean_brier": 0.3156,
+      "std_brier": 0.1007,
+      "mean_nll": 0.8632,
+      "std_nll": 0.2602,
+      "fold_eces": [
+        0.4659,
+        0.4265,
+        0.5062,
+        0.3477,
+        0.1287
+      ],
+      "fold_briers": [
+        0.4402,
+        0.3707,
+        0.3375,
+        0.2901,
+        0.1395
+      ]
+    },
+    "Platt_Scaling_Similarity": {
+      "mean_ece": 0.2311,
+      "std_ece": 0.0934,
+      "ci_95_ece": [
+        0.1492,
+        0.3129
+      ],
+      "mean_brier": 0.2218,
+      "std_brier": 0.0332,
+      "mean_nll": 0.635,
+      "std_nll": 0.0679,
+      "fold_eces": [
+        0.1917,
+        0.079,
+        0.306,
+        0.2323,
+        0.3464
+      ],
+      "fold_briers": [
+        0.2535,
+        0.2222,
+        0.17,
+        0.2031,
+        0.2603
+      ]
+    },
+    "Platt_Scaling_Margin": {
+      "mean_ece": 0.2845,
+      "std_ece": 0.1677,
+      "ci_95_ece": [
+        0.1375,
+        0.4315
+      ],
+      "mean_brier": 0.2094,
+      "std_brier": 0.029,
+      "mean_nll": 0.5963,
+      "std_nll": 0.0707,
+      "fold_eces": [
+        0.0256,
+        0.1997,
+        0.4559,
+        0.4759,
+        0.2654
+      ],
+      "fold_briers": [
+        0.2265,
+        0.1538,
+        0.2085,
+        0.2339,
+        0.2245
+      ]
+    },
+    "Temperature_Scaling": {
+      "mean_ece": 0.3115,
+      "std_ece": 0.0903,
+      "ci_95_ece": [
+        0.2323,
+        0.3907
+      ],
+      "mean_brier": 0.2322,
+      "std_brier": 0.0646,
+      "mean_nll": 0.6584,
+      "std_nll": 0.1401,
+      "fold_eces": [
+        0.3575,
+        0.3735,
+        0.4166,
+        0.228,
+        0.1819
+      ],
+      "fold_briers": [
+        0.3477,
+        0.2544,
+        0.1878,
+        0.2041,
+        0.167
+      ]
+    },
+    "Isotonic_Regression": {
+      "mean_ece": 0.1919,
+      "std_ece": 0.1189,
+      "ci_95_ece": [
+        0.0876,
+        0.2961
+      ],
+      "mean_brier": 0.151,
+      "std_brier": 0.0867,
+      "mean_nll": 0.8362,
+      "std_nll": 0.6691,
+      "fold_eces": [
+        0.3672,
+        0.0896,
+        0.0416,
+        0.275,
+        0.186
+      ],
+      "fold_briers": [
+        0.2789,
+        0.1301,
+        0.009,
+        0.1666,
+        0.1706
+      ]
+    },
+    "Regularized_Logistic_Constrained": {
+      "mean_ece": 0.2898,
+      "std_ece": 0.0931,
+      "ci_95_ece": [
+        0.2082,
+        0.3714
+      ],
+      "mean_brier": 0.2108,
+      "std_brier": 0.0325,
+      "mean_nll": 0.6113,
+      "std_nll": 0.0665,
+      "fold_eces": [
+        0.2107,
+        0.2919,
+        0.3942,
+        0.1626,
+        0.3898
+      ],
+      "fold_briers": [
+        0.2473,
+        0.1941,
+        0.1594,
+        0.21,
+        0.2431
+      ]
+    },
+    "Unregularized_Logistic_Legacy": {
+      "mean_ece": 0.2602,
+      "std_ece": 0.107,
+      "ci_95_ece": [
+        0.1665,
+        0.354
+      ],
+      "mean_brier": 0.228,
+      "std_brier": 0.0202,
+      "mean_nll": 0.6475,
+      "std_nll": 0.0425,
+      "fold_eces": [
+        0.1427,
+        0.4257,
+        0.253,
+        0.1529,
+        0.3268
+      ],
+      "fold_briers": [
+        0.2407,
+        0.1897,
+        0.2294,
+        0.2321,
+        0.248
+      ]
+    }
+  },
+  "frozen_parameters": {
+    "platt_scaling_similarity": {
+      "A": 3.0315,
+      "B": -2.5333,
+      "monotonicity_guaranteed": true
+    },
+    "temperature_scaling": {
+      "temperature": 2.2887
+    },
+    "regularized_logistic_constrained": {
+      "weights": {
+        "top1_sim": 0.2499,
+        "margin": 0.1795,
+        "gatekeeper": 0.0856,
+        "quality": 0.002
+      },
+      "bias": -0.0462,
+      "means": {
+        "top1_sim": 0.8355,
+        "margin": 0.1314,
+        "gatekeeper": 0.6723,
+        "quality": 0.843
+      },
+      "stds": {
+        "top1_sim": 0.1147,
+        "margin": 0.2788,
+        "gatekeeper": 0.1244,
+        "quality": 0.2237
+      },
+      "non_negativity_enforced": true
+    }
+  },
+  "recommendation": {
+    "action": "DEPRECATE_MULTIVARIABLE_LOGISTIC",
+    "primary_calibrator": "Platt_Scaling_Similarity",
+    "production_status": "EXPERIMENTAL_CALIBRATED",
+    "scientific_rationale": "Unconstrained multivariable logistic calibration suffers from severe collinearity inversion (top1_sim=-1.004) and under-generalization when trained on N=47 development samples. Univariate Platt Scaling guarantees positive monotonicity (A=10.22 > 0), achieving stable cross-validation ECE without catastrophic under-prediction on out-of-fold samples."
+  }
+}

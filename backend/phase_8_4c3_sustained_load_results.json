@@ -1,0 +1,274 @@
+{
+  "phase": "8.4C.3",
+  "title": "Sustained Queue Saturation and Concurrency Stress Audit",
+  "timestamp_utc": "2026-11-07T14:41:36Z",
+  "saturation_metrics": {
+    "configured_capacity": 10,
+    "total_timeline_samples": 1583,
+    "mean_queue_depth": 6.94,
+    "max_queue_depth": 10,
+    "min_queue_depth": 0,
+    "percent_samples_at_capacity": 67.28,
+    "excess_dropped_submissions": 0,
+    "timeouts_recorded": 0,
+    "completed_evaluations": 0,
+    "unbounded_queue_leak_detected": false,
+    "worker_lockup_detected": false,
+    "timeout_semantics": "Cooperative deadline expiry at 500ms checkpoints; does not forcefully preempt native in-flight C++ execution."
+  },
+  "telemetry_event_distribution": {
+    "UNKNOWN": 1674
+  },
+  "queue_timeline_samples_preview": [
+    {
+      "elapsed_ms": 0.0,
+      "queue_length": 0,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 15.3,
+      "queue_length": 1,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 30.9,
+      "queue_length": 2,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 46.3,
+      "queue_length": 3,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 62.3,
+      "queue_length": 4,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 77.8,
+      "queue_length": 5,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 93.5,
+      "queue_length": 6,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 109.2,
+      "queue_length": 7,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 124.7,
+      "queue_length": 7,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 141.1,
+      "queue_length": 8,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 156.9,
+      "queue_length": 9,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 172.3,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 188.2,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 204.5,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 219.9,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 235.1,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 252.3,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 267.5,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 283.2,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 298.7,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 314.9,
+      "queue_length": 9,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 330.2,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 345.4,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 360.8,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 376.4,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 391.9,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 408.6,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 424.1,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 439.7,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 455.1,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 470.5,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 486.2,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 501.4,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 516.5,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 532.0,
+      "queue_length": 9,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 547.7,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 563.1,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 578.9,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 594.1,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 609.7,
+      "queue_length": 9,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 625.8,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 641.4,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 656.8,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 672.2,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 687.3,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 702.8,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 718.2,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 733.7,
+      "queue_length": 9,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 749.6,
+      "queue_length": 10,
+      "target_capacity": 10
+    },
+    {
+      "elapsed_ms": 765.1,
+      "queue_length": 10,
+      "target_capacity": 10
+    }
+  ]
+}

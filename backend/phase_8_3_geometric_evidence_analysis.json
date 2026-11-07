@@ -1,0 +1,126 @@
+{
+  "title": "Geometric Evidence & SIFT/RANSAC Architectural Verification Analysis",
+  "phase": "Phase 8.3",
+  "purpose": "Establish mathematically defensible geometric corroboration criteria to safely resolve margin deficits without inducing false acceptances",
+  "tested_inlier_thresholds": [
+    6,
+    8,
+    10,
+    12,
+    15
+  ],
+  "hard_negative_pairs_evaluated": [
+    {
+      "pair": [
+        "konark_sun_temple",
+        "brihadeeswarar_temple"
+      ],
+      "architectural_similarity": "Repetitive Dravidian/Kalinga stone carved friezes, tiered stone plinths, floral relief",
+      "false_match_rate_at_6_inliers": 0.1875,
+      "false_match_rate_at_8_inliers": 0.0625,
+      "false_match_rate_at_10_inliers": 0.0,
+      "false_match_rate_at_12_inliers": 0.0,
+      "mean_accidental_inliers": 5.4,
+      "max_accidental_inliers": 8,
+      "failure_mechanism": "Repetitive spatial frequencies in stone moldings create locally consistent affine patches between distinct 11th-13th century temples."
+    },
+    {
+      "pair": [
+        "charminar",
+        "gateway_of_india"
+      ],
+      "architectural_similarity": "Indo-Islamic and Indo-Saracenic grand ceremonial archways, voussoir masonry",
+      "false_match_rate_at_6_inliers": 0.125,
+      "false_match_rate_at_8_inliers": 0.0,
+      "false_match_rate_at_10_inliers": 0.0,
+      "false_match_rate_at_12_inliers": 0.0,
+      "mean_accidental_inliers": 4.1,
+      "max_accidental_inliers": 7,
+      "failure_mechanism": "Archway curvature and voussoir spacing match when minarets and sea views are excluded."
+    },
+    {
+      "pair": [
+        "hampi_stone_chariot",
+        "konark_sun_temple"
+      ],
+      "architectural_similarity": "Monolithic stone chariot wheels, spoke carvings, axle hubs",
+      "false_match_rate_at_6_inliers": 0.1875,
+      "false_match_rate_at_8_inliers": 0.0625,
+      "false_match_rate_at_10_inliers": 0.0,
+      "false_match_rate_at_12_inliers": 0.0,
+      "mean_accidental_inliers": 5.8,
+      "max_accidental_inliers": 8,
+      "failure_mechanism": "Radial wheel spokes generate circular keypoint constellations that can pass RANSAC homography estimation under loose tolerance."
+    },
+    {
+      "pair": [
+        "taj_mahal",
+        "victoria_memorial"
+      ],
+      "architectural_similarity": "White Makrana marble domes, arched portals, water reflection basins",
+      "false_match_rate_at_6_inliers": 0.0625,
+      "false_match_rate_at_8_inliers": 0.0,
+      "false_match_rate_at_10_inliers": 0.0,
+      "false_match_rate_at_12_inliers": 0.0,
+      "mean_accidental_inliers": 3.2,
+      "max_accidental_inliers": 6,
+      "failure_mechanism": "Smooth marble dome curvature yields low keypoint yield (< 100); false matches are rare due to feature sparsity."
+    }
+  ],
+  "keypoint_yield_by_architectural_surface": {
+    "ornate_stone_relief_and_carvings": {
+      "mean_keypoints": 1420,
+      "std_keypoints": 412,
+      "inlier_ratio_true_matches": 0.38,
+      "false_homography_vulnerability": "HIGH (Requires >= 10 inliers and spatial dispersion filter)"
+    },
+    "honeycombed_jali_and_lattice": {
+      "mean_keypoints": 980,
+      "std_keypoints": 285,
+      "inlier_ratio_true_matches": 0.32,
+      "false_homography_vulnerability": "MEDIUM (Periodic grid structures create ambiguous descriptors)"
+    },
+    "smooth_marble_and_plaster": {
+      "mean_keypoints": 340,
+      "std_keypoints": 160,
+      "inlier_ratio_true_matches": 0.18,
+      "false_homography_vulnerability": "LOW (Keypoints are sparse, rarely forming false homographies)"
+    }
+  },
+  "spatial_dispersion_and_matrix_condition_rules": {
+    "bounding_box_coverage": {
+      "metric": "Area of convex hull of RANSAC inliers divided by total image area",
+      "threshold": 0.15,
+      "rationale": "Inliers concentrated in a tiny cluster (< 15% image area) frequently represent accidental repetitive textures rather than building-wide structural correspondence."
+    },
+    "homography_determinant_check": {
+      "metric": "Determinant of 3x3 homography matrix H",
+      "valid_range": [
+        0.1,
+        10.0
+      ],
+      "rationale": "Extreme determinants indicate degenerate homographies (e.g. collinear points or extreme perspective shearing) that must be rejected."
+    },
+    "minimum_inlier_count": {
+      "recommended_threshold": 10,
+      "justification": "At inliers >= 10, the false match rate across all evaluated hard-negative architectural pairs dropped to strictly 0.0%."
+    }
+  },
+  "local_clip_patch_analysis": {
+    "patch_resolution": "224x224 multi-crop (3x3 grid)",
+    "true_match_mean_similarity": 0.841,
+    "hard_negative_mean_similarity": 0.712,
+    "recommended_local_clip_threshold": 0.8,
+    "synergy_with_sift": "SIFT excels at high-frequency textured surfaces but fails on smooth marble; Local CLIP excels at smooth semantic regions (domes, arches) where SIFT keypoint yield is low."
+  },
+  "safe_verification_policy_specifications": {
+    "policy_name": "Policy D: Conservative Multi-Evidence Hybrid",
+    "formal_logic": "VERIFIED if (sim >= 0.75 AND gatekeeper >= 0.50) AND [(margin >= 0.08) OR (margin >= 0.05 AND (sift_inliers >= 10 OR (local_clip >= 0.80 AND gatekeeper >= 0.65)))]",
+    "safety_invariants_preserved": [
+      "Gatekeeper score strictly enforced (>= 0.50 for verified, < 0.45 triggers non-monument rejection)",
+      "Absolute similarity floor strictly preserved at 0.75",
+      "Zero margin relaxation below 0.05 under any circumstances",
+      "Zero false acceptances on distractor specimens in development grouped cross-validation"
+    ]
+  }
+}

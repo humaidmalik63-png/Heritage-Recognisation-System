@@ -1,0 +1,89 @@
+{
+  "phase": "8.4C.4",
+  "title": "p95 Latency Statistical Equivalence and Tail Distribution Audit",
+  "timestamp_utc": "2026-11-07T14:55:00Z",
+  "methodology": "Quantile estimation under clustered repeated measures (M=12 specimen clusters, K=5 blocks, nominal N=60 per condition)",
+  "pre_registered_margin": {
+    "metric": "p95_latency_delta",
+    "margin_delta_ms": 100.0,
+    "confidence_level": "90% for TOST equivalence (alpha=0.05)",
+    "baseline_p95_ms": 1351.75
+  },
+  "conditions": {
+    "normal_vs_disabled": {
+      "point_estimate_treatment_p95_ms": 1491.04,
+      "point_estimate_baseline_p95_ms": 1351.75,
+      "p95_difference_ms": 139.29,
+      "percentage_p95_difference": 10.3,
+      "clustered_standard_error_ms": 64.5,
+      "confidence_intervals": {
+        "ci_90_percent": {
+          "lower_ms": 33.19,
+          "upper_ms": 245.39
+        },
+        "ci_95_percent": {
+          "lower_ms": 12.87,
+          "upper_ms": 265.71
+        }
+      },
+      "pre_registered_margin_ms": 100.0,
+      "within_pre_registered_margin": false,
+      "point_estimate_exceeds_margin": true,
+      "ci_90_inside_margin": false,
+      "equivalence_decision": "EQUIVALENCE_REJECTED_TAIL_EXPANSION",
+      "operational_impact": "Non-monument and borderline specimens traverse the uncertainty logging and exception ticketing pathways, where background thread pool dispatch induces modest additional tail scheduling latency on pure CPU."
+    },
+    "slow_vs_disabled": {
+      "point_estimate_treatment_p95_ms": 1511.07,
+      "point_estimate_baseline_p95_ms": 1351.75,
+      "p95_difference_ms": 159.32,
+      "percentage_p95_difference": 11.79,
+      "clustered_standard_error_ms": 72.1,
+      "confidence_intervals": {
+        "ci_90_percent": {
+          "lower_ms": 40.7,
+          "upper_ms": 277.94
+        },
+        "ci_95_percent": {
+          "lower_ms": 18.0,
+          "upper_ms": 300.64
+        }
+      },
+      "pre_registered_margin_ms": 100.0,
+      "within_pre_registered_margin": false,
+      "point_estimate_exceeds_margin": true,
+      "ci_90_inside_margin": false,
+      "equivalence_decision": "EQUIVALENCE_REJECTED_TAIL_EXPANSION",
+      "operational_impact": "Simulated 550ms worker tasks trigger cooperative deadline checks, causing background workers to remain busy up to the 500ms deadline, mildly amplifying tail CPU contention for concurrent outlier queries."
+    },
+    "saturated_vs_disabled": {
+      "point_estimate_treatment_p95_ms": 1387.78,
+      "point_estimate_baseline_p95_ms": 1351.75,
+      "p95_difference_ms": 36.03,
+      "percentage_p95_difference": 2.67,
+      "clustered_standard_error_ms": 58.3,
+      "confidence_intervals": {
+        "ci_90_percent": {
+          "lower_ms": -59.9,
+          "upper_ms": 131.96
+        },
+        "ci_95_percent": {
+          "lower_ms": -78.24,
+          "upper_ms": 150.3
+        }
+      },
+      "pre_registered_margin_ms": 100.0,
+      "within_pre_registered_margin": true,
+      "point_estimate_exceeds_margin": false,
+      "ci_90_inside_margin": false,
+      "equivalence_decision": "INCONCLUSIVE_INSUFFICIENT_POWER",
+      "operational_impact": "Under queue saturation, excess shadow tasks are rejected immediately via SHADOW_SKIPPED_CAPACITY in O(1) time without thread dispatch, keeping p95 within 36ms of baseline. However, wide clustered confidence intervals prevent formal equivalence declaration."
+    }
+  },
+  "summary_findings": {
+    "p95_equivalence_declared": false,
+    "primary_cause": "Bimodal latency profile between clean catalog queries (~180ms) and exception logging queries (~1400ms), compounded by limited independent specimen clusters (M=12).",
+    "recommendation": "Maintain controlled staging; gather expanded specimen dataset (M >= 150) before re-evaluating tail equivalence."
+  }
+}
+

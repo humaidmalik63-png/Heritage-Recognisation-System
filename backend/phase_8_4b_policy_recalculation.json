@@ -1,0 +1,192 @@
+{
+  "audit_title": "Phase 8.4B Policy Metric Recalculation Audit",
+  "dataset": "independent_final_test_v4 (Split D, N=100)",
+  "policies": {
+    "Policy_A_Baseline": {
+      "policy_name": "Policy_A",
+      "sample_counts": {
+        "total_specimens": 100,
+        "catalog_specimens": 60,
+        "unknown_heritage_specimens": 20,
+        "non_monument_specimens": 20,
+        "open_world_distractors": 40,
+        "catalog_retrieval_errors": 21,
+        "total_false_acceptance_opportunities": 61
+      },
+      "decisions": {
+        "correct_top1_retrievals": 39,
+        "incorrect_top1_retrievals": 21,
+        "correct_top3_retrievals": 52,
+        "true_positives_verified": 11,
+        "false_positives_verified_total": 0,
+        "false_positives_out_of_catalog_heritage": 0,
+        "false_positives_non_monument": 0,
+        "false_positives_catalog_misretrieval": 0,
+        "correct_rejections": 61,
+        "false_rejections": 28,
+        "uncertain_matches": 51,
+        "review_required": 10
+      },
+      "rates_and_confidence_intervals": {
+        "top1_retrieval_accuracy": 0.65,
+        "top3_retrieval_accuracy": 0.8667,
+        "verification_recall_end_to_end": 0.1833,
+        "verification_recall_95_ci": [
+          0.1056,
+          0.2992
+        ],
+        "verification_yield_on_correct_retrievals": 0.2821,
+        "verification_yield_95_ci": [
+          0.1654,
+          0.4378
+        ],
+        "verification_precision": 1.0,
+        "verification_precision_95_ci": [
+          0.7412,
+          1.0
+        ],
+        "false_acceptance_rate_out_of_catalog": 0.0,
+        "false_acceptance_rate_out_of_catalog_exact_95_upper": 0.1391,
+        "false_acceptance_rate_non_monument": 0.0,
+        "false_acceptance_rate_non_monument_exact_95_upper": 0.1391,
+        "false_acceptance_rate_misretrieval": 0.0,
+        "false_acceptance_rate_misretrieval_exact_95_upper": 0.1329,
+        "false_acceptance_rate_distractors": 0.0,
+        "false_acceptance_rate_distractors_exact_95_upper": 0.0722,
+        "false_acceptance_rate_opportunities": 0.0,
+        "false_acceptance_rate_opportunities_exact_95_upper": 0.0479,
+        "false_rejection_rate": 0.4667,
+        "verified_decision_coverage": 0.11,
+        "verified_decision_coverage_95_ci": [
+          0.0625,
+          0.1863
+        ],
+        "selective_accuracy": 1.0
+      }
+    },
+    "Policy_C_Local_CLIP": {
+      "policy_name": "Policy_C",
+      "sample_counts": {
+        "total_specimens": 100,
+        "catalog_specimens": 60,
+        "unknown_heritage_specimens": 20,
+        "non_monument_specimens": 20,
+        "open_world_distractors": 40,
+        "catalog_retrieval_errors": 21,
+        "total_false_acceptance_opportunities": 61
+      },
+      "decisions": {
+        "correct_top1_retrievals": 39,
+        "incorrect_top1_retrievals": 21,
+        "correct_top3_retrievals": 52,
+        "true_positives_verified": 12,
+        "false_positives_verified_total": 0,
+        "false_positives_out_of_catalog_heritage": 0,
+        "false_positives_non_monument": 0,
+        "false_positives_catalog_misretrieval": 0,
+        "correct_rejections": 61,
+        "false_rejections": 27,
+        "uncertain_matches": 50,
+        "review_required": 10
+      },
+      "rates_and_confidence_intervals": {
+        "top1_retrieval_accuracy": 0.65,
+        "top3_retrieval_accuracy": 0.8667,
+        "verification_recall_end_to_end": 0.2,
+        "verification_recall_95_ci": [
+          0.1183,
+          0.3178
+        ],
+        "verification_yield_on_correct_retrievals": 0.3077,
+        "verification_yield_95_ci": [
+          0.1857,
+          0.4642
+        ],
+        "verification_precision": 1.0,
+        "verification_precision_95_ci": [
+          0.7575,
+          1.0
+        ],
+        "false_acceptance_rate_out_of_catalog": 0.0,
+        "false_acceptance_rate_out_of_catalog_exact_95_upper": 0.1391,
+        "false_acceptance_rate_non_monument": 0.0,
+        "false_acceptance_rate_non_monument_exact_95_upper": 0.1391,
+        "false_acceptance_rate_misretrieval": 0.0,
+        "false_acceptance_rate_misretrieval_exact_95_upper": 0.1329,
+        "false_acceptance_rate_distractors": 0.0,
+        "false_acceptance_rate_distractors_exact_95_upper": 0.0722,
+        "false_acceptance_rate_opportunities": 0.0,
+        "false_acceptance_rate_opportunities_exact_95_upper": 0.0479,
+        "false_rejection_rate": 0.45,
+        "verified_decision_coverage": 0.12,
+        "verified_decision_coverage_95_ci": [
+          0.07,
+          0.1981
+        ],
+        "selective_accuracy": 1.0
+      }
+    },
+    "Policy_D_Conservative_Hybrid": {
+      "policy_name": "Policy_D",
+      "sample_counts": {
+        "total_specimens": 100,
+        "catalog_specimens": 60,
+        "unknown_heritage_specimens": 20,
+        "non_monument_specimens": 20,
+        "open_world_distractors": 40,
+        "catalog_retrieval_errors": 21,
+        "total_false_acceptance_opportunities": 61
+      },
+      "decisions": {
+        "correct_top1_retrievals": 39,
+        "incorrect_top1_retrievals": 21,
+        "correct_top3_retrievals": 52,
+        "true_positives_verified": 13,
+        "false_positives_verified_total": 0,
+        "false_positives_out_of_catalog_heritage": 0,
+        "false_positives_non_monument": 0,
+        "false_positives_catalog_misretrieval": 0,
+        "correct_rejections": 61,
+        "false_rejections": 26,
+        "uncertain_matches": 49,
+        "review_required": 10
+      },
+      "rates_and_confidence_intervals": {
+        "top1_retrieval_accuracy": 0.65,
+        "top3_retrieval_accuracy": 0.8667,
+        "verification_recall_end_to_end": 0.2167,
+        "verification_recall_95_ci": [
+          0.1312,
+          0.3362
+        ],
+        "verification_yield_on_correct_retrievals": 0.3333,
+        "verification_yield_95_ci": [
+          0.2063,
+          0.4902
+        ],
+        "verification_precision": 1.0,
+        "verification_precision_95_ci": [
+          0.7719,
+          1.0
+        ],
+        "false_acceptance_rate_out_of_catalog": 0.0,
+        "false_acceptance_rate_out_of_catalog_exact_95_upper": 0.1391,
+        "false_acceptance_rate_non_monument": 0.0,
+        "false_acceptance_rate_non_monument_exact_95_upper": 0.1391,
+        "false_acceptance_rate_misretrieval": 0.0,
+        "false_acceptance_rate_misretrieval_exact_95_upper": 0.1329,
+        "false_acceptance_rate_distractors": 0.0,
+        "false_acceptance_rate_distractors_exact_95_upper": 0.0722,
+        "false_acceptance_rate_opportunities": 0.0,
+        "false_acceptance_rate_opportunities_exact_95_upper": 0.0479,
+        "false_rejection_rate": 0.4333,
+        "verified_decision_coverage": 0.13,
+        "verified_decision_coverage_95_ci": [
+          0.0776,
+          0.2098
+        ],
+        "selective_accuracy": 1.0
+      }
+    }
+  }
+}

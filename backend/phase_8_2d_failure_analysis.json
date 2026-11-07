@@ -1,0 +1,210 @@
+{
+  "title": "Phase 8.2D Recognition Failure & Uncertainty Root-Cause Analysis",
+  "dataset": "independent_final_test_v3 (Split C, N=28)",
+  "attribution_summary": {
+    "retrieval_failures_catalog": 7,
+    "threshold_conservatism_catalog": 8,
+    "distractors_correctly_intercepted": 13,
+    "total_catalog_queries": 15,
+    "total_distractor_queries": 13
+  },
+  "catalog_retrieval_failures": [
+    {
+      "specimen_id": "split_c_002",
+      "filename": "split_c_002_brihadeeswarar_temple.jpg",
+      "ground_truth_monument": "brihadeeswarar_temple",
+      "recognized_candidate": "konark_sun_temple",
+      "category": "catalog",
+      "condition": "side_view",
+      "resolution": "6000x4000",
+      "similarity_score": 0.8453,
+      "decision_state": "REVIEW_REQUIRED",
+      "failure_attribution": "RETRIEVAL_FAILURE",
+      "detailed_diagnosis": "Global CLIP embedding retrieved 'konark_sun_temple' instead of ground truth 'brihadeeswarar_temple'. Visual similarity was 0.8453. "
+    },
+    {
+      "specimen_id": "split_c_004",
+      "filename": "split_c_004_gateway_of_india.jpg",
+      "ground_truth_monument": "gateway_of_india",
+      "recognized_candidate": "sanchi_stupa",
+      "category": "catalog",
+      "condition": "architectural_carving",
+      "resolution": "2848x4288",
+      "similarity_score": 0.872,
+      "decision_state": "UNCERTAIN_MATCH",
+      "failure_attribution": "RETRIEVAL_FAILURE",
+      "detailed_diagnosis": "Global CLIP embedding retrieved 'sanchi_stupa' instead of ground truth 'gateway_of_india'. Visual similarity was 0.8720. High-frequency stone carving features caused cross-temple confusion (e.g. Dravidian/Kalinga stone carving visual overlap)."
+    },
+    {
+      "specimen_id": "split_c_007",
+      "filename": "split_c_007_qutub_minar.jpg",
+      "ground_truth_monument": "qutub_minar",
+      "recognized_candidate": "konark_sun_temple",
+      "category": "catalog",
+      "condition": "full_structure",
+      "resolution": "5897x3800",
+      "similarity_score": 0.8076,
+      "decision_state": "UNCERTAIN_MATCH",
+      "failure_attribution": "RETRIEVAL_FAILURE",
+      "detailed_diagnosis": "Global CLIP embedding retrieved 'konark_sun_temple' instead of ground truth 'qutub_minar'. Visual similarity was 0.8076. "
+    },
+    {
+      "specimen_id": "split_c_022",
+      "filename": "split_c_022_gateway_of_india.jpg",
+      "ground_truth_monument": "gateway_of_india",
+      "recognized_candidate": "qutub_minar",
+      "category": "catalog",
+      "condition": "distant_view",
+      "resolution": "1200x750",
+      "similarity_score": 0.5571,
+      "decision_state": "UNKNOWN_HERITAGE_SPECIMEN",
+      "failure_attribution": "RETRIEVAL_FAILURE",
+      "detailed_diagnosis": "Global CLIP embedding retrieved 'qutub_minar' instead of ground truth 'gateway_of_india'. Visual similarity was 0.5571. Extreme distance or peripheral environmental elements dominated the 512-dim embedding."
+    },
+    {
+      "specimen_id": "split_c_025",
+      "filename": "split_c_025_hawa_mahal.jpg",
+      "ground_truth_monument": "hawa_mahal",
+      "recognized_candidate": "taj_mahal",
+      "category": "catalog",
+      "condition": "rear_view",
+      "resolution": "5855x3498",
+      "similarity_score": 0.8112,
+      "decision_state": "UNCERTAIN_MATCH",
+      "failure_attribution": "RETRIEVAL_FAILURE",
+      "detailed_diagnosis": "Global CLIP embedding retrieved 'taj_mahal' instead of ground truth 'hawa_mahal'. Visual similarity was 0.8112. "
+    },
+    {
+      "specimen_id": "split_c_026",
+      "filename": "split_c_026_taj_mahal.jpg",
+      "ground_truth_monument": "taj_mahal",
+      "recognized_candidate": "charminar",
+      "category": "catalog",
+      "condition": "front_view",
+      "resolution": "1088x1386",
+      "similarity_score": 0.8722,
+      "decision_state": "UNCERTAIN_MATCH",
+      "failure_attribution": "RETRIEVAL_FAILURE",
+      "detailed_diagnosis": "Global CLIP embedding retrieved 'charminar' instead of ground truth 'taj_mahal'. Visual similarity was 0.8722. "
+    },
+    {
+      "specimen_id": "split_c_027",
+      "filename": "split_c_027_victoria_memorial.jpg",
+      "ground_truth_monument": "victoria_memorial",
+      "recognized_candidate": "gateway_of_india",
+      "category": "catalog",
+      "condition": "architectural_carving",
+      "resolution": "3264x2448",
+      "similarity_score": 0.7456,
+      "decision_state": "REVIEW_REQUIRED",
+      "failure_attribution": "RETRIEVAL_FAILURE",
+      "detailed_diagnosis": "Global CLIP embedding retrieved 'gateway_of_india' instead of ground truth 'victoria_memorial'. Visual similarity was 0.7456. High-frequency stone carving features caused cross-temple confusion (e.g. Dravidian/Kalinga stone carving visual overlap)."
+    }
+  ],
+  "catalog_uncertainty_cases": [
+    {
+      "specimen_id": "split_c_001",
+      "filename": "split_c_001_brihadeeswarar_temple.jpg",
+      "monument": "brihadeeswarar_temple",
+      "similarity_score": 0.9082,
+      "decision_state": "UNCERTAIN_MATCH",
+      "condition": "architectural_carving",
+      "attribution": "THRESHOLD_CONSERVATISM",
+      "detailed_diagnosis": "Retrieval was correct ('brihadeeswarar_temple'), with high cosine similarity of 0.9082. However, automatic verification was blocked because: The margin between Top-1 and Top-2 was below uncertainty_margin_threshold (0.08), or absence of EXIF GPS prevented geo-boost activation. Rule 4 classified the query as UNCERTAIN_MATCH to prevent forced attributions on competing architectural candidates."
+    },
+    {
+      "specimen_id": "split_c_003",
+      "filename": "split_c_003_charminar.jpg",
+      "monument": "charminar",
+      "similarity_score": 0.91,
+      "decision_state": "UNCERTAIN_MATCH",
+      "condition": "front_view",
+      "attribution": "THRESHOLD_CONSERVATISM",
+      "detailed_diagnosis": "Retrieval was correct ('charminar'), with high cosine similarity of 0.9100. However, automatic verification was blocked because: The margin between Top-1 and Top-2 was below uncertainty_margin_threshold (0.08), or absence of EXIF GPS prevented geo-boost activation. Rule 4 classified the query as UNCERTAIN_MATCH to prevent forced attributions on competing architectural candidates."
+    },
+    {
+      "specimen_id": "split_c_005",
+      "filename": "split_c_005_hawa_mahal.jpg",
+      "monument": "hawa_mahal",
+      "similarity_score": 0.8532,
+      "decision_state": "UNCERTAIN_MATCH",
+      "condition": "close_up_carving",
+      "attribution": "THRESHOLD_CONSERVATISM",
+      "detailed_diagnosis": "Retrieval was correct ('hawa_mahal'), with high cosine similarity of 0.8532. However, automatic verification was blocked because: The margin between Top-1 and Top-2 was below uncertainty_margin_threshold (0.08), or absence of EXIF GPS prevented geo-boost activation. Rule 4 classified the query as UNCERTAIN_MATCH to prevent forced attributions on competing architectural candidates."
+    },
+    {
+      "specimen_id": "split_c_006",
+      "filename": "split_c_006_konark_sun_temple.jpg",
+      "monument": "konark_sun_temple",
+      "similarity_score": 0.8049,
+      "decision_state": "UNCERTAIN_MATCH",
+      "condition": "side_view",
+      "attribution": "THRESHOLD_CONSERVATISM",
+      "detailed_diagnosis": "Retrieval was correct ('konark_sun_temple'), with high cosine similarity of 0.8049. However, automatic verification was blocked because: The margin between Top-1 and Top-2 was below uncertainty_margin_threshold (0.08), or absence of EXIF GPS prevented geo-boost activation. Rule 4 classified the query as UNCERTAIN_MATCH to prevent forced attributions on competing architectural candidates."
+    },
+    {
+      "specimen_id": "split_c_008",
+      "filename": "split_c_008_sanchi_stupa.jpg",
+      "monument": "sanchi_stupa",
+      "similarity_score": 0.9149,
+      "decision_state": "UNCERTAIN_MATCH",
+      "condition": "partial_view",
+      "attribution": "THRESHOLD_CONSERVATISM",
+      "detailed_diagnosis": "Retrieval was correct ('sanchi_stupa'), with high cosine similarity of 0.9149. However, automatic verification was blocked because: The margin between Top-1 and Top-2 was below uncertainty_margin_threshold (0.08), or absence of EXIF GPS prevented geo-boost activation. Rule 4 classified the query as UNCERTAIN_MATCH to prevent forced attributions on competing architectural candidates."
+    },
+    {
+      "specimen_id": "split_c_021",
+      "filename": "split_c_021_charminar.jpg",
+      "monument": "charminar",
+      "similarity_score": 0.9367,
+      "decision_state": "UNCERTAIN_MATCH",
+      "condition": "architectural_carving",
+      "attribution": "THRESHOLD_CONSERVATISM",
+      "detailed_diagnosis": "Retrieval was correct ('charminar'), with high cosine similarity of 0.9367. However, automatic verification was blocked because: The margin between Top-1 and Top-2 was below uncertainty_margin_threshold (0.08), or absence of EXIF GPS prevented geo-boost activation. Rule 4 classified the query as UNCERTAIN_MATCH to prevent forced attributions on competing architectural candidates."
+    },
+    {
+      "specimen_id": "split_c_023",
+      "filename": "split_c_023_hampi_stone_chariot.jpg",
+      "monument": "hampi_stone_chariot",
+      "similarity_score": 0.9205,
+      "decision_state": "UNCERTAIN_MATCH",
+      "condition": "architectural_carving",
+      "attribution": "THRESHOLD_CONSERVATISM",
+      "detailed_diagnosis": "Retrieval was correct ('hampi_stone_chariot'), with high cosine similarity of 0.9205. However, automatic verification was blocked because: The margin between Top-1 and Top-2 was below uncertainty_margin_threshold (0.08), or absence of EXIF GPS prevented geo-boost activation. Rule 4 classified the query as UNCERTAIN_MATCH to prevent forced attributions on competing architectural candidates."
+    },
+    {
+      "specimen_id": "split_c_024",
+      "filename": "split_c_024_hampi_stone_chariot.jpg",
+      "monument": "hampi_stone_chariot",
+      "similarity_score": 0.9282,
+      "decision_state": "UNCERTAIN_MATCH",
+      "condition": "partial_view",
+      "attribution": "THRESHOLD_CONSERVATISM",
+      "detailed_diagnosis": "Retrieval was correct ('hampi_stone_chariot'), with high cosine similarity of 0.9282. However, automatic verification was blocked because: The margin between Top-1 and Top-2 was below uncertainty_margin_threshold (0.08), or absence of EXIF GPS prevented geo-boost activation. Rule 4 classified the query as UNCERTAIN_MATCH to prevent forced attributions on competing architectural candidates."
+    }
+  ],
+  "architectural_failure_patterns": [
+    {
+      "pattern": "Cross-Temple Relief Carving Confusion",
+      "affected_monuments": [
+        "brihadeeswarar_temple",
+        "konark_sun_temple",
+        "hampi_stone_chariot",
+        "qutub_minar"
+      ],
+      "mechanism": "Ancient Indian stone reliefs share visual features: weathered granite/sandstone, warm ochre tones, and repetitive iconographic friezes. When an image contains only a cropped carving rather than the macro silhouette, global CLIP ViT-B/32 lacks sufficient fine-grained class separation, causing Top-1 misretrievals.",
+      "remedy_recommendation": "Phase 9.0 hierarchical spatial patch routing or learned visual codebook."
+    },
+    {
+      "pattern": "Narrow Candidate Margin Blocking Verification",
+      "affected_monuments": [
+        "brihadeeswarar_temple",
+        "charminar",
+        "hampi_stone_chariot",
+        "sanchi_stupa"
+      ],
+      "mechanism": "Even when Top-1 retrieval is 100% accurate with similarity > 0.90, the Top-2 competitor often achieves similarity ~ 0.86-0.88. Because uncertainty_margin_threshold is fixed at 0.08, the empirical margin (0.02 - 0.05) triggers UNCERTAIN_MATCH. In the absence of EXIF GPS, geo-boost cannot bridge the gap, resulting in 0% verification recall.",
+      "remedy_recommendation": "Calibrate margin_threshold dynamically based on calibrated probability P(Y=1|s) >= 0.75 rather than static cosine difference."
+    }
+  ]
+}

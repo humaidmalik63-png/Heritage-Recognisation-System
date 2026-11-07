@@ -42,6 +42,7 @@ export default function PipelineInspector({
   const top1Sim = uncertainty?.top1_similarity ?? (top_3_candidates[0]?.cosine_similarity || 0);
   const top2Sim = uncertainty?.top2_similarity ?? (top_3_candidates[1]?.cosine_similarity || 0);
   const margin = uncertainty?.similarity_margin ?? Math.max(0, top1Sim - top2Sim);
+  const marginThreshold = uncertainty?.margin_threshold ?? 0.08;
   const quality = uncertainty?.image_quality;
   const gpsEvidence = uncertainty?.gps_evidence;
   const reasonCodes = uncertainty?.reason_codes || [];
@@ -175,7 +176,7 @@ export default function PipelineInspector({
 
           {/* Margin */}
           <div className={`p-3 rounded border flex flex-col justify-between ${
-            margin >= 0.05
+            margin >= marginThreshold
               ? 'bg-emerald-50/60 border-emerald-200'
               : 'bg-amber-50/60 border-amber-200'
           }`}>
@@ -184,13 +185,15 @@ export default function PipelineInspector({
                 Similarity Margin (Top-1 vs Top-2)
               </span>
               <div className={`font-mono text-lg font-bold mt-0.5 ${
-                margin >= 0.05 ? 'text-emerald-800' : 'text-amber-800'
+                margin >= marginThreshold ? 'text-emerald-800' : 'text-amber-800'
               }`}>
                 +{margin.toFixed(4)}
               </div>
             </div>
             <span className="text-[10px] font-sans text-archive-stone mt-1">
-              {margin >= 0.05 ? 'Decisive candidate separation.' : 'Narrow margin; potential visual ambiguity.'}
+              {margin >= marginThreshold
+                ? `Decisive candidate separation (Threshold: ${marginThreshold.toFixed(4)}).`
+                : `Narrow margin (Threshold: ${marginThreshold.toFixed(4)}); potential visual ambiguity.`}
             </span>
           </div>
         </div>
@@ -199,14 +202,14 @@ export default function PipelineInspector({
         <div className="space-y-1 pt-1 font-mono text-[10px] text-archive-stone">
           <div className="flex justify-between">
             <span>DISCRIMINATION SPECTRUM</span>
-            <span>MARGIN: {(margin * 100).toFixed(2)} pts</span>
+            <span>MARGIN: {(margin * 100).toFixed(2)} pts (Req: {(marginThreshold * 100).toFixed(1)} pts)</span>
           </div>
           <div className="w-full bg-archive-parchment h-2 rounded-full overflow-hidden border border-archive-hairline">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${Math.min(margin * 400, 100)}%` }}
               transition={{ type: 'spring', stiffness: 100, damping: 20 }}
-              className={`h-full ${margin >= 0.05 ? 'bg-emerald-600' : 'bg-amber-500'}`}
+              className={`h-full ${margin >= marginThreshold ? 'bg-emerald-600' : 'bg-amber-500'}`}
             />
           </div>
         </div>

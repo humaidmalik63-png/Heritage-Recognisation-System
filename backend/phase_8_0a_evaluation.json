@@ -1,0 +1,52 @@
+{
+  "phase": "8.0A",
+  "project": "Visual Heritage Recognition and Grounded Cultural Discovery Platform",
+  "sih_id": "SIH25052",
+  "evaluation_timestamp": "2026-11-05T04:33:12Z",
+  "dataset": "Independent Wikimedia Commons Holdout (20 verified specimens, 10 monuments)",
+  "zero_data_leakage_verified": true,
+  "sha256_collisions_with_reference_gallery": 0,
+  "baseline_metrics": {
+    "reference_gallery_size": 40,
+    "vectors_in_faiss": 50,
+    "top_1_accuracy_pct": 65.0,
+    "top_1_correct_count": 13,
+    "top_3_accuracy_pct": 100.0,
+    "top_3_correct_count": 20,
+    "mean_reciprocal_rank": 0.7917,
+    "mean_similarity_margin": 0.0591,
+    "false_acceptances": 0
+  },
+  "phase_8_0a_metrics": {
+    "reference_gallery_size": 200,
+    "vectors_in_faiss": 210,
+    "top_1_accuracy_pct": 90.0,
+    "top_1_correct_count": 18,
+    "top_3_accuracy_pct": 100.0,
+    "top_3_correct_count": 20,
+    "mean_reciprocal_rank": 0.9417,
+    "mean_similarity_margin": 0.2223,
+    "mean_latency_ms": 761.51,
+    "p95_latency_ms": 1594.04,
+    "false_acceptances": 0
+  },
+  "delta": {
+    "top_1_accuracy_gain_pct": 25.0,
+    "mrr_gain": 0.15,
+    "margin_gain": 0.1632,
+    "safety_catch_rate_pct": 100.0
+  },
+  "monument_breakdown": {
+    "brihadeeswarar_temple": { "baseline_top1": "2/2", "phase_8_0a_top1": "2/2", "status": "PERFECT" },
+    "charminar": { "baseline_top1": "1/2", "phase_8_0a_top1": "2/2", "status": "RESOLVED (+1)" },
+    "gateway_of_india": { "baseline_top1": "1/2", "phase_8_0a_top1": "2/2", "status": "RESOLVED (+1)" },
+    "hampi_stone_chariot": { "baseline_top1": "1/2", "phase_8_0a_top1": "2/2", "status": "RESOLVED (+1)" },
+    "hawa_mahal": { "baseline_top1": "2/2", "phase_8_0a_top1": "2/2", "status": "PERFECT" },
+    "konark_sun_temple": { "baseline_top1": "0/2", "phase_8_0a_top1": "2/2", "status": "RESOLVED (+2)" },
+    "qutub_minar": { "baseline_top1": "0/2", "phase_8_0a_top1": "0/2", "status": "UNCERTAINTY INTERCEPTED (100% Safe)" },
+    "sanchi_stupa": { "baseline_top1": "2/2", "phase_8_0a_top1": "2/2", "status": "PERFECT" },
+    "taj_mahal": { "baseline_top1": "2/2", "phase_8_0a_top1": "2/2", "status": "PERFECT" },
+    "victoria_memorial": { "baseline_top1": "2/2", "phase_8_0a_top1": "2/2", "status": "PERFECT" }
+  }
+}
+

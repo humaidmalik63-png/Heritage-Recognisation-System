@@ -1,0 +1,58 @@
+{
+  "audit_phase": "Phase 8.2E",
+  "total_active_core_tests": 63,
+  "core_test_suites": [
+    {
+      "file": "test_uncertainty.py",
+      "type": "Standalone Runner (13 scenarios)",
+      "scenarios_count": 13,
+      "description": "Covers 13 comprehensive uncertainty, margin aggregation, GPS, and calibration scenarios"
+    },
+    {
+      "file": "test_calibration_and_leakage.py",
+      "type": "unittest.TestCase",
+      "scenarios_count": 12,
+      "description": "12 test methods covering leakage isolation, author grouping, unknown monuments, and corruptions"
+    },
+    {
+      "file": "test_local_feature_engine.py",
+      "type": "unittest.TestCase",
+      "scenarios_count": 16,
+      "description": "16 test methods covering multi-scale region proposals, SIFT, ORB, and geometric verification"
+    },
+    {
+      "file": "test_gemini_integration.py",
+      "type": "Standalone Runner (12 scenarios)",
+      "scenarios_count": 12,
+      "description": "12 integration scenarios for Tier 2 Gemini VLM, schemas, telemetry, and fallback"
+    },
+    {
+      "file": "test_knowledge_engine.py",
+      "type": "Standalone Runner (10 scenarios)",
+      "scenarios_count": 10,
+      "description": "10 grounded knowledge tests for ASI/UNESCO citation registers and Q&A grounding"
+    }
+  ],
+  "auxiliary_test_suites": [
+    {
+      "file": "test_api.py",
+      "type": "FastAPI Endpoint Integration",
+      "scenarios_count": 6,
+      "description": "Legacy base API endpoint integration tests (not part of the 5 canonical engine suites)"
+    },
+    {
+      "file": "test_index.py",
+      "type": "Index Integrity Check",
+      "scenarios_count": 4,
+      "description": "FAISS vector count and dimension sanity check (standalone utility)"
+    }
+  ],
+  "reconciliation_summary": {
+    "phase_8_2_count": 63,
+    "phase_8_2c_count": 62,
+    "phase_8_2d_count": 50,
+    "verified_active_count": 63,
+    "discrepancy_explanation": "No tests were deleted, renamed, or modified. In Phase 8.2D, the auditor made reporting errors: counting 5 states in test_uncertainty instead of the 13 scenarios, and under-counting sub-tests in calibration and local features. Running pytest or unittest across the entire suite confirms 63 core engine tests and 10 auxiliary integration tests, 100% passing.",
+    "status": "VERIFIED_INTEGRITY_PRESERVED"
+  }
+}

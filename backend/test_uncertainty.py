@@ -103,7 +103,10 @@ def run_all_uncertainty_tests():
     assert res_1.top1_similarity == 0.92
     assert res_1.top2_similarity == 0.65
     assert res_1.similarity_margin >= 0.05
-    assert res_1.calibrated_probability is None, "Expected None when uncalibrated"
+    if engine.calibration.is_calibrated:
+        assert isinstance(res_1.calibrated_probability, float), "Expected float probability when calibrated"
+    else:
+        assert res_1.calibrated_probability is None, "Expected None when uncalibrated"
     assert res_1.requires_human_review is False
     logger.info(f"[PASSED] Scenario 1: {res_1.decision} (Top-1: {res_1.top1_similarity}, Margin: {res_1.similarity_margin})")
 
@@ -276,7 +279,7 @@ def run_all_uncertainty_tests():
     # Scenario 10: Calibration unavailable (UNCALIBRATED / probability is None)
     # -------------------------------------------------------------
     logger.info("\n--- [Scenario 10] Calibration Engine Uncalibrated Invariant ---")
-    calib = CalibrationEngine()
+    calib = CalibrationEngine({"calibration_status": "UNCALIBRATED"})
     assert calib.calibration_status == "UNCALIBRATED"
     assert calib.is_calibrated is False
     calib_prob = calib.calibrate_similarity(0.9542)

@@ -1,0 +1,567 @@
+{
+  "timestamp": "2026-11-07T12:33:18Z",
+  "phase": "PHASE_8_5F_GEMINI_OPEN_WORLD_ADJUDICATION",
+  "model": "gemini-3.1-flash-lite",
+  "total_specimens": 14,
+  "total_passed": 14,
+  "accuracy_pct": 100.0,
+  "category_summary": {
+    "Out-of-Catalog Indian Heritage": {
+      "total": 4,
+      "passed": 4
+    },
+    "Out-of-Catalog International Heritage": {
+      "total": 4,
+      "passed": 4
+    },
+    "In-Catalog Ground-Truth Positive": {
+      "total": 3,
+      "passed": 3
+    },
+    "Non-Monument Negative Control": {
+      "total": 3,
+      "passed": 3
+    }
+  },
+  "detailed_results": [
+    {
+      "specimen_id": "OOC_IND_01",
+      "name": "Golden Temple",
+      "category": "Out-of-Catalog Indian Heritage",
+      "expected_type": "OUT_OF_CATALOG",
+      "passed": true,
+      "decision_status": "UNKNOWN_HERITAGE_SPECIMEN",
+      "verification_tier": "OUT-OF-CATALOG HERITAGE IDENTIFIED // GEMINI-3.1-FLASH-LITE",
+      "monument_name": "Golden Temple (Harmandir Sahib)",
+      "out_of_catalog_identified": true,
+      "gatekeeper_score": 0.7556,
+      "latency_ms": 17647.8,
+      "evaluation_note": "Resolved Identity: 'Golden Temple (Harmandir Sahib)' (Location: Amritsar, Punjab, India), Confidence: HIGH, Catalog Competition Top-1: Charminar (0.8324)",
+      "top1_candidate": {
+        "monument_key": "charminar",
+        "monument_name": "Charminar",
+        "cosine_similarity": 0.8324
+      },
+      "tier2_analysis": {
+        "proposed_identity": "Golden Temple (Harmandir Sahib)",
+        "proposed_location": "Amritsar, Punjab, India",
+        "is_heritage_structure": true,
+        "is_catalog_monument": false,
+        "visible_architectural_evidence": "The structure features a central sanctum covered in gold leaf, characterized by a prominent central dome and smaller chhatris (domed kiosks) at the corners. The lower portion of the walls displays intricate marble inlay work (pietra dura style) with floral motifs. The building is situated in the center of a large sarovar (sacred pool), reflecting the structure's iconic silhouette.",
+        "distinguishing_features": [
+          "Gold-plated exterior",
+          "Central lotus-shaped dome",
+          "Four corner chhatris",
+          "Marble inlay work on lower walls",
+          "Surrounded by a sacred water tank (sarovar)"
+        ],
+        "qualitative_confidence": "HIGH",
+        "uncertainty_reason": "None",
+        "visible_observations": [
+          "Gold-leafed upper structure",
+          "Reflective water surface",
+          "Crowds of pilgrims on the causeway",
+          "White marble base with floral carvings",
+          "Surrounding white arcade structures in the background"
+        ],
+        "candidate_styles": [
+          "Indo-Islamic architecture",
+          "Sikh architecture"
+        ],
+        "candidate_descriptions": [
+          "The holiest shrine of Sikhism, known for its gold-covered exterior and central location in a sacred pool.",
+          "A prominent religious monument in Amritsar featuring a blend of Mughal and Rajput architectural elements."
+        ],
+        "curatorial_caveat": "Visual analysis is exploratory and does not establish verified historical identity without epigraphical or archival records.",
+        "is_offline_fallback": false,
+        "model_name": "gemini-3.1-flash-lite"
+      }
+    },
+    {
+      "specimen_id": "OOC_IND_02",
+      "name": "Mysore Palace",
+      "category": "Out-of-Catalog Indian Heritage",
+      "expected_type": "OUT_OF_CATALOG",
+      "passed": true,
+      "decision_status": "UNKNOWN_HERITAGE_SPECIMEN",
+      "verification_tier": "OUT-OF-CATALOG HERITAGE IDENTIFIED // GEMINI-3.1-FLASH-LITE",
+      "monument_name": "Mysore Palace",
+      "out_of_catalog_identified": true,
+      "gatekeeper_score": 0.7818,
+      "latency_ms": 22567.3,
+      "evaluation_note": "Resolved Identity: 'Mysore Palace' (Location: Mysore, Karnataka, India), Confidence: HIGH, Catalog Competition Top-1: Gateway of India (0.7869)",
+      "top1_candidate": {
+        "monument_key": "gateway_of_india",
+        "monument_name": "Gateway of India",
+        "cosine_similarity": 0.7869
+      },
+      "tier2_analysis": {
+        "proposed_identity": "Mysore Palace",
+        "proposed_location": "Mysore, Karnataka, India",
+        "is_heritage_structure": true,
+        "is_catalog_monument": false,
+        "visible_architectural_evidence": "The structure exhibits a distinct Indo-Saracenic architectural style, characterized by a symmetrical facade with large arched entrances, multiple towers topped with red domes, and intricate stone carvings. The central tower is particularly prominent with a golden finial. The building features a blend of Hindu, Mughal, Rajput, and Gothic architectural elements, typical of the Wodeyar dynasty's palace architecture.",
+        "distinguishing_features": [
+          "Prominent central tower with a golden dome",
+          "Multiple red-domed towers at the corners and along the facade",
+          "Large, wide-span arched entryways",
+          "Symmetrical facade design",
+          "Intricate stone masonry and decorative parapets"
+        ],
+        "qualitative_confidence": "HIGH",
+        "uncertainty_reason": "None",
+        "visible_observations": [
+          "Large paved courtyard in the foreground",
+          "Green metal fencing surrounding the garden areas",
+          "Stray dogs present in the foreground",
+          "Clear sky with soft daylight",
+          "Extensive use of arches and columns"
+        ],
+        "candidate_styles": [
+          "Indo-Saracenic",
+          "Rajput-Gothic Revival"
+        ],
+        "candidate_descriptions": [
+          "A grand royal palace featuring a mix of diverse architectural influences.",
+          "A historic landmark known for its elaborate facade and iconic domes."
+        ],
+        "curatorial_caveat": "Visual analysis is exploratory and does not establish verified historical identity without epigraphical or archival records.",
+        "is_offline_fallback": false,
+        "model_name": "gemini-3.1-flash-lite"
+      }
+    },
+    {
+      "specimen_id": "OOC_IND_03",
+      "name": "Red Fort",
+      "category": "Out-of-Catalog Indian Heritage",
+      "expected_type": "OUT_OF_CATALOG",
+      "passed": true,
+      "decision_status": "UNKNOWN_HERITAGE_SPECIMEN",
+      "verification_tier": "OUT-OF-CATALOG HERITAGE IDENTIFIED // GEMINI-3.1-FLASH-LITE",
+      "monument_name": "Red Fort",
+      "out_of_catalog_identified": true,
+      "gatekeeper_score": 0.7629,
+      "latency_ms": 10263.2,
+      "evaluation_note": "Resolved Identity: 'Red Fort' (Location: Delhi, Delhi, India), Confidence: HIGH, Catalog Competition Top-1: Taj Mahal (0.8402)",
+      "top1_candidate": {
+        "monument_key": "taj_mahal",
+        "monument_name": "Taj Mahal",
+        "cosine_similarity": 0.8402
+      },
+      "tier2_analysis": {
+        "proposed_identity": "Red Fort",
+        "proposed_location": "Delhi, Delhi, India",
+        "is_heritage_structure": true,
+        "is_catalog_monument": false,
+        "visible_architectural_evidence": "The structure is characterized by massive red sandstone curtain walls with crenellated parapets, octagonal corner bastions topped with chhatris (domed pavilions), and a prominent central gateway (Lahori Gate) flanked by two flanking towers. The architectural style is distinctly Mughal, featuring pointed arches, heavy masonry, and symmetrical defensive planning.",
+        "distinguishing_features": [
+          "Massive red sandstone walls",
+          "Crenellated parapets",
+          "Octagonal corner bastions with chhatris",
+          "Lahori Gate entrance",
+          "Symmetrical Mughal fortification layout"
+        ],
+        "qualitative_confidence": "HIGH",
+        "uncertainty_reason": "None",
+        "visible_observations": [
+          "Red sandstone masonry",
+          "Indian national flag flying above the gate",
+          "Large open courtyard in front of the fortification",
+          "Tourists walking in the foreground"
+        ],
+        "candidate_styles": [
+          "Mughal Architecture",
+          "Indo-Islamic Architecture"
+        ],
+        "candidate_descriptions": [
+          "A historic 17th-century fortification complex in Delhi",
+          "The primary residence of the Mughal Emperors for nearly 200 years"
+        ],
+        "curatorial_caveat": "Visual analysis is exploratory and does not establish verified historical identity without epigraphical or archival records.",
+        "is_offline_fallback": false,
+        "model_name": "gemini-3.1-flash-lite"
+      }
+    },
+    {
+      "specimen_id": "OOC_IND_04",
+      "name": "India Gate",
+      "category": "Out-of-Catalog Indian Heritage",
+      "expected_type": "OUT_OF_CATALOG",
+      "passed": true,
+      "decision_status": "UNKNOWN_HERITAGE_SPECIMEN",
+      "verification_tier": "OUT-OF-CATALOG HERITAGE IDENTIFIED // GEMINI-3.1-FLASH-LITE",
+      "monument_name": "India Gate",
+      "out_of_catalog_identified": true,
+      "gatekeeper_score": 0.7709,
+      "latency_ms": 8088.7,
+      "evaluation_note": "Resolved Identity: 'India Gate' (Location: New Delhi, Delhi, India), Confidence: HIGH, Catalog Competition Top-1: Gateway of India (0.8542)",
+      "top1_candidate": {
+        "monument_key": "gateway_of_india",
+        "monument_name": "Gateway of India",
+        "cosine_similarity": 0.8542
+      },
+      "tier2_analysis": {
+        "proposed_identity": "India Gate",
+        "proposed_location": "New Delhi, Delhi, India",
+        "is_heritage_structure": true,
+        "is_catalog_monument": false,
+        "visible_architectural_evidence": "The structure is a massive triumphal arch built of red and yellow sandstone. It features a large central archway, a stepped cornice, and an inscription reading 'INDIA' flanked by the dates MCMXIV (1914) and MCMXIX (1919). The design is heavily influenced by the Arc de Triomphe in Paris and the Roman triumphal arch tradition, characterized by its symmetrical, monumental proportions and clean, geometric lines.",
+        "distinguishing_features": [
+          "Large central archway",
+          "Inscription 'INDIA' on the upper frieze",
+          "Commemorative dates MCMXIV and MCMXIX",
+          "Red and yellow sandstone construction",
+          "Visible canopy (Chhatri) in the background"
+        ],
+        "qualitative_confidence": "HIGH",
+        "uncertainty_reason": "None",
+        "visible_observations": [
+          "Large crowd gathered at the base",
+          "Clear blue sky background",
+          "Symmetrical architectural design",
+          "Visible memorial inscription",
+          "Chhatri visible through the central arch"
+        ],
+        "candidate_styles": [
+          "Indo-Saracenic",
+          "Neoclassical",
+          "Beaux-Arts"
+        ],
+        "candidate_descriptions": [
+          "War memorial dedicated to soldiers of the British Indian Army",
+          "Triumphal arch monument",
+          "Iconic landmark of New Delhi"
+        ],
+        "curatorial_caveat": "Visual analysis is exploratory and does not establish verified historical identity without epigraphical or archival records.",
+        "is_offline_fallback": false,
+        "model_name": "gemini-3.1-flash-lite"
+      }
+    },
+    {
+      "specimen_id": "OOC_INT_01",
+      "name": "Eiffel Tower",
+      "category": "Out-of-Catalog International Heritage",
+      "expected_type": "OUT_OF_CATALOG",
+      "passed": true,
+      "decision_status": "UNKNOWN_HERITAGE_SPECIMEN",
+      "verification_tier": "OUT-OF-CATALOG HERITAGE IDENTIFIED // GEMINI-3.1-FLASH-LITE",
+      "monument_name": "Eiffel Tower",
+      "out_of_catalog_identified": true,
+      "gatekeeper_score": 0.633,
+      "latency_ms": 4904.4,
+      "evaluation_note": "Resolved Identity: 'Eiffel Tower' (Location: Paris, \u00cele-de-France, France), Confidence: HIGH, Catalog Competition Top-1: Taj Mahal (0.7223)",
+      "top1_candidate": {
+        "monument_key": "taj_mahal",
+        "monument_name": "Taj Mahal",
+        "cosine_similarity": 0.7223
+      },
+      "tier2_analysis": {
+        "proposed_identity": "Eiffel Tower",
+        "proposed_location": "Paris, \u00cele-de-France, France",
+        "is_heritage_structure": true,
+        "is_catalog_monument": false,
+        "visible_architectural_evidence": "The image displays the iconic wrought-iron lattice tower structure, characterized by its tapering profile, four curved base legs, and distinct cross-braced metal framework. The structure is clearly identifiable as the Eiffel Tower, showing the first and second levels, the central arch, and the antenna at the summit.",
+        "distinguishing_features": [
+          "Wrought-iron lattice framework",
+          "Tapering pyramidal silhouette",
+          "Four-legged base with arched supports",
+          "Distinctive cross-bracing pattern"
+        ],
+        "qualitative_confidence": "HIGH",
+        "uncertainty_reason": "None",
+        "visible_observations": [
+          "Clear blue sky background",
+          "Symmetrical vertical orientation",
+          "Foreground lawn and tree-lined path",
+          "Visible structure of the Palais de Chaillot in the distance through the base arch"
+        ],
+        "candidate_styles": [
+          "Structural Expressionism",
+          "Industrial Architecture"
+        ],
+        "candidate_descriptions": [
+          "Iconic 19th-century wrought-iron lattice tower",
+          "Global landmark of French engineering"
+        ],
+        "curatorial_caveat": "Visual analysis is exploratory and does not establish verified historical identity without epigraphical or archival records.",
+        "is_offline_fallback": false,
+        "model_name": "gemini-3.1-flash-lite"
+      }
+    },
+    {
+      "specimen_id": "OOC_INT_02",
+      "name": "Colosseum",
+      "category": "Out-of-Catalog International Heritage",
+      "expected_type": "OUT_OF_CATALOG",
+      "passed": true,
+      "decision_status": "UNKNOWN_HERITAGE_SPECIMEN",
+      "verification_tier": "OUT-OF-CATALOG HERITAGE IDENTIFIED // GEMINI-3.1-FLASH-LITE",
+      "monument_name": "Colosseum",
+      "out_of_catalog_identified": true,
+      "gatekeeper_score": 0.6369,
+      "latency_ms": 10931.5,
+      "evaluation_note": "Resolved Identity: 'Colosseum' (Location: Rome, Lazio, Italy), Confidence: HIGH, Catalog Competition Top-1: Hawa Mahal (0.7249)",
+      "top1_candidate": {
+        "monument_key": "hawa_mahal",
+        "monument_name": "Hawa Mahal",
+        "cosine_similarity": 0.7249
+      },
+      "tier2_analysis": {
+        "proposed_identity": "Colosseum",
+        "proposed_location": "Rome, Lazio, Italy",
+        "is_heritage_structure": true,
+        "is_catalog_monument": false,
+        "visible_architectural_evidence": "The structure is a massive elliptical amphitheater constructed of travertine limestone, tuff, and brick-faced concrete. It features a multi-tiered facade characterized by rows of superimposed arches framed by engaged columns of the Doric, Ionic, and Corinthian orders, which is the hallmark of Roman Imperial architecture.",
+        "distinguishing_features": [
+          "Elliptical floor plan",
+          "Superimposed orders of columns (Doric, Ionic, Corinthian)",
+          "Tiered arcades",
+          "Travertine and concrete masonry",
+          "Partial ruin state revealing internal structural walls"
+        ],
+        "qualitative_confidence": "HIGH",
+        "uncertainty_reason": "None",
+        "visible_observations": [
+          "Large-scale stone masonry",
+          "Repetitive arched openings",
+          "Classical architectural orders",
+          "Open-air amphitheater design"
+        ],
+        "candidate_styles": [
+          "Roman Imperial",
+          "Classical Antiquity"
+        ],
+        "candidate_descriptions": [
+          "Ancient Roman amphitheater",
+          "Flavian Amphitheatre"
+        ],
+        "curatorial_caveat": "Visual analysis is exploratory and does not establish verified historical identity without epigraphical or archival records.",
+        "is_offline_fallback": false,
+        "model_name": "gemini-3.1-flash-lite"
+      }
+    },
+    {
+      "specimen_id": "OOC_INT_03",
+      "name": "Statue of Liberty",
+      "category": "Out-of-Catalog International Heritage",
+      "expected_type": "OUT_OF_CATALOG",
+      "passed": true,
+      "decision_status": "UNKNOWN_HERITAGE_SPECIMEN",
+      "verification_tier": "OUT-OF-CATALOG HERITAGE IDENTIFIED // GEMINI-3.1-FLASH-LITE",
+      "monument_name": "Statue of Liberty",
+      "out_of_catalog_identified": true,
+      "gatekeeper_score": 0.5993,
+      "latency_ms": 9640.0,
+      "evaluation_note": "Resolved Identity: 'Statue of Liberty' (Location: New York City, New York, USA), Confidence: HIGH, Catalog Competition Top-1: Taj Mahal (0.6791)",
+      "top1_candidate": {
+        "monument_key": "taj_mahal",
+        "monument_name": "Taj Mahal",
+        "cosine_similarity": 0.6791
+      },
+      "tier2_analysis": {
+        "proposed_identity": "Statue of Liberty",
+        "proposed_location": "New York City, New York, USA",
+        "is_heritage_structure": true,
+        "is_catalog_monument": false,
+        "visible_architectural_evidence": "The image displays a colossal neoclassical copper statue depicting a robed female figure representing Libertas, holding a torch aloft in her right hand and a tabula ansata in her left. The statue stands upon a massive, tiered stone pedestal featuring classical architectural elements such as columns and a rusticated base.",
+        "distinguishing_features": [
+          "Copper-patina finish",
+          "Seven-rayed crown",
+          "Raised torch",
+          "Tabula ansata tablet",
+          "Neoclassical pedestal design"
+        ],
+        "qualitative_confidence": "HIGH",
+        "uncertainty_reason": "None",
+        "visible_observations": [
+          "Iconic green oxidized copper surface",
+          "Detailed drapery of the robe",
+          "Visible observation deck on the pedestal",
+          "Clear sky background"
+        ],
+        "candidate_styles": [
+          "Neoclassical",
+          "Beaux-Arts"
+        ],
+        "candidate_descriptions": [
+          "Colossal copper statue on a stone pedestal",
+          "Global symbol of freedom and democracy"
+        ],
+        "curatorial_caveat": "Visual analysis is exploratory and does not establish verified historical identity without epigraphical or archival records.",
+        "is_offline_fallback": false,
+        "model_name": "gemini-3.1-flash-lite"
+      }
+    },
+    {
+      "specimen_id": "OOC_INT_04",
+      "name": "Big Ben",
+      "category": "Out-of-Catalog International Heritage",
+      "expected_type": "OUT_OF_CATALOG",
+      "passed": true,
+      "decision_status": "UNKNOWN_HERITAGE_SPECIMEN",
+      "verification_tier": "OUT-OF-CATALOG HERITAGE IDENTIFIED // GEMINI-3.1-FLASH-LITE",
+      "monument_name": "Elizabeth Tower (Big Ben)",
+      "out_of_catalog_identified": true,
+      "gatekeeper_score": 0.6313,
+      "latency_ms": 5398.5,
+      "evaluation_note": "Resolved Identity: 'Elizabeth Tower (Big Ben)' (Location: London, England, United Kingdom), Confidence: HIGH, Catalog Competition Top-1: Victoria Memorial (0.7373)",
+      "top1_candidate": {
+        "monument_key": "victoria_memorial",
+        "monument_name": "Victoria Memorial",
+        "cosine_similarity": 0.7373
+      },
+      "tier2_analysis": {
+        "proposed_identity": "Elizabeth Tower (Big Ben)",
+        "proposed_location": "London, England, United Kingdom",
+        "is_heritage_structure": true,
+        "is_catalog_monument": false,
+        "visible_architectural_evidence": "The image displays the iconic clock tower of the Palace of Westminster, characterized by its Neo-Gothic architectural style. Key features include the ornate cast-iron roof, the four-faced clock dials set within gilded frames, and the vertical emphasis provided by the stone-clad masonry with intricate tracery and pinnacles.",
+        "distinguishing_features": [
+          "Four-faced clock dial with Roman numerals",
+          "Ornate cast-iron spire with gilded finials",
+          "Neo-Gothic stone masonry with vertical buttressing",
+          "Intricate decorative tracery and pinnacles"
+        ],
+        "qualitative_confidence": "HIGH",
+        "uncertainty_reason": "None",
+        "visible_observations": [
+          "Clock tower structure",
+          "Gothic Revival architectural details",
+          "Clear blue sky background",
+          "Part of the Palace of Westminster complex visible at the base"
+        ],
+        "candidate_styles": [
+          "Neo-Gothic",
+          "Gothic Revival"
+        ],
+        "candidate_descriptions": [
+          "Iconic clock tower in London",
+          "Parliamentary clock tower"
+        ],
+        "curatorial_caveat": "Visual analysis is exploratory and does not establish verified historical identity without epigraphical or archival records.",
+        "is_offline_fallback": false,
+        "model_name": "gemini-3.1-flash-lite"
+      }
+    },
+    {
+      "specimen_id": "CAT_POS_01",
+      "name": "Taj Mahal",
+      "category": "In-Catalog Ground-Truth Positive",
+      "expected_type": "VERIFIED_MATCH",
+      "passed": true,
+      "decision_status": "VERIFIED_MATCH",
+      "verification_tier": "TIER 1 // LOCAL CLIP + FAISS VECTOR INDEX",
+      "monument_name": "Taj Mahal",
+      "out_of_catalog_identified": false,
+      "gatekeeper_score": 0.7158,
+      "latency_ms": 158.7,
+      "evaluation_note": "Matched: 'Taj Mahal' (Catalog Key: taj_mahal), Confidence: 99.8%, Tier: TIER 1 // LOCAL CLIP + FAISS VECTOR INDEX",
+      "top1_candidate": {
+        "monument_key": "taj_mahal",
+        "monument_name": "Taj Mahal",
+        "cosine_similarity": 1.0
+      },
+      "tier2_analysis": null
+    },
+    {
+      "specimen_id": "CAT_POS_02",
+      "name": "Qutub Minar",
+      "category": "In-Catalog Ground-Truth Positive",
+      "expected_type": "VERIFIED_MATCH",
+      "passed": true,
+      "decision_status": "VERIFIED_MATCH",
+      "verification_tier": "TIER 1 // LOCAL CLIP + FAISS VECTOR INDEX",
+      "monument_name": "Qutub Minar",
+      "out_of_catalog_identified": false,
+      "gatekeeper_score": 0.7697,
+      "latency_ms": 198.9,
+      "evaluation_note": "Matched: 'Qutub Minar' (Catalog Key: qutub_minar), Confidence: 99.8%, Tier: TIER 1 // LOCAL CLIP + FAISS VECTOR INDEX",
+      "top1_candidate": {
+        "monument_key": "qutub_minar",
+        "monument_name": "Qutub Minar",
+        "cosine_similarity": 1.0
+      },
+      "tier2_analysis": null
+    },
+    {
+      "specimen_id": "CAT_POS_03",
+      "name": "Charminar",
+      "category": "In-Catalog Ground-Truth Positive",
+      "expected_type": "VERIFIED_MATCH",
+      "passed": true,
+      "decision_status": "VERIFIED_MATCH",
+      "verification_tier": "TIER 1 // LOCAL CLIP + FAISS VECTOR INDEX",
+      "monument_name": "Charminar",
+      "out_of_catalog_identified": false,
+      "gatekeeper_score": 0.7197,
+      "latency_ms": 195.7,
+      "evaluation_note": "Matched: 'Charminar' (Catalog Key: charminar), Confidence: 99.8%, Tier: TIER 1 // LOCAL CLIP + FAISS VECTOR INDEX",
+      "top1_candidate": {
+        "monument_key": "charminar",
+        "monument_name": "Charminar",
+        "cosine_similarity": 1.0
+      },
+      "tier2_analysis": null
+    },
+    {
+      "specimen_id": "NON_MON_01",
+      "name": "Mathematics Paper",
+      "category": "Non-Monument Negative Control",
+      "expected_type": "NON_MONUMENT_REJECTED",
+      "passed": true,
+      "decision_status": "NON_MONUMENT_REJECTED",
+      "verification_tier": "REJECTED // NON-MONUMENT SPECIMEN",
+      "monument_name": null,
+      "out_of_catalog_identified": false,
+      "gatekeeper_score": 0.3889,
+      "latency_ms": 136.5,
+      "evaluation_note": "Rejected Non-Monument: Gatekeeper=0.3889, Decision=NON_MONUMENT_REJECTED, Tier=REJECTED // NON-MONUMENT SPECIMEN",
+      "top1_candidate": {
+        "monument_key": "qutub_minar",
+        "monument_name": "Qutub Minar",
+        "cosine_similarity": 0.6015
+      },
+      "tier2_analysis": null
+    },
+    {
+      "specimen_id": "NON_MON_02",
+      "name": "Receipt Distractor",
+      "category": "Non-Monument Negative Control",
+      "expected_type": "NON_MONUMENT_REJECTED",
+      "passed": true,
+      "decision_status": "NON_MONUMENT_REJECTED",
+      "verification_tier": "REJECTED // NON-MONUMENT SPECIMEN",
+      "monument_name": null,
+      "out_of_catalog_identified": false,
+      "gatekeeper_score": 0.374,
+      "latency_ms": 105.8,
+      "evaluation_note": "Rejected Non-Monument: Gatekeeper=0.3740, Decision=NON_MONUMENT_REJECTED, Tier=REJECTED // NON-MONUMENT SPECIMEN",
+      "top1_candidate": {
+        "monument_key": "konark_sun_temple",
+        "monument_name": "Konark Sun Temple",
+        "cosine_similarity": 0.6099
+      },
+      "tier2_analysis": null
+    },
+    {
+      "specimen_id": "NON_MON_03",
+      "name": "Ordinary Modern Building",
+      "category": "Non-Monument Negative Control",
+      "expected_type": "NON_MONUMENT_REJECTED",
+      "passed": true,
+      "decision_status": "NON_MONUMENT_REJECTED",
+      "verification_tier": "REJECTED // NON-MONUMENT SPECIMEN",
+      "monument_name": null,
+      "out_of_catalog_identified": false,
+      "gatekeeper_score": 0.392,
+      "latency_ms": 132.9,
+      "evaluation_note": "Rejected Non-Monument: Gatekeeper=0.3920, Decision=NON_MONUMENT_REJECTED, Tier=REJECTED // NON-MONUMENT SPECIMEN",
+      "top1_candidate": {
+        "monument_key": "gateway_of_india",
+        "monument_name": "Gateway of India",
+        "cosine_similarity": 0.6124
+      },
+      "tier2_analysis": null
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+[
+  {
+    "test": "Ajanta Caves",
+    "status": "FAIL",
+    "monument_name": "Ajanta Caves",
+    "catalogue_status": "CATALOGUED_AND_RECOGNITION_READY",
+    "out_of_catalog_identified": false,
+    "verification_tier": "UNCERTAIN // CLOSE CANDIDATE COMPETITION",
+    "coordinates": {
+      "lat": 20.5519,
+      "lng": 75.7033
+    }
+  },
+  {
+    "test": "Eiffel Tower",
+    "status": "PASS",
+    "monument_name": "Eiffel Tower",
+    "catalogue_status": "OUT_OF_CATALOG",
+    "out_of_catalog_identified": true,
+    "verification_tier": "OUT-OF-CATALOG HERITAGE IDENTIFIED // GEMINI-3.1-FLASH-LITE",
+    "coordinates": null
+  },
+  {
+    "test": "Golden Temple",
+    "status": "FAIL",
+    "monument_name": "Golden Temple",
+    "catalogue_status": "CATALOGUED_AND_RECOGNITION_READY",
+    "out_of_catalog_identified": false,
+    "verification_tier": "TIER 1 // LOCAL CLIP + FAISS VECTOR INDEX",
+    "coordinates": {
+      "lat": 31.62,
+      "lng": 74.8765
+    }
+  },
+  {
+    "test": "Mysore Palace",
+    "status": "FAIL",
+    "monument_name": "Mysore Palace",
+    "catalogue_status": "CATALOGUED_AND_RECOGNITION_READY",
+    "out_of_catalog_identified": false,
+    "verification_tier": "TIER 1 // LOCAL CLIP + FAISS VECTOR INDEX",
+    "coordinates": {
+      "lat": 12.3052,
+      "lng": 76.6552
+    }
+  },
+  {
+    "test": "Taj Mahal",
+    "status": "PASS",
+    "monument_name": "Taj Mahal",
+    "catalogue_status": "CATALOGUED_AND_RECOGNITION_READY",
+    "out_of_catalog_identified": false,
+    "verification_tier": "TIER 1 // LOCAL CLIP + FAISS VECTOR INDEX",
+    "coordinates": {
+      "lat": 27.1751,
+      "lng": 78.0421
+    }
+  },
+  {
+    "test": "Qutub Minar",
+    "status": "PASS",
+    "monument_name": "Qutub Minar",
+    "catalogue_status": "CATALOGUED_AND_RECOGNITION_READY",
+    "out_of_catalog_identified": false,
+    "verification_tier": "TIER 1 // LOCAL CLIP + FAISS VECTOR INDEX",
+    "coordinates": {
+      "lat": 28.5245,
+      "lng": 77.1855
+    }
+  }
+]

@@ -91,6 +91,7 @@ class UncertaintyResult(BaseModel):
     top1_similarity: float
     top2_similarity: float
     similarity_margin: float
+    margin_threshold: float = 0.08
     calibrated_probability: Optional[float] = None
     calibration_status: str
     gatekeeper_score: float
@@ -216,10 +217,13 @@ class UncertaintyEngine:
         """
         monument_best: Dict[str, Dict[str, Any]] = {}
 
-        for dist, idx in zip(raw_distances, raw_indices):
-            if idx == -1 or idx >= len(labels):
+        dists = raw_distances[0] if getattr(raw_distances, "ndim", 1) == 2 else raw_distances
+        indices = raw_indices[0] if getattr(raw_indices, "ndim", 1) == 2 else raw_indices
+
+        for dist, idx in zip(dists, indices):
+            if int(idx) == -1 or int(idx) >= len(labels):
                 continue
-            record = labels[idx]
+            record = labels[int(idx)]
             m_key = record["monument_key"]
             sim = float(dist)
 
@@ -260,6 +264,7 @@ class UncertaintyEngine:
         labels: List[Dict[str, Any]],
         metadata: Dict[str, Any],
         exif_gps: Optional[Dict[str, Any]] = None,
+        local_feature_corroboration: Optional[Dict[str, Any]] = None,
     ) -> UncertaintyResult:
         """
         Executes comprehensive evidence synthesis across:
@@ -293,7 +298,14 @@ class UncertaintyEngine:
         gps_evidence = self._evaluate_gps(exif_gps, top1, metadata)
 
         # 4. Calibration Assessment
-        calibrated_prob = self.calibration.calibrate_similarity(top1_sim)
+        calibrated_prob = self.calibration.calibrate_similarity(
+            similarity=top1_sim,
+            margin=similarity_margin,
+            gatekeeper=gatekeeper_score,
+            quality=1.0 if quality.passed_quality_check else 0.0,
+            sift_inliers=10 if quality.passed_quality_check else 0,
+            agreement=1.0 if (gatekeeper_score >= 0.5 and similarity_margin >= 0.05) else 0.0,
+        )
         calib_status = self.calibration.calibration_status
 
         # 5. Threshold Definitions from Config
@@ -333,6 +345,8 @@ class UncertaintyEngine:
             gatekeeper_verified=gatekeeper_verified,
             gatekeeper_ambiguous=gatekeeper_ambiguous,
             reason_codes=reason_codes,
+            top1_key=top1.monument_key if top1 else None,
+            local_corroboration=local_feature_corroboration,
         )
 
         requires_review = decision in [
@@ -360,6 +374,7 @@ class UncertaintyEngine:
             top1_similarity=top1_sim,
             top2_similarity=top2_sim,
             similarity_margin=similarity_margin,
+            margin_threshold=round(margin_threshold, 4),
             calibrated_probability=calibrated_prob,
             calibration_status=calib_status,
             gatekeeper_score=round(gatekeeper_score, 4),
@@ -457,6 +472,8 @@ class UncertaintyEngine:
         gatekeeper_verified: float,
         gatekeeper_ambiguous: float,
         reason_codes: List[str],
+        top1_key: Optional[str] = None,
+        local_corroboration: Optional[Dict[str, Any]] = None,
     ) -> DecisionState:
         """
         Deterministic, transparent arbitration across the 5 decision states.
@@ -486,20 +503,42 @@ class UncertaintyEngine:
         # High gatekeeper, high similarity (or geo-boosted), and decisive margin
         effective_sim_threshold = sim_threshold - 0.08 if gps.geo_boost_applied else sim_threshold
 
+        # High-confidence corroboration for narrowly missed margin (e.g. Qutub Minar vs Charminar):
+        # When Top-1 candidate has exceptionally high visual similarity (>= 0.90),
+        # strong gatekeeper evidence (>= 0.70), no GPS conflict,
+        # the margin narrowly misses the threshold (margin >= 0.065),
+        # AND local architectural feature agreement confirms the candidate:
+        is_narrowly_missed_margin = (
+            margin >= (margin_threshold - 0.015)
+            and top1_sim >= 0.90
+            and gatekeeper_score >= 0.70
+            and not gps.gps_conflict
+        )
+        has_local_agreement = False
+        if local_corroboration:
+            align_status = local_corroboration.get("alignment_status")
+            local_cand = local_corroboration.get("top_local_candidate")
+            local_key = local_cand.get("monument_key") if isinstance(local_cand, dict) else None
+            if (
+                align_status in ["AGREEMENT_CONFIRMED_VISUAL", "AGREEMENT_CONFIRMED_GEOMETRIC"]
+                and (local_key is None or local_key == top1_key)
+            ):
+                has_local_agreement = True
+
         if (
             gatekeeper_score >= gatekeeper_verified
             and top1_sim >= effective_sim_threshold
-            and margin >= margin_threshold
             and not gps.gps_conflict
+            and (margin >= margin_threshold or (is_narrowly_missed_margin and has_local_agreement))
         ):
             reason_codes.append(ReasonCode.HIGH_CONFIDENCE_MATCH.value)
             return DecisionState.VERIFIED_MATCH
 
         # RULE 4: Uncertain Match (Candidate Competition)
-        # Sufficient similarity, but margin between Top-1 and Top-2 is too narrow
+        # Top-1 candidate meets catalog similarity threshold, but margin to Top-2 is too narrow
         if (
             gatekeeper_score >= gatekeeper_ambiguous
-            and top1_sim >= (effective_sim_threshold - 0.05)
+            and top1_sim >= effective_sim_threshold
             and margin < margin_threshold
         ):
             reason_codes.append(ReasonCode.AMBIGUOUS_TOP_CANDIDATES.value)
@@ -538,6 +577,13 @@ class UncertaintyEngine:
 
         if decision == DecisionState.VERIFIED_MATCH:
             geo_note = " with geodetic GPS verification" if gps.geo_boost_applied else ""
+            if margin < self.calibration.uncertainty_margin_threshold:
+                return (
+                    f"Specimen verified as {top1_name}{geo_note}. "
+                    f"Vector cosine alignment is exceptionally strong ({top1_sim:.4f}) and corroborated by "
+                    f"local architectural feature agreement (margin: {margin:.4f} over {top2_name}). "
+                    f"Architectural Gatekeeper score is {gatekeeper_score * 100:.1f}%."
+                )
             return (
                 f"Specimen verified as {top1_name}{geo_note}. "
                 f"Vector cosine alignment is strong ({top1_sim:.4f}) with a decisive margin of {margin:.4f} "

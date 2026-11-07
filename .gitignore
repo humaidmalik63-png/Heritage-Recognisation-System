@@ -28,6 +28,12 @@ wheels/
 .env
 *.local.env
 
+# Backups & Temporary Test Dumps
+*.bak*
+/*_test.html
+/dom_dump*.html
+/page_test.html
+
 # Node / Frontend
 node_modules/
 frontend/node_modules/

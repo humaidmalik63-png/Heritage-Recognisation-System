@@ -41,6 +41,11 @@ from PIL import Image
 from pydantic import BaseModel, Field
 from transformers import CLIPModel, CLIPProcessor
 
+# Ensure backend dir is on sys.path for direct imports
+BASE_DIR = Path(__file__).resolve().parent
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+
 # Import Calibration, Uncertainty, and Knowledge Engine modules
 from calibration import CalibrationEngine
 from uncertainty import (
@@ -62,6 +67,21 @@ from knowledge_schema import (
     SourceCitation,
 )
 from knowledge_engine import GroundedKnowledgeEngine
+from gemini_service import (
+    gemini_service,
+    telemetry_manager,
+    UnknownHeritageAnalysis,
+    GeminiAdjudicationResult,
+    ArchitecturalExplanation,
+)
+from catalogue_service import (
+    check_catalogue_membership,
+    CatalogueStatus,
+    CatalogueMembershipResult,
+    get_catalogue_100,
+)
+from local_feature_engine import local_feature_engine
+from shadow_engine import shadow_engine
 
 # Load environment variables
 load_dotenv()
@@ -82,6 +102,7 @@ METADATA_FILE = BASE_DIR / "monuments_metadata.json"
 EXCEPTIONS_FILE = BASE_DIR / "exceptions_log.json"
 CALIBRATION_CONFIG_FILE = BASE_DIR / "calibration_config.json"
 KNOWLEDGE_SOURCES_FILE = BASE_DIR / "knowledge_sources.json"
+CATALOGUE_100_FILE = BASE_DIR / "datasets" / "heritage_catalogue_100.json"
 
 MODEL_NAME = "openai/clip-vit-base-patch32"
 GATEKEEPER_SCALE = 18.0
@@ -117,6 +138,7 @@ state: Dict[str, Any] = {
     "faiss_index": None,
     "labels": [],
     "metadata": {},
+    "catalogue_100": {},
     "gatekeeper_pos_vec": None,
     "gatekeeper_neg_vec": None,
     "gemini_client": None,
@@ -141,6 +163,7 @@ class PipelineTelemetry(BaseModel):
     top_3_candidates: List[CandidateMatch]
     decision_reason: str
     geo_boost_applied: bool = False
+    margin_threshold: float = 0.08
 
 
 class GroundedCitations(BaseModel):
@@ -174,6 +197,10 @@ class VerificationResponse(BaseModel):
     human_review_flagged: bool = False
     exception_id: Optional[str] = None
     uncertainty: Optional[UncertaintyResult] = None
+    tier2_analysis: Optional[Dict[str, Any]] = None
+    local_features: Optional[Dict[str, Any]] = None
+    out_of_catalog_identified: bool = False
+    catalogue_status: Optional[str] = "OUT_OF_CATALOG"
 
 
 class ExceptionItem(BaseModel):
@@ -389,7 +416,7 @@ def execute_gemini_fallback(image: Image.Image) -> Optional[Dict[str, Any]]:
         )
 
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
+            model=gemini_service.model_name,
             contents=[prompt, image],
             config=types.GenerateContentConfig(
                 response_mime_type="application/json",
@@ -454,6 +481,14 @@ async def lifespan(app: FastAPI):
     with open(METADATA_FILE, "r", encoding="utf-8") as f:
         state["metadata"] = json.load(f)
 
+    # 4B. Load 100-Site Extended Heritage Catalogue (Phase 8.6)
+    if CATALOGUE_100_FILE.exists():
+        with open(CATALOGUE_100_FILE, "r", encoding="utf-8") as f:
+            state["catalogue_100"] = json.load(f)
+        logger.info(f"Loaded Phase 8.6 Heritage Catalogue: {len(state['catalogue_100'])} sites (50 Indian + 50 International).")
+    else:
+        logger.warning(f"100-Site Heritage Catalogue not found at {CATALOGUE_100_FILE}.")
+
     # 5. Initialize Confidence Calibration, Uncertainty & Knowledge Engines
     calibration_engine = CalibrationEngine(CALIBRATION_CONFIG_FILE)
     uncertainty_engine = UncertaintyEngine(calibration_engine)
@@ -475,24 +510,48 @@ async def lifespan(app: FastAPI):
         f"{len(state['labels'])} labels, and {len(state['metadata'])} monument metadata records."
     )
 
-    # 6. Initialize Gemini Tier 2 Client if configured
-    gemini_key = os.environ.get("GEMINI_API_KEY", "").strip()
-    if gemini_key and gemini_key != "your_google_ai_studio_api_key_here":
-        try:
-            from google import genai
-            state["gemini_client"] = genai.Client(api_key=gemini_key)
-            state["gemini_configured"] = True
-            logger.info("Gemini 2.5 Flash Tier 2 VLM client successfully configured.")
-        except Exception as exc:
-            logger.warning(f"Could not initialize Gemini Client: {exc}")
-            state["gemini_configured"] = False
+    # 5B. Initialize Local Feature Engine with CLIP resources and pre-indexed reference vectors
+    local_feature_engine.set_clip_resources(
+        state["clip_model"],
+        state["clip_processor"],
+        state["device"]
+    )
+    ref_items = []
+    for item in state["labels"]:
+        idx_id = item["index_id"]
+        vec = state["faiss_index"].reconstruct(idx_id)
+        ref_items.append({
+            "image_id": item.get("image_id", str(idx_id)),
+            "monument_key": item["monument_key"],
+            "monument_name": item["monument_name"],
+            "embedding": vec,
+            "file_path": item.get("file_path"),
+            "view_type": item.get("view_type"),
+        })
+    state["reference_items"] = ref_items
+    logger.info(f"Loaded {len(ref_items)} reference views into Local Feature Engine cache.")
+
+    # 6. Initialize Gemini Tier 2 Service
+    state["gemini_service"] = gemini_service
+    state["gemini_client"] = gemini_service.client
+    state["gemini_configured"] = gemini_service.is_available()
+    if state["gemini_configured"]:
+        logger.info(f"Gemini Tier 2 VLM service operational ({gemini_service.model_name}).")
     else:
-        logger.info("No active GEMINI_API_KEY detected. Running in pure offline Tier 1 mode.")
-        state["gemini_configured"] = False
+        logger.info("Running Tier-2 in pure offline fallback mode.")
+
+    # 7. Initialize Policy D Shadow Staging Engine (Phase 8.4C)
+    state["shadow_engine"] = shadow_engine
+    logger.info(
+        f"Policy D Shadow Staging Engine: ENABLED={shadow_engine.is_enabled()} "
+        f"[workers={shadow_engine.config.max_workers}, max_queue={shadow_engine.config.max_queue_size}, "
+        f"timeout={shadow_engine.config.timeout_seconds*1000:.0f}ms]"
+    )
 
     logger.info("Engine startup complete. Service ready.")
     yield
     logger.info("Service shutting down...")
+    shadow_engine.shutdown()
 
 
 # --- FastAPI Application ---
@@ -529,8 +588,10 @@ def get_health():
         "status": "healthy",
         "faiss_vectors_loaded": state["faiss_index"].ntotal if state["faiss_index"] else 0,
         "clip_device": state["device"],
-        "gemini_tier2_configured": state["gemini_configured"],
+        "gemini_tier2_configured": gemini_service.is_available(),
+        "gemini_tier2_model": gemini_service.model_name,
         "monuments_count": len(state["metadata"]),
+        "catalogue_100_count": len(state.get("catalogue_100", {})),
         "knowledge_records_count": len(ke.records) if ke else 0,
         "exceptions_count": len(load_exceptions_log()),
         "calibration_status": calib.calibration_status if calib else "UNCALIBRATED",
@@ -538,11 +599,65 @@ def get_health():
 
 
 @app.get("/api/monuments")
-def get_monuments_catalog():
-    """Returns the comprehensive catalog of 10 indexed heritage monuments."""
+def get_monuments_catalog(
+    country: Optional[str] = None,
+    category: Optional[str] = None,
+    readiness: Optional[str] = None,
+    search: Optional[str] = None,
+    scope: Optional[str] = None,
+):
+    """
+    Returns the comprehensive catalog of heritage monuments.
+    By default returns the full 100-site heritage catalogue (50 Indian + 50 International).
+    Supports filtering by country, category, recognition readiness, and search query.
+    If scope == 'flagship', returns the original 10 core monuments for backward compatibility.
+    """
+    cat_source = state.get("catalogue_100") or state["metadata"]
+    if scope == "flagship":
+        return {
+            "total": len(state["metadata"]),
+            "catalogue_size": len(state["metadata"]),
+            "monuments": state["metadata"],
+        }
+
+    filtered = {}
+    for mid, item in cat_source.items():
+        if country and country.lower() != "all":
+            c_low = country.lower()
+            item_c = item.get("country", "").lower()
+            if c_low == "india" and item_c != "india":
+                continue
+            elif c_low == "international" and item_c == "india":
+                continue
+            elif c_low not in ["india", "international"] and item_c != c_low:
+                continue
+
+        if category and category.lower() != "all":
+            if item.get("category", "").lower() != category.lower():
+                continue
+
+        if readiness and readiness.lower() != "all":
+            if item.get("recognition_readiness", "").lower() != readiness.lower():
+                continue
+
+        if search:
+            s = search.lower().strip()
+            name_match = s in item.get("monument_name", "").lower()
+            key_match = s in mid.lower()
+            city_match = s in item.get("city_region", "").lower()
+            state_match = s in item.get("state_province", "").lower()
+            country_match = s in item.get("country", "").lower()
+            loc_match = s in item.get("location", "").lower()
+            alt_match = any(s in alt.lower() for alt in item.get("alternate_names", []))
+            if not (name_match or key_match or city_match or state_match or country_match or loc_match or alt_match):
+                continue
+
+        filtered[mid] = item
+
     return {
-        "total": len(state["metadata"]),
-        "monuments": state["metadata"],
+        "total": len(filtered),
+        "catalogue_size": len(cat_source),
+        "monuments": filtered,
     }
 
 
@@ -627,12 +742,106 @@ def ask_monument_archive(monument_id: str, payload: AskKnowledgeRequest):
             detail="Inquiry question cannot be empty or solely whitespace."
         )
 
-    gemini_client = state.get("gemini_client") if state.get("gemini_configured") else None
+    gemini_handler = state.get("gemini_service") if gemini_service.is_available() else state.get("gemini_client")
     return engine.ask_archive(
         monument_id=monument_id,
         question=clean_question,
-        gemini_client=gemini_client,
+        gemini_client=gemini_handler,
     )
+
+
+# --- Phase 7.2 Gemini Tier-2 Diagnostics & Architectural Explanation ---
+
+@app.get("/api/telemetry/gemini")
+def get_gemini_telemetry():
+    """Phase 7.2: Returns safe aggregated telemetry for Gemini Tier-2 usage without sensitive keys."""
+    return telemetry_manager.get_public_stats()
+
+
+@app.post("/api/monuments/{monument_id}/explain-architecture")
+async def explain_monument_architecture(
+    monument_id: str,
+    file: UploadFile = File(...),
+):
+    """
+    Phase 7.2 Capability C:
+    Generates a structured architectural explanation rigorously separating
+    directly visible observations from stylistic interpretations and verified facts.
+    """
+    try:
+        content = await file.read()
+        with Image.open(io.BytesIO(content)) as pil_img:
+            image_rgb = pil_img.convert("RGB")
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=f"Invalid image file: {exc}")
+
+    m_data = state["metadata"].get(monument_id, {})
+    m_name = m_data.get("monument_name", monument_id.replace("_", " ").title())
+    verified_facts = m_data.get("structural_features_detected", [])
+
+    explanation = gemini_service.explain_architecture(
+        image=image_rgb,
+        monument_name=m_name,
+        verified_facts=verified_facts,
+    )
+    return explanation.dict()
+
+
+# --- Phase 8.0B Dedicated Local Architectural Feature Recognition ---
+
+@app.post("/api/recognition/local-features")
+async def analyze_local_features_endpoint(file: UploadFile = File(...)):
+    """
+    Phase 8.0B Dedicated Local Architectural Feature Recognition & Geometric Verification:
+    - Extracts multi-scale architectural regions (upper crown, arcade/columns, lower friezes, gradient saliency).
+    - Extracts local CLIP embeddings per region crop.
+    - Matches regions against 210 reference gallery views.
+    - Performs classical SIFT keypoint extraction and RANSAC homography estimation.
+    - Evaluates cross-modal alignment between global and localized evidence.
+    """
+    try:
+        content = await file.read()
+        if not content:
+            raise HTTPException(status_code=400, detail="Uploaded file is empty.")
+        with Image.open(io.BytesIO(content)) as raw_img:
+            image_rgb = raw_img.convert("RGB")
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=f"Invalid image file: {exc}")
+
+    img_vec = compute_clip_image_embedding(image_rgb)
+    arch_prob = evaluate_architectural_gatekeeper(img_vec)
+
+    query_matrix = np.expand_dims(img_vec, axis=0).astype(np.float32)
+    raw_distances, raw_indices = state["faiss_index"].search(query_matrix, 5)
+
+    global_cand = None
+    if len(raw_indices[0]) > 0 and raw_indices[0][0] >= 0:
+        idx_0 = int(raw_indices[0][0])
+        lbl = state["labels"][idx_0]
+        global_cand = {
+            "monument_key": lbl["monument_key"],
+            "monument_name": lbl["monument_name"],
+            "similarity": float(raw_distances[0][0]),
+        }
+
+    local_results = local_feature_engine.match_local_features(
+        image=image_rgb,
+        reference_images=state.get("reference_items", []),
+        top_k_candidates=5
+    )
+
+    hybrid_summary = local_feature_engine.evaluate_hybrid_evidence(
+        global_candidate=global_cand,
+        local_results=local_results,
+        gatekeeper_score=arch_prob,
+    )
+
+    return {
+        "global_candidate": global_cand,
+        "gatekeeper_score": round(arch_prob, 4),
+        "local_analysis": local_results,
+        "hybrid_alignment": hybrid_summary,
+    }
 
 
 @app.get("/api/exceptions")
@@ -749,79 +958,196 @@ async def verify_monument(file: UploadFile = File(...)):
 
     geo_boost = uncertainty_res.gps_evidence.geo_boost_applied
 
-    # 5. Handle Tier 2 Gemini VLM Fallback if configured and indicated
-    if (
-        state["gemini_configured"]
-        and uncertainty_res.decision in [DecisionState.UNKNOWN_HERITAGE_SPECIMEN, DecisionState.REVIEW_REQUIRED]
+    # 4B. Conditional Local Architectural Feature & Geometric Corroboration (Tier 1C)
+    local_features_data = None
+    is_decisive_global = (
+        best_score >= 0.85
+        and uncertainty_res.similarity_margin >= 0.10
+        and arch_prob >= 0.70
+        and not uncertainty_res.gps_evidence.gps_conflict
+    )
+    is_non_monument = (arch_prob < 0.40 and best_score < 0.65) or (uncertainty_res.decision == DecisionState.NON_MONUMENT_REJECTED)
+    should_run_local = (not is_decisive_global) and (not is_non_monument) and bool(state.get("reference_items"))
+
+    if should_run_local:
+        try:
+            local_eval = local_feature_engine.match_local_features(
+                image=image_rgb,
+                reference_images=state["reference_items"],
+                top_k_candidates=3
+            )
+            hybrid_eval = local_feature_engine.evaluate_hybrid_evidence(
+                global_candidate={"monument_key": best_key, "similarity": best_score} if best_cand else None,
+                local_results=local_eval,
+                gatekeeper_score=arch_prob,
+            )
+            local_features_data = {
+                "execution_mode": "TRIGGERED_AMBIGUOUS_SPECIMEN",
+                "top_local_candidate": local_eval.get("top_candidate"),
+                "regions_evaluated": local_eval.get("regions_evaluated", 0),
+                "geometric_verification": local_eval.get("geometric_verification"),
+                "sift_triggered": local_eval.get("sift_triggered", False),
+                "alignment_status": hybrid_eval.get("alignment_status"),
+                "alignment_explanation": hybrid_eval.get("explanation"),
+                "override_applied": hybrid_eval.get("override_applied", False),
+                "evidence_quality": hybrid_eval.get("evidence_quality"),
+                "latency_ms": local_eval.get("latency_ms", 0.0),
+            }
+
+            # If initially flagged as UNCERTAIN_MATCH due to candidate competition,
+            # allow local architectural feature evidence to corroborate high-confidence matches:
+            if uncertainty_res.decision == DecisionState.UNCERTAIN_MATCH:
+                corroborated_res = uncertainty_engine.evaluate(
+                    image=image_rgb,
+                    gatekeeper_score=arch_prob,
+                    raw_distances=raw_distances[0],
+                    raw_indices=raw_indices[0],
+                    labels=state["labels"],
+                    metadata=state["metadata"],
+                    exif_gps=exif_gps,
+                    local_feature_corroboration={
+                        "alignment_status": hybrid_eval.get("alignment_status"),
+                        "top_local_candidate": local_eval.get("top_candidate"),
+                        "geometric_verification": local_eval.get("geometric_verification"),
+                    },
+                )
+                if corroborated_res.decision == DecisionState.VERIFIED_MATCH:
+                    uncertainty_res = corroborated_res
+                    logger.info(
+                        f"Local architectural feature corroboration confirmed VERIFIED_MATCH for {best_key} "
+                        f"(top1_sim={best_score:.4f}, margin={uncertainty_res.similarity_margin:.4f})."
+                    )
+        except Exception as e:
+            logger.warning(f"Local feature evaluation encountered non-fatal error: {e}")
+    else:
+        bypass_reason = "DECISIVE_GLOBAL_MATCH" if is_decisive_global else "NON_MONUMENT_REJECTED"
+        local_features_data = {
+            "execution_mode": "BYPASS_OPTIMIZED",
+            "routing_reason": bypass_reason,
+            "regions_evaluated": 0,
+            "geometric_verification": {"status": "BYPASSED", "inliers_count": 0},
+            "sift_triggered": False,
+            "override_applied": False,
+            "alignment_status": "DECISIVE_GLOBAL_MATCH" if is_decisive_global else "BYPASSED",
+            "alignment_explanation": (
+                "Decisive global CLIP alignment observed (high similarity, decisive margin, strong gatekeeper). "
+                "Local feature extraction bypassed to maintain ~130ms low-latency execution."
+                if is_decisive_global
+                else "Non-monument scene rejected by architectural gatekeeper. Local feature processing bypassed."
+            ),
+            "latency_ms": 0.0,
+        }
+
+    # 5. Gemini 3.1 Flash-Lite Open-World Adjudication Stage (Phase 8.5F & 8.6B)
+    tier2_analysis_dict = None
+    gemini_adjudication = None
+    is_out_of_catalog_identified = False
+    is_catalog_metadata_only = False
+    final_decision = uncertainty_res.decision
+    adjudicated_membership: Optional[CatalogueMembershipResult] = None
+    final_catalogue_status = CatalogueStatus.OUT_OF_CATALOG.value
+
+    should_adjudicate = (
+        gemini_service.is_available()
+        and uncertainty_res.decision in [
+            DecisionState.UNCERTAIN_MATCH,
+            DecisionState.UNKNOWN_HERITAGE_SPECIMEN,
+            DecisionState.REVIEW_REQUIRED,
+        ]
         and arch_prob >= 0.40
-    ):
-        logger.info(f"Dispatching to Tier 2 Gemini VLM Fallback (arch_prob={arch_prob}, best_score={best_score})...")
-        vlm_result = execute_gemini_fallback(image_rgb)
-        if vlm_result:
-            if vlm_result.get("is_monument", False):
-                coords = None
-                if vlm_result.get("latitude") and vlm_result.get("longitude"):
-                    coords = {"lat": float(vlm_result["latitude"]), "lng": float(vlm_result["longitude"])}
+    )
 
-                m_name = vlm_result.get("monument_name", "Identified Heritage Landmark")
-                slug_key = m_name.lower().replace(" ", "_")[:20]
-                catalog_id = f"ASI-VLM-{slug_key[:4].upper()}-99"
+    if should_adjudicate:
+        logger.info(
+            f"Invoking Gemini 3.1 Flash-Lite Open-World Adjudication (decision={uncertainty_res.decision.value}, "
+            f"arch_prob={arch_prob:.4f}, best_score={best_score:.4f}, top_cand={best_cand})..."
+        )
+        gemini_adjudication = gemini_service.adjudicate_monument(image_rgb)
+        tier2_analysis_dict = gemini_adjudication.model_dump()
 
-                return VerificationResponse(
-                    is_monument=True,
-                    verification_status=DecisionState.VERIFIED_MATCH.value,
-                    is_uncertain=False,
-                    verification_tier="TIER 2 // VLM DEEP ARCHITECTURAL VERIFICATION",
-                    confidence_score=round(float(vlm_result.get("confidence_score", 88.0)), 1),
-                    catalog_id=catalog_id,
-                    monument_key=slug_key,
-                    monument_name=m_name,
-                    location=vlm_result.get("location", "Location Verified"),
-                    coordinates=coords,
-                    architectural_style=vlm_result.get("architectural_style", "Historical Heritage"),
-                    built_by_or_era=vlm_result.get("built_by_or_era", "Heritage Era"),
-                    historical_summary=vlm_result.get("historical_summary", "Historical site verified by VLM."),
-                    structural_features_detected=vlm_result.get("structural_features_detected", []),
-                    preservation_status="VLM Verified Monument of Cultural Interest",
-                    grounded_citations=GroundedCitations(
-                        primary_source="Gemini 2.5 Flash Multimodal Archaeological Engine",
-                        curatorial_notes="Identified outside primary local vector database via deep vision-language synthesis."
-                    ),
-                    pipeline_telemetry=PipelineTelemetry(
-                        exif_gps=exif_gps,
-                        architectural_gatekeeper_score=arch_prob,
-                        top_3_candidates=top_3_telemetry,
-                        decision_reason="Identified via Gemini 2.5 Flash VLM Multimodal Architectural Analysis",
-                        geo_boost_applied=geo_boost,
-                    ),
-                    uncertainty=uncertainty_res,
-                )
-            else:
-                return VerificationResponse(
-                    is_monument=False,
-                    verification_status=DecisionState.NON_MONUMENT_REJECTED.value,
-                    is_uncertain=False,
-                    verification_tier="REJECTED // NON-MONUMENT SPECIMEN",
-                    confidence_score=round(float(vlm_result.get("confidence_score", 95.0)), 1),
-                    rejection_message="Gemini VLM analysis confirmed that the submitted photograph does not depict a heritage monument or historical landmark.",
-                    pipeline_telemetry=PipelineTelemetry(
-                        exif_gps=exif_gps,
-                        architectural_gatekeeper_score=arch_prob,
-                        top_3_candidates=top_3_telemetry,
-                        decision_reason="Specimen rejected by Gemini VLM Tier 2 Inspection.",
-                        geo_boost_applied=geo_boost,
-                    ),
-                    uncertainty=uncertainty_res,
-                )
+        # Shared Canonical Membership Lookup (Phase 8.6B Hotfix)
+        adjudicated_membership = check_catalogue_membership(gemini_adjudication.proposed_identity)
+        final_catalogue_status = adjudicated_membership.status.value
+
+        # Conservative Adjudication Policy:
+        # D. Non-monument rejection: If Gemini explicitly identifies image as non-heritage structure
+        if not gemini_adjudication.is_heritage_structure:
+            logger.info("Gemini adjudication determined specimen is NOT a heritage structure.")
+            final_decision = DecisionState.NON_MONUMENT_REJECTED
+            final_catalogue_status = CatalogueStatus.OUT_OF_CATALOG.value
+
+        # B1. Identifiable Catalogued Metadata-Only Monument (e.g. Ajanta Caves, Golden Temple, Mysore Palace):
+        elif (
+            gemini_adjudication.is_heritage_structure
+            and gemini_adjudication.proposed_identity
+            and len(gemini_adjudication.proposed_identity.strip()) > 3
+            and len(gemini_adjudication.visible_architectural_evidence.strip()) >= 20
+            and gemini_adjudication.qualitative_confidence.upper() in ["HIGH", "MEDIUM"]
+            and adjudicated_membership.status == CatalogueStatus.CATALOGUED_METADATA_ONLY
+            and not gemini_adjudication.is_offline_fallback
+        ):
+            logger.info(
+                f"Gemini adjudication confirmed CATALOGUED METADATA-ONLY monument: "
+                f"'{gemini_adjudication.proposed_identity}' -> ID '{adjudicated_membership.monument_id}'"
+            )
+            final_decision = DecisionState.UNKNOWN_HERITAGE_SPECIMEN
+            is_catalog_metadata_only = True
+            is_out_of_catalog_identified = False
+            final_catalogue_status = CatalogueStatus.CATALOGUED_METADATA_ONLY.value
+
+        # B2. Identifiable Truly Out-of-Catalog Monument (e.g. Eiffel Tower):
+        elif (
+            gemini_adjudication.is_heritage_structure
+            and gemini_adjudication.proposed_identity
+            and len(gemini_adjudication.proposed_identity.strip()) > 3
+            and len(gemini_adjudication.visible_architectural_evidence.strip()) >= 20
+            and gemini_adjudication.qualitative_confidence.upper() in ["HIGH", "MEDIUM"]
+            and adjudicated_membership.status == CatalogueStatus.OUT_OF_CATALOG
+            and not gemini_adjudication.is_offline_fallback
+        ):
+            logger.info(
+                f"Gemini adjudication confirmed OUT-OF-CATALOG monument: "
+                f"'{gemini_adjudication.proposed_identity}' -> UNKNOWN_HERITAGE_SPECIMEN (OUT_OF_CATALOG)"
+            )
+            final_decision = DecisionState.UNKNOWN_HERITAGE_SPECIMEN
+            is_out_of_catalog_identified = True
+            is_catalog_metadata_only = False
+            final_catalogue_status = CatalogueStatus.OUT_OF_CATALOG.value
+
+        # B3. Flagship / Recognition-Ready Monument (e.g. Taj Mahal, Qutub Minar confirmed under uncertainty):
+        elif (
+            gemini_adjudication.is_heritage_structure
+            and gemini_adjudication.proposed_identity
+            and adjudicated_membership.status == CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY
+            and not gemini_adjudication.is_offline_fallback
+        ):
+            logger.info(
+                f"Gemini adjudication confirmed RECOGNITION-READY catalog monument: "
+                f"'{gemini_adjudication.proposed_identity}' -> ID '{adjudicated_membership.monument_id}'"
+            )
+            is_out_of_catalog_identified = False
+            is_catalog_metadata_only = False
+            final_catalogue_status = CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY.value
+
+        # C. Uncertain identity / generic masonry: retain original uncertainty decision
+        else:
+            logger.info(
+                f"Gemini adjudication retained original uncertainty decision ({uncertainty_res.decision.value})."
+            )
 
     # 6. Handle Human Review Exception Logging
     exception_id = None
-    if uncertainty_res.requires_human_review:
+    if uncertainty_res.requires_human_review or final_decision in [DecisionState.UNCERTAIN_MATCH, DecisionState.UNKNOWN_HERITAGE_SPECIMEN, DecisionState.REVIEW_REQUIRED]:
+        exc_reason = (
+            f"Out-of-catalog monument identified: {gemini_adjudication.proposed_identity}"
+            if is_out_of_catalog_identified and gemini_adjudication and gemini_adjudication.proposed_identity
+            else uncertainty_res.explanation
+        )
         exception_id = record_exception_entry(
             filename=file.filename or "uploaded_specimen.jpg",
             gatekeeper_score=arch_prob,
             top_candidate=best_cand,
-            reason=uncertainty_res.explanation,
+            reason=exc_reason,
             specimen_hash=specimen_hash,
             top_candidates_list=top_candidates_agg,
             similarity_margin=uncertainty_res.similarity_margin,
@@ -829,8 +1155,8 @@ async def verify_monument(file: UploadFile = File(...)):
             calibration_status=uncertainty_res.calibration_status,
         )
 
-    # 7. Map Uncertainty State to Backward-Compatible VerificationResponse
-    decision = uncertainty_res.decision
+    # 7. Map Final Adjudicated State to Backward-Compatible VerificationResponse
+    decision = final_decision
 
     # --- CASE A: VERIFIED MATCH ---
     if decision == DecisionState.VERIFIED_MATCH and best_key in state["metadata"]:
@@ -842,7 +1168,7 @@ async def verify_monument(file: UploadFile = File(...)):
         if "grounded_citations" in m_data:
             citations = GroundedCitations(**m_data["grounded_citations"])
 
-        return VerificationResponse(
+        response_obj = VerificationResponse(
             is_monument=True,
             verification_status=DecisionState.VERIFIED_MATCH.value,
             is_uncertain=False,
@@ -865,18 +1191,23 @@ async def verify_monument(file: UploadFile = File(...)):
                 top_3_candidates=top_3_telemetry,
                 decision_reason=uncertainty_res.explanation,
                 geo_boost_applied=geo_boost,
+                margin_threshold=round(uncertainty_engine.calibration.uncertainty_margin_threshold, 4),
             ),
             human_review_flagged=False,
             exception_id=None,
             uncertainty=uncertainty_res,
+            tier2_analysis=tier2_analysis_dict,
+            local_features=local_features_data,
+            out_of_catalog_identified=False,
+            catalogue_status=CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY.value,
         )
 
     # --- CASE B: UNCERTAIN MATCH (CANDIDATE COMPETITION) ---
-    if decision == DecisionState.UNCERTAIN_MATCH:
+    elif decision == DecisionState.UNCERTAIN_MATCH:
         m_data = state["metadata"].get(best_key, {})
         catalog_id = CATALOG_ID_MAP.get(best_key, f"ASI-ARCH-{best_key[:3].upper()}-00")
 
-        return VerificationResponse(
+        response_obj = VerificationResponse(
             is_monument=True,
             verification_status=DecisionState.UNCERTAIN_MATCH.value,
             is_uncertain=True,
@@ -900,37 +1231,122 @@ async def verify_monument(file: UploadFile = File(...)):
                 top_3_candidates=top_3_telemetry,
                 decision_reason="Ambiguous visual distinction between top unique candidates. Human review requested.",
                 geo_boost_applied=geo_boost,
+                margin_threshold=round(uncertainty_engine.calibration.uncertainty_margin_threshold, 4),
             ),
             human_review_flagged=True,
             exception_id=exception_id,
             uncertainty=uncertainty_res,
+            tier2_analysis=tier2_analysis_dict,
+            local_features=local_features_data,
+            out_of_catalog_identified=False,
+            catalogue_status=CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY.value if best_key in state["metadata"] else CatalogueStatus.OUT_OF_CATALOG.value,
         )
 
     # --- CASE C: UNKNOWN HERITAGE SPECIMEN ---
-    if decision == DecisionState.UNKNOWN_HERITAGE_SPECIMEN:
-        return VerificationResponse(
-            is_monument=False,
+    elif decision == DecisionState.UNKNOWN_HERITAGE_SPECIMEN:
+        if is_catalog_metadata_only and adjudicated_membership and gemini_adjudication:
+            mon_name = adjudicated_membership.monument_name or gemini_adjudication.proposed_identity
+            loc_name = adjudicated_membership.location or gemini_adjudication.proposed_location
+            v_tier = f"CATALOGUED — METADATA ONLY // {gemini_service.model_name.upper()}"
+            features_list = gemini_adjudication.distinguishing_features or [
+                gemini_adjudication.visible_architectural_evidence
+            ]
+            rej_msg = (
+                f"Specimen catalogued in 100-Site Heritage Register ('{mon_name}'). "
+                f"Metadata verified; visual identification by {gemini_service.model_name} (Tier 1 vector anchors pending field photographic survey)."
+            )
+            cat_id = (adjudicated_membership.monument_id or "SITE").upper()
+            coords = adjudicated_membership.coordinates
+            entry = adjudicated_membership.catalog_entry or {}
+            arch_style = entry.get("architectural_style")
+            built_era = entry.get("historical_period")
+            hist_sum = entry.get("verified_description")
+            pres_stat = entry.get("preservation_status")
+            status_val = CatalogueStatus.CATALOGUED_METADATA_ONLY.value
+            is_mon = True
+            is_ooc = False
+
+        elif is_out_of_catalog_identified and gemini_adjudication:
+            mon_name = gemini_adjudication.proposed_identity
+            loc_name = gemini_adjudication.proposed_location or "Geographic location pending curatorial confirmation"
+            v_tier = f"OUT-OF-CATALOG HERITAGE IDENTIFIED // {gemini_service.model_name.upper()}"
+            features_list = gemini_adjudication.distinguishing_features or [
+                gemini_adjudication.visible_architectural_evidence
+            ]
+            rej_msg = (
+                f"Specimen visually identified as out-of-catalog heritage site '{mon_name}'. "
+                f"Curatorial verification and catalogue expansion recommended."
+            )
+            cat_id = None
+            coords = None
+            arch_style = None
+            built_era = None
+            hist_sum = None
+            pres_stat = None
+            status_val = CatalogueStatus.OUT_OF_CATALOG.value
+            is_mon = True
+            is_ooc = True
+
+        else:
+            mon_name = "Unindexed / Ambiguous Heritage Site"
+            loc_name = None
+            v_tier = "UNKNOWN SPECIMEN // UNINDEXED OR AMBIGUOUS HERITAGE SITE"
+            features_list = []
+            rej_msg = uncertainty_res.explanation
+            cat_id = None
+            coords = None
+            arch_style = None
+            built_era = None
+            hist_sum = None
+            pres_stat = None
+            status_val = CatalogueStatus.OUT_OF_CATALOG.value
+            is_mon = False
+            is_ooc = False
+
+        response_obj = VerificationResponse(
+            is_monument=is_mon,
             verification_status=DecisionState.UNKNOWN_HERITAGE_SPECIMEN.value,
             is_uncertain=True,
-            verification_tier="UNKNOWN SPECIMEN // UNINDEXED OR AMBIGUOUS HERITAGE SITE",
+            verification_tier=v_tier,
             confidence_score=round(best_score * 100.0, 1),
-            monument_name="Unindexed / Ambiguous Heritage Site",
-            rejection_message=uncertainty_res.explanation,
+            monument_name=mon_name,
+            catalog_id=cat_id,
+            location=loc_name,
+            coordinates=coords,
+            architectural_style=arch_style,
+            built_by_or_era=built_era,
+            historical_summary=hist_sum,
+            preservation_status=pres_stat,
+            structural_features_detected=features_list,
+            rejection_message=rej_msg,
+            out_of_catalog_identified=is_ooc,
+            catalogue_status=status_val,
             pipeline_telemetry=PipelineTelemetry(
                 exif_gps=exif_gps,
                 architectural_gatekeeper_score=arch_prob,
                 top_3_candidates=top_3_telemetry,
-                decision_reason="Explicit Uncertainty State Triggered (SIH 2025 Compliance). Flagged for human review.",
+                decision_reason=(
+                    f"Catalogue metadata-only monument identified by {gemini_service.model_name}: {mon_name}"
+                    if is_catalog_metadata_only
+                    else (
+                        f"Out-of-catalog heritage monument adjudicated by {gemini_service.model_name}: {mon_name}"
+                        if is_out_of_catalog_identified
+                        else "Explicit Uncertainty State Triggered (SIH 2025 Compliance). Flagged for human review."
+                    )
+                ),
                 geo_boost_applied=geo_boost,
+                margin_threshold=round(uncertainty_engine.calibration.uncertainty_margin_threshold, 4),
             ),
             human_review_flagged=True,
             exception_id=exception_id,
             uncertainty=uncertainty_res,
+            tier2_analysis=tier2_analysis_dict,
+            local_features=local_features_data,
         )
 
     # --- CASE D: REVIEW REQUIRED (GEODETIC CONFLICT OR DEGRADED QUALITY) ---
-    if decision == DecisionState.REVIEW_REQUIRED:
-        return VerificationResponse(
+    elif decision == DecisionState.REVIEW_REQUIRED:
+        response_obj = VerificationResponse(
             is_monument=False,
             verification_status=DecisionState.REVIEW_REQUIRED.value,
             is_uncertain=True,
@@ -944,31 +1360,64 @@ async def verify_monument(file: UploadFile = File(...)):
                 top_3_candidates=top_3_telemetry,
                 decision_reason=uncertainty_res.explanation,
                 geo_boost_applied=geo_boost,
+                margin_threshold=round(uncertainty_engine.calibration.uncertainty_margin_threshold, 4),
             ),
             human_review_flagged=True,
             exception_id=exception_id,
             uncertainty=uncertainty_res,
+            tier2_analysis=tier2_analysis_dict,
+            local_features=local_features_data,
+            out_of_catalog_identified=False,
+            catalogue_status=CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY.value if best_key in state["metadata"] else CatalogueStatus.OUT_OF_CATALOG.value,
         )
 
     # --- CASE E: NON-MONUMENT REJECTED ---
-    return VerificationResponse(
-        is_monument=False,
-        verification_status=DecisionState.NON_MONUMENT_REJECTED.value,
-        is_uncertain=False,
-        verification_tier="REJECTED // NON-MONUMENT SPECIMEN",
-        confidence_score=round(max(best_score * 100.0, (1.0 - arch_prob) * 100.0), 1),
-        rejection_message=uncertainty_res.explanation,
-        pipeline_telemetry=PipelineTelemetry(
-            exif_gps=exif_gps,
-            architectural_gatekeeper_score=arch_prob,
-            top_3_candidates=top_3_telemetry,
-            decision_reason="Specimen failed architectural gatekeeper and retrieval similarity thresholds.",
-            geo_boost_applied=geo_boost,
-        ),
-        human_review_flagged=False,
-        exception_id=None,
-        uncertainty=uncertainty_res,
-    )
+    else:
+        response_obj = VerificationResponse(
+            is_monument=False,
+            verification_status=DecisionState.NON_MONUMENT_REJECTED.value,
+            is_uncertain=False,
+            verification_tier="REJECTED // NON-MONUMENT SPECIMEN",
+            confidence_score=round(max(best_score * 100.0, (1.0 - arch_prob) * 100.0), 1),
+            rejection_message=uncertainty_res.explanation,
+            pipeline_telemetry=PipelineTelemetry(
+                exif_gps=exif_gps,
+                architectural_gatekeeper_score=arch_prob,
+                top_3_candidates=top_3_telemetry,
+                decision_reason="Specimen failed architectural gatekeeper and retrieval similarity thresholds.",
+                geo_boost_applied=geo_boost,
+                margin_threshold=round(uncertainty_engine.calibration.uncertainty_margin_threshold, 4),
+            ),
+            human_review_flagged=False,
+            exception_id=None,
+            uncertainty=uncertainty_res,
+            tier2_analysis=tier2_analysis_dict,
+            local_features=local_features_data,
+            out_of_catalog_identified=False,
+            catalogue_status=CatalogueStatus.OUT_OF_CATALOG.value,
+        )
+
+    # 8. Asynchronous / Non-blocking Shadow Evaluation of Candidate Policy D
+    if shadow_engine.is_enabled():
+        try:
+            req_id = f"req_{specimen_hash}_{uuid.uuid4().hex[:8]}"
+            shadow_engine.submit_shadow_evaluation(
+                request_id=req_id,
+                image=image_rgb,
+                top1_key=best_key,
+                top1_sim=best_score,
+                margin=uncertainty_res.similarity_margin,
+                gatekeeper_score=arch_prob,
+                policy_a_decision=decision.value,
+                policy_a_monument=best_key,
+                reference_items=state.get("reference_items"),
+                clip_model=state.get("clip_model"),
+                clip_processor=state.get("clip_processor"),
+            )
+        except Exception as shadow_exc:
+            logger.warning(f"Shadow staging submission failed silently without affecting response: {shadow_exc}")
+
+    return response_obj
 
 
 if __name__ == "__main__":

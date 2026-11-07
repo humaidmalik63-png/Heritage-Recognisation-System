@@ -1,0 +1,178 @@
+{
+  "timestamp": "2026-11-07T10:20:08Z",
+  "backend": {
+    "health": {
+      "status": 200,
+      "body": {
+        "status": "healthy",
+        "faiss_vectors_loaded": 210,
+        "clip_device": "cpu",
+        "gemini_tier2_configured": true,
+        "gemini_tier2_model": "gemini-2.5-flash",
+        "monuments_count": 10,
+        "knowledge_records_count": 10,
+        "exceptions_count": 19,
+        "calibration_status": "EXPERIMENTAL_CALIBRATED"
+      }
+    },
+    "docs": {
+      "status": 200,
+      "has_swagger": true
+    }
+  },
+  "frontend": {
+    "status": 200,
+    "has_root_div": true,
+    "content_length": 1440,
+    "is_vite_running": true
+  },
+  "image_recognition": {
+    "Taj Mahal (Canonical Catalog)": {
+      "image": "img_1.jpg",
+      "http_status": 200,
+      "latency_ms": 251.73,
+      "top_1_monument": "Taj Mahal",
+      "monument_key": "taj_mahal",
+      "decision_state": "VERIFIED_MATCH",
+      "confidence_score": 99.8,
+      "calibrated_prob": null,
+      "is_uncertain": false,
+      "historical_context_present": true,
+      "tier2_active": false,
+      "verification_tier": "TIER 1 // LOCAL CLIP + FAISS VECTOR INDEX",
+      "human_review_flagged": false,
+      "exception_id": null
+    },
+    "Charminar (Canonical Catalog)": {
+      "image": "img_1.jpg",
+      "http_status": 200,
+      "latency_ms": 172.33,
+      "top_1_monument": "Charminar",
+      "monument_key": "charminar",
+      "decision_state": "VERIFIED_MATCH",
+      "confidence_score": 99.8,
+      "calibrated_prob": null,
+      "is_uncertain": false,
+      "historical_context_present": true,
+      "tier2_active": false,
+      "verification_tier": "TIER 1 // LOCAL CLIP + FAISS VECTOR INDEX",
+      "human_review_flagged": false,
+      "exception_id": null
+    },
+    "Qutub Minar (Canonical Catalog)": {
+      "image": "img_1.jpg",
+      "http_status": 200,
+      "latency_ms": 153.07,
+      "top_1_monument": "Qutub Minar",
+      "monument_key": "qutub_minar",
+      "decision_state": "VERIFIED_MATCH",
+      "confidence_score": 99.8,
+      "calibrated_prob": null,
+      "is_uncertain": false,
+      "historical_context_present": true,
+      "tier2_active": false,
+      "verification_tier": "TIER 1 // LOCAL CLIP + FAISS VECTOR INDEX",
+      "human_review_flagged": false,
+      "exception_id": null
+    },
+    "Ambiguous Monument (Split D 019 Hampi)": {
+      "image": "split_d_019_hampi_stone_chariot.jpg",
+      "http_status": 200,
+      "latency_ms": 920.67,
+      "top_1_monument": "Hampi Stone Chariot",
+      "monument_key": "hampi_stone_chariot",
+      "decision_state": "UNCERTAIN_MATCH",
+      "confidence_score": 87.6,
+      "calibrated_prob": null,
+      "is_uncertain": true,
+      "historical_context_present": true,
+      "tier2_active": false,
+      "verification_tier": "UNCERTAIN // CLOSE CANDIDATE COMPETITION",
+      "human_review_flagged": true,
+      "exception_id": "EXC-66472F45"
+    },
+    "Non-Monument Distractor (Split D 062)": {
+      "image": "split_d_062_non_monument.jpg",
+      "http_status": 200,
+      "latency_ms": 2286.94,
+      "top_1_monument": "Unindexed / Ambiguous Heritage Site",
+      "monument_key": null,
+      "decision_state": "UNKNOWN_HERITAGE_SPECIMEN",
+      "confidence_score": 64.6,
+      "calibrated_prob": null,
+      "is_uncertain": true,
+      "historical_context_present": false,
+      "tier2_active": true,
+      "verification_tier": "UNKNOWN SPECIMEN // UNINDEXED OR AMBIGUOUS HERITAGE SITE",
+      "human_review_flagged": true,
+      "exception_id": "EXC-642923ED"
+    },
+    "Non-Monument Document / Receipt": {
+      "image": "receipt_distractor.jpg",
+      "http_status": 200,
+      "latency_ms": 146.33,
+      "top_1_monument": null,
+      "monument_key": null,
+      "decision_state": "NON_MONUMENT_REJECTED",
+      "confidence_score": 62.6,
+      "calibrated_prob": null,
+      "is_uncertain": false,
+      "historical_context_present": false,
+      "tier2_active": false,
+      "verification_tier": "REJECTED // NON-MONUMENT SPECIMEN",
+      "human_review_flagged": false,
+      "exception_id": null
+    },
+    "Out-of-Catalog Heritage (Mysore Palace)": {
+      "image": "split_d_086_mysore_palace.jpg",
+      "http_status": 200,
+      "latency_ms": 913.82,
+      "top_1_monument": "Gateway of India",
+      "monument_key": "gateway_of_india",
+      "decision_state": "UNCERTAIN_MATCH",
+      "confidence_score": 78.7,
+      "calibrated_prob": null,
+      "is_uncertain": true,
+      "historical_context_present": true,
+      "tier2_active": false,
+      "verification_tier": "UNCERTAIN // CLOSE CANDIDATE COMPETITION",
+      "human_review_flagged": true,
+      "exception_id": "EXC-1D1DC9F9"
+    }
+  },
+  "knowledge_retrieval": {
+    "taj_mahal_knowledge_status": 200,
+    "taj_mahal_sources_status": 200,
+    "taj_mahal_sources_count": 4,
+    "factual_qa": {
+      "question": "Who commissioned the Taj Mahal and in what century?",
+      "answer_preview": "Taj Mahal (Rauza-i-Munawwara, Crown of the Palace): The Taj Mahal is an ivory-white marble mausoleum situated on the southern bank of the Yamuna River in Agra. Commissioned in 1631 by Mughal Emperor S",
+      "citations": null
+    },
+    "missing_info_qa": {
+      "question": "What brand of modern synthetic paint was used during the 2024 dome maintenance?",
+      "answer": "The official archival records for Taj Mahal do not contain verified information to answer this specific question. To uphold SIH 2025 anti-hallucination standards, the system does not guess or generate unverified claims. Verified records are available regarding: its Mughal Classical Architecture style, patronage by Mughal Empire (Emperor Shah Jahan), its construction period (1631\u20131653 CE), and its protection under Archaeological Survey of India (ASI) Northern Circle, Agra.",
+      "refused_hallucination": true
+    }
+  },
+  "gemini_fallback": {
+    "live_gemini_configured": true,
+    "model_name": "gemini-2.5-flash",
+    "offline_fallback_operational": true,
+    "fallback_analysis_observations": [
+      "Unindexed heritage specimen detected by Tier-1 visual vector scanner."
+    ],
+    "fallback_caveat": "Visual analysis is exploratory and does not establish verified historical identity without epigraphical or archival records."
+  },
+  "governance": {
+    "policy_a_authoritative": true,
+    "policy_d_observational_only": true,
+    "shadow_engine_enabled_by_default": false,
+    "faiss_index_vectors": 210,
+    "confidence_threshold": 0.75,
+    "uncertainty_margin_threshold": 0.08,
+    "gatekeeper_threshold_verified": 0.5,
+    "gatekeeper_threshold_ambiguous": 0.45,
+    "git_status": "zero commits/pushes performed"
+  }
+}

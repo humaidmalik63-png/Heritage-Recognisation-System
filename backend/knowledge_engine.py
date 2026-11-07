@@ -357,40 +357,66 @@ class GroundedKnowledgeEngine:
 
         # Case A: Gemini 2.5 Flash Grounded Generation (if configured)
         if gemini_client is not None:
-            try:
-                context_block = "\n\n".join(
-                    f"[{p['section']}] (Citations: {', '.join(p['citation_ids'])})\n{p['text']}"
-                    for p in top_matches
-                )
-                prompt = (
-                    f"You are the Chief Heritage Curator of the Indian Heritage Register. "
-                    f"Answer the user's question about {record.monument_name} strictly and ONLY using the verified historical evidence below. "
-                    f"Include citation tags like [CIT-...] next to each fact. "
-                    f"Do NOT invent dates, rulers, or facts. If the evidence does not state the answer, state that clearly.\n\n"
-                    f"EVIDENCE EXCERPTS:\n{context_block}\n\n"
-                    f"USER QUESTION: {question}\n\n"
-                    f"GROUNDED CURATORIAL ANSWER:"
-                )
-
-                response = gemini_client.models.generate_content(
-                    model="gemini-2.5-flash",
-                    contents=prompt,
-                )
-                if response and response.text:
+            if hasattr(gemini_client, "answer_historical_question"):
+                try:
+                    res = gemini_client.answer_historical_question(
+                        monument_id=monument_id,
+                        monument_name=record.monument_name,
+                        question=question,
+                        verified_passages=top_matches,
+                        citations_list=citations_list,
+                    )
                     return AskKnowledgeResponse(
                         monument_id=monument_id,
                         monument_name=record.monument_name,
                         question=question,
-                        answer=response.text.strip(),
-                        citations=citations_list,
-                        grounded=True,
-                        evidence_sufficient=True,
-                        answering_engine="GEMINI_2_5_FLASH_GROUNDED",
-                        confidence_assessment="VERIFIED_GROUNDED_IN_ASI_UNESCO_EVIDENCE",
-                        disclaimer="AI-assisted explanation strictly constrained to retrieved ASI & UNESCO archival excerpts.",
+                        answer=res["answer"],
+                        citations=res["citations"],
+                        grounded=res["grounded"],
+                        evidence_sufficient=res["evidence_sufficient"],
+                        answering_engine=res["answering_engine"],
+                        confidence_assessment="VERIFIED_GROUNDED_IN_ASI_UNESCO_EVIDENCE" if res["evidence_sufficient"] else "INSUFFICIENT_EVIDENCE // ANTI_HALLUCINATION_GUARD",
+                        disclaimer="AI-assisted explanation strictly constrained to retrieved ASI & UNESCO archival excerpts." if not res.get("is_offline_fallback") else "Extractive curatorial retrieval directly compiled from verified ASI and UNESCO registry sources.",
                     )
-            except Exception as exc:
-                logger.warning(f"Gemini grounded Q&A failed, falling back to offline retrieval: {exc}")
+                except Exception as exc:
+                    logger.warning(f"Gemini service grounded Q&A failed, falling back to offline: {exc}")
+            else:
+                try:
+                    context_block = "\n\n".join(
+                        f"[{p['section']}] (Citations: {', '.join(p['citation_ids'])})\n{p['text']}"
+                        for p in top_matches
+                    )
+                    prompt = (
+                        f"You are the Chief Heritage Curator of the Indian Heritage Register. "
+                        f"Answer the user's question about {record.monument_name} strictly and ONLY using the verified historical evidence below. "
+                        f"Include citation tags like [CIT-...] next to each fact. "
+                        f"Do NOT invent dates, rulers, or facts. If the evidence does not state the answer, state that clearly.\n\n"
+                        f"EVIDENCE EXCERPTS:\n{context_block}\n\n"
+                        f"USER QUESTION: {question}\n\n"
+                        f"GROUNDED CURATORIAL ANSWER:"
+                    )
+
+                    model_name = getattr(gemini_client, "model_name", os.environ.get("GEMINI_MODEL", "gemini-3.1-flash-lite"))
+                    response = gemini_client.models.generate_content(
+                        model=model_name,
+                        contents=prompt,
+                    )
+                    if response and response.text:
+                        engine_tag = f"GEMINI_{model_name.upper().replace('-', '_').replace('.', '_')}_GROUNDED"
+                        return AskKnowledgeResponse(
+                            monument_id=monument_id,
+                            monument_name=record.monument_name,
+                            question=question,
+                            answer=response.text.strip(),
+                            citations=citations_list,
+                            grounded=True,
+                            evidence_sufficient=True,
+                            answering_engine=engine_tag,
+                            confidence_assessment="VERIFIED_GROUNDED_IN_ASI_UNESCO_EVIDENCE",
+                            disclaimer="AI-assisted explanation strictly constrained to retrieved ASI & UNESCO archival excerpts.",
+                        )
+                except Exception as exc:
+                    logger.warning(f"Gemini grounded Q&A failed, falling back to offline retrieval: {exc}")
 
         # Case B: Offline Curatorial Retrieval (100% deterministic, no external network needed)
         answer_parts = []

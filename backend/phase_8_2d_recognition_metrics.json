@@ -1,0 +1,137 @@
+{
+  "audit_name": "Phase 8.2D Recognition Utility and Safety Audit",
+  "dataset_audited": "independent_final_test_v3 (Split C)",
+  "sample_size": 28,
+  "ground_truth_definitions": {
+    "positive_calibration_label_Y_1": {
+      "definition": "Specimen is an in-catalog monument AND Top-1 retrieved candidate matches ground-truth monument key (pred_key == gt_key).",
+      "semantic_meaning": "Correct Top-1 Retrieval by visual embedding encoder (not a verification decision).",
+      "condition": "category == 'catalog' and recognized_label == ground_truth_label"
+    },
+    "negative_calibration_label_Y_0": {
+      "definition": "Specimen is a non-monument distractor, an out-of-catalog unknown heritage monument, OR an in-catalog monument whose Top-1 prediction was incorrect.",
+      "semantic_meaning": "Incorrect retrieval outcome or out-of-distribution distractor.",
+      "condition": "category in ['unknown_heritage', 'non_monument'] or (category == 'catalog' and recognized_label != ground_truth_label)"
+    },
+    "out_of_catalog_heritage_handling": {
+      "definition": "Ground truth label is 'unknown_heritage'. Assigned Y=0 for in-catalog calibration.",
+      "expected_decision": "UNKNOWN_HERITAGE_SPECIMEN or REVIEW_REQUIRED."
+    },
+    "non_monument_handling": {
+      "definition": "Ground truth label is 'non_monument'. Assigned Y=0 for in-catalog calibration.",
+      "expected_decision": "NON_MONUMENT_REJECTED."
+    },
+    "decision_system_vs_retrieval_distinction": {
+      "crucial_audit_rule": "Y in calibration models represents RETRIEVAL correctness P(Y=1 | s). The Decision System arbitrates 5 discrete operational states (VERIFIED_MATCH, UNCERTAIN_MATCH, etc.). A query with Y=1 can receive UNCERTAIN_MATCH if margin < 0.08 or GPS is missing. Therefore, retrieval accuracy and decision verification recall must be reported separately."
+    }
+  },
+  "retrieval_performance": {
+    "catalog_specimens_count": 15,
+    "top1_correct_count": 8,
+    "top1_accuracy": 0.5333,
+    "top1_exact_clopper_pearson_95ci": [
+      0.2659,
+      0.7873
+    ],
+    "top3_correct_count": 10,
+    "top3_accuracy": 0.6667,
+    "mean_reciprocal_rank": 0.6
+  },
+  "decision_system_safety_and_utility": {
+    "correct_verified_match_count_TP": 0,
+    "incorrect_verified_match_count_FP": 0,
+    "correct_rejection_count_TN": 13,
+    "incorrect_rejection_count_FN": 15,
+    "uncertain_match_count": 20,
+    "human_review_count": 3,
+    "unknown_heritage_detection_count": 1,
+    "non_monument_rejected_count": 4,
+    "total_verified_decisions": 0,
+    "rates": {
+      "false_acceptance_rate_FAR": {
+        "value": 0.0,
+        "formula": "0/13",
+        "exact_one_sided_95_upper_bound": 0.2058,
+        "rule_of_three_upper_bound": 0.2308
+      },
+      "false_rejection_rate_FRR": {
+        "value": 1.0,
+        "formula": "15/15",
+        "interpretation": "100.0% of in-catalog queries were rejected from automatic verified status due to margin/GPS thresholds."
+      },
+      "verification_precision": {
+        "value": 0.0,
+        "note": "0.0 (Undefined mathematically because zero verified decisions were issued; denominator is 0)"
+      },
+      "verification_recall": {
+        "value": 0.0,
+        "formula": "0/15",
+        "interpretation": "0.0% automatic verification recall on Split C."
+      },
+      "coverage": {
+        "value": 0.0,
+        "formula": "0/28",
+        "interpretation": "0.0% automated verification coverage."
+      },
+      "selective_accuracy": {
+        "value": 0.0,
+        "note": "Undefined (0 verified decisions issued)."
+      }
+    }
+  },
+  "confusion_matrix": {
+    "brihadeeswarar_temple": {
+      "brihadeeswarar_temple": 1,
+      "konark_sun_temple": 1
+    },
+    "charminar": {
+      "charminar": 2
+    },
+    "gateway_of_india": {
+      "qutub_minar": 1,
+      "sanchi_stupa": 1
+    },
+    "hampi_stone_chariot": {
+      "hampi_stone_chariot": 2
+    },
+    "hawa_mahal": {
+      "hawa_mahal": 1,
+      "taj_mahal": 1
+    },
+    "konark_sun_temple": {
+      "konark_sun_temple": 1
+    },
+    "qutub_minar": {
+      "konark_sun_temple": 1
+    },
+    "sanchi_stupa": {
+      "sanchi_stupa": 1
+    },
+    "taj_mahal": {
+      "charminar": 1
+    },
+    "victoria_memorial": {
+      "gateway_of_india": 1
+    },
+    "unknown_heritage": {
+      "hampi_stone_chariot": 2,
+      "konark_sun_temple": 1,
+      "qutub_minar": 1,
+      "sanchi_stupa": 2,
+      "taj_mahal": 1
+    },
+    "non_monument": {
+      "charminar": 1,
+      "hampi_stone_chariot": 1,
+      "konark_sun_temple": 3,
+      "sanchi_stupa": 1
+    }
+  },
+  "descriptive_pooled_cross_split_bounds": {
+    "warning": "Descriptive only. Split B and Split C originate from distinct collection runs and cannot be formally pooled as i.i.d.",
+    "pooled_splits_b_and_c_distractors": 32,
+    "pooled_false_acceptances": 0,
+    "exact_one_sided_95_upper_bound": 0.0894,
+    "rule_of_three_upper_bound": 0.0938
+  }
+}

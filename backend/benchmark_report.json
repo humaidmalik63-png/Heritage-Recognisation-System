@@ -1,0 +1,419 @@
+{
+  "title": "Phase 7.1 Quantitative Retrieval Benchmarking & Model Calibration Report",
+  "project": "Project No. 30: Visual Heritage Recognition and Grounded Cultural Discovery Platform",
+  "sih_reference": "SIH 2025 - SIH25052",
+  "timestamp_utc": "2026-11-05T04:48:26.096340+00:00",
+  "evaluation_metadata": {
+    "benchmark_type": "Synthetic Perturbation Robustness Test (Self-Retrieval Stress Test)",
+    "data_leakage_status": "IDENTIFIED // BASE IMAGES OVERLAP WITH FAISS REFERENCE SET",
+    "data_leakage_explanation": "The 360 evaluation queries were generated via controlled transformations (crops, rotations, lighting shifts, blur) of the 40 indexed reference photographs. This provides rigorous validation of visual feature stability under optical perturbation, but does NOT represent an independent generalization test on unseen photographic source material.",
+    "independent_dataset_manifest_path": "C:\\Users\\humai\\Heritage PJ\\backend\\independent_eval_manifest.json",
+    "calibration_status": "UNCALIBRATED",
+    "calibrated_probability": null,
+    "operational_invariants": {
+      "cosine_similarity_is_probability": false,
+      "temperature_scaling_active": false,
+      "gatekeeper_scale_tau": 18.0,
+      "recommended_gatekeeper_cutoff": 0.55,
+      "operational_retrieval_threshold": 0.8,
+      "uncertainty_margin_threshold": 0.05
+    }
+  },
+  "hardware_environment": {
+    "os_name": "Windows",
+    "os_release": "11",
+    "os_version": "10.0.26200",
+    "processor": "AMD64 Family 25 Model 68 Stepping 1, AuthenticAMD",
+    "cpu_cores": 8,
+    "ram_gb": "N/A",
+    "python_version": "3.12.10",
+    "pytorch_version": "2.15.0+cpu",
+    "faiss_version": "1.15.1",
+    "clip_model": "openai/clip-vit-base-patch32",
+    "embedding_dim": 512,
+    "index_type": "IndexFlatIP"
+  },
+  "summary_metrics": {
+    "total_queries_evaluated": 360,
+    "num_indexed_monuments": 10,
+    "num_reference_vectors": 210,
+    "top1_accuracy_pct": 100.0,
+    "top3_accuracy_pct": 100.0,
+    "mean_reciprocal_rank_mrr": 1.0,
+    "precision_at_1": 1.0,
+    "precision_at_3": 0.3333,
+    "precision_at_3_theoretical_max": 0.3333,
+    "recall_at_1": 1.0,
+    "recall_at_3": 1.0,
+    "mean_cosine_margin_overall": 0.2456,
+    "mean_cosine_margin_correct": 0.2456,
+    "mean_cosine_margin_incorrect": 0.0
+  },
+  "latency_profile": {
+    "warmup_runs": 5,
+    "measured_runs": 360,
+    "model_loading_time_ms": 72647.24,
+    "feature_extraction_ms": {
+      "mean": 273.09,
+      "median": 220.11,
+      "std": 189.07,
+      "p95": 542.48,
+      "p99": 1046.16
+    },
+    "faiss_index_search_ms": {
+      "mean": 0.1163,
+      "median": 0.1091,
+      "std": 0.031,
+      "p95": 0.1474,
+      "p99": 0.3017
+    },
+    "total_inference_ms": {
+      "mean": 273.2,
+      "median": 220.22,
+      "std": 189.07,
+      "p95": 542.59,
+      "p99": 1046.28
+    }
+  },
+  "per_monument_performance": {
+    "brihadeeswarar_temple": {
+      "display_name": "Brihadeeswarar",
+      "sample_count": 36,
+      "top1_accuracy_pct": 100.0,
+      "top3_accuracy_pct": 100.0,
+      "mean_cosine_margin": 0.1132
+    },
+    "charminar": {
+      "display_name": "Charminar",
+      "sample_count": 36,
+      "top1_accuracy_pct": 100.0,
+      "top3_accuracy_pct": 100.0,
+      "mean_cosine_margin": 0.3202
+    },
+    "gateway_of_india": {
+      "display_name": "Gateway of India",
+      "sample_count": 36,
+      "top1_accuracy_pct": 100.0,
+      "top3_accuracy_pct": 100.0,
+      "mean_cosine_margin": 0.1422
+    },
+    "hampi_stone_chariot": {
+      "display_name": "Hampi Chariot",
+      "sample_count": 36,
+      "top1_accuracy_pct": 100.0,
+      "top3_accuracy_pct": 100.0,
+      "mean_cosine_margin": 0.1111
+    },
+    "hawa_mahal": {
+      "display_name": "Hawa Mahal",
+      "sample_count": 36,
+      "top1_accuracy_pct": 100.0,
+      "top3_accuracy_pct": 100.0,
+      "mean_cosine_margin": 0.4074
+    },
+    "konark_sun_temple": {
+      "display_name": "Konark Sun Temple",
+      "sample_count": 36,
+      "top1_accuracy_pct": 100.0,
+      "top3_accuracy_pct": 100.0,
+      "mean_cosine_margin": 0.1172
+    },
+    "qutub_minar": {
+      "display_name": "Qutub Minar",
+      "sample_count": 36,
+      "top1_accuracy_pct": 100.0,
+      "top3_accuracy_pct": 100.0,
+      "mean_cosine_margin": 0.1533
+    },
+    "sanchi_stupa": {
+      "display_name": "Sanchi Stupa",
+      "sample_count": 36,
+      "top1_accuracy_pct": 100.0,
+      "top3_accuracy_pct": 100.0,
+      "mean_cosine_margin": 0.1475
+    },
+    "taj_mahal": {
+      "display_name": "Taj Mahal",
+      "sample_count": 36,
+      "top1_accuracy_pct": 100.0,
+      "top3_accuracy_pct": 100.0,
+      "mean_cosine_margin": 0.7679
+    },
+    "victoria_memorial": {
+      "display_name": "Victoria Memorial",
+      "sample_count": 36,
+      "top1_accuracy_pct": 100.0,
+      "top3_accuracy_pct": 100.0,
+      "mean_cosine_margin": 0.1756
+    }
+  },
+  "confusion_matrix": {
+    "monuments": [
+      "Brihadeeswarar",
+      "Charminar",
+      "Gateway of India",
+      "Hampi Chariot",
+      "Hawa Mahal",
+      "Konark Sun Temple",
+      "Qutub Minar",
+      "Sanchi Stupa",
+      "Taj Mahal",
+      "Victoria Memorial"
+    ],
+    "matrix_counts": [
+      [
+        36,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        36,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        36,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        36,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        36,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        36,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        36,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        36,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        36,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        36
+      ]
+    ]
+  },
+  "semantic_ambiguities_detected": [],
+  "gatekeeper_calibration": {
+    "tau_temperature": 18.0,
+    "recommended_threshold": 0.55,
+    "threshold_curve": [
+      {
+        "threshold": 0.1,
+        "false_rejection_rate_pct": 0.0,
+        "false_acceptance_rate_pct": 100.0,
+        "combined_error_rate_pct": 50.0,
+        "verified_gate_status": "SUBOPTIMAL"
+      },
+      {
+        "threshold": 0.15,
+        "false_rejection_rate_pct": 0.0,
+        "false_acceptance_rate_pct": 100.0,
+        "combined_error_rate_pct": 50.0,
+        "verified_gate_status": "SUBOPTIMAL"
+      },
+      {
+        "threshold": 0.2,
+        "false_rejection_rate_pct": 0.0,
+        "false_acceptance_rate_pct": 100.0,
+        "combined_error_rate_pct": 50.0,
+        "verified_gate_status": "SUBOPTIMAL"
+      },
+      {
+        "threshold": 0.25,
+        "false_rejection_rate_pct": 0.0,
+        "false_acceptance_rate_pct": 100.0,
+        "combined_error_rate_pct": 50.0,
+        "verified_gate_status": "SUBOPTIMAL"
+      },
+      {
+        "threshold": 0.3,
+        "false_rejection_rate_pct": 0.0,
+        "false_acceptance_rate_pct": 75.0,
+        "combined_error_rate_pct": 37.5,
+        "verified_gate_status": "SUBOPTIMAL"
+      },
+      {
+        "threshold": 0.35,
+        "false_rejection_rate_pct": 0.0,
+        "false_acceptance_rate_pct": 50.0,
+        "combined_error_rate_pct": 25.0,
+        "verified_gate_status": "SUBOPTIMAL"
+      },
+      {
+        "threshold": 0.4,
+        "false_rejection_rate_pct": 0.0,
+        "false_acceptance_rate_pct": 0.0,
+        "combined_error_rate_pct": 0.0,
+        "verified_gate_status": "SUBOPTIMAL"
+      },
+      {
+        "threshold": 0.45,
+        "false_rejection_rate_pct": 0.0,
+        "false_acceptance_rate_pct": 0.0,
+        "combined_error_rate_pct": 0.0,
+        "verified_gate_status": "SUBOPTIMAL"
+      },
+      {
+        "threshold": 0.5,
+        "false_rejection_rate_pct": 0.0,
+        "false_acceptance_rate_pct": 0.0,
+        "combined_error_rate_pct": 0.0,
+        "verified_gate_status": "OPTIMAL_SELECTIVITY"
+      },
+      {
+        "threshold": 0.55,
+        "false_rejection_rate_pct": 4.17,
+        "false_acceptance_rate_pct": 0.0,
+        "combined_error_rate_pct": 2.08,
+        "verified_gate_status": "OPTIMAL_SELECTIVITY"
+      },
+      {
+        "threshold": 0.6,
+        "false_rejection_rate_pct": 6.11,
+        "false_acceptance_rate_pct": 0.0,
+        "combined_error_rate_pct": 3.06,
+        "verified_gate_status": "OPTIMAL_SELECTIVITY"
+      },
+      {
+        "threshold": 0.65,
+        "false_rejection_rate_pct": 13.61,
+        "false_acceptance_rate_pct": 0.0,
+        "combined_error_rate_pct": 6.81,
+        "verified_gate_status": "SUBOPTIMAL"
+      },
+      {
+        "threshold": 0.7,
+        "false_rejection_rate_pct": 33.89,
+        "false_acceptance_rate_pct": 0.0,
+        "combined_error_rate_pct": 16.94,
+        "verified_gate_status": "SUBOPTIMAL"
+      },
+      {
+        "threshold": 0.75,
+        "false_rejection_rate_pct": 70.83,
+        "false_acceptance_rate_pct": 0.0,
+        "combined_error_rate_pct": 35.42,
+        "verified_gate_status": "SUBOPTIMAL"
+      },
+      {
+        "threshold": 0.8,
+        "false_rejection_rate_pct": 95.83,
+        "false_acceptance_rate_pct": 0.0,
+        "combined_error_rate_pct": 47.92,
+        "verified_gate_status": "SUBOPTIMAL"
+      },
+      {
+        "threshold": 0.85,
+        "false_rejection_rate_pct": 100.0,
+        "false_acceptance_rate_pct": 0.0,
+        "combined_error_rate_pct": 50.0,
+        "verified_gate_status": "SUBOPTIMAL"
+      },
+      {
+        "threshold": 0.9,
+        "false_rejection_rate_pct": 100.0,
+        "false_acceptance_rate_pct": 0.0,
+        "combined_error_rate_pct": 50.0,
+        "verified_gate_status": "SUBOPTIMAL"
+      },
+      {
+        "threshold": 0.95,
+        "false_rejection_rate_pct": 100.0,
+        "false_acceptance_rate_pct": 0.0,
+        "combined_error_rate_pct": 50.0,
+        "verified_gate_status": "SUBOPTIMAL"
+      }
+    ]
+  }
+}

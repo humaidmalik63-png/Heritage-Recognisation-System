@@ -1,0 +1,71 @@
+{
+  "title": "Phase 8.2 Calibration Dataset Integrity & Provenance Report",
+  "timestamp_utc": "2026-11-05T06:58:28Z",
+  "total_specimens": 265,
+  "target_met": true,
+  "monuments_covered": 10,
+  "specimens_per_monument": {
+    "taj_mahal": 33,
+    "qutub_minar": 15,
+    "hawa_mahal": 8,
+    "konark_sun_temple": 23,
+    "gateway_of_india": 26,
+    "charminar": 25,
+    "hampi_stone_chariot": 22,
+    "sanchi_stupa": 8,
+    "victoria_memorial": 33,
+    "brihadeeswarar_temple": 6,
+    "unknown_heritage": 33,
+    "non_monument": 33
+  },
+  "condition_breakdown": {
+    "night_time": 19,
+    "low_light": 26,
+    "architectural_carving": 47,
+    "distant_monument": 34,
+    "unusual_angle": 6,
+    "partial_monument": 22,
+    "occluded_monument": 1,
+    "out_of_catalog_heritage": 25,
+    "non_monument_distractor": 25,
+    "general_photograph": 60
+  },
+  "unique_authors": 180,
+  "top_authors": {
+    "Wikimedia Contributor": 13,
+    "Ingo Mehling": 11,
+    "xiquinhosilva": 9,
+    "Pinakpani": 8,
+    "Joydeep": 7,
+    "Jmadhu": 5,
+    "Aleksandr Zykov from Russia": 5,
+    "iMahesh": 4,
+    "Rashid Jorvee": 4,
+    "Aazam4u": 3,
+    "Hiroki Ogawa": 3,
+    "Kavaljeet Singh": 3,
+    "Dietmar Rabich": 3,
+    "balajijagadesh": 3,
+    "Chunder, Bholanauth": 2
+  },
+  "license_distribution": {
+    "Public domain": 104,
+    "CC0": 7,
+    "CC BY-SA 4.0": 104,
+    "CC BY-SA 3.0": 12,
+    "CC BY 3.0": 5,
+    "CC BY-SA 2.0": 8,
+    "CC BY 4.0": 13,
+    "CC BY 2.0": 9,
+    "FAL": 2,
+    "No restrictions": 1
+  },
+  "leakage_audit": {
+    "reference_gallery_collisions": 0,
+    "holdout_v1_collisions": 0,
+    "independent_test_v2_collisions": 0,
+    "development_v1_collisions": 0,
+    "internal_duplicate_collisions": 0,
+    "zero_leakage_verified": true
+  }
+}

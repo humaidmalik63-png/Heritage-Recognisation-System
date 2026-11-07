@@ -1,0 +1,29 @@
+{
+  "phase": "8.4C.5",
+  "title": "Pilot Prospective Dataset Integrity Audit Report",
+  "audited_at_utc": "2026-11-07T09:46:52Z",
+  "specimens_audited": 0,
+  "leakage_verifications": {
+    "exact_sha256_duplicates_with_historical": 0,
+    "internal_sha256_duplicates": 0,
+    "perceptual_dhash_violations_dist_lt_8": 0,
+    "source_url_overlap_with_historical": 0,
+    "internal_url_duplicates": 0,
+    "non_photographic_modality_count": 0
+  },
+  "historical_datasets_cross_referenced": [
+    "backend/dataset (Reference Gallery Root)",
+    "backend/datasets/reference_gallery_v2",
+    "backend/datasets/reference_gallery_v1_backup",
+    "backend/datasets/independent_eval",
+    "backend/datasets/independent_eval_v2",
+    "backend/datasets/calibration_development",
+    "backend/datasets/calibration_dataset_v3",
+    "backend/datasets/independent_final_test_v3 (Split C)",
+    "backend/datasets/independent_final_test_v4 (Split D)"
+  ],
+  "min_historical_dhash_distance_observed": 999,
+  "mean_historical_dhash_distance_observed": 0.0,
+  "integrity_status": "CERTIFIED_INDEPENDENT_PROSPECTIVE",
+  "all_specimens_authentic_photos": true
+}

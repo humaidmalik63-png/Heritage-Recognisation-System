@@ -1,0 +1,111 @@
+{
+  "phase": "8.5_COMPLETION",
+  "title": "End-to-End User Journey & Functional Verification Report",
+  "timestamp_utc": "2026-11-07T12:41:21Z",
+  "total_tests": 12,
+  "passed_tests": 12,
+  "failed_tests": 0,
+  "all_passed": true,
+  "user_journey_flows_verified": [
+    "1. Health & FAISS Index Verification",
+    "2. Grounded Monuments Catalog Exploration",
+    "3. Authenticated Curatorial Image Upload & Recognition",
+    "4. Multi-Tier Visual Similarity & Calibrated Decision Evaluation",
+    "5. Zero-Shot Non-Monument Rejection",
+    "6. Optical Quality Degradation Flagging",
+    "7. Malformed / Empty Upload Defense",
+    "8. Curator Exception Logging & Dispute Resolution",
+    "9. Anti-Hallucination Grounded Historical Q&A",
+    "10. Shadow Candidate Execution Safety & 100% Invariance"
+  ],
+  "test_cases": [
+    {
+      "test_id": "TC_01_HEALTH_READINESS",
+      "name": "Platform Health & FAISS Index Readiness",
+      "passed": true,
+      "latency_ms": 5.87,
+      "details": "Status: healthy, Vectors: 210, Monuments: 10"
+    },
+    {
+      "test_id": "TC_02_MONUMENTS_CATALOG",
+      "name": "Monuments Catalog & Grounded ASI/UNESCO Sources",
+      "passed": true,
+      "latency_ms": 4.13,
+      "details": "Retrieved 10 canonical monuments. Taj Mahal validated with 4 primary archival sources."
+    },
+    {
+      "test_id": "TC_03_VERIFIED_TAJ_MAHAL",
+      "name": "Authoritative Policy A Recognition \u2014 Taj Mahal",
+      "passed": true,
+      "latency_ms": 308.91,
+      "decision_state": "VERIFIED_MATCH",
+      "monument_key": "taj_mahal",
+      "confidence_score": 99.8
+    },
+    {
+      "test_id": "TC_04_VERIFIED_CHARMINAR",
+      "name": "Authoritative Policy A Recognition \u2014 Charminar",
+      "passed": true,
+      "latency_ms": 150.05,
+      "decision_state": "VERIFIED_MATCH",
+      "monument_key": "charminar",
+      "confidence_score": 99.8
+    },
+    {
+      "test_id": "TC_05_NON_MONUMENT_REJECTED",
+      "name": "Architectural Gatekeeper Non-Monument Rejection",
+      "passed": true,
+      "latency_ms": 112.72,
+      "decision_state": "NON_MONUMENT_REJECTED"
+    },
+    {
+      "test_id": "TC_06_QUALITY_DEGRADATION",
+      "name": "Optical Quality Degradation Inspection",
+      "passed": true,
+      "latency_ms": 129.51,
+      "decision_state": "NON_MONUMENT_REJECTED"
+    },
+    {
+      "test_id": "TC_07_CORRUPTED_IMAGE_REJECTION",
+      "name": "Corrupted / Malformed Image Upload Defense",
+      "passed": true,
+      "latency_ms": 84.13,
+      "http_status": 400
+    },
+    {
+      "test_id": "TC_08_ZERO_BYTE_UPLOAD",
+      "name": "Zero-Byte Empty Upload Defense",
+      "passed": true,
+      "latency_ms": 2.71,
+      "http_status": 400
+    },
+    {
+      "test_id": "TC_09_EXCEPTIONS_WORKFLOW",
+      "name": "Curatorial Review Exception Audit Trail",
+      "passed": true,
+      "latency_ms": 9.3,
+      "exceptions_logged": 54
+    },
+    {
+      "test_id": "TC_10_GROUNDED_HISTORICAL_QA",
+      "name": "Grounded Historical Q&A with Anti-Hallucination Citations",
+      "passed": true,
+      "latency_ms": 3110.76,
+      "citation_count": 1
+    },
+    {
+      "test_id": "TC_11_GEMINI_TELEMETRY",
+      "name": "Tier-2 Gemini Telemetry Audit Reporting",
+      "passed": true,
+      "latency_ms": 3.83,
+      "configured": false
+    },
+    {
+      "test_id": "TC_12_SHADOW_RESPONSE_INVARIANCE",
+      "name": "Authoritative Policy A Isolation & Response Invariance",
+      "passed": true,
+      "latency_ms": 286.08,
+      "invariance_verified": true
+    }
+  ]
+}

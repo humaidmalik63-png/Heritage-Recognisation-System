@@ -1,0 +1,24 @@
+{
+  "title": "Phase 8.1 Decision Gatekeeper Threshold Optimization",
+  "timestamp_utc": "2026-11-05T06:01:34Z",
+  "dataset": "calibration_development",
+  "total_specimens_evaluated": 47,
+  "configurations_tested": 225,
+  "objective_function": "Loss = 10.0*FalseVerified + 2.0*FalseRejection + 0.2*Review - 1.0*TrueVerified - 0.5*Rejection",
+  "optimal_thresholds": {
+    "confidence_threshold": 0.75,
+    "uncertainty_margin_threshold": 0.08,
+    "gatekeeper_threshold_verified": 0.5,
+    "gatekeeper_threshold_ambiguous": 0.45
+  },
+  "optimal_metrics": {
+    "loss": -13.3,
+    "true_verified_matches": 11,
+    "false_verified_matches": 0,
+    "uncertain_matches": 29,
+    "correct_unknown_rejections": 5,
+    "false_rejections": 0,
+    "curator_reviews": 1,
+    "false_acceptance_rate_pct": 0.0
+  }
+}

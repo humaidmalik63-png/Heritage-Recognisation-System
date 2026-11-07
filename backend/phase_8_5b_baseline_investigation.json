@@ -1,0 +1,131 @@
+{
+  "Eiffel Tower (Out-of-Catalog)": {
+    "file": "Screenshot 2026-10-01 005544.png",
+    "verification_status": "UNKNOWN_HERITAGE_SPECIMEN",
+    "monument_name": "Unindexed / Ambiguous Heritage Site",
+    "monument_key": null,
+    "confidence_score": 74.4,
+    "gatekeeper_score": 0.5984,
+    "top1_similarity": 0.7439,
+    "top2_similarity": 0.7094,
+    "similarity_margin": 0.0345,
+    "reason_codes": [
+      "CALIBRATED_CONFIDENCE",
+      "MISSING_GPS",
+      "LOW_RETRIEVAL_SIMILARITY"
+    ],
+    "explanation": "Heritage architecture verified by Gatekeeper (59.8%), but similarity to all cataloged monuments fell below threshold (Nearest: Taj Mahal at 0.7439 < 0.75). Classified as Unknown Heritage Specimen to adhere to SIH anti-hallucination protocols.",
+    "candidates": [
+      "Taj Mahal (0.7439)",
+      "Victoria Memorial (0.7094)"
+    ]
+  },
+  "Mysore Palace (Out-of-Catalog)": {
+    "file": "split_d_086_mysore_palace.jpg",
+    "verification_status": "UNCERTAIN_MATCH",
+    "monument_name": "Gateway of India",
+    "monument_key": "gateway_of_india",
+    "confidence_score": 78.7,
+    "gatekeeper_score": 0.7818,
+    "top1_similarity": 0.7869,
+    "top2_similarity": 0.7856,
+    "similarity_margin": 0.0013,
+    "reason_codes": [
+      "CALIBRATED_CONFIDENCE",
+      "MISSING_GPS",
+      "AMBIGUOUS_TOP_CANDIDATES"
+    ],
+    "explanation": "Ambiguous attribution: Close competition between Gateway of India (sim: 0.7869) and Victoria Memorial (sim: 0.7856) with a narrow margin of 0.0013 (below threshold of 0.08). Classified as Uncertain Match to avoid forced attribution; flagged for human curator review.",
+    "candidates": [
+      "Gateway of India (0.7869)",
+      "Victoria Memorial (0.7856)",
+      "Charminar (0.7794)"
+    ]
+  },
+  "Taj Mahal (Catalog Positive)": {
+    "file": "img_1.jpg",
+    "verification_status": "VERIFIED_MATCH",
+    "monument_name": "Taj Mahal",
+    "monument_key": "taj_mahal",
+    "confidence_score": 99.8,
+    "gatekeeper_score": 0.7158,
+    "top1_similarity": 1.0,
+    "top2_similarity": 0.0,
+    "similarity_margin": 1.0,
+    "reason_codes": [
+      "CALIBRATED_CONFIDENCE",
+      "MISSING_GPS",
+      "HIGH_CONFIDENCE_MATCH"
+    ],
+    "explanation": "Specimen verified as Taj Mahal. Vector cosine alignment is strong (1.0000) with a decisive margin of 1.0000 over None (0.0000). Architectural Gatekeeper score is 71.6%.",
+    "candidates": [
+      "Taj Mahal (1.0000)"
+    ]
+  },
+  "Charminar (Catalog Positive)": {
+    "file": "img_1.jpg",
+    "verification_status": "VERIFIED_MATCH",
+    "monument_name": "Charminar",
+    "monument_key": "charminar",
+    "confidence_score": 99.8,
+    "gatekeeper_score": 0.7197,
+    "top1_similarity": 1.0,
+    "top2_similarity": 0.8642,
+    "similarity_margin": 0.1358,
+    "reason_codes": [
+      "CALIBRATED_CONFIDENCE",
+      "MISSING_GPS",
+      "HIGH_CONFIDENCE_MATCH"
+    ],
+    "explanation": "Specimen verified as Charminar. Vector cosine alignment is strong (1.0000) with a decisive margin of 0.1358 over Qutub Minar (0.8642). Architectural Gatekeeper score is 72.0%.",
+    "candidates": [
+      "Charminar (1.0000)",
+      "Qutub Minar (0.8642)",
+      "Gateway of India (0.8489)"
+    ]
+  },
+  "Math Document (Non-Monument)": {
+    "file": "Screenshot 2026-10-01 005418.png",
+    "verification_status": "UNKNOWN_HERITAGE_SPECIMEN",
+    "monument_name": "Unindexed / Ambiguous Heritage Site",
+    "monument_key": null,
+    "confidence_score": 67.8,
+    "gatekeeper_score": 0.6273,
+    "top1_similarity": 0.6785,
+    "top2_similarity": 0.6771,
+    "similarity_margin": 0.0014,
+    "reason_codes": [
+      "CALIBRATED_CONFIDENCE",
+      "MISSING_GPS",
+      "LOW_RETRIEVAL_SIMILARITY"
+    ],
+    "explanation": "Heritage architecture verified by Gatekeeper (62.7%), but similarity to all cataloged monuments fell below threshold (Nearest: Victoria Memorial at 0.6785 < 0.75). Classified as Unknown Heritage Specimen to adhere to SIH anti-hallucination protocols.",
+    "candidates": [
+      "Victoria Memorial (0.6785)",
+      "Taj Mahal (0.6771)",
+      "Qutub Minar (0.6539)"
+    ]
+  },
+  "Hampi Ambiguous (Catalog Ambiguous)": {
+    "file": "split_d_019_hampi_stone_chariot.jpg",
+    "verification_status": "UNCERTAIN_MATCH",
+    "monument_name": "Hampi Stone Chariot",
+    "monument_key": "hampi_stone_chariot",
+    "confidence_score": 87.6,
+    "gatekeeper_score": 0.729,
+    "top1_similarity": 0.876,
+    "top2_similarity": 0.8358,
+    "similarity_margin": 0.0402,
+    "reason_codes": [
+      "CALIBRATED_CONFIDENCE",
+      "MISSING_GPS",
+      "AMBIGUOUS_TOP_CANDIDATES"
+    ],
+    "explanation": "Ambiguous attribution: Close competition between Hampi Stone Chariot (sim: 0.8760) and Konark Sun Temple (sim: 0.8358) with a narrow margin of 0.0402 (below threshold of 0.08). Classified as Uncertain Match to avoid forced attribution; flagged for human curator review.",
+    "candidates": [
+      "Hampi Stone Chariot (0.8760)",
+      "Konark Sun Temple (0.8358)",
+      "Brihadeeswarar Temple (0.8306)"
+    ]
+  }
+}

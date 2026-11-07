@@ -1,0 +1,26 @@
+{
+  "audit_phase": "Phase 8.4 Prospective Dataset Integrity Audit",
+  "dataset": "independent_final_test_v4 (Split D)",
+  "total_specimens_collected": 100,
+  "exact_sha256_duplicates_with_prior_datasets": 0,
+  "perceptual_duplicates_hamming_under_8": 0,
+  "author_overlap_with_reference_gallery_for_same_monument": 0,
+  "min_observed_dhash_distance_to_prior_datasets": 10,
+  "mean_dhash_distance_to_prior_datasets": 16.77,
+  "license_compliance_summary": {
+    "all_licenses_openly_licensed": true,
+    "license_types_represented": [
+      "CC BY 2.0",
+      "CC BY 3.0",
+      "CC BY 4.0",
+      "CC BY-SA 2.0",
+      "CC BY-SA 3.0",
+      "CC BY-SA 4.0",
+      "FAL",
+      "GFDL 1.2",
+      "No restrictions",
+      "Public domain"
+    ]
+  },
+  "integrity_verdict": "CERTIFIED_INDEPENDENT_AND_NON_CONTAMINATED"
+}

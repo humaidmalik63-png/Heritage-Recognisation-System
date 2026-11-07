@@ -168,10 +168,10 @@ export default function Dashboard({ onExceptionCreated }) {
 
               <div className="space-y-2">
                 <h4 className="font-serif font-bold text-lg text-archive-charcoal">
-                  Tier 2: Gemini 2.5 Flash VLM Fallback
+                  Tier 2: Gemini 3.1 Flash-Lite VLM Adjudication
                 </h4>
                 <p className="leading-relaxed">
-                  Photographs depicting unindexed monuments, extreme angles, or ambiguous lighting are automatically routed to multimodal <code className="font-mono text-xs bg-archive-parchment px-1.5 py-0.5 rounded">gemini-2.5-flash</code> with strict Pydantic JSON validation for comprehensive curatorial analysis.
+                  Photographs depicting unindexed monuments, extreme angles, or close candidate competition are automatically routed to multimodal <code className="font-mono text-xs bg-archive-parchment px-1.5 py-0.5 rounded">gemini-3.1-flash-lite</code> with strict structured JSON schema for out-of-catalog adjudication and comprehensive curatorial analysis.
                 </p>
               </div>
             </div>

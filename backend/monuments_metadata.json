@@ -16,7 +16,7 @@
       "Intricate Pietra dura floral inlays",
       "Symmetrical charbagh garden layout"
     ],
-    "preservation_status": "UNESCO World Heritage Site (Ref #252, 1983) • Centrally Protected Monument of National Importance (ASI / AMASR Act 1958)",
+    "preservation_status": "UNESCO World Heritage Site (1983) • Monument of National Importance (AMASR Act 1958)",
     "grounded_citations": {
       "primary_source": "Archaeological Survey of India (ASI) Northern Circle Inventory",
       "gazetteer_reference": "Agra District Gazetteer, Vol. VIII (Mughal Monuments of Uttar Pradesh), pp. 142–158",
@@ -24,7 +24,8 @@
       "epigraphical_records": "Quranic thuluth inscriptions designed by calligrapher Amanat Khan Shirazi in 1638 CE",
       "legal_framework": "Ancient Monuments and Archaeological Sites and Remains (AMASR) Act, 1958 & Taj Trapezium Zone (TTZ) Environmental Regulations",
       "curatorial_notes": "Ground-truthed against high-resolution archival survey plates maintained by the National Mission on Monuments and Antiquities (NMMA)."
-    }
+    },
+    "recognition_readiness": "RECOGNITION_READY"
   },
   "qutub_minar": {
     "monument_name": "Qutub Minar",
@@ -43,7 +44,7 @@
       "Intricate Arabic calligraphy bands",
       "Alternating angular and rounded flutings"
     ],
-    "preservation_status": "UNESCO World Heritage Site (Ref #233, 1993) • Monument of National Importance under ASI Delhi Circle",
+    "preservation_status": "UNESCO World Heritage Site (1993) • Monument of National Importance",
     "grounded_citations": {
       "primary_source": "Archaeological Survey of India (ASI) Delhi Circle & Epigraphia Indo-Moslemica",
       "gazetteer_reference": "Delhi District Gazetteer & Cunningham's Archaeological Survey Reports, Vol. I",
@@ -51,7 +52,36 @@
       "epigraphical_records": "Arabic and Nagari epigraphs detailing Sultanate restorations by Firoz Shah Tughlaq (1368 CE) and Sikandar Lodi (1503 CE)",
       "legal_framework": "AMASR Act 1958 (Protected Monument Classification Class A-1)",
       "curatorial_notes": "Structural baseline validated against laser scanning datasets documented by the National Institute of Advanced Studies."
-    }
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "charminar": {
+    "monument_name": "Charminar",
+    "location": "Hyderabad, Telangana",
+    "coordinates": {
+      "lat": 17.3616,
+      "lng": 78.4747
+    },
+    "architectural_style": "Indo-Islamic / Qutb Shahi Architecture",
+    "built_by_or_era": "Muhammad Quli Qutb Shah (c. 1591)",
+    "historical_summary": "Charminar is a monumental mosque and landmark situated in the heart of Hyderabad, built in 1591 by Muhammad Quli Qutb Shah to commemorate the eradication of a devastating plague. Positioned at the intersection of historic trade routes, it served as the focal point around which the modern city of Hyderabad was planned. The square granite structure features four soaring minarets, grand pointed arches, and an upper-floor mosque with a tranquil courtyard. It remains the principal cultural symbol and landmark of Hyderabad.",
+    "structural_features_detected": [
+      "Four 56-meter-tall fluted minarets",
+      "Four colossal grand pointed arches",
+      "Stucco ornamentation and floral medallions",
+      "Double-balconied minaret tiers with bulbous finials",
+      "Upper floor vaulted mosque gallery"
+    ],
+    "preservation_status": "Centrally Protected Monument of National Importance (ASI)",
+    "grounded_citations": {
+      "primary_source": "Archaeological Survey of India (ASI) Hyderabad Circle & Tarikh-i-Firishta",
+      "gazetteer_reference": "Hyderabad State Gazetteer & Bilgrami's Landmarks of the Deccan, pp. 11–24",
+      "unesco_whc_ref": "UNESCO Tentative List Ref #5573 (Monuments and Forts of the Deccan Sultanate)",
+      "epigraphical_records": "Persian chronogram recording 1000 AH (1591–1592 CE) inscribed above the western archway",
+      "legal_framework": "AMASR Act 1958 (National Monument Protection Order #HYD-1591)",
+      "curatorial_notes": "Granite, mortar, and pulverized marble stucco chemistry analyzed in ASI chemical conservation laboratories."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
   },
   "hawa_mahal": {
     "monument_name": "Hawa Mahal",
@@ -70,7 +100,7 @@
       "Miniature chhatris and arched openings",
       "Pyramidal five-storey tiered elevation"
     ],
-    "preservation_status": "Protected State Monument under Rajasthan Department of Archaeology and Museums • Key component of Jaipur UNESCO WHS (#1347)",
+    "preservation_status": "State Protected Heritage Monument • UNESCO World Heritage Inscription (Jaipur City)",
     "grounded_citations": {
       "primary_source": "Department of Archaeology and Museums, Government of Rajasthan",
       "gazetteer_reference": "Imperial Gazetteer of India: Provincial Series (Rajputana), pp. 240–246",
@@ -78,7 +108,8 @@
       "epigraphical_records": "Kachhwaha Dynasty court chronicles and architectural blueprints preserved at the City Palace Museum Archive",
       "legal_framework": "Rajasthan Monuments, Archaeological Sites and Antique Treasures Act, 1961",
       "curatorial_notes": "Acoustic and venturi aerodynamic patterns documented in ASI architectural conservation monographs."
-    }
+    },
+    "recognition_readiness": "RECOGNITION_READY"
   },
   "konark_sun_temple": {
     "monument_name": "Konark Sun Temple",
@@ -97,7 +128,7 @@
       "Pyramidal stepped pidha roof (Jagamohana)",
       "Weathered Khondalite stone masonry"
     ],
-    "preservation_status": "UNESCO World Heritage Site (Ref #242, 1984) • Centrally Protected Monument under ASI Bhubaneswar Circle",
+    "preservation_status": "UNESCO World Heritage Site (1984) • Monument of National Importance",
     "grounded_citations": {
       "primary_source": "Archaeological Survey of India (ASI) Bhubaneswar Circle Architectural Memoir",
       "gazetteer_reference": "Puri District Gazetteer & Madala Panji (Chronicles of the Jagannath Temple)",
@@ -105,13 +136,14 @@
       "epigraphical_records": "Copper plate grants of King Narasimhadeva I (Kendupatna Plates, 1295 CE)",
       "legal_framework": "AMASR Act 1958 and Coastal Regulation Zone (CRZ) Notification for marine buffer preservation",
       "curatorial_notes": "Astronomical shadow alignments of the 24 sundial chariot wheels verified by the Indian Astronomical Observatory."
-    }
+    },
+    "recognition_readiness": "RECOGNITION_READY"
   },
   "gateway_of_india": {
     "monument_name": "Gateway of India",
     "location": "Mumbai, Maharashtra",
     "coordinates": {
-      "lat": 18.9220,
+      "lat": 18.922,
       "lng": 72.8347
     },
     "architectural_style": "Indo-Saracenic Architecture",
@@ -124,7 +156,7 @@
       "Four supporting corner turrets",
       "Central shallow dome with Gujarati spires"
     ],
-    "preservation_status": "Grade I Heritage Landmark protected under Maharashtra State Directorate of Archaeology & Museums and MCGM",
+    "preservation_status": "State Protected Monument (Grade I Heritage Structure)",
     "grounded_citations": {
       "primary_source": "Maharashtra State Archives & Municipal Corporation of Greater Mumbai (MCGM) Heritage Cell",
       "gazetteer_reference": "Bombay City Gazetteer, Vol. III (Public Monuments and Sea Gates), pp. 290–302",
@@ -132,41 +164,15 @@
       "epigraphical_records": "Commemorative English dedication inscription engraved on the central arch frieze (1924 CE)",
       "legal_framework": "Maharashtra Ancient Monuments and Archaeological Sites and Remains Act, 1960",
       "curatorial_notes": "Geotechnical yellow basalt quarry records sourced from Kharodi, Raigad district."
-    }
-  },
-  "charminar": {
-    "monument_name": "Charminar",
-    "location": "Hyderabad, Telangana",
-    "coordinates": {
-      "lat": 17.3616,
-      "lng": 78.4747
     },
-    "architectural_style": "Indo-Islamic (Qutb Shahi) Architecture",
-    "built_by_or_era": "Muhammad Quli Qutb Shah (c. 1591)",
-    "historical_summary": "Charminar is a monumental mosque and landmark situated in the heart of Hyderabad, built in 1591 by Muhammad Quli Qutb Shah to commemorate the eradication of a devastating plague. Positioned at the intersection of historic trade routes, it served as the focal point around which the modern city of Hyderabad was planned. The square granite structure features four soaring minarets, grand pointed arches, and an upper-floor mosque with a tranquil courtyard. It remains the principal cultural symbol and landmark of Hyderabad.",
-    "structural_features_detected": [
-      "Four 56-meter-tall fluted minarets",
-      "Four colossal grand pointed arches",
-      "Stucco ornamentation and floral medallions",
-      "Double-balconied minaret tiers with bulbous finials",
-      "Upper floor vaulted mosque gallery"
-    ],
-    "preservation_status": "Centrally Protected Monument under ASI Hyderabad Circle • UNESCO Tentative List (Qutb Shahi Monuments)",
-    "grounded_citations": {
-      "primary_source": "Archaeological Survey of India (ASI) Hyderabad Circle & Tarikh-i-Firishta",
-      "gazetteer_reference": "Hyderabad State Gazetteer & Bilgrami's Landmarks of the Deccan, pp. 11–24",
-      "unesco_whc_ref": "UNESCO Tentative List Ref #5573 (Monuments and Forts of the Deccan Sultanate)",
-      "epigraphical_records": "Persian chronogram recording 1000 AH (1591–1592 CE) inscribed above the western archway",
-      "legal_framework": "AMASR Act 1958 (National Monument Protection Order #HYD-1591)",
-      "curatorial_notes": "Granite, mortar, and pulverized marble stucco chemistry analyzed in ASI chemical conservation laboratories."
-    }
+    "recognition_readiness": "RECOGNITION_READY"
   },
   "hampi_stone_chariot": {
     "monument_name": "Hampi Stone Chariot",
     "location": "Hampi, Karnataka",
     "coordinates": {
-      "lat": 15.3350,
-      "lng": 76.4600
+      "lat": 15.335,
+      "lng": 76.46
     },
     "architectural_style": "Vijayanagara Dravidian Architecture",
     "built_by_or_era": "King Krishnadevaraya of Vijayanagara Empire (c. 16th Century)",
@@ -178,7 +184,7 @@
       "Pillared pedestal with sculpted mythical beasts (yalis)",
       "Dravidian shikhara roof remnants"
     ],
-    "preservation_status": "UNESCO World Heritage Site (Ref #241, 1986) • Centrally Protected Monument under ASI Hampi Mini Circle",
+    "preservation_status": "UNESCO World Heritage Site (1986) • Monument of National Importance",
     "grounded_citations": {
       "primary_source": "Archaeological Survey of India (ASI) Hampi World Heritage Area Management Authority",
       "gazetteer_reference": "Bellary District Gazetteer & Sewell's 'A Forgotten Empire: Vijayanagar'",
@@ -186,7 +192,8 @@
       "epigraphical_records": "Kannada and Telugu inscriptions on the Vittala Temple pillars dating to Krishnadevaraya (1513 CE)",
       "legal_framework": "AMASR Act 1958 & Hampi World Heritage Area Management Authority Act, 2002",
       "curatorial_notes": "Granite joinery technique inspected; originally featured a brick and mortar shikhara tower."
-    }
+    },
+    "recognition_readiness": "RECOGNITION_READY"
   },
   "sanchi_stupa": {
     "monument_name": "Sanchi Stupa",
@@ -195,7 +202,7 @@
       "lat": 23.4793,
       "lng": 77.7397
     },
-    "architectural_style": "Buddhist Architecture",
+    "architectural_style": "Ancient Buddhist Architecture",
     "built_by_or_era": "Emperor Ashoka / Maurya & Satavahana Dynasties (c. 3rd Century BCE–1st Century CE)",
     "historical_summary": "The Great Stupa at Sanchi is one of the oldest and best-preserved stone structures in India, initially commissioned by Mauryan Emperor Ashoka in the 3rd century BCE. It was built to enshrine sacred relics of the Buddha and was later expanded with stone casing and circumambulatory pathways during the Shunga period. In the 1st century BCE, four elaborate carved stone gateways (toranas) depicting the life and jatakas of Buddha were added by the Satavahanas. The monument stands as a crowning masterpiece of classical Buddhist art and a UNESCO World Heritage Site.",
     "structural_features_detected": [
@@ -205,7 +212,7 @@
       "Four ornate ceremonial torana gateways",
       "Elevated stone circumambulation path (pradakshina patha)"
     ],
-    "preservation_status": "UNESCO World Heritage Site (Ref #524, 1989) • Centrally Protected Monument under ASI Bhopal Circle",
+    "preservation_status": "UNESCO World Heritage Site (1989) • Monument of National Importance",
     "grounded_citations": {
       "primary_source": "Archaeological Survey of India (ASI) Bhopal Circle & Sir John Marshall's Monograph",
       "gazetteer_reference": "Raisen District Gazetteer & Marshall and Foucher's 'The Monuments of Sânchî', Vols. I–III",
@@ -213,7 +220,8 @@
       "epigraphical_records": "Brahmi donor inscriptions carved into the vedika railings and torana crossbeams",
       "legal_framework": "AMASR Act 1958 (Class A Monument of Extreme Archaeological Importance)",
       "curatorial_notes": "Cunningham relic box records verified; torana gateway sculptural reliefs cataloged by ASI."
-    }
+    },
+    "recognition_readiness": "RECOGNITION_READY"
   },
   "victoria_memorial": {
     "monument_name": "Victoria Memorial",
@@ -232,7 +240,7 @@
       "Grand pediment with classical statues and reliefs",
       "Reflecting pools and symmetrical manicured gardens"
     ],
-    "preservation_status": "Autonomous National Institution & Grade I Protected Heritage Complex under Ministry of Culture, Government of India",
+    "preservation_status": "Institution of National Importance (Ministry of Culture, Govt. of India)",
     "grounded_citations": {
       "primary_source": "Board of Trustees of Victoria Memorial Hall & National Archives of India",
       "gazetteer_reference": "Calcutta District Gazetteer & Centenary Architectural Catalog (1921–2021)",
@@ -240,7 +248,8 @@
       "epigraphical_records": "Royal foundation plaques and foundation stone laid by the Prince of Wales on 4 January 1906",
       "legal_framework": "Victoria Memorial Act, 1903 (Act No. X of 1903)",
       "curatorial_notes": "Makrana marble quarry provenance identical to the Taj Mahal; surveyed by Central Building Research Institute (CBRI)."
-    }
+    },
+    "recognition_readiness": "RECOGNITION_READY"
   },
   "brihadeeswarar_temple": {
     "monument_name": "Brihadeeswarar Temple",
@@ -249,7 +258,7 @@
       "lat": 10.7828,
       "lng": 79.1318
     },
-    "architectural_style": "Chola Dravidian Architecture",
+    "architectural_style": "Dravidian Chola Architecture",
     "built_by_or_era": "Chola Emperor Rajaraja I (c. 1010 CE)",
     "historical_summary": "Brihadeeswarar Temple, also known as the Peruvudaiyar Kovil or Big Temple, is a magnificent Hindu temple dedicated to Lord Shiva in Thanjavur, Tamil Nadu. Completed in 1010 CE by the Chola Emperor Rajaraja I, it stands as the pinnacle of Dravidian architectural mastery. The temple features a massive 66-meter pyramidal tower (vimana) crowned by an 80-ton monolithic granite cupola. Recognized as a UNESCO World Heritage Site under the 'Great Living Chola Temples', it is built entirely of interlocking granite blocks without mortar.",
     "structural_features_detected": [
@@ -259,7 +268,7 @@
       "Deeply incised Tamil stone inscriptions",
       "Fortified multi-tiered gopuram entryways"
     ],
-    "preservation_status": "UNESCO World Heritage Site (Ref #250bis, 1987/2004: Great Living Chola Temples) • Protected under ASI Chennai Circle",
+    "preservation_status": "UNESCO World Heritage Site (1987) • Monument of National Importance",
     "grounded_citations": {
       "primary_source": "Archaeological Survey of India (ASI) Chennai Circle & South Indian Inscriptions (SII), Vol. II",
       "gazetteer_reference": "Tanjore District Gazetteer & K.A. Nilakanta Sastri's 'The Colas'",
@@ -267,6 +276,1807 @@
       "epigraphical_records": "Extensive Tamil grantha inscriptions carved into the temple plinth detailing administrative gifts by Emperor Rajaraja I",
       "legal_framework": "AMASR Act 1958 and Tamil Nadu Ancient and Historical Monuments and Archaeological Sites and Remains Act, 1966",
       "curatorial_notes": "Dry-masonry interlocking granite engineering with zero binding mortar verified by structural engineering field surveys."
-    }
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "red_fort": {
+    "monument_name": "Red Fort",
+    "location": "Old Delhi, Delhi, India",
+    "coordinates": {
+      "lat": 28.6562,
+      "lng": 77.241
+    },
+    "architectural_style": "Mughal Architecture",
+    "built_by_or_era": "Mughal Empire (1638–1648 CE)",
+    "historical_summary": "Massive red sandstone fortified palace built by Emperor Shah Jahan when shifting the Mughal capital from Agra to Shahjahanabad. Known for the Lahori Gate, Diwan-i-Aam, and Diwan-i-Khas.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (2007) • ASI Centrally Protected Monument",
+    "grounded_citations": {
+      "primary_source": "ASI Delhi Circle",
+      "gazetteer_reference": "Heritage Register, Old Delhi, Delhi, India",
+      "unesco_whc_ref": "UNESCO World Heritage Site (2007) • ASI Centrally Protected Monument",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "golden_temple": {
+    "monument_name": "Golden Temple",
+    "location": "Amritsar, Punjab, India",
+    "coordinates": {
+      "lat": 31.62,
+      "lng": 74.8765
+    },
+    "architectural_style": "Sikh Architecture",
+    "built_by_or_era": "Sikh Era (1589–1604 CE; gold cladding 1830 CE)",
+    "historical_summary": "Central sanctum of Sikhism situated in the sacred Amrit Sarovar pool, gilded with over 500 kg of pure gold foil by Maharaja Ranjit Singh, featuring four doors symbolizing universal human welcoming.",
+    "structural_features_detected": [],
+    "preservation_status": "Living Sikh Spiritual Sanctuary • Tentative UNESCO List",
+    "grounded_citations": {
+      "primary_source": "Shiromani Gurdwara Parbandhak Committee (SGPC)",
+      "gazetteer_reference": "Heritage Register, Amritsar, Punjab, India",
+      "unesco_whc_ref": "Living Sikh Spiritual Sanctuary • Tentative UNESCO List",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "mysore_palace": {
+    "monument_name": "Mysore Palace",
+    "location": "Mysuru, Karnataka, India",
+    "coordinates": {
+      "lat": 12.3052,
+      "lng": 76.6552
+    },
+    "architectural_style": "Indo-Saracenic Revival",
+    "built_by_or_era": "Wadiyar Dynasty (1897–1912 CE)",
+    "historical_summary": "Three-storey stone palace designed by Henry Irwin with marble domes, a 145-foot five-storey tower, and stained glass ceilings, serving as the official seat of the Wadiyar dynasty.",
+    "structural_features_detected": [],
+    "preservation_status": "State Protected Heritage Palace",
+    "grounded_citations": {
+      "primary_source": "Department of Archaeology, Heritage & Museums, Karnataka",
+      "gazetteer_reference": "Heritage Register, Mysuru, Karnataka, India",
+      "unesco_whc_ref": "State Protected Heritage Palace",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "india_gate": {
+    "monument_name": "India Gate",
+    "location": "New Delhi, Delhi, India",
+    "coordinates": {
+      "lat": 28.6129,
+      "lng": 77.2295
+    },
+    "architectural_style": "Triumphal Arch / Neoclassical",
+    "built_by_or_era": "British Era (1921–1931 CE)",
+    "historical_summary": "42-meter triumphal arch designed by Sir Edwin Lutyens honoring over 80,000 soldiers of the British Indian Army who died in World War I, inscribed with 13,300 servicemen names.",
+    "structural_features_detected": [],
+    "preservation_status": "Monument of National Importance",
+    "grounded_citations": {
+      "primary_source": "National War Memorial Directorate",
+      "gazetteer_reference": "Heritage Register, New Delhi, Delhi, India",
+      "unesco_whc_ref": "Monument of National Importance",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "meenakshi_temple": {
+    "monument_name": "Meenakshi Amman Temple",
+    "location": "Madurai, Tamil Nadu, India",
+    "coordinates": {
+      "lat": 9.9195,
+      "lng": 78.1193
+    },
+    "architectural_style": "Dravidian Nayaka Architecture",
+    "built_by_or_era": "Pandya & Nayaka Dynasties (1623–1655 CE)",
+    "historical_summary": "Historic Hindu temple complex with 14 colossal gateway gopurams encrusted with thousands of stucco mythological sculptures, and the famous Hall of a Thousand Pillars.",
+    "structural_features_detected": [],
+    "preservation_status": "Ancient Monument of National Standing • Tentative UNESCO List",
+    "grounded_citations": {
+      "primary_source": "Hindu Religious and Charitable Endowments (HR&CE) Tamil Nadu",
+      "gazetteer_reference": "Heritage Register, Madurai, Tamil Nadu, India",
+      "unesco_whc_ref": "Ancient Monument of National Standing • Tentative UNESCO List",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "shore_temple": {
+    "monument_name": "Shore Temple",
+    "location": "Mahabalipuram, Tamil Nadu, India",
+    "coordinates": {
+      "lat": 12.6163,
+      "lng": 80.1983
+    },
+    "architectural_style": "Pallava Dravidian Architecture",
+    "built_by_or_era": "Pallava Dynasty (c. 700–728 CE)",
+    "historical_summary": "8th-century structural stone temple perched on the Coromandel Coast of the Bay of Bengal, built by King Narasimhavarman II with twin pyramidal towers dedicated to Shiva and Vishnu.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1984)",
+    "grounded_citations": {
+      "primary_source": "ASI Chennai Circle",
+      "gazetteer_reference": "Heritage Register, Mahabalipuram, Tamil Nadu, India",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1984)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "humayuns_tomb": {
+    "monument_name": "Humayun's Tomb",
+    "location": "New Delhi, Delhi, India",
+    "coordinates": {
+      "lat": 28.5933,
+      "lng": 77.2507
+    },
+    "architectural_style": "Mughal Charbagh Architecture",
+    "built_by_or_era": "Mughal Empire (1565–1572 CE)",
+    "historical_summary": "First substantial example of Mughal architecture in India, designed by Mirak Mirza Ghiyas. Features a double dome, red sandstone clad with white marble, and a four-quadrant charbagh water garden.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1993)",
+    "grounded_citations": {
+      "primary_source": "ASI Delhi Circle",
+      "gazetteer_reference": "Heritage Register, New Delhi, Delhi, India",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1993)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "sun_temple_modhera": {
+    "monument_name": "Sun Temple Modhera",
+    "location": "Modhera (Mehsana District), Gujarat, India",
+    "coordinates": {
+      "lat": 23.5835,
+      "lng": 72.133
+    },
+    "architectural_style": "Māru-Gurjara Architecture",
+    "built_by_or_era": "Chalukya / Solanki Dynasty (1026–1027 CE)",
+    "historical_summary": "11th-century Sun temple on the Pushpavati River featuring the Gudhamandapa sanctum, Sabha Mandapa assembly hall, and the stepped Surya Kund water reservoir lined with 108 miniature shrines.",
+    "structural_features_detected": [],
+    "preservation_status": "ASI Monument of National Importance • Tentative UNESCO List",
+    "grounded_citations": {
+      "primary_source": "ASI Vadodara Circle",
+      "gazetteer_reference": "Heritage Register, Modhera (Mehsana District), Gujarat, India",
+      "unesco_whc_ref": "ASI Monument of National Importance • Tentative UNESCO List",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "ellora_caves": {
+    "monument_name": "Ellora Kailasa Temple (Cave 16)",
+    "location": "Chhatrapati Sambhajinagar, Maharashtra, India",
+    "coordinates": {
+      "lat": 20.024,
+      "lng": 75.1793
+    },
+    "architectural_style": "Dravidian Rock-cut Architecture",
+    "built_by_or_era": "Rashtrakuta Dynasty (c. 756–773 CE)",
+    "historical_summary": "World's largest monolithic rock-cut monument, excavated vertically from top to bottom out of a basalt cliff under Rashtrakuta King Krishna I, dedicated to Mount Kailash and Lord Shiva.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1983)",
+    "grounded_citations": {
+      "primary_source": "ASI Aurangabad Circle",
+      "gazetteer_reference": "Heritage Register, Chhatrapati Sambhajinagar, Maharashtra, India",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1983)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "fatehpur_sikri": {
+    "monument_name": "Fatehpur Sikri Buland Darwaza",
+    "location": "Fatehpur Sikri (Agra), Uttar Pradesh, India",
+    "coordinates": {
+      "lat": 27.0945,
+      "lng": 77.6679
+    },
+    "architectural_style": "Mughal Architecture",
+    "built_by_or_era": "Mughal Empire (1571–1585 CE)",
+    "historical_summary": "Akbar's ceremonial capital founded in 1571 CE, dominated by the 54-meter Buland Darwaza ('Gate of Magnificence'), Jama Masjid, and white marble tomb of Sufi saint Sheikh Salim Chishti.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1986)",
+    "grounded_citations": {
+      "primary_source": "ASI Agra Circle",
+      "gazetteer_reference": "Heritage Register, Fatehpur Sikri (Agra), Uttar Pradesh, India",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1986)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "gol_gumbaz": {
+    "monument_name": "Gol Gumbaz",
+    "location": "Vijayapura (Bijapur), Karnataka, India",
+    "coordinates": {
+      "lat": 16.8306,
+      "lng": 75.7362
+    },
+    "architectural_style": "Deccani Indo-Islamic Architecture",
+    "built_by_or_era": "Adil Shahi Dynasty (1656 CE)",
+    "historical_summary": "Mausoleum of King Mohammed Adil Shah crowned by a freestanding 44-meter circular dome supported by interlocking squinches without interior pillars, famous for its acoustic Whispering Gallery.",
+    "structural_features_detected": [],
+    "preservation_status": "ASI Monument of National Importance",
+    "grounded_citations": {
+      "primary_source": "ASI Dharwad Circle",
+      "gazetteer_reference": "Heritage Register, Vijayapura (Bijapur), Karnataka, India",
+      "unesco_whc_ref": "ASI Monument of National Importance",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "ajanta_caves": {
+    "monument_name": "Ajanta Caves",
+    "location": "Chhatrapati Sambhajinagar, Maharashtra, India",
+    "coordinates": {
+      "lat": 20.5519,
+      "lng": 75.7033
+    },
+    "architectural_style": "Rock-cut Buddhist Architecture",
+    "built_by_or_era": "Satavahana & Vakataka Dynasties (2nd Century BCE – 5th Century CE)",
+    "historical_summary": "Series of 30 rock-hewn Buddhist cave temples lining a horseshoe gorge, world-renowned for exquisite tempera murals depicting Jataka tales and expressive Bodhisattvas.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1983)",
+    "grounded_citations": {
+      "primary_source": "ASI Aurangabad Circle",
+      "gazetteer_reference": "Heritage Register, Chhatrapati Sambhajinagar, Maharashtra, India",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1983)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "khajuraho_temples": {
+    "monument_name": "Khajuraho Group of Monuments",
+    "location": "Khajuraho (Chhatarpur), Madhya Pradesh, India",
+    "coordinates": {
+      "lat": 24.8318,
+      "lng": 79.9199
+    },
+    "architectural_style": "Nagara Temple Architecture",
+    "built_by_or_era": "Chandela Dynasty (950–1050 CE)",
+    "historical_summary": "Collection of Hindu and Jain temples built of sandstone, celebrated for soaring sikhara spires simulating Himalayan peaks and intricate friezes celebrating human life and spiritual transcendence.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1986)",
+    "grounded_citations": {
+      "primary_source": "ASI Bhopal Circle",
+      "gazetteer_reference": "Heritage Register, Khajuraho (Chhatarpur), Madhya Pradesh, India",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1986)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "elephanta_caves": {
+    "monument_name": "Elephanta Caves",
+    "location": "Gharapuri Island (Mumbai Harbour), Maharashtra, India",
+    "coordinates": {
+      "lat": 18.9633,
+      "lng": 72.9315
+    },
+    "architectural_style": "Rock-cut Shaivite Architecture",
+    "built_by_or_era": "Kalachuri / Rashtrakuta Dynasties (5th–8th Century CE)",
+    "historical_summary": "Island cave sanctuary featuring the colossal 6-meter-high Sadashiva Trimurti relief carving depicting Shiva as Creator (Vamadeva), Preserver (Tatpurusha), and Destroyer (Aghora).",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1987)",
+    "grounded_citations": {
+      "primary_source": "ASI Mumbai Circle",
+      "gazetteer_reference": "Heritage Register, Gharapuri Island (Mumbai Harbour), Maharashtra, India",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1987)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "nalanda_mahavihara": {
+    "monument_name": "Nalanda Mahavihara",
+    "location": "Nalanda (Rajgir), Bihar, India",
+    "coordinates": {
+      "lat": 25.1357,
+      "lng": 85.445
+    },
+    "architectural_style": "Buddhist Brick Architecture",
+    "built_by_or_era": "Gupta to Pala Dynasties (5th–12th Century CE)",
+    "historical_summary": "World's foremost ancient residential Buddhist university, comprising extensive red-brick stupas, viharas (monasteries), chaityas, and scholarly archives frequented by Xuanzang.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (2016)",
+    "grounded_citations": {
+      "primary_source": "ASI Patna Circle",
+      "gazetteer_reference": "Heritage Register, Nalanda (Rajgir), Bihar, India",
+      "unesco_whc_ref": "UNESCO World Heritage Site (2016)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "chhatrapati_shivaji_terminus": {
+    "monument_name": "Chhatrapati Shivaji Maharaj Terminus",
+    "location": "Mumbai (Fort), Maharashtra, India",
+    "coordinates": {
+      "lat": 18.9398,
+      "lng": 72.8355
+    },
+    "architectural_style": "Victorian Gothic Revival & Indo-Saracenic",
+    "built_by_or_era": "British Colonial Era (1878–1887 CE)",
+    "historical_summary": "Masterwork of Victorian Gothic architecture in India designed by Frederick William Stevens, with high stone domes, turrets, pointed arches, and indigenous animal gargoyles.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (2004)",
+    "grounded_citations": {
+      "primary_source": "Central Railway Heritage Directorate",
+      "gazetteer_reference": "Heritage Register, Mumbai (Fort), Maharashtra, India",
+      "unesco_whc_ref": "UNESCO World Heritage Site (2004)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "amer_fort": {
+    "monument_name": "Amer Fort",
+    "location": "Jaipur (Amer), Rajasthan, India",
+    "coordinates": {
+      "lat": 26.9855,
+      "lng": 75.8513
+    },
+    "architectural_style": "Rajput Architecture",
+    "built_by_or_era": "Kachhwaha Rajput Dynasty (1592 CE)",
+    "historical_summary": "Yellow and pink sandstone hill fortress perched overlooking Maota Lake, famous for the Sheesh Mahal (Mirror Palace), Diwan-i-Khas, and ramparts integrated into the Aravalli range.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (2013)",
+    "grounded_citations": {
+      "primary_source": "Department of Archaeology & Museums, Rajasthan",
+      "gazetteer_reference": "Heritage Register, Jaipur (Amer), Rajasthan, India",
+      "unesco_whc_ref": "UNESCO World Heritage Site (2013)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "golconda_fort": {
+    "monument_name": "Golconda Fort",
+    "location": "Hyderabad, Telangana, India",
+    "coordinates": {
+      "lat": 17.3833,
+      "lng": 78.4011
+    },
+    "architectural_style": "Deccani Military Architecture",
+    "built_by_or_era": "Kakatiya & Qutb Shahi Dynasties (1143–1687 CE)",
+    "historical_summary": "Monumental citadel on a 120-meter granite hill famous for brilliant acoustic engineering at the Fateh Darwaza, multi-tiered defensive walls, and as the trading centre of the Koh-i-Noor diamond.",
+    "structural_features_detected": [],
+    "preservation_status": "ASI Monument of National Importance",
+    "grounded_citations": {
+      "primary_source": "ASI Hyderabad Circle",
+      "gazetteer_reference": "Heritage Register, Hyderabad, Telangana, India",
+      "unesco_whc_ref": "ASI Monument of National Importance",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "somnath_temple": {
+    "monument_name": "Somnath Temple",
+    "location": "Prabhas Patan (Veraval), Gujarat, India",
+    "coordinates": {
+      "lat": 20.888,
+      "lng": 70.4012
+    },
+    "architectural_style": "Māru-Gurjara / Chalukyan Style",
+    "built_by_or_era": "Ancient roots; reconstructed 1951 CE",
+    "historical_summary": "First among the twelve sacred Jyotirlinga shrines of Shiva, standing at the shores of the Arabian Sea; historically reconstructed multiple times and rebuilt in Māru-Gurjara style post-independence.",
+    "structural_features_detected": [],
+    "preservation_status": "National Sacred Heritage Site",
+    "grounded_citations": {
+      "primary_source": "Shree Somnath Trust",
+      "gazetteer_reference": "Heritage Register, Prabhas Patan (Veraval), Gujarat, India",
+      "unesco_whc_ref": "National Sacred Heritage Site",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "jantar_mantar_jaipur": {
+    "monument_name": "Jantar Mantar Jaipur",
+    "location": "Jaipur, Rajasthan, India",
+    "coordinates": {
+      "lat": 26.9248,
+      "lng": 75.8246
+    },
+    "architectural_style": "Stone Astronomical Architecture",
+    "built_by_or_era": "Rajput Sawai Jai Singh II (1734 CE)",
+    "historical_summary": "Collection of nineteen architectural astronomical instruments built by Rajput King Sawai Jai Singh II, including the Vrihat Samrat Yantra, the world's largest stone sundial.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (2010)",
+    "grounded_citations": {
+      "primary_source": "ASI Jaipur Circle",
+      "gazetteer_reference": "Heritage Register, Jaipur, Rajasthan, India",
+      "unesco_whc_ref": "UNESCO World Heritage Site (2010)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "mahabodhi_temple": {
+    "monument_name": "Mahabodhi Temple Complex",
+    "location": "Bodh Gaya, Bihar, India",
+    "coordinates": {
+      "lat": 24.696,
+      "lng": 84.9914
+    },
+    "architectural_style": "Classical Indian Brick Temple Architecture",
+    "built_by_or_era": "Maurya to Late Gupta (c. 250 BCE – 6th Century CE)",
+    "historical_summary": "Soaring 55-meter brick grand temple marking the location where Siddhartha Gautama attained enlightenment beneath the sacred Bodhi Tree around 531 BCE.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (2002)",
+    "grounded_citations": {
+      "primary_source": "Bodhgaya Temple Management Committee",
+      "gazetteer_reference": "Heritage Register, Bodh Gaya, Bihar, India",
+      "unesco_whc_ref": "UNESCO World Heritage Site (2002)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "rani_ki_vav": {
+    "monument_name": "Rani ki Vav",
+    "location": "Patan, Gujarat, India",
+    "coordinates": {
+      "lat": 23.8589,
+      "lng": 72.1017
+    },
+    "architectural_style": "Māru-Gurjara Subterranean Architecture",
+    "built_by_or_era": "Chaulukya / Solanki Dynasty (1063 CE)",
+    "historical_summary": "Seven-storey inverted temple stepwell built by Queen Udayamati, featuring over 500 principal sculptures and 1,000 minor religious carvings dedicated to Lord Vishnu.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (2014)",
+    "grounded_citations": {
+      "primary_source": "ASI Vadodara Circle",
+      "gazetteer_reference": "Heritage Register, Patan, Gujarat, India",
+      "unesco_whc_ref": "UNESCO World Heritage Site (2014)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "chittorgarh_fort": {
+    "monument_name": "Chittorgarh Fort",
+    "location": "Chittorgarh, Rajasthan, India",
+    "coordinates": {
+      "lat": 24.8879,
+      "lng": 74.6451
+    },
+    "architectural_style": "Mewari Rajput Architecture",
+    "built_by_or_era": "Mewar Sisodia Dynasty (7th Century CE onwards)",
+    "historical_summary": "India's largest hill fort covering 700 acres atop a 180-meter hill, known for the Vijay Stambha (Tower of Victory), Kirti Stambha, and historic reservoirs holding billions of liters.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (2013)",
+    "grounded_citations": {
+      "primary_source": "ASI Jaipur Circle",
+      "gazetteer_reference": "Heritage Register, Chittorgarh, Rajasthan, India",
+      "unesco_whc_ref": "UNESCO World Heritage Site (2013)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "gwalior_fort": {
+    "monument_name": "Gwalior Fort",
+    "location": "Gwalior, Madhya Pradesh, India",
+    "coordinates": {
+      "lat": 26.2307,
+      "lng": 78.1695
+    },
+    "architectural_style": "Tomara Rajput & Indo-Islamic Architecture",
+    "built_by_or_era": "Tomar & Mughal Dynasties (8th–16th Century CE)",
+    "historical_summary": "Hill fort on a solitary sandstone ridge famed for the Man Mandir Palace adorned with turquoise and yellow glazed tiles, and colossal rock-cut Jain Tirthankara figures.",
+    "structural_features_detected": [],
+    "preservation_status": "ASI Monument of National Importance",
+    "grounded_citations": {
+      "primary_source": "ASI Bhopal Circle",
+      "gazetteer_reference": "Heritage Register, Gwalior, Madhya Pradesh, India",
+      "unesco_whc_ref": "ASI Monument of National Importance",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "badami_cave_temples": {
+    "monument_name": "Badami Cave Temples",
+    "location": "Badami (Bagalkot District), Karnataka, India",
+    "coordinates": {
+      "lat": 15.9189,
+      "lng": 75.6766
+    },
+    "architectural_style": "Badami Chalukya Rock-cut Architecture",
+    "built_by_or_era": "Early Chalukya Dynasty (6th Century CE)",
+    "historical_summary": "Four cave temples cut into red sandstone bluffs overlooking Agastya Lake, containing magnificent sculptures of 18-armed dancing Shiva Nataraja, Vishnu as Trivikrama, and Jain Tirthankaras.",
+    "structural_features_detected": [],
+    "preservation_status": "ASI Monument of National Importance",
+    "grounded_citations": {
+      "primary_source": "ASI Dharwad Circle",
+      "gazetteer_reference": "Heritage Register, Badami (Bagalkot District), Karnataka, India",
+      "unesco_whc_ref": "ASI Monument of National Importance",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "belur_chennakeshava_temple": {
+    "monument_name": "Chennakeshava Temple Belur",
+    "location": "Belur (Hassan District), Karnataka, India",
+    "coordinates": {
+      "lat": 13.1625,
+      "lng": 75.8601
+    },
+    "architectural_style": "Hoysala Soapstone Architecture",
+    "built_by_or_era": "Hoysala Empire (1117 CE)",
+    "historical_summary": "Masterwork of Hoysala craftsmanship built by King Vishnuvardhana, renowned for soapstone star-shaped sanctums and intricately sculpted bracket figures (madanikas).",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (2023)",
+    "grounded_citations": {
+      "primary_source": "ASI Bengaluru Circle",
+      "gazetteer_reference": "Heritage Register, Belur (Hassan District), Karnataka, India",
+      "unesco_whc_ref": "UNESCO World Heritage Site (2023)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "halebidu_hoysaleswara_temple": {
+    "monument_name": "Hoysaleswara Temple Halebidu",
+    "location": "Halebidu (Hassan District), Karnataka, India",
+    "coordinates": {
+      "lat": 13.2131,
+      "lng": 75.9942
+    },
+    "architectural_style": "Hoysala Soapstone Architecture",
+    "built_by_or_era": "Hoysala Empire (1121 CE)",
+    "historical_summary": "Twin Shaivite temple on a stellate plinth featuring over 240 wall sculptures depicting the Mahabharata and Ramayana, celebrated as the pinnacle of Hoysala artistic virtuosity.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (2023)",
+    "grounded_citations": {
+      "primary_source": "ASI Bengaluru Circle",
+      "gazetteer_reference": "Heritage Register, Halebidu (Hassan District), Karnataka, India",
+      "unesco_whc_ref": "UNESCO World Heritage Site (2023)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "mehrangarh_fort": {
+    "monument_name": "Mehrangarh Fort",
+    "location": "Jodhpur, Rajasthan, India",
+    "coordinates": {
+      "lat": 26.2978,
+      "lng": 73.0185
+    },
+    "architectural_style": "Rajput Citadel Architecture",
+    "built_by_or_era": "Rathore Rajput Dynasty (1459 CE)",
+    "historical_summary": "Colossal fortress rising 125 meters above Jodhpur's blue city, with burnished red sandstone walls enclosing palaces including the Sheesh Mahal, Phool Mahal, and Moti Mahal.",
+    "structural_features_detected": [],
+    "preservation_status": "Major National Heritage Fort & Museum",
+    "grounded_citations": {
+      "primary_source": "Mehrangarh Museum Trust",
+      "gazetteer_reference": "Heritage Register, Jodhpur, Rajasthan, India",
+      "unesco_whc_ref": "Major National Heritage Fort & Museum",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "agra_fort": {
+    "monument_name": "Agra Fort",
+    "location": "Agra, Uttar Pradesh, India",
+    "coordinates": {
+      "lat": 27.1795,
+      "lng": 78.0211
+    },
+    "architectural_style": "Mughal Imperial Architecture",
+    "built_by_or_era": "Mughal Empire (1565–1573 CE)",
+    "historical_summary": "Crescent-shaped red sandstone citadel on the Yamuna River, main residence of Mughal emperors until 1638; houses Jahangiri Mahal, Khas Mahal, and Musamman Burj overlooking the Taj Mahal.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1983)",
+    "grounded_citations": {
+      "primary_source": "ASI Agra Circle",
+      "gazetteer_reference": "Heritage Register, Agra, Uttar Pradesh, India",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1983)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "padmanabhaswamy_temple": {
+    "monument_name": "Padmanabhaswamy Temple",
+    "location": "Thiruvananthapuram, Kerala, India",
+    "coordinates": {
+      "lat": 8.4828,
+      "lng": 76.9436
+    },
+    "architectural_style": "Kerala and Dravidian Syncretic Style",
+    "built_by_or_era": "Travancore Dynasty (16th–18th Century CE)",
+    "historical_summary": "Sacred Hindu temple dedicated to Lord Vishnu in Anantha Sayana posture, featuring a 100-foot seven-tier gopuram, stone corridors, and renowned underground subterranean vaults.",
+    "structural_features_detected": [],
+    "preservation_status": "Protected State Heritage Sanctuary",
+    "grounded_citations": {
+      "primary_source": "Travancore Royal Trust",
+      "gazetteer_reference": "Heritage Register, Thiruvananthapuram, Kerala, India",
+      "unesco_whc_ref": "Protected State Heritage Sanctuary",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "ranganathaswamy_temple": {
+    "monument_name": "Ranganathaswamy Temple Srirangam",
+    "location": "Tiruchirappalli, Tamil Nadu, India",
+    "coordinates": {
+      "lat": 10.8622,
+      "lng": 78.6902
+    },
+    "architectural_style": "Dravidian Architecture",
+    "built_by_or_era": "Chola, Pandya & Vijayanagara (10th–17th Century CE)",
+    "historical_summary": "Largest functioning Hindu temple complex in the world, spanning 156 acres enclosed by seven concentric prakara walls and 21 gopurams, including the 73-meter Rajagopuram.",
+    "structural_features_detected": [],
+    "preservation_status": "ASI Protected Heritage Complex • Tentative UNESCO List",
+    "grounded_citations": {
+      "primary_source": "ASI Chennai Circle",
+      "gazetteer_reference": "Heritage Register, Tiruchirappalli, Tamil Nadu, India",
+      "unesco_whc_ref": "ASI Protected Heritage Complex • Tentative UNESCO List",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "ramappa_temple": {
+    "monument_name": "Ramappa Temple",
+    "location": "Mulugu District (Palampet), Telangana, India",
+    "coordinates": {
+      "lat": 18.2612,
+      "lng": 79.9433
+    },
+    "architectural_style": "Kakatiya Architecture",
+    "built_by_or_era": "Kakatiya Dynasty (1213 CE)",
+    "historical_summary": "13th-century Kakatiya temple built with lightweight floating bricks, sandbox foundations, and carved black basalt pillars depicting bracket dancers with flowing drapery.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (2021)",
+    "grounded_citations": {
+      "primary_source": "ASI Hyderabad Circle",
+      "gazetteer_reference": "Heritage Register, Mulugu District (Palampet), Telangana, India",
+      "unesco_whc_ref": "UNESCO World Heritage Site (2021)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "dholavira": {
+    "monument_name": "Dholavira Harappan City",
+    "location": "Khadir Bet (Kutch), Gujarat, India",
+    "coordinates": {
+      "lat": 23.8864,
+      "lng": 70.2133
+    },
+    "architectural_style": "Harappan Urban Architecture",
+    "built_by_or_era": "Indus Valley Civilization (c. 3000–1500 BCE)",
+    "historical_summary": "Ancient fortified Indus Valley city noted for stone architecture, multi-tiered water reservoirs, storm-water drainage networks, and a ten-letter Harappan signboard inscription.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (2021)",
+    "grounded_citations": {
+      "primary_source": "ASI Excavation Branch",
+      "gazetteer_reference": "Heritage Register, Khadir Bet (Kutch), Gujarat, India",
+      "unesco_whc_ref": "UNESCO World Heritage Site (2021)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "basilica_of_bom_jesus": {
+    "monument_name": "Basilica of Bom Jesus",
+    "location": "Old Goa (Velha Goa), Goa, India",
+    "coordinates": {
+      "lat": 15.5009,
+      "lng": 73.9116
+    },
+    "architectural_style": "Baroque Architecture",
+    "built_by_or_era": "Portuguese Era (1594–1605 CE)",
+    "historical_summary": "16th-century Jesuit basilica built of laterite stone, containing the sacred mortal remains of Saint Francis Xavier in an Italian silver and Florentine marble reliquary.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1986)",
+    "grounded_citations": {
+      "primary_source": "ASI Goa Circle",
+      "gazetteer_reference": "Heritage Register, Old Goa (Velha Goa), Goa, India",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1986)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "rashtrapati_bhavan": {
+    "monument_name": "Rashtrapati Bhavan",
+    "location": "New Delhi (Raisina Hill), Delhi, India",
+    "coordinates": {
+      "lat": 28.6143,
+      "lng": 77.1995
+    },
+    "architectural_style": "Indo-Saracenic & Neoclassical",
+    "built_by_or_era": "British / Independent India (1912–1929 CE)",
+    "historical_summary": "340-room neoclassical mansion designed by Sir Edwin Lutyens with a colossal copper dome inspired by the Great Stupa of Sanchi, Mughal gardens, and chhatris.",
+    "structural_features_detected": [],
+    "preservation_status": "State Heritage Monument of National Importance",
+    "grounded_citations": {
+      "primary_source": "President's Secretariat Heritage Directorate",
+      "gazetteer_reference": "Heritage Register, New Delhi (Raisina Hill), Delhi, India",
+      "unesco_whc_ref": "State Heritage Monument of National Importance",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "lotus_temple": {
+    "monument_name": "Lotus Temple",
+    "location": "New Delhi (Kalkaji), Delhi, India",
+    "coordinates": {
+      "lat": 28.5535,
+      "lng": 77.2588
+    },
+    "architectural_style": "Expressionist Modern Architecture",
+    "built_by_or_era": "Modern Era (1986 CE)",
+    "historical_summary": "Expressionist temple shaped like an unfolding lotus flower with 27 freestanding marble petals arranged in clusters of three to form nine doorways opening into a central prayer hall.",
+    "structural_features_detected": [],
+    "preservation_status": "Modern Cultural Heritage Monument",
+    "grounded_citations": {
+      "primary_source": "National Spiritual Assembly of the Bahá'ís of India",
+      "gazetteer_reference": "Heritage Register, New Delhi (Kalkaji), Delhi, India",
+      "unesco_whc_ref": "Modern Cultural Heritage Monument",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "akshardham_delhi": {
+    "monument_name": "Akshardham Temple Delhi",
+    "location": "New Delhi (Noida Mor), Delhi, India",
+    "coordinates": {
+      "lat": 28.6127,
+      "lng": 77.2773
+    },
+    "architectural_style": "Neo-Vedic / Traditional Nagara Architecture",
+    "built_by_or_era": "Modern Era (2005 CE)",
+    "historical_summary": "Colossal pink sandstone and Italian Carrara marble temple built according to ancient Vastu Shastra, featuring 234 carved pillars, nine domes, and 20,000 murtis.",
+    "structural_features_detected": [],
+    "preservation_status": "Registered Cultural Heritage Campus",
+    "grounded_citations": {
+      "primary_source": "BAPS Swaminarayan Sanstha",
+      "gazetteer_reference": "Heritage Register, New Delhi (Noida Mor), Delhi, India",
+      "unesco_whc_ref": "Registered Cultural Heritage Campus",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "jaisalmer_fort": {
+    "monument_name": "Jaisalmer Fort",
+    "location": "Jaisalmer, Rajasthan, India",
+    "coordinates": {
+      "lat": 26.9124,
+      "lng": 70.9127
+    },
+    "architectural_style": "Rajput Desert Architecture",
+    "built_by_or_era": "Bhati Rajput Dynasty (1156 CE)",
+    "historical_summary": "Living fort atop Trikuta Hill constructed of yellow sandstone that takes on a golden hue at sunset, housing around 4,000 residents, royal palaces, and Jain temples.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (2013)",
+    "grounded_citations": {
+      "primary_source": "ASI Jaipur Circle",
+      "gazetteer_reference": "Heritage Register, Jaisalmer, Rajasthan, India",
+      "unesco_whc_ref": "UNESCO World Heritage Site (2013)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "kumbhalgarh_fort": {
+    "monument_name": "Kumbhalgarh Fort",
+    "location": "Rajsamand, Rajasthan, India",
+    "coordinates": {
+      "lat": 25.1479,
+      "lng": 73.5873
+    },
+    "architectural_style": "Rajput Military Architecture",
+    "built_by_or_era": "Mewar Dynasty under Rana Kumbha (15th Century CE)",
+    "historical_summary": "Mewar stronghold birthplace of Maharana Pratap, surrounded by a 36-kilometer continuous defensive stone perimeter wall, recognized as the second longest continuous wall in the world.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (2013)",
+    "grounded_citations": {
+      "primary_source": "ASI Jaipur Circle",
+      "gazetteer_reference": "Heritage Register, Rajsamand, Rajasthan, India",
+      "unesco_whc_ref": "UNESCO World Heritage Site (2013)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "cellular_jail": {
+    "monument_name": "Cellular Jail",
+    "location": "Port Blair, Andaman and Nicobar Islands, India",
+    "coordinates": {
+      "lat": 11.6739,
+      "lng": 92.7478
+    },
+    "architectural_style": "Panopticon Colonial Architecture",
+    "built_by_or_era": "British Colonial Era (1896–1906 CE)",
+    "historical_summary": "Seven-winged radial panopticon prison where Indian freedom fighters were exiled and solitary-confined; now preserved as a national memorial honoring India's independence movement.",
+    "structural_features_detected": [],
+    "preservation_status": "National Memorial of India",
+    "grounded_citations": {
+      "primary_source": "Ministry of Home Affairs, Government of India",
+      "gazetteer_reference": "Heritage Register, Port Blair, Andaman and Nicobar Islands, India",
+      "unesco_whc_ref": "National Memorial of India",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "florence_cathedral": {
+    "monument_name": "Cathedral of Santa Maria del Fiore (Florence Duomo)",
+    "location": "Florence, Tuscany, Italy",
+    "coordinates": {
+      "lat": 43.7731,
+      "lng": 11.256
+    },
+    "architectural_style": "Italian Gothic / Early Renaissance Architecture",
+    "built_by_or_era": "Italian Renaissance (1296–1436 CE)",
+    "historical_summary": "Monumental cathedral complex in Piazza del Duomo featuring Filippo Brunelleschi's pioneering octagonal brick dome, Giotto's Campanile, and polychrome marble facade in green, pink, and white.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1982) • Monumento Nazionale (Italy)",
+    "grounded_citations": {
+      "primary_source": "Opera di Santa Maria del Fiore",
+      "gazetteer_reference": "Heritage Register, Florence, Tuscany, Italy",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1982) • Monumento Nazionale (Italy)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "colosseum": {
+    "monument_name": "Colosseum",
+    "location": "Rome, Lazio, Italy",
+    "coordinates": {
+      "lat": 41.8902,
+      "lng": 12.4922
+    },
+    "architectural_style": "Classical Roman Architecture",
+    "built_by_or_era": "Flavian Dynasty, Roman Empire (70–80 CE)",
+    "historical_summary": "Elliptical travertine limestone and concrete amphitheatre commissioned by Emperor Vespasian and completed under Titus, holding 50,000 to 80,000 spectators for gladiatorial contests.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1980) • New 7 Wonders of the World",
+    "grounded_citations": {
+      "primary_source": "Parco Archeologico del Colosseo",
+      "gazetteer_reference": "Heritage Register, Rome, Lazio, Italy",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1980) • New 7 Wonders of the World",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "statue_of_liberty": {
+    "monument_name": "Statue of Liberty",
+    "location": "New York City (Liberty Island), New York, United States",
+    "coordinates": {
+      "lat": 40.6892,
+      "lng": -74.0445
+    },
+    "architectural_style": "Neoclassical & Copper Repoussé",
+    "built_by_or_era": "Late 19th Century (1886 CE)",
+    "historical_summary": "Colossal copper sculpture designed by Frédéric-Auguste Bartholdi with internal iron pylon framework engineered by Gustave Eiffel, gifted by the people of France to the United States.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1984) • US National Monument",
+    "grounded_citations": {
+      "primary_source": "US National Park Service (NPS)",
+      "gazetteer_reference": "Heritage Register, New York City (Liberty Island), New York, United States",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1984) • US National Monument",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "big_ben": {
+    "monument_name": "Big Ben and Elizabeth Tower",
+    "location": "London (Westminster), England, United Kingdom",
+    "coordinates": {
+      "lat": 51.5007,
+      "lng": -0.1246
+    },
+    "architectural_style": "Gothic Revival Architecture",
+    "built_by_or_era": "Victorian Era (1859 CE)",
+    "historical_summary": "96-meter neo-Gothic clock tower at the north end of the Palace of Westminster, famous for its four dial faces and the resonant 13.7-tonne Great Bell known as Big Ben.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1987) • Grade I Listed Building",
+    "grounded_citations": {
+      "primary_source": "UK Parliament Heritage Collections",
+      "gazetteer_reference": "Heritage Register, London (Westminster), England, United Kingdom",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1987) • Grade I Listed Building",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "great_wall_of_china": {
+    "monument_name": "Great Wall of China",
+    "location": "Badaling / Mutianyu, Beijing / Northern China, China",
+    "coordinates": {
+      "lat": 40.4319,
+      "lng": 116.5704
+    },
+    "architectural_style": "Ancient Chinese Military Masonry",
+    "built_by_or_era": "Ming Dynasty (and earlier dynasties, 7th Century BCE – 17th Century CE)",
+    "historical_summary": "Ancient series of masonry and tamped-earth fortifications stretching over 21,000 km across northern China, built to defend against nomadic steppe incursions.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1987) • New 7 Wonders of the World",
+    "grounded_citations": {
+      "primary_source": "National Cultural Heritage Administration of China",
+      "gazetteer_reference": "Heritage Register, Badaling / Mutianyu, Beijing / Northern China, China",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1987) • New 7 Wonders of the World",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "machu_picchu": {
+    "monument_name": "Machu Picchu",
+    "location": "Urubamba Province, Cusco Region, Peru",
+    "coordinates": {
+      "lat": -13.1631,
+      "lng": -72.545
+    },
+    "architectural_style": "Classical Inca Ashlar Dry-Stone Masonry",
+    "built_by_or_era": "Inca Empire under Pachacuti (c. 1450 CE)",
+    "historical_summary": "15th-century mountain citadel set 2,430 meters above sea level in the Andes, constructed of finely fitted polished dry-stone ashlar blocks without mortar.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1983) • New 7 Wonders of the World",
+    "grounded_citations": {
+      "primary_source": "Ministerio de Cultura del Perú",
+      "gazetteer_reference": "Heritage Register, Urubamba Province, Cusco Region, Peru",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1983) • New 7 Wonders of the World",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "petra": {
+    "monument_name": "Petra",
+    "location": "Wadi Musa, Ma'an Governorate, Jordan",
+    "coordinates": {
+      "lat": 30.3285,
+      "lng": 35.4444
+    },
+    "architectural_style": "Hellenistic-Nabataean Rock-cut Architecture",
+    "built_by_or_era": "Nabataean Kingdom (1st Century BCE – 1st Century CE)",
+    "historical_summary": "Ancient Nabataean capital carved directly into pink sandstone cliffs, accessed via the narrow Siq gorge and centered upon the elaborate facade of Al-Khazneh (The Treasury).",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1985) • New 7 Wonders of the World",
+    "grounded_citations": {
+      "primary_source": "Petra Development and Tourism Region Authority",
+      "gazetteer_reference": "Heritage Register, Wadi Musa, Ma'an Governorate, Jordan",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1985) • New 7 Wonders of the World",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "christ_the_redeemer": {
+    "monument_name": "Christ the Redeemer",
+    "location": "Rio de Janeiro (Corcovado), Rio de Janeiro, Brazil",
+    "coordinates": {
+      "lat": -22.9519,
+      "lng": -43.2105
+    },
+    "architectural_style": "Art Deco Reinforced Concrete & Soapstone",
+    "built_by_or_era": "Art Deco Era (1922–1931 CE)",
+    "historical_summary": "30-meter-tall Art Deco statue of Jesus Christ with a 28-meter arm span atop Corcovado mountain, sculpted by Paul Landowski and engineered by Heitor da Silva Costa.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Inscription • New 7 Wonders of the World",
+    "grounded_citations": {
+      "primary_source": "Instituto do Patrimônio Histórico e Artístico Nacional (IPHAN)",
+      "gazetteer_reference": "Heritage Register, Rio de Janeiro (Corcovado), Rio de Janeiro, Brazil",
+      "unesco_whc_ref": "UNESCO World Heritage Inscription • New 7 Wonders of the World",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "chichen_itza": {
+    "monument_name": "Chichen Itza El Castillo",
+    "location": "Tinúm, Yucatán, Mexico",
+    "coordinates": {
+      "lat": 20.6843,
+      "lng": -88.5678
+    },
+    "architectural_style": "Maya-Toltec Architecture",
+    "built_by_or_era": "Late Classic to Early Postclassic Maya (c. 600–1200 CE)",
+    "historical_summary": "24-meter-tall step pyramid honoring the feathered serpent god Kukulcan, aligned such that the setting sun on equinoxes casts shadows resembling a snake slithering down its balustrade.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1988) • New 7 Wonders of the World",
+    "grounded_citations": {
+      "primary_source": "Instituto Nacional de Antropología e Historia (INAH)",
+      "gazetteer_reference": "Heritage Register, Tinúm, Yucatán, Mexico",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1988) • New 7 Wonders of the World",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "great_pyramid_of_giza": {
+    "monument_name": "Great Pyramid of Giza",
+    "location": "Al Haram (Cairo), Giza Governorate, Egypt",
+    "coordinates": {
+      "lat": 29.9792,
+      "lng": 31.1342
+    },
+    "architectural_style": "Ancient Egyptian Monumental Masonry",
+    "built_by_or_era": "Old Kingdom Fourth Dynasty (c. 2560 BCE)",
+    "historical_summary": "Oldest and largest of the Giza pyramids, built for Pharaoh Khufu using approximately 2.3 million limestone and granite blocks; sole surviving wonder of the original Seven Wonders of the Ancient World.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1979) • Ancient Wonder",
+    "grounded_citations": {
+      "primary_source": "Ministry of Tourism and Antiquities (Egypt)",
+      "gazetteer_reference": "Heritage Register, Al Haram (Cairo), Giza Governorate, Egypt",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1979) • Ancient Wonder",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "acropolis_of_athens": {
+    "monument_name": "Acropolis of Athens",
+    "location": "Athens, Attica, Greece",
+    "coordinates": {
+      "lat": 37.9715,
+      "lng": 23.7257
+    },
+    "architectural_style": "Classical Doric and Ionic Architecture",
+    "built_by_or_era": "Classical Greece under Pericles (5th Century BCE)",
+    "historical_summary": "Rocky promontory rising above Athens crowned by monuments of classical antiquity including the Parthenon, Erechtheion, Propylaea, and Temple of Athena Nike.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1987)",
+    "grounded_citations": {
+      "primary_source": "Hellenic Ministry of Culture and Sports",
+      "gazetteer_reference": "Heritage Register, Athens, Attica, Greece",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1987)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "stonehenge": {
+    "monument_name": "Stonehenge",
+    "location": "Salisbury Plain, Wiltshire, United Kingdom",
+    "coordinates": {
+      "lat": 51.1789,
+      "lng": -1.8262
+    },
+    "architectural_style": "Prehistoric Megalithic Post-and-Lintel",
+    "built_by_or_era": "Neolithic to Bronze Age (c. 3000–2000 BCE)",
+    "historical_summary": "Prehistoric ring of standing stones consisting of sarsen megaliths up to 9 meters high and smaller Welsh bluestones, precisely aligned with the summer solstice sunrise and winter solstice sunset.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1986) • Scheduled Ancient Monument",
+    "grounded_citations": {
+      "primary_source": "English Heritage",
+      "gazetteer_reference": "Heritage Register, Salisbury Plain, Wiltshire, United Kingdom",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1986) • Scheduled Ancient Monument",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "angkor_wat": {
+    "monument_name": "Angkor Wat",
+    "location": "Angkor Archaeological Park, Siem Reap, Cambodia",
+    "coordinates": {
+      "lat": 13.4125,
+      "lng": 103.867
+    },
+    "architectural_style": "Classical Khmer Architecture",
+    "built_by_or_era": "Khmer Empire under Suryavarman II (12th Century CE)",
+    "historical_summary": "Largest religious structure in the world, dedicated originally to Vishnu and later converted to Buddhism; represents Mount Meru with five lotus-bud towers and a 190-meter-wide moat.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1992)",
+    "grounded_citations": {
+      "primary_source": "APSARA National Authority",
+      "gazetteer_reference": "Heritage Register, Angkor Archaeological Park, Siem Reap, Cambodia",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1992)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "alhambra": {
+    "monument_name": "Alhambra",
+    "location": "Granada, Andalusia, Spain",
+    "coordinates": {
+      "lat": 37.1773,
+      "lng": -3.5898
+    },
+    "architectural_style": "Moorish / Islamic Mudéjar Architecture",
+    "built_by_or_era": "Nasrid Dynasty (1238–1358 CE)",
+    "historical_summary": "Moorish fortress and palace complex atop the Sabika hill, celebrated for exquisite stucco arabesques, stalactite muqarnas vaulting, and courtyards such as the Court of the Lions.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1984)",
+    "grounded_citations": {
+      "primary_source": "Patronato de la Alhambra y Generalife",
+      "gazetteer_reference": "Heritage Register, Granada, Andalusia, Spain",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1984)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "sagrada_familia": {
+    "monument_name": "Basílica de la Sagrada Família",
+    "location": "Barcelona, Catalonia, Spain",
+    "coordinates": {
+      "lat": 41.4036,
+      "lng": 2.1744
+    },
+    "architectural_style": "Catalan Modernisme & Gothic Revival",
+    "built_by_or_era": "Modernisme (1882 CE – present)",
+    "historical_summary": "Unfinished expiatory church designed by Antoni Gaudí featuring biomimetic tree-like interior columns, hyperbolic vaults, and intricate Nativity and Passion facades.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (2005)",
+    "grounded_citations": {
+      "primary_source": "Basílica de la Sagrada Família Foundation",
+      "gazetteer_reference": "Heritage Register, Barcelona, Catalonia, Spain",
+      "unesco_whc_ref": "UNESCO World Heritage Site (2005)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "sydney_opera_house": {
+    "monument_name": "Sydney Opera House",
+    "location": "Sydney (Bennelong Point), New South Wales, Australia",
+    "coordinates": {
+      "lat": -33.8568,
+      "lng": 151.2153
+    },
+    "architectural_style": "Expressionist Modernism",
+    "built_by_or_era": "Late Modernist (1959–1973 CE)",
+    "historical_summary": "Multi-venue performing arts centre designed by Danish architect Jørn Utzon, iconic for its interlocking precast concrete shell roofs clad in Swedish ceramic tiles.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (2007)",
+    "grounded_citations": {
+      "primary_source": "Sydney Opera House Trust",
+      "gazetteer_reference": "Heritage Register, Sydney (Bennelong Point), New South Wales, Australia",
+      "unesco_whc_ref": "UNESCO World Heritage Site (2007)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "leaning_tower_of_pisa": {
+    "monument_name": "Leaning Tower of Pisa",
+    "location": "Pisa (Piazza dei Miracoli), Tuscany, Italy",
+    "coordinates": {
+      "lat": 43.723,
+      "lng": 10.3966
+    },
+    "architectural_style": "Pisan Romanesque Architecture",
+    "built_by_or_era": "Medieval Period (1173–1372 CE)",
+    "historical_summary": "56-meter marble campanile bell tower that began tilting during construction due to unstable clay subsoil, framed by six tiers of open Romanesque colonnades.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1987)",
+    "grounded_citations": {
+      "primary_source": "Opera della Primaziale Pisana",
+      "gazetteer_reference": "Heritage Register, Pisa (Piazza dei Miracoli), Tuscany, Italy",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1987)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "notre_dame_cathedral": {
+    "monument_name": "Notre-Dame de Paris",
+    "location": "Paris (Île de la Cité), Île-de-France, France",
+    "coordinates": {
+      "lat": 48.853,
+      "lng": 2.3499
+    },
+    "architectural_style": "French Gothic Architecture",
+    "built_by_or_era": "High Middle Ages (1163–1260 CE)",
+    "historical_summary": "French Gothic cathedral on the Île de la Cité renowned for its pioneering flying buttresses, ribbed vaulting, twin western towers, and brilliant stained-glass rose windows.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1991) • Monument Historique",
+    "grounded_citations": {
+      "primary_source": "Centre des Monuments Nationaux (France)",
+      "gazetteer_reference": "Heritage Register, Paris (Île de la Cité), Île-de-France, France",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1991) • Monument Historique",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "louvre_pyramid": {
+    "monument_name": "Louvre Pyramid",
+    "location": "Paris (Cour Napoléon), Île-de-France, France",
+    "coordinates": {
+      "lat": 48.8606,
+      "lng": 2.3376
+    },
+    "architectural_style": "Modernist Geometric Architecture",
+    "built_by_or_era": "Late 20th Century (1989 CE)",
+    "historical_summary": "Large glass and steel pyramid designed by I. M. Pei in the main courtyard of the Louvre Palace, surrounded by three smaller pyramids and reflective water basins.",
+    "structural_features_detected": [],
+    "preservation_status": "Designated National Cultural Landmark",
+    "grounded_citations": {
+      "primary_source": "Musée du Louvre Heritage Directorate",
+      "gazetteer_reference": "Heritage Register, Paris (Cour Napoléon), Île-de-France, France",
+      "unesco_whc_ref": "Designated National Cultural Landmark",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "st_basils_cathedral": {
+    "monument_name": "Saint Basil's Cathedral",
+    "location": "Moscow (Red Square), Moscow Federal City, Russia",
+    "coordinates": {
+      "lat": 55.7525,
+      "lng": 37.6231
+    },
+    "architectural_style": "Traditional Russian Tent-Roofed Architecture",
+    "built_by_or_era": "Tsardom of Russia under Ivan the Terrible (1555–1561 CE)",
+    "historical_summary": "Red Square landmark composed of eight colorful onion-domed churches surrounding a central 47-meter tent-roofed core, commissioned to commemorate the capture of Kazan.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1990)",
+    "grounded_citations": {
+      "primary_source": "State Historical Museum of Russia",
+      "gazetteer_reference": "Heritage Register, Moscow (Red Square), Moscow Federal City, Russia",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1990)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "parthenon": {
+    "monument_name": "Parthenon",
+    "location": "Athens (Acropolis), Attica, Greece",
+    "coordinates": {
+      "lat": 37.9715,
+      "lng": 23.7266
+    },
+    "architectural_style": "Classical Doric Order",
+    "built_by_or_era": "Classical Period (447–432 BCE)",
+    "historical_summary": "Pentelic marble temple atop the Acropolis designed by Ictinus and Callicrates with sculptures oversaw by Phidias, universally regarded as the apex of Classical Greek architectural refinement.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1987)",
+    "grounded_citations": {
+      "primary_source": "Acropolis Restoration Service (YSMA)",
+      "gazetteer_reference": "Heritage Register, Athens (Acropolis), Attica, Greece",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1987)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "moai_easter_island": {
+    "monument_name": "Moai of Easter Island",
+    "location": "Easter Island (Rapa Nui), Valparaíso Region, Chile",
+    "coordinates": {
+      "lat": -27.1258,
+      "lng": -109.2768
+    },
+    "architectural_style": "Polynesian Monolithic Stone Carving",
+    "built_by_or_era": "Rapa Nui Polynesian Culture (c. 1250–1500 CE)",
+    "historical_summary": "Monolithic human figures carved from volcanic tuff at Rano Raraku quarry, representing deified ancestral chiefs mounted upon stone ceremonial platforms known as ahu.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1995)",
+    "grounded_citations": {
+      "primary_source": "Corporación Nacional Forestal (CONAF)",
+      "gazetteer_reference": "Heritage Register, Easter Island (Rapa Nui), Valparaíso Region, Chile",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1995)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "borobudur": {
+    "monument_name": "Borobudur Temple",
+    "location": "Magelang, Central Java, Indonesia",
+    "coordinates": {
+      "lat": -7.6079,
+      "lng": 110.2038
+    },
+    "architectural_style": "Javanese Buddhist Architecture",
+    "built_by_or_era": "Sailendra Dynasty (8th–9th Century CE)",
+    "historical_summary": "World's largest Buddhist temple, built as a three-dimensional mandala with nine stacked platforms (six square, three circular) crowned by 72 perforated stupas enclosing Buddha statues.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1991)",
+    "grounded_citations": {
+      "primary_source": "Ministry of Education and Culture (Indonesia)",
+      "gazetteer_reference": "Heritage Register, Magelang, Central Java, Indonesia",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1991)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "prambanan": {
+    "monument_name": "Prambanan Temple Complex",
+    "location": "Sleman, Special Region of Yogyakarta, Indonesia",
+    "coordinates": {
+      "lat": -7.752,
+      "lng": 110.4915
+    },
+    "architectural_style": "Classical Hindu Javanese Architecture",
+    "built_by_or_era": "Mataram Kingdom (c. 850 CE)",
+    "historical_summary": "9th-century Hindu temple compound dedicated to the Trimurti, characterized by tall pointed architecture featuring the soaring 47-meter-high central temple of Shiva.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1991)",
+    "grounded_citations": {
+      "primary_source": "Balai Pelestarian Cagar Budaya D.I. Yogyakarta",
+      "gazetteer_reference": "Heritage Register, Sleman, Special Region of Yogyakarta, Indonesia",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1991)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "hagia_sophia": {
+    "monument_name": "Hagia Sophia",
+    "location": "Fatih (Sultanahmet), Istanbul, Turkey",
+    "coordinates": {
+      "lat": 41.0086,
+      "lng": 28.9802
+    },
+    "architectural_style": "Byzantine Architecture",
+    "built_by_or_era": "Byzantine Empire under Justinian I (532–537 CE)",
+    "historical_summary": "Pinnacle of Byzantine architecture engineered by Isidore of Miletus and Anthemius of Tralles, famed for its massive 31-meter pendentive dome that seemed suspended from heaven.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1985)",
+    "grounded_citations": {
+      "primary_source": "Turkish Directorate of Foundations",
+      "gazetteer_reference": "Heritage Register, Fatih (Sultanahmet), Istanbul, Turkey",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1985)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "blue_mosque": {
+    "monument_name": "Sultan Ahmed Mosque",
+    "location": "Fatih, Istanbul, Turkey",
+    "coordinates": {
+      "lat": 41.0054,
+      "lng": 28.9768
+    },
+    "architectural_style": "Classical Ottoman Architecture",
+    "built_by_or_era": "Ottoman Empire (1609–1616 CE)",
+    "historical_summary": "Ottoman imperial mosque designed by Sedefkar Mehmed Agha featuring six minarets and an interior lined with over 20,000 handmade blue Iznik ceramic tiles depicting tulip and floral motifs.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1985)",
+    "grounded_citations": {
+      "primary_source": "General Directorate of Foundations (Turkey)",
+      "gazetteer_reference": "Heritage Register, Fatih, Istanbul, Turkey",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1985)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "pantheon_rome": {
+    "monument_name": "Pantheon Rome",
+    "location": "Rome (Piazza della Rotonda), Lazio, Italy",
+    "coordinates": {
+      "lat": 41.8986,
+      "lng": 12.4769
+    },
+    "architectural_style": "Classical Roman Concrete Architecture",
+    "built_by_or_era": "Roman Empire under Hadrian (c. 118–125 CE)",
+    "historical_summary": "Ancient Roman temple featuring the world's largest unreinforced concrete dome (43.3-meter diameter) illuminated by a central 9-meter oculus open to the sky.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1980)",
+    "grounded_citations": {
+      "primary_source": "Direzione Musei Statali della città di Roma",
+      "gazetteer_reference": "Heritage Register, Rome (Piazza della Rotonda), Lazio, Italy",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1980)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "brandenburg_gate": {
+    "monument_name": "Brandenburg Gate",
+    "location": "Mitte (Pariser Platz), Berlin, Germany",
+    "coordinates": {
+      "lat": 52.5163,
+      "lng": 13.3777
+    },
+    "architectural_style": "Neoclassical Early Doric Style",
+    "built_by_or_era": "Kingdom of Prussia (1788–1791 CE)",
+    "historical_summary": "18th-century neoclassical monument commissioned by Prussian King Frederick William II, crowned by the copper Quadriga chariot of peace sculpted by Johann Gottfried Schadow.",
+    "structural_features_detected": [],
+    "preservation_status": "German National Architectural Monument",
+    "grounded_citations": {
+      "primary_source": "Landesdenkmalamt Berlin",
+      "gazetteer_reference": "Heritage Register, Mitte (Pariser Platz), Berlin, Germany",
+      "unesco_whc_ref": "German National Architectural Monument",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "neuschwanstein_castle": {
+    "monument_name": "Neuschwanstein Castle",
+    "location": "Schwangau (Allgäu), Bavaria, Germany",
+    "coordinates": {
+      "lat": 47.5576,
+      "lng": 10.7498
+    },
+    "architectural_style": "Romanesque Revival Architecture",
+    "built_by_or_era": "Late 19th Century (1869–1886 CE)",
+    "historical_summary": "Fairytale palace perched on a rugged alpine hill commissioned by King Ludwig II of Bavaria as a romantic homage to composer Richard Wagner; inspiration for Disney's Sleeping Beauty castle.",
+    "structural_features_detected": [],
+    "preservation_status": "Bavarian State Heritage Landmark",
+    "grounded_citations": {
+      "primary_source": "Bayerische Schlösserverwaltung",
+      "gazetteer_reference": "Heritage Register, Schwangau (Allgäu), Bavaria, Germany",
+      "unesco_whc_ref": "Bavarian State Heritage Landmark",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "tower_bridge": {
+    "monument_name": "Tower Bridge",
+    "location": "London (Thames), England, United Kingdom",
+    "coordinates": {
+      "lat": 51.5055,
+      "lng": -0.0754
+    },
+    "architectural_style": "Victorian Gothic Style",
+    "built_by_or_era": "Victorian Era (1886–1894 CE)",
+    "historical_summary": "Historic Thames river crossing designed by Sir Horace Jones and Sir John Wolfe Barry, featuring twin 65-meter neo-Gothic stone-clad towers and steam-powered hydraulic bascules.",
+    "structural_features_detected": [],
+    "preservation_status": "Grade I Listed Historic Structure",
+    "grounded_citations": {
+      "primary_source": "Bridge House Estates",
+      "gazetteer_reference": "Heritage Register, London (Thames), England, United Kingdom",
+      "unesco_whc_ref": "Grade I Listed Historic Structure",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "westminster_abbey": {
+    "monument_name": "Westminster Abbey",
+    "location": "London (Westminster), England, United Kingdom",
+    "coordinates": {
+      "lat": 51.4993,
+      "lng": -0.1273
+    },
+    "architectural_style": "English Gothic Architecture",
+    "built_by_or_era": "Medieval (rebuilt 1245 CE onwards by Henry III)",
+    "historical_summary": "Coronation site of British monarchs since William the Conqueror in 1066, renowned for the Henry VII Lady Chapel with fan vaulting, Poets' Corner, and royal tombs.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1987)",
+    "grounded_citations": {
+      "primary_source": "Dean and Chapter of Westminster",
+      "gazetteer_reference": "Heritage Register, London (Westminster), England, United Kingdom",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1987)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "arc_de_triomphe": {
+    "monument_name": "Arc de Triomphe",
+    "location": "Paris (Place Charles de Gaulle), Île-de-France, France",
+    "coordinates": {
+      "lat": 48.8738,
+      "lng": 2.295
+    },
+    "architectural_style": "Neoclassical Architecture",
+    "built_by_or_era": "First Empire / Restoration (1806–1836 CE)",
+    "historical_summary": "50-meter triumphal arch commissioned by Napoleon Bonaparte following his victory at Austerlitz, honoring those who fought for France, sheltering the Tomb of the Unknown Soldier.",
+    "structural_features_detected": [],
+    "preservation_status": "French Monument Historique",
+    "grounded_citations": {
+      "primary_source": "Centre des Monuments Nationaux (France)",
+      "gazetteer_reference": "Heritage Register, Paris (Place Charles de Gaulle), Île-de-France, France",
+      "unesco_whc_ref": "French Monument Historique",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "palace_of_versailles": {
+    "monument_name": "Palace of Versailles",
+    "location": "Versailles, Île-de-France, France",
+    "coordinates": {
+      "lat": 48.8049,
+      "lng": 2.1204
+    },
+    "architectural_style": "French Baroque Classical Architecture",
+    "built_by_or_era": "Ancien Régime under Louis XIV (1661–1715 CE)",
+    "historical_summary": "Monumental royal château transformed by the Sun King Louis XIV into the seat of French political power, famed for the 73-meter Hall of Mirrors (Galerie des Glaces) and grand fountains.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1979)",
+    "grounded_citations": {
+      "primary_source": "Établissement public du château de Versailles",
+      "gazetteer_reference": "Heritage Register, Versailles, Île-de-France, France",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1979)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "mont_saint_michel": {
+    "monument_name": "Mont-Saint-Michel",
+    "location": "Manche, Normandy, France",
+    "coordinates": {
+      "lat": 48.636,
+      "lng": -1.5115
+    },
+    "architectural_style": "Carolingian, Romanesque & Flamboyant Gothic",
+    "built_by_or_era": "Medieval Period (10th–16th Century CE)",
+    "historical_summary": "Tidal island commune crowned by a medieval Benedictine abbey dedicated to the Archangel Michael, soaring above dramatic intertidal mudflats that experience extreme tidal variations.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1979)",
+    "grounded_citations": {
+      "primary_source": "Centre des Monuments Nationaux (France)",
+      "gazetteer_reference": "Heritage Register, Manche, Normandy, France",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1979)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "kremlin": {
+    "monument_name": "Moscow Kremlin",
+    "location": "Moscow, Moscow Federal City, Russia",
+    "coordinates": {
+      "lat": 55.7517,
+      "lng": 37.6178
+    },
+    "architectural_style": "Russian & Italian Renaissance Fortification",
+    "built_by_or_era": "Grand Duchy of Moscow (1482–1495 CE walls)",
+    "historical_summary": "Triangular fortified citadel overlooking the Moskva River, comprising five palaces, four cathedrals, and twenty defensive towers built by Italian and Russian master architects.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1990)",
+    "grounded_citations": {
+      "primary_source": "State Historical and Cultural Museum-Preserve 'The Moscow Kremlin'",
+      "gazetteer_reference": "Heritage Register, Moscow, Moscow Federal City, Russia",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1990)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "forbidden_city": {
+    "monument_name": "Forbidden City",
+    "location": "Dongcheng, Beijing, China",
+    "coordinates": {
+      "lat": 39.9163,
+      "lng": 116.3972
+    },
+    "architectural_style": "Traditional Chinese Palatial Architecture",
+    "built_by_or_era": "Ming to Qing Dynasties (1406–1420 CE)",
+    "historical_summary": "World's largest imperial palace complex, comprising 980 surviving buildings and over 8,700 rooms enclosed by a 10-meter wall and 52-meter moat; home to 24 emperors.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1987)",
+    "grounded_citations": {
+      "primary_source": "The Palace Museum Beijing",
+      "gazetteer_reference": "Heritage Register, Dongcheng, Beijing, China",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1987)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "terracotta_army": {
+    "monument_name": "Terracotta Army of Qin Shi Huang",
+    "location": "Xi'an (Lintong), Shaanxi, China",
+    "coordinates": {
+      "lat": 34.3841,
+      "lng": 109.2785
+    },
+    "architectural_style": "Ancient Chinese Funerary Clay Sculptures",
+    "built_by_or_era": "Qin Dynasty (246–208 BCE)",
+    "historical_summary": "Underground army of over 8,000 life-sized terracotta soldiers, 130 chariots, and 670 horses buried with Emperor Qin Shi Huang to protect him in the afterlife.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1987)",
+    "grounded_citations": {
+      "primary_source": "Emperor Qinshihuang's Mausoleum Site Museum",
+      "gazetteer_reference": "Heritage Register, Xi'an (Lintong), Shaanxi, China",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1987)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "fushimi_inari_taisha": {
+    "monument_name": "Fushimi Inari Taisha",
+    "location": "Kyoto (Fushimi), Kyoto Prefecture, Japan",
+    "coordinates": {
+      "lat": 34.9671,
+      "lng": 135.7727
+    },
+    "architectural_style": "Traditional Japanese Shinto Architecture",
+    "built_by_or_era": "Nara to Edo Periods (711 CE onwards)",
+    "historical_summary": "Head Shinto shrine dedicated to Inari the kami of agriculture and business, famous for the Senbon Torii tunnel composed of over 10,000 vibrant vermilion torii gates winding up Mount Inari.",
+    "structural_features_detected": [],
+    "preservation_status": "National Important Cultural Property of Japan",
+    "grounded_citations": {
+      "primary_source": "Fushimi Inari Taisha Shrine Directorate",
+      "gazetteer_reference": "Heritage Register, Kyoto (Fushimi), Kyoto Prefecture, Japan",
+      "unesco_whc_ref": "National Important Cultural Property of Japan",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "kinkaku_ji": {
+    "monument_name": "Kinkaku-ji",
+    "location": "Kyoto (Kita Ward), Kyoto Prefecture, Japan",
+    "coordinates": {
+      "lat": 35.0394,
+      "lng": 135.7292
+    },
+    "architectural_style": "Kitayama Culture (Shinden, Buke, and Zen Synthesis)",
+    "built_by_or_era": "Muromachi Period (1397 CE)",
+    "historical_summary": "Three-storey Zen pavilion overlooking Kyoko-chi mirror pond, with top two storeys completely covered in pure gold leaf and crowned by a bronze Chinese phoenix.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1994) • National Special Historic Site",
+    "grounded_citations": {
+      "primary_source": "Rinzai Shokoku-ji Sect",
+      "gazetteer_reference": "Heritage Register, Kyoto (Kita Ward), Kyoto Prefecture, Japan",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1994) • National Special Historic Site",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "himeji_castle": {
+    "monument_name": "Himeji Castle",
+    "location": "Himeji, Hyōgo Prefecture, Japan",
+    "coordinates": {
+      "lat": 34.8394,
+      "lng": 134.6939
+    },
+    "architectural_style": "Hirayama Feudal Castle Architecture",
+    "built_by_or_era": "Sengoku to Edo Periods (1601–1609 CE rebuild)",
+    "historical_summary": "Finest surviving 17th-century Japanese castle, composed of 83 defensive buildings with brilliant white plastered walls designed like a soaring white heron.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1993) • National Treasure of Japan",
+    "grounded_citations": {
+      "primary_source": "Himeji Castle Management Office",
+      "gazetteer_reference": "Heritage Register, Himeji, Hyōgo Prefecture, Japan",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1993) • National Treasure of Japan",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "senso_ji": {
+    "monument_name": "Senso-ji Temple",
+    "location": "Tokyo (Asakusa, Taito), Tokyo Metropolis, Japan",
+    "coordinates": {
+      "lat": 35.7148,
+      "lng": 139.7967
+    },
+    "architectural_style": "Traditional Japanese Buddhist Architecture",
+    "built_by_or_era": "Asuka Period roots (645 CE)",
+    "historical_summary": "Tokyo's oldest temple dedicated to Bodhisattva Kannon, entered through the monumental Kaminarimon (Thunder Gate) with its iconic 700-kg red paper lantern.",
+    "structural_features_detected": [],
+    "preservation_status": "Tokyo Cultural Heritage Landmark",
+    "grounded_citations": {
+      "primary_source": "Senso-ji Shounzan Buddhist Administration",
+      "gazetteer_reference": "Heritage Register, Tokyo (Asakusa, Taito), Tokyo Metropolis, Japan",
+      "unesco_whc_ref": "Tokyo Cultural Heritage Landmark",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "petronas_towers": {
+    "monument_name": "Petronas Twin Towers",
+    "location": "Kuala Lumpur (KLCC), Federal Territory, Malaysia",
+    "coordinates": {
+      "lat": 3.1579,
+      "lng": 101.7116
+    },
+    "architectural_style": "Postmodern Islamic Supertall Architecture",
+    "built_by_or_era": "Late 20th Century (1998 CE)",
+    "historical_summary": "451.9-meter 88-storey twin skyscrapers designed by César Pelli, inspired by Islamic geometric Rub el Hizb motifs, linked by a double-decker skybridge at levels 41 and 42.",
+    "structural_features_detected": [],
+    "preservation_status": "National Architectural Landmark of Malaysia",
+    "grounded_citations": {
+      "primary_source": "KLCC Property Holdings",
+      "gazetteer_reference": "Heritage Register, Kuala Lumpur (KLCC), Federal Territory, Malaysia",
+      "unesco_whc_ref": "National Architectural Landmark of Malaysia",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "burj_khalifa": {
+    "monument_name": "Burj Khalifa",
+    "location": "Dubai (Downtown), Emirate of Dubai, United Arab Emirates",
+    "coordinates": {
+      "lat": 25.1972,
+      "lng": 55.2744
+    },
+    "architectural_style": "Neo-Futurism / Buttressed Core Structural System",
+    "built_by_or_era": "Early 21st Century (2004–2010 CE)",
+    "historical_summary": "World's tallest artificial structure at 828 meters, designed by Adrian Smith at SOM; features a Y-shaped tripartite floor plan derived from the desert flower Hymenocallis.",
+    "structural_features_detected": [],
+    "preservation_status": "Global Engineering Wonder & Record Holder",
+    "grounded_citations": {
+      "primary_source": "Emaar Properties PJSC",
+      "gazetteer_reference": "Heritage Register, Dubai (Downtown), Emirate of Dubai, United Arab Emirates",
+      "unesco_whc_ref": "Global Engineering Wonder & Record Holder",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "sheikh_zayed_grand_mosque": {
+    "monument_name": "Sheikh Zayed Grand Mosque",
+    "location": "Abu Dhabi, Emirate of Abu Dhabi, United Arab Emirates",
+    "coordinates": {
+      "lat": 24.4128,
+      "lng": 54.4749
+    },
+    "architectural_style": "Neo-Islamic Synthesis (Mamluk, Ottoman, Fatimid)",
+    "built_by_or_era": "Contemporary Era (1996–2007 CE)",
+    "historical_summary": "Monumental white Macedonian marble mosque with 82 domes, four 106-meter minarets, the world's largest hand-knotted Persian carpet, and seven Swarovski crystal chandeliers.",
+    "structural_features_detected": [],
+    "preservation_status": "National Cultural & Religious Sanctuary",
+    "grounded_citations": {
+      "primary_source": "Sheikh Zayed Grand Mosque Centre (SZGMC)",
+      "gazetteer_reference": "Heritage Register, Abu Dhabi, Emirate of Abu Dhabi, United Arab Emirates",
+      "unesco_whc_ref": "National Cultural & Religious Sanctuary",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "carnac_stones": {
+    "monument_name": "Carnac Megaliths",
+    "location": "Carnac (Morbihan), Brittany, France",
+    "coordinates": {
+      "lat": 47.5925,
+      "lng": -3.0805
+    },
+    "architectural_style": "Prehistoric Megalithic Alignments",
+    "built_by_or_era": "Neolithic Period (c. 4500–3300 BCE)",
+    "historical_summary": "Dense concentration of over 3,000 standing stones (menhirs) arranged in parallel alignments, dolmens, and tumuli stretching over 4 kilometers across the Breton landscape.",
+    "structural_features_detected": [],
+    "preservation_status": "French Monument Historique",
+    "grounded_citations": {
+      "primary_source": "Centre des Monuments Nationaux (France)",
+      "gazetteer_reference": "Heritage Register, Carnac (Morbihan), Brittany, France",
+      "unesco_whc_ref": "French Monument Historique",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "pompeii": {
+    "monument_name": "Archaeological Area of Pompeii",
+    "location": "Pompei (Naples), Campania, Italy",
+    "coordinates": {
+      "lat": 40.7508,
+      "lng": 14.4869
+    },
+    "architectural_style": "Classical Roman Urban Architecture & Frescoes",
+    "built_by_or_era": "Roman Empire (buried 79 CE)",
+    "historical_summary": "Flourishing ancient Roman town buried and preserved under meters of volcanic ash from the eruption of Mount Vesuvius in 79 CE, providing an unprecedented snapshot of Roman daily life.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1997)",
+    "grounded_citations": {
+      "primary_source": "Parco Archeologico di Pompei",
+      "gazetteer_reference": "Heritage Register, Pompei (Naples), Campania, Italy",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1997)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "teotihuacan": {
+    "monument_name": "Teotihuacan",
+    "location": "San Juan Teotihuacán, State of Mexico, Mexico",
+    "coordinates": {
+      "lat": 19.6923,
+      "lng": -98.8436
+    },
+    "architectural_style": "Talud-Tablero Mesoamerican Architecture",
+    "built_by_or_era": "Classic Mesoamerican (c. 100 BCE – 650 CE)",
+    "historical_summary": "Vast pre-Columbian holy city centered along the Avenue of the Dead, flanked by the colossal Pyramid of the Sun (65m high) and the Pyramid of the Moon.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1987)",
+    "grounded_citations": {
+      "primary_source": "Instituto Nacional de Antropología e Historia (INAH)",
+      "gazetteer_reference": "Heritage Register, San Juan Teotihuacán, State of Mexico, Mexico",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1987)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "tikal": {
+    "monument_name": "Tikal National Park",
+    "location": "Flores, Petén Department, Guatemala",
+    "coordinates": {
+      "lat": 17.2221,
+      "lng": -89.6237
+    },
+    "architectural_style": "Classic Maya Architecture",
+    "built_by_or_era": "Classic Maya Period (c. 200–900 CE)",
+    "historical_summary": "Ancient Maya capital deep within the Guatemalan rainforest, dominated by Temple I (Temple of the Great Jaguar) rising 47 meters above the Grand Plaza.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1979)",
+    "grounded_citations": {
+      "primary_source": "Ministerio de Cultura y Deportes de Guatemala",
+      "gazetteer_reference": "Heritage Register, Flores, Petén Department, Guatemala",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1979)",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "mesa_verde": {
+    "monument_name": "Mesa Verde Cliff Palace",
+    "location": "Montezuma County, Colorado, United States",
+    "coordinates": {
+      "lat": 37.1838,
+      "lng": -108.4886
+    },
+    "architectural_style": "Stone and Mortar Cliff-Alcove Architecture",
+    "built_by_or_era": "Pueblo III Era (c. 1190–1260 CE)",
+    "historical_summary": "Largest cliff dwelling in North America, built beneath sandstone canyon overhangs by Ancestral Puebloans, featuring 150 rooms and 23 ceremonial subterranean kivas.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (1978) • US National Park",
+    "grounded_citations": {
+      "primary_source": "US National Park Service (NPS)",
+      "gazetteer_reference": "Heritage Register, Montezuma County, Colorado, United States",
+      "unesco_whc_ref": "UNESCO World Heritage Site (1978) • US National Park",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
+  },
+  "golden_gate_bridge": {
+    "monument_name": "Golden Gate Bridge",
+    "location": "San Francisco, California, United States",
+    "coordinates": {
+      "lat": 37.8199,
+      "lng": -122.4783
+    },
+    "architectural_style": "Art Deco Structural Engineering",
+    "built_by_or_era": "Interwar Period (1933–1937 CE)",
+    "historical_summary": "2.7-kilometer suspension bridge spanning the Golden Gate strait, famed for its 227-meter Art Deco towers, swooping main cables, and signature International Orange coloration.",
+    "structural_features_detected": [],
+    "preservation_status": "California Historical Landmark • ASCE Civil Engineering Wonder",
+    "grounded_citations": {
+      "primary_source": "Golden Gate Bridge, Highway and Transportation District",
+      "gazetteer_reference": "Heritage Register, San Francisco, California, United States",
+      "unesco_whc_ref": "California Historical Landmark • ASCE Civil Engineering Wonder",
+      "curatorial_notes": "Verified record from canonical 100-site heritage register."
+    },
+    "recognition_readiness": "RECOGNITION_READY"
   }
 }

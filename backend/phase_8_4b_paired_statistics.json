@@ -1,0 +1,135 @@
+{
+  "audit_title": "Phase 8.4B Paired Statistical Comparison Audit",
+  "dataset": "independent_final_test_v4 (Split D Catalog Specimens, N=60)",
+  "paired_tests": {
+    "Policy_C_vs_Policy_A": {
+      "comparison": "Policy_C_vs_Policy_A",
+      "sample_size": 60,
+      "contingency_table": {
+        "both_Policy_A_and_Policy_C": 11,
+        "only_Policy_C_verified": 1,
+        "only_Policy_A_verified": 0,
+        "neither_verified": 48
+      },
+      "discordant_pairs": {
+        "Policy_C_wins": 1,
+        "Policy_A_wins": 0,
+        "total_discordant": 1
+      },
+      "mcnemar_test": {
+        "statistic_continuity_corrected": 0.0,
+        "exact_one_sided_p_value": 0.5,
+        "exact_two_sided_p_value": 1.0,
+        "is_statistically_significant_at_alpha_0_05": false
+      },
+      "recall_difference": {
+        "point_estimate_delta": 0.0167,
+        "95_percent_confidence_interval": [
+          -0.0157,
+          0.0491
+        ]
+      },
+      "discordant_specimens": [
+        {
+          "specimen_id": "split_d_021",
+          "monument_key": "hawa_mahal",
+          "winner": "Policy_C",
+          "margin": 0.0704,
+          "ransac_inliers": 5,
+          "local_clip_mean": 0.8494
+        }
+      ],
+      "statistical_interpretation": "Observed delta of +0.0167 (95% CI: [-0.0157, 0.0491]). With b=1 and c=0, exact two-sided p=1.0000. Evidence is insufficient to claim statistical significance at alpha=0.05 due to small discordant sample size."
+    },
+    "Policy_D_vs_Policy_A": {
+      "comparison": "Policy_D_vs_Policy_A",
+      "sample_size": 60,
+      "contingency_table": {
+        "both_Policy_A_and_Policy_D": 11,
+        "only_Policy_D_verified": 2,
+        "only_Policy_A_verified": 0,
+        "neither_verified": 47
+      },
+      "discordant_pairs": {
+        "Policy_D_wins": 2,
+        "Policy_A_wins": 0,
+        "total_discordant": 2
+      },
+      "mcnemar_test": {
+        "statistic_continuity_corrected": 0.5,
+        "exact_one_sided_p_value": 0.25,
+        "exact_two_sided_p_value": 0.5,
+        "is_statistically_significant_at_alpha_0_05": false
+      },
+      "recall_difference": {
+        "point_estimate_delta": 0.0333,
+        "95_percent_confidence_interval": [
+          -0.0121,
+          0.0788
+        ]
+      },
+      "discordant_specimens": [
+        {
+          "specimen_id": "split_d_021",
+          "monument_key": "hawa_mahal",
+          "winner": "Policy_D",
+          "margin": 0.0704,
+          "ransac_inliers": 5,
+          "local_clip_mean": 0.8494
+        },
+        {
+          "specimen_id": "split_d_077",
+          "monument_key": "hampi_stone_chariot",
+          "winner": "Policy_D",
+          "margin": 0.0637,
+          "ransac_inliers": 18,
+          "local_clip_mean": 0.7174
+        }
+      ],
+      "statistical_interpretation": "Observed delta of +0.0333 (95% CI: [-0.0121, 0.0788]). With b=2 and c=0, exact two-sided p=0.5000. Evidence is insufficient to claim statistical significance at alpha=0.05 due to small discordant sample size."
+    },
+    "Policy_D_vs_Policy_C": {
+      "comparison": "Policy_D_vs_Policy_C",
+      "sample_size": 60,
+      "contingency_table": {
+        "both_Policy_C_and_Policy_D": 12,
+        "only_Policy_D_verified": 1,
+        "only_Policy_C_verified": 0,
+        "neither_verified": 47
+      },
+      "discordant_pairs": {
+        "Policy_D_wins": 1,
+        "Policy_C_wins": 0,
+        "total_discordant": 1
+      },
+      "mcnemar_test": {
+        "statistic_continuity_corrected": 0.0,
+        "exact_one_sided_p_value": 0.5,
+        "exact_two_sided_p_value": 1.0,
+        "is_statistically_significant_at_alpha_0_05": false
+      },
+      "recall_difference": {
+        "point_estimate_delta": 0.0167,
+        "95_percent_confidence_interval": [
+          -0.0157,
+          0.0491
+        ]
+      },
+      "discordant_specimens": [
+        {
+          "specimen_id": "split_d_077",
+          "monument_key": "hampi_stone_chariot",
+          "winner": "Policy_D",
+          "margin": 0.0637,
+          "ransac_inliers": 18,
+          "local_clip_mean": 0.7174
+        }
+      ],
+      "statistical_interpretation": "Observed delta of +0.0167 (95% CI: [-0.0157, 0.0491]). With b=1 and c=0, exact two-sided p=1.0000. Evidence is insufficient to claim statistical significance at alpha=0.05 due to small discordant sample size."
+    }
+  },
+  "photographer_dependency_analysis": {
+    "finding": "Discordant specimen split_d_021 (Hawa Mahal) was authored by user 'Firo0002'. Discordant specimen split_d_077 (Hampi Stone Chariot) was authored by user 'A.Savin'.",
+    "independence": "Neither author shares specimens with the reference gallery for those respective monuments. The two recovered specimens represent completely disjoint photographers and monuments."
+  }
+}

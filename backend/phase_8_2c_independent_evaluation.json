@@ -1,0 +1,870 @@
+{
+  "title": "Phase 8.2C Genuinely Untouched Independent Final Evaluation (Split C)",
+  "dataset_name": "independent_final_test_v3 (Split C)",
+  "frozen_calibrator_evaluated": {
+    "method": "Platt_Scaling_Similarity",
+    "parameters": {
+      "A": 4.2622,
+      "B": -3.5748,
+      "crossover": 0.8387
+    },
+    "source_status": "Strictly frozen prior to Split C evaluation. Zero tuning on Split C."
+  },
+  "sample_size": 28,
+  "categories_breakdown": {
+    "catalog_monuments": 15,
+    "unknown_heritage": 7,
+    "non_monument": 6
+  },
+  "recognition_performance": {
+    "catalog_specimens_count": 15,
+    "top1_correct_count": 8,
+    "top1_accuracy": 0.5333,
+    "formula": "8/15"
+  },
+  "calibration_metrics_comparison": {
+    "Raw_Cosine": {
+      "ece": 0.5594,
+      "brier": 0.4405,
+      "nll": 1.1658,
+      "bins": [
+        {
+          "bin_index": 1,
+          "bin_range": "[0.00, 0.10]",
+          "count": 0,
+          "empirical_accuracy": 0.0,
+          "mean_confidence": 0.05,
+          "calibration_gap": 0.0
+        },
+        {
+          "bin_index": 2,
+          "bin_range": "[0.10, 0.20]",
+          "count": 0,
+          "empirical_accuracy": 0.0,
+          "mean_confidence": 0.15,
+          "calibration_gap": 0.0
+        },
+        {
+          "bin_index": 3,
+          "bin_range": "[0.20, 0.30]",
+          "count": 0,
+          "empirical_accuracy": 0.0,
+          "mean_confidence": 0.25,
+          "calibration_gap": 0.0
+        },
+        {
+          "bin_index": 4,
+          "bin_range": "[0.30, 0.40]",
+          "count": 0,
+          "empirical_accuracy": 0.0,
+          "mean_confidence": 0.35,
+          "calibration_gap": 0.0
+        },
+        {
+          "bin_index": 5,
+          "bin_range": "[0.40, 0.50]",
+          "count": 0,
+          "empirical_accuracy": 0.0,
+          "mean_confidence": 0.45,
+          "calibration_gap": 0.0
+        },
+        {
+          "bin_index": 6,
+          "bin_range": "[0.50, 0.60]",
+          "count": 1,
+          "empirical_accuracy": 0.0,
+          "mean_confidence": 0.5571,
+          "calibration_gap": 0.5571
+        },
+        {
+          "bin_index": 7,
+          "bin_range": "[0.60, 0.70]",
+          "count": 4,
+          "empirical_accuracy": 0.0,
+          "mean_confidence": 0.6492,
+          "calibration_gap": 0.6492
+        },
+        {
+          "bin_index": 8,
+          "bin_range": "[0.70, 0.80]",
+          "count": 5,
+          "empirical_accuracy": 0.0,
+          "mean_confidence": 0.761,
+          "calibration_gap": 0.761
+        },
+        {
+          "bin_index": 9,
+          "bin_range": "[0.80, 0.90]",
+          "count": 12,
+          "empirical_accuracy": 0.1667,
+          "mean_confidence": 0.8518,
+          "calibration_gap": 0.6851
+        },
+        {
+          "bin_index": 10,
+          "bin_range": "[0.90, 1.00]",
+          "count": 6,
+          "empirical_accuracy": 1.0,
+          "mean_confidence": 0.9198,
+          "calibration_gap": 0.0802
+        }
+      ]
+    },
+    "Platt_Scaling_Production": {
+      "ece": 0.2154,
+      "brier": 0.1987,
+      "nll": 0.5866,
+      "bootstrap_95ci_ece": [
+        0.117,
+        0.3498
+      ],
+      "bootstrap_95ci_brier": [
+        0.1719,
+        0.2229
+      ],
+      "bins": [
+        {
+          "bin_index": 1,
+          "bin_range": "[0.00, 0.10]",
+          "count": 0,
+          "empirical_accuracy": 0.0,
+          "mean_confidence": 0.05,
+          "calibration_gap": 0.0
+        },
+        {
+          "bin_index": 2,
+          "bin_range": "[0.10, 0.20]",
+          "count": 0,
+          "empirical_accuracy": 0.0,
+          "mean_confidence": 0.15,
+          "calibration_gap": 0.0
+        },
+        {
+          "bin_index": 3,
+          "bin_range": "[0.20, 0.30]",
+          "count": 2,
+          "empirical_accuracy": 0.0,
+          "mean_confidence": 0.2598,
+          "calibration_gap": 0.2598
+        },
+        {
+          "bin_index": 4,
+          "bin_range": "[0.30, 0.40]",
+          "count": 4,
+          "empirical_accuracy": 0.0,
+          "mean_confidence": 0.3335,
+          "calibration_gap": 0.3335
+        },
+        {
+          "bin_index": 5,
+          "bin_range": "[0.40, 0.50]",
+          "count": 7,
+          "empirical_accuracy": 0.1429,
+          "mean_confidence": 0.4435,
+          "calibration_gap": 0.3006
+        },
+        {
+          "bin_index": 6,
+          "bin_range": "[0.50, 0.60]",
+          "count": 14,
+          "empirical_accuracy": 0.4286,
+          "mean_confidence": 0.5482,
+          "calibration_gap": 0.1196
+        },
+        {
+          "bin_index": 7,
+          "bin_range": "[0.60, 0.70]",
+          "count": 1,
+          "empirical_accuracy": 1.0,
+          "mean_confidence": 0.6029,
+          "calibration_gap": 0.3971
+        },
+        {
+          "bin_index": 8,
+          "bin_range": "[0.70, 0.80]",
+          "count": 0,
+          "empirical_accuracy": 0.0,
+          "mean_confidence": 0.75,
+          "calibration_gap": 0.0
+        },
+        {
+          "bin_index": 9,
+          "bin_range": "[0.80, 0.90]",
+          "count": 0,
+          "empirical_accuracy": 0.0,
+          "mean_confidence": 0.85,
+          "calibration_gap": 0.0
+        },
+        {
+          "bin_index": 10,
+          "bin_range": "[0.90, 1.00]",
+          "count": 0,
+          "empirical_accuracy": 0.0,
+          "mean_confidence": 0.95,
+          "calibration_gap": 0.0
+        }
+      ]
+    },
+    "Temperature_Scaling_Baseline": {
+      "ece": 0.2963,
+      "brier": 0.227,
+      "nll": 0.637,
+      "bootstrap_95ci_ece": [
+        0.1887,
+        0.4261
+      ],
+      "bootstrap_95ci_brier": [
+        0.159,
+        0.2908
+      ],
+      "bins": [
+        {
+          "bin_index": 1,
+          "bin_range": "[0.00, 0.10]",
+          "count": 0,
+          "empirical_accuracy": 0.0,
+          "mean_confidence": 0.05,
+          "calibration_gap": 0.0
+        },
+        {
+          "bin_index": 2,
+          "bin_range": "[0.10, 0.20]",
+          "count": 2,
+          "empirical_accuracy": 0.0,
+          "mean_confidence": 0.1543,
+          "calibration_gap": 0.1543
+        },
+        {
+          "bin_index": 3,
+          "bin_range": "[0.20, 0.30]",
+          "count": 3,
+          "empirical_accuracy": 0.0,
+          "mean_confidence": 0.243,
+          "calibration_gap": 0.243
+        },
+        {
+          "bin_index": 4,
+          "bin_range": "[0.30, 0.40]",
+          "count": 1,
+          "empirical_accuracy": 0.0,
+          "mean_confidence": 0.3904,
+          "calibration_gap": 0.3904
+        },
+        {
+          "bin_index": 5,
+          "bin_range": "[0.40, 0.50]",
+          "count": 3,
+          "empirical_accuracy": 0.0,
+          "mean_confidence": 0.4581,
+          "calibration_gap": 0.4581
+        },
+        {
+          "bin_index": 6,
+          "bin_range": "[0.50, 0.60]",
+          "count": 4,
+          "empirical_accuracy": 0.25,
+          "mean_confidence": 0.5528,
+          "calibration_gap": 0.3028
+        },
+        {
+          "bin_index": 7,
+          "bin_range": "[0.60, 0.70]",
+          "count": 5,
+          "empirical_accuracy": 0.2,
+          "mean_confidence": 0.6657,
+          "calibration_gap": 0.4657
+        },
+        {
+          "bin_index": 8,
+          "bin_range": "[0.70, 0.80]",
+          "count": 9,
+          "empirical_accuracy": 0.5556,
+          "mean_confidence": 0.7514,
+          "calibration_gap": 0.1959
+        },
+        {
+          "bin_index": 9,
+          "bin_range": "[0.80, 0.90]",
+          "count": 1,
+          "empirical_accuracy": 1.0,
+          "mean_confidence": 0.8094,
+          "calibration_gap": 0.1906
+        },
+        {
+          "bin_index": 10,
+          "bin_range": "[0.90, 1.00]",
+          "count": 0,
+          "empirical_accuracy": 0.0,
+          "mean_confidence": 0.95,
+          "calibration_gap": 0.0
+        }
+      ]
+    }
+  },
+  "confidence_distribution_platt": {
+    "mean": 0.4727,
+    "std": 0.1021,
+    "min": 0.2314,
+    "percentile_25": 0.4199,
+    "median": 0.51,
+    "percentile_75": 0.5522,
+    "max": 0.6029,
+    "pct_above_75": 0.0,
+    "pct_above_50": 53.57
+  },
+  "per_class_calibration": {
+    "catalog": {
+      "specimen_count": 15,
+      "empirical_accuracy": 0.5333,
+      "mean_raw_sim": 0.8458,
+      "mean_calibrated_conf": 0.5094,
+      "brier_score": 0.2026,
+      "ece": 0.1619
+    },
+    "unknown_heritage": {
+      "specimen_count": 7,
+      "empirical_accuracy": 0.0,
+      "mean_raw_sim": 0.8449,
+      "mean_calibrated_conf": 0.5067,
+      "brier_score": 0.2589,
+      "ece": 0.5067
+    },
+    "non_monument": {
+      "specimen_count": 6,
+      "empirical_accuracy": 0.0,
+      "mean_raw_sim": 0.6829,
+      "mean_calibrated_conf": 0.3413,
+      "brier_score": 0.1189,
+      "ece": 0.3413
+    }
+  },
+  "per_condition_calibration": {
+    "architectural_carving": {
+      "specimen_count": 5,
+      "empirical_accuracy": 0.6,
+      "mean_raw_similarity": 0.8766,
+      "mean_calibrated_confidence": 0.54,
+      "brier_score": 0.1918
+    },
+    "side_view": {
+      "specimen_count": 2,
+      "empirical_accuracy": 0.5,
+      "mean_raw_similarity": 0.8251,
+      "mean_calibrated_confidence": 0.4855,
+      "brier_score": 0.2722
+    },
+    "front_view": {
+      "specimen_count": 2,
+      "empirical_accuracy": 0.5,
+      "mean_raw_similarity": 0.8911,
+      "mean_calibrated_confidence": 0.5555,
+      "brier_score": 0.2336
+    },
+    "close_up_carving": {
+      "specimen_count": 1,
+      "empirical_accuracy": 1.0,
+      "mean_raw_similarity": 0.8532,
+      "mean_calibrated_confidence": 0.5154,
+      "brier_score": 0.2348
+    },
+    "full_structure": {
+      "specimen_count": 1,
+      "empirical_accuracy": 0.0,
+      "mean_raw_similarity": 0.8076,
+      "mean_calibrated_confidence": 0.4669,
+      "brier_score": 0.218
+    },
+    "partial_view": {
+      "specimen_count": 2,
+      "empirical_accuracy": 1.0,
+      "mean_raw_similarity": 0.9216,
+      "mean_calibrated_confidence": 0.5874,
+      "brier_score": 0.1703
+    },
+    "out_of_catalog_heritage": {
+      "specimen_count": 7,
+      "empirical_accuracy": 0.0,
+      "mean_raw_similarity": 0.8449,
+      "mean_calibrated_confidence": 0.5067,
+      "brier_score": 0.2589
+    },
+    "non_monument_distractor": {
+      "specimen_count": 6,
+      "empirical_accuracy": 0.0,
+      "mean_raw_similarity": 0.6829,
+      "mean_calibrated_confidence": 0.3413,
+      "brier_score": 0.1189
+    },
+    "distant_view": {
+      "specimen_count": 1,
+      "empirical_accuracy": 0.0,
+      "mean_raw_similarity": 0.5571,
+      "mean_calibrated_confidence": 0.2314,
+      "brier_score": 0.0535
+    },
+    "rear_view": {
+      "specimen_count": 1,
+      "empirical_accuracy": 0.0,
+      "mean_raw_similarity": 0.8112,
+      "mean_calibrated_confidence": 0.4707,
+      "brier_score": 0.2216
+    }
+  },
+  "false_acceptance_analysis": {
+    "distractor_specimens_count": 13,
+    "unknown_heritage_count": 7,
+    "non_monument_count": 6,
+    "false_verified_predictions_count": 0,
+    "total_verified_predictions_count": 0,
+    "empirical_false_acceptance_rate": 0.0,
+    "far_formula": "0/13",
+    "zero_risk_statistical_fallacy_refutation": "An empirical false acceptance count of 0 does NOT prove zero real-world risk. Under the statistical Rule of Three (Hanley & Lippman-Hand, 1983), the 95% upper confidence bound for a Poisson/Binomial event with 0 occurrences in N=13 trials is 3/N = 23.08%. When pooled across all audited evaluation splits (N=98 total distractors without a single false acceptance), the true 95% upper risk ceiling is bounded at 3/98 = 3.06%.",
+    "rule_of_three_upper_confidence_bounds": {
+      "split_c_alone_n_13": 0.2308,
+      "splits_b_and_c_n_32": 0.0938,
+      "all_audited_distractors_n_98": 0.0306
+    },
+    "uncertainty_and_human_review_coverage": {
+      "total_queries": 28,
+      "verified_match_count": 0,
+      "review_required_count": 3,
+      "rejected_non_monument_count": 4,
+      "review_required_rate": 0.1071,
+      "rejection_rate_on_distractors": 0.3077,
+      "review_rate_on_unknown_heritage": 0.0,
+      "decisions_breakdown_distractors": {
+        "UNCERTAIN_MATCH": 8,
+        "NON_MONUMENT_REJECTED": 4,
+        "REVIEW_REQUIRED": 1
+      },
+      "decisions_breakdown_catalog": {
+        "UNCERTAIN_MATCH": 12,
+        "REVIEW_REQUIRED": 2,
+        "UNKNOWN_HERITAGE_SPECIMEN": 1
+      }
+    }
+  },
+  "specimen_level_results": [
+    {
+      "specimen_id": "split_c_001",
+      "filename": "split_c_001_brihadeeswarar_temple.jpg",
+      "category": "catalog",
+      "ground_truth_label": "brihadeeswarar_temple",
+      "recognized_label": "brihadeeswarar_temple",
+      "condition": "architectural_carving",
+      "raw_top1_similarity": 0.9082,
+      "gatekeeper_score": 0.7831,
+      "decision_state": "UNCERTAIN_MATCH",
+      "is_correct_outcome": 1,
+      "raw_cosine_prob": 0.9082,
+      "platt_calibrated_prob": 0.5735,
+      "temp_calibrated_prob": 0.7655
+    },
+    {
+      "specimen_id": "split_c_002",
+      "filename": "split_c_002_brihadeeswarar_temple.jpg",
+      "category": "catalog",
+      "ground_truth_label": "brihadeeswarar_temple",
+      "recognized_label": "konark_sun_temple",
+      "condition": "side_view",
+      "raw_top1_similarity": 0.8453,
+      "gatekeeper_score": 0.7826,
+      "decision_state": "REVIEW_REQUIRED",
+      "is_correct_outcome": 0,
+      "raw_cosine_prob": 0.8453,
+      "platt_calibrated_prob": 0.507,
+      "temp_calibrated_prob": 0.6463
+    },
+    {
+      "specimen_id": "split_c_003",
+      "filename": "split_c_003_charminar.jpg",
+      "category": "catalog",
+      "ground_truth_label": "charminar",
+      "recognized_label": "charminar",
+      "condition": "front_view",
+      "raw_top1_similarity": 0.91,
+      "gatekeeper_score": 0.7192,
+      "decision_state": "UNCERTAIN_MATCH",
+      "is_correct_outcome": 1,
+      "raw_cosine_prob": 0.91,
+      "platt_calibrated_prob": 0.5754,
+      "temp_calibrated_prob": 0.7685
+    },
+    {
+      "specimen_id": "split_c_004",
+      "filename": "split_c_004_gateway_of_india.jpg",
+      "category": "catalog",
+      "ground_truth_label": "gateway_of_india",
+      "recognized_label": "sanchi_stupa",
+      "condition": "architectural_carving",
+      "raw_top1_similarity": 0.872,
+      "gatekeeper_score": 0.6269,
+      "decision_state": "UNCERTAIN_MATCH",
+      "is_correct_outcome": 0,
+      "raw_cosine_prob": 0.872,
+      "platt_calibrated_prob": 0.5354,
+      "temp_calibrated_prob": 0.7003
+    },
+    {
+      "specimen_id": "split_c_005",
+      "filename": "split_c_005_hawa_mahal.jpg",
+      "category": "catalog",
+      "ground_truth_label": "hawa_mahal",
+      "recognized_label": "hawa_mahal",
+      "condition": "close_up_carving",
+      "raw_top1_similarity": 0.8532,
+      "gatekeeper_score": 0.752,
+      "decision_state": "UNCERTAIN_MATCH",
+      "is_correct_outcome": 1,
+      "raw_cosine_prob": 0.8532,
+      "platt_calibrated_prob": 0.5154,
+      "temp_calibrated_prob": 0.6628
+    },
+    {
+      "specimen_id": "split_c_006",
+      "filename": "split_c_006_konark_sun_temple.jpg",
+      "category": "catalog",
+      "ground_truth_label": "konark_sun_temple",
+      "recognized_label": "konark_sun_temple",
+      "condition": "side_view",
+      "raw_top1_similarity": 0.8049,
+      "gatekeeper_score": 0.5837,
+      "decision_state": "UNCERTAIN_MATCH",
+      "is_correct_outcome": 1,
+      "raw_cosine_prob": 0.8049,
+      "platt_calibrated_prob": 0.464,
+      "temp_calibrated_prob": 0.5572
+    },
+    {
+      "specimen_id": "split_c_007",
+      "filename": "split_c_007_qutub_minar.jpg",
+      "category": "catalog",
+      "ground_truth_label": "qutub_minar",
+      "recognized_label": "konark_sun_temple",
+      "condition": "full_structure",
+      "raw_top1_similarity": 0.8076,
+      "gatekeeper_score": 0.7633,
+      "decision_state": "UNCERTAIN_MATCH",
+      "is_correct_outcome": 0,
+      "raw_cosine_prob": 0.8076,
+      "platt_calibrated_prob": 0.4669,
+      "temp_calibrated_prob": 0.5635
+    },
+    {
+      "specimen_id": "split_c_008",
+      "filename": "split_c_008_sanchi_stupa.jpg",
+      "category": "catalog",
+      "ground_truth_label": "sanchi_stupa",
+      "recognized_label": "sanchi_stupa",
+      "condition": "partial_view",
+      "raw_top1_similarity": 0.9149,
+      "gatekeeper_score": 0.7355,
+      "decision_state": "UNCERTAIN_MATCH",
+      "is_correct_outcome": 1,
+      "raw_cosine_prob": 0.9149,
+      "platt_calibrated_prob": 0.5805,
+      "temp_calibrated_prob": 0.7765
+    },
+    {
+      "specimen_id": "split_c_009",
+      "filename": "split_c_009_unknown_heritage.jpg",
+      "category": "unknown_heritage",
+      "ground_truth_label": "unknown_heritage",
+      "recognized_label": "konark_sun_temple",
+      "condition": "out_of_catalog_heritage",
+      "raw_top1_similarity": 0.8659,
+      "gatekeeper_score": 0.6616,
+      "decision_state": "UNCERTAIN_MATCH",
+      "is_correct_outcome": 0,
+      "raw_cosine_prob": 0.8659,
+      "platt_calibrated_prob": 0.5289,
+      "temp_calibrated_prob": 0.6884
+    },
+    {
+      "specimen_id": "split_c_010",
+      "filename": "split_c_010_unknown_heritage.jpg",
+      "category": "unknown_heritage",
+      "ground_truth_label": "unknown_heritage",
+      "recognized_label": "qutub_minar",
+      "condition": "out_of_catalog_heritage",
+      "raw_top1_similarity": 0.7882,
+      "gatekeeper_score": 0.7487,
+      "decision_state": "UNCERTAIN_MATCH",
+      "is_correct_outcome": 0,
+      "raw_cosine_prob": 0.7882,
+      "platt_calibrated_prob": 0.4464,
+      "temp_calibrated_prob": 0.5189
+    },
+    {
+      "specimen_id": "split_c_011",
+      "filename": "split_c_011_unknown_heritage.jpg",
+      "category": "unknown_heritage",
+      "ground_truth_label": "unknown_heritage",
+      "recognized_label": "hampi_stone_chariot",
+      "condition": "out_of_catalog_heritage",
+      "raw_top1_similarity": 0.8949,
+      "gatekeeper_score": 0.7159,
+      "decision_state": "UNCERTAIN_MATCH",
+      "is_correct_outcome": 0,
+      "raw_cosine_prob": 0.8949,
+      "platt_calibrated_prob": 0.5596,
+      "temp_calibrated_prob": 0.7428
+    },
+    {
+      "specimen_id": "split_c_012",
+      "filename": "split_c_012_unknown_heritage.jpg",
+      "category": "unknown_heritage",
+      "ground_truth_label": "unknown_heritage",
+      "recognized_label": "taj_mahal",
+      "condition": "out_of_catalog_heritage",
+      "raw_top1_similarity": 0.8581,
+      "gatekeeper_score": 0.7723,
+      "decision_state": "UNCERTAIN_MATCH",
+      "is_correct_outcome": 0,
+      "raw_cosine_prob": 0.8581,
+      "platt_calibrated_prob": 0.5207,
+      "temp_calibrated_prob": 0.6729
+    },
+    {
+      "specimen_id": "split_c_013",
+      "filename": "split_c_013_unknown_heritage.jpg",
+      "category": "unknown_heritage",
+      "ground_truth_label": "unknown_heritage",
+      "recognized_label": "sanchi_stupa",
+      "condition": "out_of_catalog_heritage",
+      "raw_top1_similarity": 0.771,
+      "gatekeeper_score": 0.603,
+      "decision_state": "UNCERTAIN_MATCH",
+      "is_correct_outcome": 0,
+      "raw_cosine_prob": 0.771,
+      "platt_calibrated_prob": 0.4283,
+      "temp_calibrated_prob": 0.4792
+    },
+    {
+      "specimen_id": "split_c_014",
+      "filename": "split_c_014_unknown_heritage.jpg",
+      "category": "unknown_heritage",
+      "ground_truth_label": "unknown_heritage",
+      "recognized_label": "sanchi_stupa",
+      "condition": "out_of_catalog_heritage",
+      "raw_top1_similarity": 0.8509,
+      "gatekeeper_score": 0.5749,
+      "decision_state": "UNCERTAIN_MATCH",
+      "is_correct_outcome": 0,
+      "raw_cosine_prob": 0.8509,
+      "platt_calibrated_prob": 0.5129,
+      "temp_calibrated_prob": 0.658
+    },
+    {
+      "specimen_id": "split_c_015",
+      "filename": "split_c_015_unknown_heritage.jpg",
+      "category": "unknown_heritage",
+      "ground_truth_label": "unknown_heritage",
+      "recognized_label": "hampi_stone_chariot",
+      "condition": "out_of_catalog_heritage",
+      "raw_top1_similarity": 0.8856,
+      "gatekeeper_score": 0.775,
+      "decision_state": "UNCERTAIN_MATCH",
+      "is_correct_outcome": 0,
+      "raw_cosine_prob": 0.8856,
+      "platt_calibrated_prob": 0.5498,
+      "temp_calibrated_prob": 0.7261
+    },
+    {
+      "specimen_id": "split_c_016",
+      "filename": "split_c_016_non_monument.jpg",
+      "category": "non_monument",
+      "ground_truth_label": "non_monument",
+      "recognized_label": "konark_sun_temple",
+      "condition": "non_monument_distractor",
+      "raw_top1_similarity": 0.6266,
+      "gatekeeper_score": 0.36,
+      "decision_state": "NON_MONUMENT_REJECTED",
+      "is_correct_outcome": 0,
+      "raw_cosine_prob": 0.6266,
+      "platt_calibrated_prob": 0.2882,
+      "temp_calibrated_prob": 0.1953
+    },
+    {
+      "specimen_id": "split_c_017",
+      "filename": "split_c_017_non_monument.jpg",
+      "category": "non_monument",
+      "ground_truth_label": "non_monument",
+      "recognized_label": "charminar",
+      "condition": "non_monument_distractor",
+      "raw_top1_similarity": 0.7317,
+      "gatekeeper_score": 0.3993,
+      "decision_state": "REVIEW_REQUIRED",
+      "is_correct_outcome": 0,
+      "raw_cosine_prob": 0.7317,
+      "platt_calibrated_prob": 0.3879,
+      "temp_calibrated_prob": 0.3904
+    },
+    {
+      "specimen_id": "split_c_018",
+      "filename": "split_c_018_non_monument.jpg",
+      "category": "non_monument",
+      "ground_truth_label": "non_monument",
+      "recognized_label": "hampi_stone_chariot",
+      "condition": "non_monument_distractor",
+      "raw_top1_similarity": 0.6507,
+      "gatekeeper_score": 0.3853,
+      "decision_state": "NON_MONUMENT_REJECTED",
+      "is_correct_outcome": 0,
+      "raw_cosine_prob": 0.6507,
+      "platt_calibrated_prob": 0.3097,
+      "temp_calibrated_prob": 0.2327
+    },
+    {
+      "specimen_id": "split_c_019",
+      "filename": "split_c_019_non_monument.jpg",
+      "category": "non_monument",
+      "ground_truth_label": "non_monument",
+      "recognized_label": "konark_sun_temple",
+      "condition": "non_monument_distractor",
+      "raw_top1_similarity": 0.6564,
+      "gatekeeper_score": 0.4089,
+      "decision_state": "NON_MONUMENT_REJECTED",
+      "is_correct_outcome": 0,
+      "raw_cosine_prob": 0.6564,
+      "platt_calibrated_prob": 0.315,
+      "temp_calibrated_prob": 0.2422
+    },
+    {
+      "specimen_id": "split_c_020",
+      "filename": "split_c_020_non_monument.jpg",
+      "category": "non_monument",
+      "ground_truth_label": "non_monument",
+      "recognized_label": "konark_sun_temple",
+      "condition": "non_monument_distractor",
+      "raw_top1_similarity": 0.7687,
+      "gatekeeper_score": 0.6641,
+      "decision_state": "UNCERTAIN_MATCH",
+      "is_correct_outcome": 0,
+      "raw_cosine_prob": 0.7687,
+      "platt_calibrated_prob": 0.4259,
+      "temp_calibrated_prob": 0.4739
+    },
+    {
+      "specimen_id": "split_c_021",
+      "filename": "split_c_021_charminar.jpg",
+      "category": "catalog",
+      "ground_truth_label": "charminar",
+      "recognized_label": "charminar",
+      "condition": "architectural_carving",
+      "raw_top1_similarity": 0.9367,
+      "gatekeeper_score": 0.7678,
+      "decision_state": "UNCERTAIN_MATCH",
+      "is_correct_outcome": 1,
+      "raw_cosine_prob": 0.9367,
+      "platt_calibrated_prob": 0.6029,
+      "temp_calibrated_prob": 0.8094
+    },
+    {
+      "specimen_id": "split_c_022",
+      "filename": "split_c_022_gateway_of_india.jpg",
+      "category": "catalog",
+      "ground_truth_label": "gateway_of_india",
+      "recognized_label": "qutub_minar",
+      "condition": "distant_view",
+      "raw_top1_similarity": 0.5571,
+      "gatekeeper_score": 0.6222,
+      "decision_state": "UNKNOWN_HERITAGE_SPECIMEN",
+      "is_correct_outcome": 0,
+      "raw_cosine_prob": 0.5571,
+      "platt_calibrated_prob": 0.2314,
+      "temp_calibrated_prob": 0.1133
+    },
+    {
+      "specimen_id": "split_c_023",
+      "filename": "split_c_023_hampi_stone_chariot.jpg",
+      "category": "catalog",
+      "ground_truth_label": "hampi_stone_chariot",
+      "recognized_label": "hampi_stone_chariot",
+      "condition": "architectural_carving",
+      "raw_top1_similarity": 0.9205,
+      "gatekeeper_score": 0.7804,
+      "decision_state": "UNCERTAIN_MATCH",
+      "is_correct_outcome": 1,
+      "raw_cosine_prob": 0.9205,
+      "platt_calibrated_prob": 0.5862,
+      "temp_calibrated_prob": 0.7852
+    },
+    {
+      "specimen_id": "split_c_024",
+      "filename": "split_c_024_hampi_stone_chariot.jpg",
+      "category": "catalog",
+      "ground_truth_label": "hampi_stone_chariot",
+      "recognized_label": "hampi_stone_chariot",
+      "condition": "partial_view",
+      "raw_top1_similarity": 0.9282,
+      "gatekeeper_score": 0.7528,
+      "decision_state": "UNCERTAIN_MATCH",
+      "is_correct_outcome": 1,
+      "raw_cosine_prob": 0.9282,
+      "platt_calibrated_prob": 0.5942,
+      "temp_calibrated_prob": 0.7971
+    },
+    {
+      "specimen_id": "split_c_025",
+      "filename": "split_c_025_hawa_mahal.jpg",
+      "category": "catalog",
+      "ground_truth_label": "hawa_mahal",
+      "recognized_label": "taj_mahal",
+      "condition": "rear_view",
+      "raw_top1_similarity": 0.8112,
+      "gatekeeper_score": 0.5568,
+      "decision_state": "UNCERTAIN_MATCH",
+      "is_correct_outcome": 0,
+      "raw_cosine_prob": 0.8112,
+      "platt_calibrated_prob": 0.4707,
+      "temp_calibrated_prob": 0.5714
+    },
+    {
+      "specimen_id": "split_c_026",
+      "filename": "split_c_026_taj_mahal.jpg",
+      "category": "catalog",
+      "ground_truth_label": "taj_mahal",
+      "recognized_label": "charminar",
+      "condition": "front_view",
+      "raw_top1_similarity": 0.8722,
+      "gatekeeper_score": 0.7791,
+      "decision_state": "UNCERTAIN_MATCH",
+      "is_correct_outcome": 0,
+      "raw_cosine_prob": 0.8722,
+      "platt_calibrated_prob": 0.5356,
+      "temp_calibrated_prob": 0.7008
+    },
+    {
+      "specimen_id": "split_c_027",
+      "filename": "split_c_027_victoria_memorial.jpg",
+      "category": "catalog",
+      "ground_truth_label": "victoria_memorial",
+      "recognized_label": "gateway_of_india",
+      "condition": "architectural_carving",
+      "raw_top1_similarity": 0.7456,
+      "gatekeeper_score": 0.5867,
+      "decision_state": "REVIEW_REQUIRED",
+      "is_correct_outcome": 0,
+      "raw_cosine_prob": 0.7456,
+      "platt_calibrated_prob": 0.4021,
+      "temp_calibrated_prob": 0.4213
+    },
+    {
+      "specimen_id": "split_c_028",
+      "filename": "split_c_028_non_monument.jpg",
+      "category": "non_monument",
+      "ground_truth_label": "non_monument",
+      "recognized_label": "sanchi_stupa",
+      "condition": "non_monument_distractor",
+      "raw_top1_similarity": 0.6633,
+      "gatekeeper_score": 0.3532,
+      "decision_state": "NON_MONUMENT_REJECTED",
+      "is_correct_outcome": 0,
+      "raw_cosine_prob": 0.6633,
+      "platt_calibrated_prob": 0.3213,
+      "temp_calibrated_prob": 0.254
+    }
+  ],
+  "sample_size_limitations_disclosure": "Split C comprises N=28 authentic specimens. While sufficient to independently confirm that calibration error is reduced without test leakage, small sample sizes lead to wider bootstrap confidence intervals (e.g., Platt ECE 95% CI: [0.1170, 0.3498]) and empty bins in 10-bin ECE histograms. These intervals must be reported transparently alongside point estimates."
+}

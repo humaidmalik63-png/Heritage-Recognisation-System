@@ -1,0 +1,419 @@
+{
+  "title": "Phase 8.1 Large-Scale Independent Validation and Confidence Calibration Report",
+  "timestamp_utc": "2026-11-05T06:37:04Z",
+  "test_dataset": "independent_eval_v2",
+  "total_test_specimens": 55,
+  "catalog_monument_specimens": 36,
+  "unknown_heritage_specimens": 9,
+  "non_monument_distractors": 10,
+  "configurations_comparison": {
+    "Config_A_Global_CLIP": {
+      "top1_accuracy_pct": 77.78,
+      "top3_accuracy_pct": 88.89,
+      "mean_latency_ms": 141.12
+    },
+    "Config_B_Global_GPS": {
+      "top1_accuracy_pct": 77.78,
+      "top3_accuracy_pct": 88.89,
+      "mean_latency_ms": 141.12
+    },
+    "Config_C_Local_CLIP": {
+      "top1_accuracy_pct": 77.78,
+      "mean_latency_ms": 873.48
+    },
+    "Config_D_SIFT_Corroboration": {
+      "top1_accuracy_pct": 77.78,
+      "mean_latency_ms": 1014.6
+    },
+    "Config_E_Hybrid_Local": {
+      "top1_accuracy_pct": 77.78,
+      "mean_latency_ms": 1014.6
+    },
+    "Config_F_Full_Production": {
+      "top1_accuracy_pct": 77.78,
+      "top3_accuracy_pct": 88.89,
+      "mrr": 0.8333,
+      "mean_latency_ms": 1014.6,
+      "median_latency_ms": 998.81,
+      "p95_latency_ms": 1188.07
+    },
+    "Config_G_Conditional_Production": {
+      "top1_accuracy_pct": 77.78,
+      "top3_accuracy_pct": 88.89,
+      "mrr": 0.8333,
+      "mean_latency_ms": 797.44,
+      "median_latency_ms": 956.51,
+      "p95_latency_ms": 1188.07
+    }
+  },
+  "safety_and_uncertainty_metrics": {
+    "false_verified_matches": 0,
+    "false_acceptance_rate_pct": 0.0,
+    "unknown_heritage_rejection_rate_pct": 11.11,
+    "non_monument_rejection_rate_pct": 50.0,
+    "uncertain_matches_rate_pct": 56.36,
+    "review_required_rate_pct": 3.64
+  },
+  "calibration_performance_independent_test": {
+    "calibrated_ece": 0.2806,
+    "calibrated_brier_score": 0.1938,
+    "uncalibrated_raw_cosine_ece": 0.307,
+    "uncalibrated_raw_cosine_brier": 0.2714,
+    "ece_reduction_pct": 8.6,
+    "calibration_bins": [
+      {
+        "bin_index": 0,
+        "bin_lower": 0.0,
+        "bin_upper": 0.1,
+        "count": 0,
+        "empirical_accuracy": 0.0,
+        "mean_confidence": 0.05,
+        "calibration_error": 0.0
+      },
+      {
+        "bin_index": 1,
+        "bin_lower": 0.1,
+        "bin_upper": 0.2,
+        "count": 0,
+        "empirical_accuracy": 0.0,
+        "mean_confidence": 0.15,
+        "calibration_error": 0.0
+      },
+      {
+        "bin_index": 2,
+        "bin_lower": 0.2,
+        "bin_upper": 0.3,
+        "count": 1,
+        "empirical_accuracy": 0.0,
+        "mean_confidence": 0.2995,
+        "calibration_error": 0.2995
+      },
+      {
+        "bin_index": 3,
+        "bin_lower": 0.3,
+        "bin_upper": 0.4,
+        "count": 10,
+        "empirical_accuracy": 0.0,
+        "mean_confidence": 0.3569,
+        "calibration_error": 0.3569
+      },
+      {
+        "bin_index": 4,
+        "bin_lower": 0.4,
+        "bin_upper": 0.5,
+        "count": 16,
+        "empirical_accuracy": 0.25,
+        "mean_confidence": 0.451,
+        "calibration_error": 0.201
+      },
+      {
+        "bin_index": 5,
+        "bin_lower": 0.5,
+        "bin_upper": 0.6,
+        "count": 24,
+        "empirical_accuracy": 0.8333,
+        "mean_confidence": 0.5491,
+        "calibration_error": 0.2843
+      },
+      {
+        "bin_index": 6,
+        "bin_lower": 0.6,
+        "bin_upper": 0.7,
+        "count": 4,
+        "empirical_accuracy": 1.0,
+        "mean_confidence": 0.6179,
+        "calibration_error": 0.3821
+      },
+      {
+        "bin_index": 7,
+        "bin_lower": 0.7,
+        "bin_upper": 0.8,
+        "count": 0,
+        "empirical_accuracy": 0.0,
+        "mean_confidence": 0.75,
+        "calibration_error": 0.0
+      },
+      {
+        "bin_index": 8,
+        "bin_lower": 0.8,
+        "bin_upper": 0.9,
+        "count": 0,
+        "empirical_accuracy": 0.0,
+        "mean_confidence": 0.85,
+        "calibration_error": 0.0
+      },
+      {
+        "bin_index": 9,
+        "bin_lower": 0.9,
+        "bin_upper": 1.0,
+        "count": 0,
+        "empirical_accuracy": 0.0,
+        "mean_confidence": 0.95,
+        "calibration_error": 0.0
+      }
+    ]
+  },
+  "local_feature_metrics": {
+    "agreement_rate_pct": 60.0,
+    "divergence_rate_pct": 40.0,
+    "geometric_verification_rate_pct": 1.82,
+    "mean_sift_inliers": 2.95,
+    "max_sift_inliers": 19
+  },
+  "per_monument_accuracy": {
+    "brihadeeswarar_temple": {
+      "total": 2,
+      "correct_top1": 2,
+      "top1_acc_pct": 100.0,
+      "verified_matches": 0,
+      "uncertain_matches": 2,
+      "review_required": 0
+    },
+    "charminar": {
+      "total": 2,
+      "correct_top1": 1,
+      "top1_acc_pct": 50.0,
+      "verified_matches": 0,
+      "uncertain_matches": 1,
+      "review_required": 0
+    },
+    "gateway_of_india": {
+      "total": 2,
+      "correct_top1": 0,
+      "top1_acc_pct": 0.0,
+      "verified_matches": 0,
+      "uncertain_matches": 2,
+      "review_required": 0
+    },
+    "hampi_stone_chariot": {
+      "total": 3,
+      "correct_top1": 3,
+      "top1_acc_pct": 100.0,
+      "verified_matches": 0,
+      "uncertain_matches": 3,
+      "review_required": 0
+    },
+    "hawa_mahal": {
+      "total": 4,
+      "correct_top1": 4,
+      "top1_acc_pct": 100.0,
+      "verified_matches": 4,
+      "uncertain_matches": 0,
+      "review_required": 0
+    },
+    "konark_sun_temple": {
+      "total": 4,
+      "correct_top1": 3,
+      "top1_acc_pct": 75.0,
+      "verified_matches": 0,
+      "uncertain_matches": 4,
+      "review_required": 0
+    },
+    "qutub_minar": {
+      "total": 4,
+      "correct_top1": 4,
+      "top1_acc_pct": 100.0,
+      "verified_matches": 2,
+      "uncertain_matches": 2,
+      "review_required": 0
+    },
+    "sanchi_stupa": {
+      "total": 4,
+      "correct_top1": 4,
+      "top1_acc_pct": 100.0,
+      "verified_matches": 2,
+      "uncertain_matches": 2,
+      "review_required": 0
+    },
+    "taj_mahal": {
+      "total": 10,
+      "correct_top1": 6,
+      "top1_acc_pct": 60.0,
+      "verified_matches": 3,
+      "uncertain_matches": 6,
+      "review_required": 0
+    },
+    "victoria_memorial": {
+      "total": 1,
+      "correct_top1": 1,
+      "top1_acc_pct": 100.0,
+      "verified_matches": 0,
+      "uncertain_matches": 1,
+      "review_required": 0
+    }
+  },
+  "confusion_matrix": [
+    [
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      1,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1
+    ],
+    [
+      0,
+      0,
+      0,
+      3,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      4,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      0,
+      0,
+      0,
+      0,
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      4,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      4,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      2,
+      0,
+      6,
+      1
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1
+    ]
+  ],
+  "per_view_type_accuracy": {
+    "architectural_detail": {
+      "total": 10,
+      "correct": 10,
+      "top1_acc_pct": 100.0
+    },
+    "night_view": {
+      "total": 2,
+      "correct": 1,
+      "top1_acc_pct": 50.0
+    },
+    "front_view": {
+      "total": 4,
+      "correct": 2,
+      "top1_acc_pct": 50.0
+    },
+    "side_view": {
+      "total": 7,
+      "correct": 7,
+      "top1_acc_pct": 100.0
+    },
+    "full_structure": {
+      "total": 3,
+      "correct": 2,
+      "top1_acc_pct": 66.67
+    },
+    "non_monument_distractor": {
+      "total": 10,
+      "correct": 0,
+      "top1_acc_pct": 0.0
+    },
+    "close_up_carving": {
+      "total": 4,
+      "correct": 4,
+      "top1_acc_pct": 100.0
+    },
+    "rear_view": {
+      "total": 4,
+      "correct": 0,
+      "top1_acc_pct": 0.0
+    },
+    "distant_view": {
+      "total": 2,
+      "correct": 2,
+      "top1_acc_pct": 100.0
+    },
+    "out_of_catalog_heritage": {
+      "total": 9,
+      "correct": 0,
+      "top1_acc_pct": 0.0
+    }
+  }
+}

@@ -1,0 +1,463 @@
+{
+  "phase": "8.4C.3",
+  "title": "Dual Memory and Process Resource Analysis",
+  "timestamp_utc": "2026-11-07T14:41:36Z",
+  "measurement_methodology": {
+    "native_rss": "Windows 64-bit GetProcessMemoryInfo (WorkingSetSize)",
+    "python_heap": "tracemalloc.get_traced_memory()",
+    "cpu_utilization": "time.process_time() / time.perf_counter() over exact condition window"
+  },
+  "resource_by_condition": {
+    "disabled": {
+      "mean_cpu_percent": 288.27,
+      "max_cpu_percent": 311.92,
+      "mean_native_rss_mb": 969.0,
+      "max_native_rss_mb": 990.35,
+      "mean_python_heap_mb": 49.1,
+      "max_python_heap_mb": 49.72
+    },
+    "normal": {
+      "mean_cpu_percent": 281.38,
+      "max_cpu_percent": 289.3,
+      "mean_native_rss_mb": 992.32,
+      "max_native_rss_mb": 1092.86,
+      "mean_python_heap_mb": 48.49,
+      "max_python_heap_mb": 49.72
+    },
+    "slow": {
+      "mean_cpu_percent": 289.84,
+      "max_cpu_percent": 304.68,
+      "mean_native_rss_mb": 1025.23,
+      "max_native_rss_mb": 1091.54,
+      "mean_python_heap_mb": 49.77,
+      "max_python_heap_mb": 50.56
+    },
+    "saturated": {
+      "mean_cpu_percent": 291.15,
+      "max_cpu_percent": 326.08,
+      "mean_native_rss_mb": 1007.15,
+      "max_native_rss_mb": 1035.7,
+      "mean_python_heap_mb": 49.03,
+      "max_python_heap_mb": 50.57
+    }
+  },
+  "detailed_block_timeline": {
+    "disabled": [
+      {
+        "block_id": 1,
+        "cpu_percent": 276.3,
+        "cpu_wall_duration_s": 5.044,
+        "cpu_process_duration_s": 13.938,
+        "native_rss_before_mb": 925.84,
+        "native_rss_after_mb": 925.27,
+        "peak_native_rss_mb": 1524.51,
+        "python_heap_peak_mb": 48.17,
+        "final_queue_occupancy": 0,
+        "telemetry_health": {
+          "healthy": true,
+          "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+          "is_writable": true,
+          "total_writes": 12,
+          "write_failures": 0,
+          "duplicate_events_suppressed": 0,
+          "last_write_success_utc": "2026-11-07T09:09:53.034110+00:00"
+        }
+      },
+      {
+        "block_id": 2,
+        "cpu_percent": 296.99,
+        "cpu_wall_duration_s": 4.877,
+        "cpu_process_duration_s": 14.484,
+        "native_rss_before_mb": 950.14,
+        "native_rss_after_mb": 950.6,
+        "peak_native_rss_mb": 1594.9,
+        "python_heap_peak_mb": 48.19,
+        "final_queue_occupancy": 0,
+        "telemetry_health": {
+          "healthy": true,
+          "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+          "is_writable": true,
+          "total_writes": 175,
+          "write_failures": 0,
+          "duplicate_events_suppressed": 0,
+          "last_write_success_utc": "2026-11-07T09:10:23.678346+00:00"
+        }
+      },
+      {
+        "block_id": 3,
+        "cpu_percent": 311.92,
+        "cpu_wall_duration_s": 4.794,
+        "cpu_process_duration_s": 14.953,
+        "native_rss_before_mb": 988.98,
+        "native_rss_after_mb": 988.5,
+        "peak_native_rss_mb": 1594.9,
+        "python_heap_peak_mb": 49.72,
+        "final_queue_occupancy": 0,
+        "telemetry_health": {
+          "healthy": true,
+          "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+          "is_writable": true,
+          "total_writes": 199,
+          "write_failures": 0,
+          "duplicate_events_suppressed": 0,
+          "last_write_success_utc": "2026-11-07T09:10:39.254219+00:00"
+        }
+      },
+      {
+        "block_id": 4,
+        "cpu_percent": 279.17,
+        "cpu_wall_duration_s": 5.295,
+        "cpu_process_duration_s": 14.781,
+        "native_rss_before_mb": 1092.86,
+        "native_rss_after_mb": 990.27,
+        "peak_native_rss_mb": 1690.45,
+        "python_heap_peak_mb": 49.71,
+        "final_queue_occupancy": 0,
+        "telemetry_health": {
+          "healthy": true,
+          "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+          "is_writable": true,
+          "total_writes": 327,
+          "write_failures": 0,
+          "duplicate_events_suppressed": 0,
+          "last_write_success_utc": "2026-11-07T09:11:08.435903+00:00"
+        }
+      },
+      {
+        "block_id": 5,
+        "cpu_percent": 276.99,
+        "cpu_wall_duration_s": 5.297,
+        "cpu_process_duration_s": 14.672,
+        "native_rss_before_mb": 990.27,
+        "native_rss_after_mb": 990.35,
+        "peak_native_rss_mb": 1690.45,
+        "python_heap_peak_mb": 49.71,
+        "final_queue_occupancy": 0,
+        "telemetry_health": {
+          "healthy": true,
+          "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+          "is_writable": true,
+          "total_writes": 327,
+          "write_failures": 0,
+          "duplicate_events_suppressed": 0,
+          "last_write_success_utc": "2026-11-07T09:11:08.435903+00:00"
+        }
+      }
+    ],
+    "normal": [
+      {
+        "block_id": 1,
+        "cpu_percent": 289.3,
+        "cpu_wall_duration_s": 4.953,
+        "cpu_process_duration_s": 14.328,
+        "native_rss_before_mb": 925.27,
+        "native_rss_after_mb": 918.88,
+        "peak_native_rss_mb": 1524.51,
+        "python_heap_peak_mb": 48.18,
+        "final_queue_occupancy": 0,
+        "telemetry_health": {
+          "healthy": true,
+          "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+          "is_writable": true,
+          "total_writes": 24,
+          "write_failures": 0,
+          "duplicate_events_suppressed": 0,
+          "last_write_success_utc": "2026-11-07T09:10:03.032424+00:00"
+        }
+      },
+      {
+        "block_id": 2,
+        "cpu_percent": 281.37,
+        "cpu_wall_duration_s": 5.27,
+        "cpu_process_duration_s": 14.828,
+        "native_rss_before_mb": 989.92,
+        "native_rss_after_mb": 913.04,
+        "peak_native_rss_mb": 1594.9,
+        "python_heap_peak_mb": 48.18,
+        "final_queue_occupancy": 0,
+        "telemetry_health": {
+          "healthy": true,
+          "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+          "is_writable": true,
+          "total_writes": 118,
+          "write_failures": 0,
+          "duplicate_events_suppressed": 0,
+          "last_write_success_utc": "2026-11-07T09:10:18.709418+00:00"
+        }
+      },
+      {
+        "block_id": 3,
+        "cpu_percent": 283.48,
+        "cpu_wall_duration_s": 5.181,
+        "cpu_process_duration_s": 14.688,
+        "native_rss_before_mb": 1029.57,
+        "native_rss_after_mb": 987.88,
+        "peak_native_rss_mb": 1628.42,
+        "python_heap_peak_mb": 48.19,
+        "final_queue_occupancy": 0,
+        "telemetry_health": {
+          "healthy": true,
+          "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+          "is_writable": true,
+          "total_writes": 259,
+          "write_failures": 0,
+          "duplicate_events_suppressed": 0,
+          "last_write_success_utc": "2026-11-07T09:10:53.530902+00:00"
+        }
+      },
+      {
+        "block_id": 4,
+        "cpu_percent": 287.38,
+        "cpu_wall_duration_s": 5.013,
+        "cpu_process_duration_s": 14.406,
+        "native_rss_before_mb": 1091.54,
+        "native_rss_after_mb": 1092.86,
+        "peak_native_rss_mb": 1690.45,
+        "python_heap_peak_mb": 49.72,
+        "final_queue_occupancy": 0,
+        "telemetry_health": {
+          "healthy": true,
+          "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+          "is_writable": true,
+          "total_writes": 327,
+          "write_failures": 0,
+          "duplicate_events_suppressed": 0,
+          "last_write_success_utc": "2026-11-07T09:11:08.435903+00:00"
+        }
+      },
+      {
+        "block_id": 5,
+        "cpu_percent": 265.37,
+        "cpu_wall_duration_s": 5.352,
+        "cpu_process_duration_s": 14.203,
+        "native_rss_before_mb": 1049.72,
+        "native_rss_after_mb": 1048.93,
+        "peak_native_rss_mb": 1690.45,
+        "python_heap_peak_mb": 48.19,
+        "final_queue_occupancy": 0,
+        "telemetry_health": {
+          "healthy": true,
+          "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+          "is_writable": true,
+          "total_writes": 351,
+          "write_failures": 0,
+          "duplicate_events_suppressed": 0,
+          "last_write_success_utc": "2026-11-07T09:11:29.905190+00:00"
+        }
+      }
+    ],
+    "slow": [
+      {
+        "block_id": 1,
+        "cpu_percent": 294.36,
+        "cpu_wall_duration_s": 4.883,
+        "cpu_process_duration_s": 14.375,
+        "native_rss_before_mb": 918.88,
+        "native_rss_after_mb": 985.3,
+        "peak_native_rss_mb": 1565.27,
+        "python_heap_peak_mb": 48.23,
+        "final_queue_occupancy": 1,
+        "telemetry_health": {
+          "healthy": true,
+          "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+          "is_writable": true,
+          "total_writes": 35,
+          "write_failures": 0,
+          "duplicate_events_suppressed": 0,
+          "last_write_success_utc": "2026-11-07T09:10:08.072237+00:00"
+        }
+      },
+      {
+        "block_id": 2,
+        "cpu_percent": 274.01,
+        "cpu_wall_duration_s": 5.394,
+        "cpu_process_duration_s": 14.781,
+        "native_rss_before_mb": 950.6,
+        "native_rss_after_mb": 1010.6,
+        "peak_native_rss_mb": 1594.9,
+        "python_heap_peak_mb": 50.55,
+        "final_queue_occupancy": 3,
+        "telemetry_health": {
+          "healthy": true,
+          "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+          "is_writable": true,
+          "total_writes": 184,
+          "write_failures": 0,
+          "duplicate_events_suppressed": 0,
+          "last_write_success_utc": "2026-11-07T09:10:32.692131+00:00"
+        }
+      },
+      {
+        "block_id": 3,
+        "cpu_percent": 304.68,
+        "cpu_wall_duration_s": 4.949,
+        "cpu_process_duration_s": 15.078,
+        "native_rss_before_mb": 1010.6,
+        "native_rss_after_mb": 988.98,
+        "peak_native_rss_mb": 1594.9,
+        "python_heap_peak_mb": 49.74,
+        "final_queue_occupancy": 3,
+        "telemetry_health": {
+          "healthy": true,
+          "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+          "is_writable": true,
+          "total_writes": 196,
+          "write_failures": 0,
+          "duplicate_events_suppressed": 0,
+          "last_write_success_utc": "2026-11-07T09:10:37.951293+00:00"
+        }
+      },
+      {
+        "block_id": 4,
+        "cpu_percent": 295.56,
+        "cpu_wall_duration_s": 5.012,
+        "cpu_process_duration_s": 14.812,
+        "native_rss_before_mb": 1030.44,
+        "native_rss_after_mb": 1091.54,
+        "peak_native_rss_mb": 1670.88,
+        "python_heap_peak_mb": 49.78,
+        "final_queue_occupancy": 3,
+        "telemetry_health": {
+          "healthy": true,
+          "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+          "is_writable": true,
+          "total_writes": 312,
+          "write_failures": 0,
+          "duplicate_events_suppressed": 0,
+          "last_write_success_utc": "2026-11-07T09:11:02.281104+00:00"
+        }
+      },
+      {
+        "block_id": 5,
+        "cpu_percent": 280.6,
+        "cpu_wall_duration_s": 5.507,
+        "cpu_process_duration_s": 15.453,
+        "native_rss_before_mb": 990.35,
+        "native_rss_after_mb": 1049.72,
+        "peak_native_rss_mb": 1690.45,
+        "python_heap_peak_mb": 50.56,
+        "final_queue_occupancy": 3,
+        "telemetry_health": {
+          "healthy": true,
+          "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+          "is_writable": true,
+          "total_writes": 336,
+          "write_failures": 0,
+          "duplicate_events_suppressed": 0,
+          "last_write_success_utc": "2026-11-07T09:11:23.410583+00:00"
+        }
+      }
+    ],
+    "saturated": [
+      {
+        "block_id": 1,
+        "cpu_percent": 259.5,
+        "cpu_wall_duration_s": 5.509,
+        "cpu_process_duration_s": 14.297,
+        "native_rss_before_mb": 985.3,
+        "native_rss_after_mb": 989.92,
+        "peak_native_rss_mb": 1594.1,
+        "python_heap_peak_mb": 48.29,
+        "final_queue_occupancy": 0,
+        "telemetry_health": {
+          "healthy": true,
+          "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+          "is_writable": true,
+          "total_writes": 106,
+          "write_failures": 0,
+          "duplicate_events_suppressed": 0,
+          "last_write_success_utc": "2026-11-07T09:10:13.635572+00:00"
+        }
+      },
+      {
+        "block_id": 2,
+        "cpu_percent": 308.69,
+        "cpu_wall_duration_s": 4.895,
+        "cpu_process_duration_s": 15.109,
+        "native_rss_before_mb": 913.04,
+        "native_rss_after_mb": 950.14,
+        "peak_native_rss_mb": 1594.9,
+        "python_heap_peak_mb": 48.26,
+        "final_queue_occupancy": 0,
+        "telemetry_health": {
+          "healthy": true,
+          "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+          "is_writable": true,
+          "total_writes": 175,
+          "write_failures": 0,
+          "duplicate_events_suppressed": 0,
+          "last_write_success_utc": "2026-11-07T09:10:23.678346+00:00"
+        }
+      },
+      {
+        "block_id": 3,
+        "cpu_percent": 326.08,
+        "cpu_wall_duration_s": 4.701,
+        "cpu_process_duration_s": 15.328,
+        "native_rss_before_mb": 988.5,
+        "native_rss_after_mb": 1029.57,
+        "peak_native_rss_mb": 1628.42,
+        "python_heap_peak_mb": 48.25,
+        "final_queue_occupancy": 0,
+        "telemetry_health": {
+          "healthy": true,
+          "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+          "is_writable": true,
+          "total_writes": 247,
+          "write_failures": 0,
+          "duplicate_events_suppressed": 0,
+          "last_write_success_utc": "2026-11-07T09:10:48.518685+00:00"
+        }
+      },
+      {
+        "block_id": 4,
+        "cpu_percent": 313.31,
+        "cpu_wall_duration_s": 4.867,
+        "cpu_process_duration_s": 15.25,
+        "native_rss_before_mb": 987.88,
+        "native_rss_after_mb": 1030.44,
+        "peak_native_rss_mb": 1628.42,
+        "python_heap_peak_mb": 50.57,
+        "final_queue_occupancy": 0,
+        "telemetry_health": {
+          "healthy": true,
+          "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+          "is_writable": true,
+          "total_writes": 303,
+          "write_failures": 0,
+          "duplicate_events_suppressed": 0,
+          "last_write_success_utc": "2026-11-07T09:10:58.453294+00:00"
+        }
+      },
+      {
+        "block_id": 5,
+        "cpu_percent": 248.19,
+        "cpu_wall_duration_s": 6.081,
+        "cpu_process_duration_s": 15.094,
+        "native_rss_before_mb": 1048.93,
+        "native_rss_after_mb": 1035.7,
+        "peak_native_rss_mb": 1690.45,
+        "python_heap_peak_mb": 49.77,
+        "final_queue_occupancy": 0,
+        "telemetry_health": {
+          "healthy": true,
+          "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+          "is_writable": true,
+          "total_writes": 402,
+          "write_failures": 0,
+          "duplicate_events_suppressed": 0,
+          "last_write_success_utc": "2026-11-07T09:11:36.132470+00:00"
+        }
+      }
+    ]
+  },
+  "telemetry_health_audit": {
+    "healthy": true,
+    "log_destination": "C:\\Users\\humai\\Heritage PJ\\backend\\telemetry\\shadow_staging_audit.jsonl",
+    "is_writable": true,
+    "total_writes": 402,
+    "write_failures": 0,
+    "duplicate_events_suppressed": 0,
+    "last_write_success_utc": "2026-11-07T09:11:36.132470+00:00"
+  }
+}

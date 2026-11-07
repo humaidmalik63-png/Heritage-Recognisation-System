@@ -1,0 +1,1088 @@
+{
+  "report_title": "Independent Dataset Real-World Evaluation Report",
+  "project": "Visual Heritage Recognition & Grounded Cultural Discovery Platform (SIH 2025 - SIH25052)",
+  "timestamp": "2026-11-05T08:17:36Z",
+  "summary": {
+    "total_independent_specimens": 20,
+    "top1_accuracy_percent": 90.0,
+    "top3_accuracy_percent": 100.0,
+    "mean_reciprocal_rank": 0.9417,
+    "mean_similarity_margin": 0.2223,
+    "mean_latency_ms": 478.66,
+    "p95_latency_ms": 836.65,
+    "human_review_triggered_count": 8,
+    "calibration_status": "UNCALIBRATED",
+    "calibrated_probability": null
+  },
+  "cross_split_comparison": {
+    "split_1_reference_40": {
+      "name": "Reference Gallery Dataset (40 images)",
+      "description": "Original gallery images stored in FAISS index (Self-retrieval / memorization check)",
+      "sample_count": 40,
+      "top1_accuracy": 100.0,
+      "top3_accuracy": 100.0,
+      "mrr": 1.0,
+      "mean_margin": 0.182,
+      "data_leakage": "100% (Identical to indexed vectors)"
+    },
+    "split_2_synthetic_360": {
+      "name": "Synthetic Robustness Stress Benchmark (360 queries)",
+      "description": "9 affine/photometric perturbations applied to the 40 gallery images",
+      "sample_count": 360,
+      "top1_accuracy": 100.0,
+      "top3_accuracy": 100.0,
+      "mrr": 1.0,
+      "mean_margin": 0.1547,
+      "data_leakage": "100% source-image overlap (Affine/photometric perturbation test)"
+    },
+    "split_3_independent_20": {
+      "name": "Independent Real-World Holdout Dataset (20 images)",
+      "description": "Verified authentic Wikimedia Commons photographs across 10 monuments with zero hash overlap",
+      "sample_count": 20,
+      "top1_accuracy": 90.0,
+      "top3_accuracy": 100.0,
+      "mrr": 0.9417,
+      "mean_margin": 0.2223,
+      "data_leakage": "0.00% (Completely disjoint holdout photographs)"
+    }
+  },
+  "per_monument_performance": {
+    "brihadeeswarar_temple": {
+      "total": 2,
+      "top1_correct": 2,
+      "top1_accuracy_pct": 100.0,
+      "top3_correct": 2,
+      "top3_accuracy_pct": 100.0,
+      "mean_margin": 0.1268
+    },
+    "charminar": {
+      "total": 2,
+      "top1_correct": 2,
+      "top1_accuracy_pct": 100.0,
+      "top3_correct": 2,
+      "top3_accuracy_pct": 100.0,
+      "mean_margin": 0.1056
+    },
+    "gateway_of_india": {
+      "total": 2,
+      "top1_correct": 2,
+      "top1_accuracy_pct": 100.0,
+      "top3_correct": 2,
+      "top3_accuracy_pct": 100.0,
+      "mean_margin": 0.1013
+    },
+    "hampi_stone_chariot": {
+      "total": 2,
+      "top1_correct": 2,
+      "top1_accuracy_pct": 100.0,
+      "top3_correct": 2,
+      "top3_accuracy_pct": 100.0,
+      "mean_margin": 0.1209
+    },
+    "hawa_mahal": {
+      "total": 2,
+      "top1_correct": 2,
+      "top1_accuracy_pct": 100.0,
+      "top3_correct": 2,
+      "top3_accuracy_pct": 100.0,
+      "mean_margin": 0.5907
+    },
+    "konark_sun_temple": {
+      "total": 2,
+      "top1_correct": 2,
+      "top1_accuracy_pct": 100.0,
+      "top3_correct": 2,
+      "top3_accuracy_pct": 100.0,
+      "mean_margin": 0.1036
+    },
+    "qutub_minar": {
+      "total": 2,
+      "top1_correct": 0,
+      "top1_accuracy_pct": 0.0,
+      "top3_correct": 2,
+      "top3_accuracy_pct": 100.0,
+      "mean_margin": 0.0241
+    },
+    "sanchi_stupa": {
+      "total": 2,
+      "top1_correct": 2,
+      "top1_accuracy_pct": 100.0,
+      "top3_correct": 2,
+      "top3_accuracy_pct": 100.0,
+      "mean_margin": 0.0469
+    },
+    "taj_mahal": {
+      "total": 2,
+      "top1_correct": 2,
+      "top1_accuracy_pct": 100.0,
+      "top3_correct": 2,
+      "top3_accuracy_pct": 100.0,
+      "mean_margin": 0.9494
+    },
+    "victoria_memorial": {
+      "total": 2,
+      "top1_correct": 2,
+      "top1_accuracy_pct": 100.0,
+      "top3_correct": 2,
+      "top3_accuracy_pct": 100.0,
+      "mean_margin": 0.0534
+    }
+  },
+  "confusion_matrix": {
+    "labels": [
+      "brihadeeswarar_temple",
+      "charminar",
+      "gateway_of_india",
+      "hampi_stone_chariot",
+      "hawa_mahal",
+      "konark_sun_temple",
+      "qutub_minar",
+      "sanchi_stupa",
+      "taj_mahal",
+      "victoria_memorial"
+    ],
+    "matrix": [
+      [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2
+      ]
+    ]
+  },
+  "excluded_candidates_audit": [
+    {
+      "title": "File:The Mecca Masjid in Hyderabad 3.JPG",
+      "monument_key": "charminar",
+      "reason": "Original search hit 'File:The Mecca Masjid in Hyderabad 3.JPG' depicted adjacent Mecca Masjid rather than Charminar structure.",
+      "url": "https://commons.wikimedia.org/wiki/File%3AThe_Mecca_Masjid_in_Hyderabad_3.JPG"
+    },
+    {
+      "title": "File:Gilded replica of Sanchi Stupa Northern Torana at The Great Hall of Vajradhamma, Muang Boran, Thailand.jpg",
+      "monument_key": "sanchi_stupa",
+      "reason": "Original search hit 'File:Gilded replica of Sanchi Stupa Northern Torana... Muang Boran, Thailand.jpg' was a modern replica in Thailand rather than the ancient Madhya Pradesh complex.",
+      "url": "https://commons.wikimedia.org/wiki/File%3AGilded_replica_of_Sanchi_Stupa_Northern_Torana_at_The_Great_Hall_of_Vajradhamma%2C_Muang_Boran%2C_Thailand.jpg"
+    },
+    {
+      "title": "File:Taj M.jpg",
+      "monument_key": "taj_mahal",
+      "reason": "Replaced low-resolution thumbnail 'File:Taj M.jpg' with high-resolution canonical full facade specimen.",
+      "url": "https://commons.wikimedia.org/wiki/File%3ATaj_M.jpg"
+    }
+  ],
+  "detailed_results": [
+    {
+      "specimen_id": "indep_brih_01",
+      "filename": "brihadeeswarar_temple_indep_01.jpg",
+      "ground_truth_key": "brihadeeswarar_temple",
+      "ground_truth_name": "Brihadeeswarar Temple",
+      "predicted_key": "brihadeeswarar_temple",
+      "predicted_name": "Brihadeeswarar Temple",
+      "decision_state": "VERIFIED_MATCH",
+      "top1_similarity": 0.9964,
+      "top2_similarity": 0.8711,
+      "similarity_margin": 0.1253,
+      "gatekeeper_score": 0.7361,
+      "is_correct_top1": true,
+      "is_in_top3": true,
+      "reciprocal_rank": 1.0,
+      "requires_human_review": false,
+      "reason_codes": [
+        "CALIBRATED_CONFIDENCE",
+        "GEO_VERIFIED",
+        "HIGH_CONFIDENCE_MATCH"
+      ],
+      "calibrated_probability": 0.662,
+      "calibration_status": "CALIBRATED",
+      "latency_ms": 830.87,
+      "quality": {
+        "width": 5849,
+        "height": 3655,
+        "blur_score": 183.25,
+        "is_blurry": false,
+        "mean_brightness": 90.3,
+        "is_extreme_exposure": false,
+        "passed_quality_check": true
+      },
+      "source_provenance": {
+        "source_title": "File:Brihadisvara Temple during Maha Shivaratri-WUS03611 (edit).jpg",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3ABrihadisvara_Temple_during_Maha_Shivaratri-WUS03611_%28edit%29.jpg",
+        "photographer": "Original: Rainer Halama Derivative work: UnpetitproleX",
+        "license": "CC BY-SA 4.0"
+      }
+    },
+    {
+      "specimen_id": "indep_brih_02",
+      "filename": "brihadeeswarar_temple_indep_02.jpg",
+      "ground_truth_key": "brihadeeswarar_temple",
+      "ground_truth_name": "Brihadeeswarar Temple",
+      "predicted_key": "brihadeeswarar_temple",
+      "predicted_name": "Brihadeeswarar Temple",
+      "decision_state": "REVIEW_REQUIRED",
+      "top1_similarity": 0.9996,
+      "top2_similarity": 0.8714,
+      "similarity_margin": 0.1282,
+      "gatekeeper_score": 0.7417,
+      "is_correct_top1": true,
+      "is_in_top3": true,
+      "reciprocal_rank": 1.0,
+      "requires_human_review": true,
+      "reason_codes": [
+        "CALIBRATED_CONFIDENCE",
+        "LOW_IMAGE_QUALITY",
+        "MISSING_GPS"
+      ],
+      "calibrated_probability": 0.665,
+      "calibration_status": "CALIBRATED",
+      "latency_ms": 468.8,
+      "quality": {
+        "width": 3000,
+        "height": 4000,
+        "blur_score": 24.55,
+        "is_blurry": true,
+        "mean_brightness": 151.3,
+        "is_extreme_exposure": false,
+        "passed_quality_check": false
+      },
+      "source_provenance": {
+        "source_title": "File:Brihadisvara Temple of Thanjavur 03.jpg",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3ABrihadisvara_Temple_of_Thanjavur_03.jpg",
+        "photographer": "L Ram Vidya Sagar",
+        "license": "CC BY-SA 3.0"
+      }
+    },
+    {
+      "specimen_id": "indep_char_01",
+      "filename": "charminar_indep_01.jpg",
+      "ground_truth_key": "charminar",
+      "ground_truth_name": "Charminar",
+      "predicted_key": "charminar",
+      "predicted_name": "Charminar",
+      "decision_state": "VERIFIED_MATCH",
+      "top1_similarity": 0.9156,
+      "top2_similarity": 0.8346,
+      "similarity_margin": 0.081,
+      "gatekeeper_score": 0.7805,
+      "is_correct_top1": true,
+      "is_in_top3": true,
+      "reciprocal_rank": 1.0,
+      "requires_human_review": false,
+      "reason_codes": [
+        "CALIBRATED_CONFIDENCE",
+        "MISSING_GPS",
+        "HIGH_CONFIDENCE_MATCH"
+      ],
+      "calibrated_probability": 0.5812,
+      "calibration_status": "CALIBRATED",
+      "latency_ms": 946.66,
+      "quality": {
+        "width": 4000,
+        "height": 6329,
+        "blur_score": 531.61,
+        "is_blurry": false,
+        "mean_brightness": 183.0,
+        "is_extreme_exposure": false,
+        "passed_quality_check": true
+      },
+      "source_provenance": {
+        "source_title": "File:Charminar - Distant view of the main facade framed by bustling historic market streets (potrait).jpg",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3ACharminar_-_Distant_view_of_the_main_facade_framed_by_bustling_historic_market_streets_%28potrait%29.jpg",
+        "photographer": "iMahesh",
+        "license": "CC BY-SA 4.0"
+      }
+    },
+    {
+      "specimen_id": "indep_char_02",
+      "filename": "charminar_indep_02.jpg",
+      "ground_truth_key": "charminar",
+      "ground_truth_name": "Charminar",
+      "predicted_key": "charminar",
+      "predicted_name": "Charminar",
+      "decision_state": "VERIFIED_MATCH",
+      "top1_similarity": 0.9997,
+      "top2_similarity": 0.8695,
+      "similarity_margin": 0.1302,
+      "gatekeeper_score": 0.7635,
+      "is_correct_top1": true,
+      "is_in_top3": true,
+      "reciprocal_rank": 1.0,
+      "requires_human_review": false,
+      "reason_codes": [
+        "CALIBRATED_CONFIDENCE",
+        "MISSING_GPS",
+        "HIGH_CONFIDENCE_MATCH"
+      ],
+      "calibrated_probability": 0.6651,
+      "calibration_status": "CALIBRATED",
+      "latency_ms": 337.77,
+      "quality": {
+        "width": 2249,
+        "height": 2214,
+        "blur_score": 407.85,
+        "is_blurry": false,
+        "mean_brightness": 147.3,
+        "is_extreme_exposure": false,
+        "passed_quality_check": true
+      },
+      "source_provenance": {
+        "source_title": "File:Charminar 12032013.jpg",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3ACharminar_12032013.jpg",
+        "photographer": "Joydeep",
+        "license": "CC BY-SA 3.0"
+      }
+    },
+    {
+      "specimen_id": "indep_gate_01",
+      "filename": "gateway_of_india_indep_01.jpg",
+      "ground_truth_key": "gateway_of_india",
+      "ground_truth_name": "Gateway of India",
+      "predicted_key": "gateway_of_india",
+      "predicted_name": "Gateway of India",
+      "decision_state": "UNCERTAIN_MATCH",
+      "top1_similarity": 0.9008,
+      "top2_similarity": 0.8543,
+      "similarity_margin": 0.0465,
+      "gatekeeper_score": 0.7785,
+      "is_correct_top1": true,
+      "is_in_top3": true,
+      "reciprocal_rank": 1.0,
+      "requires_human_review": true,
+      "reason_codes": [
+        "CALIBRATED_CONFIDENCE",
+        "MISSING_GPS",
+        "AMBIGUOUS_TOP_CANDIDATES"
+      ],
+      "calibrated_probability": 0.5658,
+      "calibration_status": "CALIBRATED",
+      "latency_ms": 372.11,
+      "quality": {
+        "width": 2879,
+        "height": 3150,
+        "blur_score": 129.53,
+        "is_blurry": false,
+        "mean_brightness": 59.0,
+        "is_extreme_exposure": false,
+        "passed_quality_check": true
+      },
+      "source_provenance": {
+        "source_title": "File:Gateway Of India, Mumbai, Maharashtra.jpg",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3AGateway_Of_India%2C_Mumbai%2C_Maharashtra.jpg",
+        "photographer": "Kakarrote",
+        "license": "CC BY-SA 4.0"
+      }
+    },
+    {
+      "specimen_id": "indep_gate_02",
+      "filename": "gateway_of_india_indep_02.jpg",
+      "ground_truth_key": "gateway_of_india",
+      "ground_truth_name": "Gateway of India",
+      "predicted_key": "gateway_of_india",
+      "predicted_name": "Gateway of India",
+      "decision_state": "VERIFIED_MATCH",
+      "top1_similarity": 0.9987,
+      "top2_similarity": 0.8426,
+      "similarity_margin": 0.1561,
+      "gatekeeper_score": 0.7632,
+      "is_correct_top1": true,
+      "is_in_top3": true,
+      "reciprocal_rank": 1.0,
+      "requires_human_review": false,
+      "reason_codes": [
+        "CALIBRATED_CONFIDENCE",
+        "MISSING_GPS",
+        "HIGH_CONFIDENCE_MATCH"
+      ],
+      "calibrated_probability": 0.6642,
+      "calibration_status": "CALIBRATED",
+      "latency_ms": 440.09,
+      "quality": {
+        "width": 3648,
+        "height": 2736,
+        "blur_score": 42.18,
+        "is_blurry": false,
+        "mean_brightness": 121.5,
+        "is_extreme_exposure": false,
+        "passed_quality_check": true
+      },
+      "source_provenance": {
+        "source_title": "File:Gateway of India, Mumbai, India.jpg",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3AGateway_of_India%2C_Mumbai%2C_India.jpg",
+        "photographer": "\u00a9 ShadesofIndia",
+        "license": "CC BY-SA 4.0"
+      }
+    },
+    {
+      "specimen_id": "indep_hamp_01",
+      "filename": "hampi_stone_chariot_indep_01.jpg",
+      "ground_truth_key": "hampi_stone_chariot",
+      "ground_truth_name": "Hampi Stone Chariot",
+      "predicted_key": "hampi_stone_chariot",
+      "predicted_name": "Hampi Stone Chariot",
+      "decision_state": "VERIFIED_MATCH",
+      "top1_similarity": 0.9975,
+      "top2_similarity": 0.8668,
+      "similarity_margin": 0.1307,
+      "gatekeeper_score": 0.7641,
+      "is_correct_top1": true,
+      "is_in_top3": true,
+      "reciprocal_rank": 1.0,
+      "requires_human_review": false,
+      "reason_codes": [
+        "CALIBRATED_CONFIDENCE",
+        "MISSING_GPS",
+        "HIGH_CONFIDENCE_MATCH"
+      ],
+      "calibrated_probability": 0.663,
+      "calibration_status": "CALIBRATED",
+      "latency_ms": 478.54,
+      "quality": {
+        "width": 3024,
+        "height": 4032,
+        "blur_score": 1341.0,
+        "is_blurry": false,
+        "mean_brightness": 151.1,
+        "is_extreme_exposure": false,
+        "passed_quality_check": true
+      },
+      "source_provenance": {
+        "source_title": "File:Hampi Garuda stone chariot.jpg",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3AHampi_Garuda_stone_chariot.jpg",
+        "photographer": "Rama Warrier",
+        "license": "CC BY-SA 4.0"
+      }
+    },
+    {
+      "specimen_id": "indep_hamp_02",
+      "filename": "hampi_stone_chariot_indep_02.jpg",
+      "ground_truth_key": "hampi_stone_chariot",
+      "ground_truth_name": "Hampi Stone Chariot",
+      "predicted_key": "hampi_stone_chariot",
+      "predicted_name": "Hampi Stone Chariot",
+      "decision_state": "VERIFIED_MATCH",
+      "top1_similarity": 0.9753,
+      "top2_similarity": 0.8642,
+      "similarity_margin": 0.1111,
+      "gatekeeper_score": 0.7236,
+      "is_correct_top1": true,
+      "is_in_top3": true,
+      "reciprocal_rank": 1.0,
+      "requires_human_review": false,
+      "reason_codes": [
+        "CALIBRATED_CONFIDENCE",
+        "MISSING_GPS",
+        "HIGH_CONFIDENCE_MATCH"
+      ],
+      "calibrated_probability": 0.6416,
+      "calibration_status": "CALIBRATED",
+      "latency_ms": 477.86,
+      "quality": {
+        "width": 4032,
+        "height": 3024,
+        "blur_score": 1464.15,
+        "is_blurry": false,
+        "mean_brightness": 150.5,
+        "is_extreme_exposure": false,
+        "passed_quality_check": true
+      },
+      "source_provenance": {
+        "source_title": "File:Hampi Stone Chariot1.jpg",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3AHampi_Stone_Chariot1.jpg",
+        "photographer": "Rama Warrier",
+        "license": "CC BY-SA 4.0"
+      }
+    },
+    {
+      "specimen_id": "indep_hawa_01",
+      "filename": "hawa_mahal_indep_01.jpg",
+      "ground_truth_key": "hawa_mahal",
+      "ground_truth_name": "Hawa Mahal",
+      "predicted_key": "hawa_mahal",
+      "predicted_name": "Hawa Mahal",
+      "decision_state": "VERIFIED_MATCH",
+      "top1_similarity": 0.9984,
+      "top2_similarity": 0.0,
+      "similarity_margin": 0.9984,
+      "gatekeeper_score": 0.7328,
+      "is_correct_top1": true,
+      "is_in_top3": true,
+      "reciprocal_rank": 1.0,
+      "requires_human_review": false,
+      "reason_codes": [
+        "CALIBRATED_CONFIDENCE",
+        "GEO_VERIFIED",
+        "HIGH_CONFIDENCE_MATCH"
+      ],
+      "calibrated_probability": 0.6639,
+      "calibration_status": "CALIBRATED",
+      "latency_ms": 367.65,
+      "quality": {
+        "width": 3345,
+        "height": 2509,
+        "blur_score": 821.45,
+        "is_blurry": false,
+        "mean_brightness": 118.5,
+        "is_extreme_exposure": false,
+        "passed_quality_check": true
+      },
+      "source_provenance": {
+        "source_title": "File:East facade Hawa Mahal Jaipur from ground level (July 2022) - img 01.jpg",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3AEast_facade_Hawa_Mahal_Jaipur_from_ground_level_%28July_2022%29_-_img_01.jpg",
+        "photographer": "Chainwit.",
+        "license": "CC BY-SA 4.0"
+      }
+    },
+    {
+      "specimen_id": "indep_hawa_02",
+      "filename": "hawa_mahal_indep_02.jpg",
+      "ground_truth_key": "hawa_mahal",
+      "ground_truth_name": "Hawa Mahal",
+      "predicted_key": "hawa_mahal",
+      "predicted_name": "Hawa Mahal",
+      "decision_state": "VERIFIED_MATCH",
+      "top1_similarity": 0.9999,
+      "top2_similarity": 0.8169,
+      "similarity_margin": 0.183,
+      "gatekeeper_score": 0.6887,
+      "is_correct_top1": true,
+      "is_in_top3": true,
+      "reciprocal_rank": 1.0,
+      "requires_human_review": false,
+      "reason_codes": [
+        "CALIBRATED_CONFIDENCE",
+        "GEO_VERIFIED",
+        "HIGH_CONFIDENCE_MATCH"
+      ],
+      "calibrated_probability": 0.6653,
+      "calibration_status": "CALIBRATED",
+      "latency_ms": 480.26,
+      "quality": {
+        "width": 2896,
+        "height": 3862,
+        "blur_score": 257.58,
+        "is_blurry": false,
+        "mean_brightness": 122.0,
+        "is_extreme_exposure": false,
+        "passed_quality_check": true
+      },
+      "source_provenance": {
+        "source_title": "File:East facade of the Hawa Mahal, Jaipur.jpg",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3AEast_facade_of_the_Hawa_Mahal%2C_Jaipur.jpg",
+        "photographer": "Dudva",
+        "license": "CC0"
+      }
+    },
+    {
+      "specimen_id": "indep_kona_01",
+      "filename": "konark_sun_temple_indep_01.jpg",
+      "ground_truth_key": "konark_sun_temple",
+      "ground_truth_name": "Konark Sun Temple",
+      "predicted_key": "konark_sun_temple",
+      "predicted_name": "Konark Sun Temple",
+      "decision_state": "VERIFIED_MATCH",
+      "top1_similarity": 0.9971,
+      "top2_similarity": 0.8587,
+      "similarity_margin": 0.1384,
+      "gatekeeper_score": 0.6461,
+      "is_correct_top1": true,
+      "is_in_top3": true,
+      "reciprocal_rank": 1.0,
+      "requires_human_review": false,
+      "reason_codes": [
+        "CALIBRATED_CONFIDENCE",
+        "MISSING_GPS",
+        "HIGH_CONFIDENCE_MATCH"
+      ],
+      "calibrated_probability": 0.6626,
+      "calibration_status": "CALIBRATED",
+      "latency_ms": 818.49,
+      "quality": {
+        "width": 5814,
+        "height": 3866,
+        "blur_score": 83.47,
+        "is_blurry": false,
+        "mean_brightness": 89.9,
+        "is_extreme_exposure": false,
+        "passed_quality_check": true
+      },
+      "source_provenance": {
+        "source_title": "File:Closeup of the center of a stone wheel - Konark Sun Temple, Orissa, India.jpg",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3ACloseup_of_the_center_of_a_stone_wheel_-_Konark_Sun_Temple%2C_Orissa%2C_India.jpg",
+        "photographer": "Subhrajyoti07",
+        "license": "CC BY-SA 4.0"
+      }
+    },
+    {
+      "specimen_id": "indep_kona_02",
+      "filename": "konark_sun_temple_indep_02.jpg",
+      "ground_truth_key": "konark_sun_temple",
+      "ground_truth_name": "Konark Sun Temple",
+      "predicted_key": "konark_sun_temple",
+      "predicted_name": "Konark Sun Temple",
+      "decision_state": "UNCERTAIN_MATCH",
+      "top1_similarity": 0.9181,
+      "top2_similarity": 0.8492,
+      "similarity_margin": 0.0689,
+      "gatekeeper_score": 0.6724,
+      "is_correct_top1": true,
+      "is_in_top3": true,
+      "reciprocal_rank": 1.0,
+      "requires_human_review": true,
+      "reason_codes": [
+        "CALIBRATED_CONFIDENCE",
+        "MISSING_GPS",
+        "AMBIGUOUS_TOP_CANDIDATES"
+      ],
+      "calibrated_probability": 0.5838,
+      "calibration_status": "CALIBRATED",
+      "latency_ms": 334.18,
+      "quality": {
+        "width": 2448,
+        "height": 3264,
+        "blur_score": 300.82,
+        "is_blurry": false,
+        "mean_brightness": 139.3,
+        "is_extreme_exposure": false,
+        "passed_quality_check": true
+      },
+      "source_provenance": {
+        "source_title": "File:Konark Sun Temple (1).jpg",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3AKonark_Sun_Temple_%281%29.jpg",
+        "photographer": "\u0906\u0915\u093e\u0902\u0915\u094d\u0937\u093e \u092a\u094d\u0930\u0926\u0940\u092a \u092a\u093e\u091f\u0940\u0932",
+        "license": "CC BY-SA 4.0"
+      }
+    },
+    {
+      "specimen_id": "indep_qutu_01",
+      "filename": "qutub_minar_indep_01.jpg",
+      "ground_truth_key": "qutub_minar",
+      "ground_truth_name": "Qutub Minar",
+      "predicted_key": "gateway_of_india",
+      "predicted_name": "Gateway of India",
+      "decision_state": "REVIEW_REQUIRED",
+      "top1_similarity": 0.8752,
+      "top2_similarity": 0.8359,
+      "similarity_margin": 0.0393,
+      "gatekeeper_score": 0.6943,
+      "is_correct_top1": false,
+      "is_in_top3": true,
+      "reciprocal_rank": 0.5,
+      "requires_human_review": true,
+      "reason_codes": [
+        "CALIBRATED_CONFIDENCE",
+        "GPS_CONFLICT"
+      ],
+      "calibrated_probability": 0.5388,
+      "calibration_status": "CALIBRATED",
+      "latency_ms": 210.67,
+      "quality": {
+        "width": 1877,
+        "height": 1854,
+        "blur_score": 476.85,
+        "is_blurry": false,
+        "mean_brightness": 134.8,
+        "is_extreme_exposure": false,
+        "passed_quality_check": true
+      },
+      "source_provenance": {
+        "source_title": "File:Decorations on Qutb Minar in New Delhi 02.jpg",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3ADecorations_on_Qutb_Minar_in_New_Delhi_02.jpg",
+        "photographer": "Subrata Ghose",
+        "license": "CC BY-SA 4.0"
+      }
+    },
+    {
+      "specimen_id": "indep_qutu_02",
+      "filename": "qutub_minar_indep_02.jpg",
+      "ground_truth_key": "qutub_minar",
+      "ground_truth_name": "Qutub Minar",
+      "predicted_key": "konark_sun_temple",
+      "predicted_name": "Konark Sun Temple",
+      "decision_state": "UNCERTAIN_MATCH",
+      "top1_similarity": 0.8237,
+      "top2_similarity": 0.8148,
+      "similarity_margin": 0.0089,
+      "gatekeeper_score": 0.7734,
+      "is_correct_top1": false,
+      "is_in_top3": true,
+      "reciprocal_rank": 0.3333333333333333,
+      "requires_human_review": true,
+      "reason_codes": [
+        "CALIBRATED_CONFIDENCE",
+        "MISSING_GPS",
+        "AMBIGUOUS_TOP_CANDIDATES"
+      ],
+      "calibrated_probability": 0.484,
+      "calibration_status": "CALIBRATED",
+      "latency_ms": 354.54,
+      "quality": {
+        "width": 3264,
+        "height": 2448,
+        "blur_score": 226.03,
+        "is_blurry": false,
+        "mean_brightness": 135.2,
+        "is_extreme_exposure": false,
+        "passed_quality_check": true
+      },
+      "source_provenance": {
+        "source_title": "File:Inside Qutb Minar complex, New Delhi (30).jpg",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3AInside_Qutb_Minar_complex%2C_New_Delhi_%2830%29.jpg",
+        "photographer": "Nahid Sultan",
+        "license": "CC BY-SA 4.0"
+      }
+    },
+    {
+      "specimen_id": "indep_sanc_01",
+      "filename": "sanchi_stupa_indep_01.jpg",
+      "ground_truth_key": "sanchi_stupa",
+      "ground_truth_name": "Sanchi Stupa",
+      "predicted_key": "sanchi_stupa",
+      "predicted_name": "Sanchi Stupa",
+      "decision_state": "UNCERTAIN_MATCH",
+      "top1_similarity": 0.8436,
+      "top2_similarity": 0.8375,
+      "similarity_margin": 0.0061,
+      "gatekeeper_score": 0.5424,
+      "is_correct_top1": true,
+      "is_in_top3": true,
+      "reciprocal_rank": 1.0,
+      "requires_human_review": true,
+      "reason_codes": [
+        "CALIBRATED_CONFIDENCE",
+        "MISSING_GPS",
+        "AMBIGUOUS_TOP_CANDIDATES"
+      ],
+      "calibrated_probability": 0.5052,
+      "calibration_status": "CALIBRATED",
+      "latency_ms": 175.46,
+      "quality": {
+        "width": 900,
+        "height": 1815,
+        "blur_score": 2790.09,
+        "is_blurry": false,
+        "mean_brightness": 130.1,
+        "is_extreme_exposure": false,
+        "passed_quality_check": true
+      },
+      "source_provenance": {
+        "source_title": "File:Attendant on the Toran, The Great Stupa, Sanchi.jpg",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3AAttendant_on_the_Toran%2C_The_Great_Stupa%2C_Sanchi.jpg",
+        "photographer": "SpeakingArch",
+        "license": "CC BY-SA 4.0"
+      }
+    },
+    {
+      "specimen_id": "indep_sanc_02",
+      "filename": "sanchi_stupa_indep_02.jpg",
+      "ground_truth_key": "sanchi_stupa",
+      "ground_truth_name": "Sanchi Stupa",
+      "predicted_key": "sanchi_stupa",
+      "predicted_name": "Sanchi Stupa",
+      "decision_state": "VERIFIED_MATCH",
+      "top1_similarity": 0.884,
+      "top2_similarity": 0.7963,
+      "similarity_margin": 0.0877,
+      "gatekeeper_score": 0.6596,
+      "is_correct_top1": true,
+      "is_in_top3": true,
+      "reciprocal_rank": 1.0,
+      "requires_human_review": false,
+      "reason_codes": [
+        "CALIBRATED_CONFIDENCE",
+        "MISSING_GPS",
+        "HIGH_CONFIDENCE_MATCH"
+      ],
+      "calibrated_probability": 0.5481,
+      "calibration_status": "CALIBRATED",
+      "latency_ms": 756.97,
+      "quality": {
+        "width": 5884,
+        "height": 3310,
+        "blur_score": 480.14,
+        "is_blurry": false,
+        "mean_brightness": 121.7,
+        "is_extreme_exposure": false,
+        "passed_quality_check": true
+      },
+      "source_provenance": {
+        "source_title": "File:Stupa 1 at Sanchi, Eastern Gateway, Madhya Pradesh, India.jpg",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3AStupa_1_at_Sanchi%2C_Eastern_Gateway%2C_Madhya_Pradesh%2C_India.jpg",
+        "photographer": "Rohit Sharma",
+        "license": "CC BY-SA 4.0"
+      }
+    },
+    {
+      "specimen_id": "indep_taj__01",
+      "filename": "taj_mahal_indep_01.jpg",
+      "ground_truth_key": "taj_mahal",
+      "ground_truth_name": "Taj Mahal",
+      "predicted_key": "taj_mahal",
+      "predicted_name": "Taj Mahal",
+      "decision_state": "VERIFIED_MATCH",
+      "top1_similarity": 0.9255,
+      "top2_similarity": 0.0,
+      "similarity_margin": 0.9255,
+      "gatekeeper_score": 0.7162,
+      "is_correct_top1": true,
+      "is_in_top3": true,
+      "reciprocal_rank": 1.0,
+      "requires_human_review": false,
+      "reason_codes": [
+        "CALIBRATED_CONFIDENCE",
+        "GEO_VERIFIED",
+        "HIGH_CONFIDENCE_MATCH"
+      ],
+      "calibrated_probability": 0.5914,
+      "calibration_status": "CALIBRATED",
+      "latency_ms": 451.34,
+      "quality": {
+        "width": 2268,
+        "height": 4032,
+        "blur_score": 214.51,
+        "is_blurry": false,
+        "mean_brightness": 103.0,
+        "is_extreme_exposure": false,
+        "passed_quality_check": true
+      },
+      "source_provenance": {
+        "source_title": "File:Marble curves in morning light \u2013 south face of the Taj \u2013 Agra.jpg",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3AMarble_curves_in_morning_light_%E2%80%93_south_face_of_the_Taj_%E2%80%93_Agra.jpg",
+        "photographer": "Appurajosh",
+        "license": "CC BY 4.0"
+      }
+    },
+    {
+      "specimen_id": "indep_taj__02",
+      "filename": "taj_mahal_indep_02.jpg",
+      "ground_truth_key": "taj_mahal",
+      "ground_truth_name": "Taj Mahal",
+      "predicted_key": "taj_mahal",
+      "predicted_name": "Taj Mahal",
+      "decision_state": "VERIFIED_MATCH",
+      "top1_similarity": 0.9733,
+      "top2_similarity": 0.0,
+      "similarity_margin": 0.9733,
+      "gatekeeper_score": 0.727,
+      "is_correct_top1": true,
+      "is_in_top3": true,
+      "reciprocal_rank": 1.0,
+      "requires_human_review": false,
+      "reason_codes": [
+        "CALIBRATED_CONFIDENCE",
+        "MISSING_GPS",
+        "HIGH_CONFIDENCE_MATCH"
+      ],
+      "calibrated_probability": 0.6396,
+      "calibration_status": "CALIBRATED",
+      "latency_ms": 433.56,
+      "quality": {
+        "width": 3840,
+        "height": 2525,
+        "blur_score": 174.0,
+        "is_blurry": false,
+        "mean_brightness": 126.9,
+        "is_extreme_exposure": false,
+        "passed_quality_check": true
+      },
+      "source_provenance": {
+        "source_title": "File:Taj Mahal, Agra, India edit2.jpg",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3ATaj_Mahal%2C_Agra%2C_India_edit2.jpg",
+        "photographer": "Yann; edited by King of Hearts",
+        "license": "CC BY-SA 4.0"
+      }
+    },
+    {
+      "specimen_id": "indep_vict_01",
+      "filename": "victoria_memorial_indep_01.jpg",
+      "ground_truth_key": "victoria_memorial",
+      "ground_truth_name": "Victoria Memorial",
+      "predicted_key": "victoria_memorial",
+      "predicted_name": "Victoria Memorial",
+      "decision_state": "REVIEW_REQUIRED",
+      "top1_similarity": 0.7924,
+      "top2_similarity": 0.6953,
+      "similarity_margin": 0.0971,
+      "gatekeeper_score": 0.6188,
+      "is_correct_top1": true,
+      "is_in_top3": true,
+      "reciprocal_rank": 1.0,
+      "requires_human_review": true,
+      "reason_codes": [
+        "CALIBRATED_CONFIDENCE",
+        "LOW_IMAGE_QUALITY",
+        "MISSING_GPS"
+      ],
+      "calibrated_probability": 0.4508,
+      "calibration_status": "CALIBRATED",
+      "latency_ms": 377.4,
+      "quality": {
+        "width": 2304,
+        "height": 4096,
+        "blur_score": 2.85,
+        "is_blurry": true,
+        "mean_brightness": 155.1,
+        "is_extreme_exposure": false,
+        "passed_quality_check": false
+      },
+      "source_provenance": {
+        "source_title": "File:Kolkata Victoria Memorial IMG 20181214 100304.jpg",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3AKolkata_Victoria_Memorial_IMG_20181214_100304.jpg",
+        "photographer": "Amol.Gaitonde",
+        "license": "CC BY-SA 4.0"
+      }
+    },
+    {
+      "specimen_id": "indep_vict_02",
+      "filename": "victoria_memorial_indep_02.jpg",
+      "ground_truth_key": "victoria_memorial",
+      "ground_truth_name": "Victoria Memorial",
+      "predicted_key": "victoria_memorial",
+      "predicted_name": "Victoria Memorial",
+      "decision_state": "REVIEW_REQUIRED",
+      "top1_similarity": 0.7789,
+      "top2_similarity": 0.7692,
+      "similarity_margin": 0.0097,
+      "gatekeeper_score": 0.4167,
+      "is_correct_top1": true,
+      "is_in_top3": true,
+      "reciprocal_rank": 1.0,
+      "requires_human_review": true,
+      "reason_codes": [
+        "CALIBRATED_CONFIDENCE",
+        "GEO_VERIFIED",
+        "LOW_GATEKEEPER_CONFIDENCE"
+      ],
+      "calibrated_probability": 0.4366,
+      "calibration_status": "CALIBRATED",
+      "latency_ms": 460.06,
+      "quality": {
+        "width": 4032,
+        "height": 3024,
+        "blur_score": 154.73,
+        "is_blurry": false,
+        "mean_brightness": 132.0,
+        "is_extreme_exposure": false,
+        "passed_quality_check": true
+      },
+      "source_provenance": {
+        "source_title": "File:Main dome of the Victoria Memorial, Kolkata.jpg",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3AMain_dome_of_the_Victoria_Memorial%2C_Kolkata.jpg",
+        "photographer": "Slyronit",
+        "license": "CC BY-SA 4.0"
+      }
+    }
+  ]
+}

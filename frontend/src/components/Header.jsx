@@ -81,7 +81,7 @@ export default function Header({
               </h1>
             </Link>
             <p className="pt-0.5 text-xs text-archive-stone font-sans max-w-2xl leading-relaxed">
-              Two-Tier Hybrid Architecture integrating on-device CLIP (ViT-B/32) & FAISS Inner-Product vector indexing with Gemini 2.5 Flash VLM Deep Archaeological Fallback.
+              Two-Tier Hybrid Architecture integrating on-device CLIP (ViT-B/32) & FAISS Inner-Product vector indexing with {health?.gemini_tier2_model ? `${health.gemini_tier2_model}` : 'Gemini 3.1 Flash-Lite'} VLM Open-World Archaeological Adjudication.
             </p>
           </div>
 

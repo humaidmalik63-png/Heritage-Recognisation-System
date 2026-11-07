@@ -1,0 +1,546 @@
+{
+  "timestamp": "2026-11-07T11:30:28Z",
+  "task_1_qutub_disambiguation": {
+    "specimen_path": "C:\\Users\\humai\\Pictures\\Screenshots\\Screenshot 2026-10-01 002328.png",
+    "http_code": 200,
+    "verification_status": "VERIFIED_MATCH",
+    "monument_name": "Qutub Minar",
+    "confidence_score": 91.1,
+    "top1_similarity": 0.9115,
+    "top2_similarity": 0.8375,
+    "similarity_margin": 0.074,
+    "margin_threshold": 0.08,
+    "gatekeeper_score": 0.7595,
+    "reason_codes": [
+      "CALIBRATED_CONFIDENCE",
+      "MISSING_GPS",
+      "HIGH_CONFIDENCE_MATCH"
+    ],
+    "explanation": "Specimen verified as Qutub Minar. Vector cosine alignment is exceptionally strong (0.9115) and corroborated by local architectural feature agreement (margin: 0.0740 over Charminar). Architectural Gatekeeper score is 75.9%.",
+    "local_features": {
+      "execution_mode": "TRIGGERED_AMBIGUOUS_SPECIMEN",
+      "top_local_candidate": {
+        "monument_key": "qutub_minar",
+        "monument_name": "Qutub Minar",
+        "max_similarity": 0.908605694770813,
+        "mean_similarity": 0.8752494653066,
+        "region_matches_count": 3
+      },
+      "regions_evaluated": 4,
+      "geometric_verification": {
+        "keypoints_query": 600,
+        "keypoints_reference": 600,
+        "good_matches_count": 2,
+        "inliers_count": 0,
+        "inlier_ratio": 0.0,
+        "status": "INSUFFICIENT_FEATURES",
+        "homography_found": false
+      },
+      "sift_triggered": true,
+      "alignment_status": "AGREEMENT_CONFIRMED_VISUAL",
+      "alignment_explanation": "Consistent agreement: Global and local feature vectors both identify 'qutub_minar'.",
+      "override_applied": false,
+      "evidence_quality": "MEDIUM",
+      "latency_ms": 725.61
+    },
+    "latency_ms": 899.08
+  },
+  "task_2_threshold_display": {
+    "uncertainty_margin_threshold": 0.08,
+    "pipeline_telemetry_margin_threshold": 0.08,
+    "explanation_threshold_str": "0.08",
+    "authoritative_config_threshold": 0.08,
+    "threshold_match_verified": true
+  },
+  "task_3_out_of_catalog_validation": [
+    {
+      "key": "mysore_palace",
+      "true_name": "Mysore Palace, Karnataka",
+      "origin": "Indian Heritage",
+      "file_path": "backend/datasets/phase_8_5c_ooc_eval/mysore_palace.jpg",
+      "top1_candidate": "Gateway of India",
+      "top1_similarity": 0.7869,
+      "top2_candidate": "Victoria Memorial",
+      "top2_similarity": 0.7856,
+      "margin": 0.0013,
+      "gatekeeper_score": 0.7818,
+      "local_feature_evidence": "TRIGGERED_AMBIGUOUS_SPECIMEN",
+      "final_decision": "UNCERTAIN_MATCH",
+      "latency_ms": 929.23,
+      "false_catalog_attribution_prevented": true
+    },
+    {
+      "key": "red_fort",
+      "true_name": "Red Fort, Delhi",
+      "origin": "Indian Heritage",
+      "file_path": "backend/datasets/phase_8_5c_ooc_eval/red_fort.jpg",
+      "top1_candidate": "Taj Mahal",
+      "top1_similarity": 0.8402,
+      "top2_candidate": "Hawa Mahal",
+      "top2_similarity": 0.8066,
+      "margin": 0.0336,
+      "gatekeeper_score": 0.7629,
+      "local_feature_evidence": "TRIGGERED_AMBIGUOUS_SPECIMEN",
+      "final_decision": "UNCERTAIN_MATCH",
+      "latency_ms": 892.5,
+      "false_catalog_attribution_prevented": true
+    },
+    {
+      "key": "india_gate",
+      "true_name": "India Gate, New Delhi",
+      "origin": "Indian Heritage",
+      "file_path": "backend/datasets/phase_8_5c_ooc_eval/india_gate.jpg",
+      "top1_candidate": "Gateway of India",
+      "top1_similarity": 0.8542,
+      "top2_candidate": "Taj Mahal",
+      "top2_similarity": 0.8312,
+      "margin": 0.023,
+      "gatekeeper_score": 0.7709,
+      "local_feature_evidence": "TRIGGERED_AMBIGUOUS_SPECIMEN",
+      "final_decision": "UNCERTAIN_MATCH",
+      "latency_ms": 1238.32,
+      "false_catalog_attribution_prevented": true
+    },
+    {
+      "key": "golden_temple",
+      "true_name": "Harmandir Sahib, Amritsar",
+      "origin": "Indian Heritage",
+      "file_path": "backend/datasets/phase_8_5c_ooc_eval/golden_temple.jpg",
+      "top1_candidate": "Charminar",
+      "top1_similarity": 0.8324,
+      "top2_candidate": "Taj Mahal",
+      "top2_similarity": 0.8164,
+      "margin": 0.016,
+      "gatekeeper_score": 0.7556,
+      "local_feature_evidence": "TRIGGERED_AMBIGUOUS_SPECIMEN",
+      "final_decision": "UNCERTAIN_MATCH",
+      "latency_ms": 944.24,
+      "false_catalog_attribution_prevented": true
+    },
+    {
+      "key": "eiffel_tower",
+      "true_name": "Eiffel Tower, Paris",
+      "origin": "International Heritage",
+      "file_path": "backend/datasets/phase_8_5c_ooc_eval/eiffel_tower.jpg",
+      "top1_candidate": "Taj Mahal",
+      "top1_similarity": 0.7223,
+      "top2_candidate": "Victoria Memorial",
+      "top2_similarity": 0.6828,
+      "margin": 0.0395,
+      "gatekeeper_score": 0.633,
+      "local_feature_evidence": "TRIGGERED_AMBIGUOUS_SPECIMEN",
+      "final_decision": "UNKNOWN_HERITAGE_SPECIMEN",
+      "latency_ms": 1718.53,
+      "false_catalog_attribution_prevented": true
+    },
+    {
+      "key": "colosseum",
+      "true_name": "Colosseum, Rome",
+      "origin": "International Heritage",
+      "file_path": "backend/datasets/phase_8_5c_ooc_eval/colosseum.jpg",
+      "top1_candidate": "Hawa Mahal",
+      "top1_similarity": 0.7249,
+      "top2_candidate": "Taj Mahal",
+      "top2_similarity": 0.708,
+      "margin": 0.0169,
+      "gatekeeper_score": 0.6369,
+      "local_feature_evidence": "TRIGGERED_AMBIGUOUS_SPECIMEN",
+      "final_decision": "UNKNOWN_HERITAGE_SPECIMEN",
+      "latency_ms": 1869.69,
+      "false_catalog_attribution_prevented": true
+    },
+    {
+      "key": "statue_of_liberty",
+      "true_name": "Statue of Liberty, New York",
+      "origin": "International Heritage",
+      "file_path": "backend/datasets/phase_8_5c_ooc_eval/statue_of_liberty.jpg",
+      "top1_candidate": "Taj Mahal",
+      "top1_similarity": 0.6791,
+      "top2_candidate": "Victoria Memorial",
+      "top2_similarity": 0.668,
+      "margin": 0.0111,
+      "gatekeeper_score": 0.5993,
+      "local_feature_evidence": "TRIGGERED_AMBIGUOUS_SPECIMEN",
+      "final_decision": "UNKNOWN_HERITAGE_SPECIMEN",
+      "latency_ms": 2608.16,
+      "false_catalog_attribution_prevented": true
+    },
+    {
+      "key": "big_ben",
+      "true_name": "Big Ben / Elizabeth Tower, London",
+      "origin": "International Heritage",
+      "file_path": "backend/datasets/phase_8_5c_ooc_eval/big_ben.jpg",
+      "top1_candidate": "Victoria Memorial",
+      "top1_similarity": 0.7373,
+      "top2_candidate": "Taj Mahal",
+      "top2_similarity": 0.7195,
+      "margin": 0.0178,
+      "gatekeeper_score": 0.6313,
+      "local_feature_evidence": "TRIGGERED_AMBIGUOUS_SPECIMEN",
+      "final_decision": "UNKNOWN_HERITAGE_SPECIMEN",
+      "latency_ms": 2397.29,
+      "false_catalog_attribution_prevented": true
+    }
+  ],
+  "task_4_gemini_live_validation": {
+    "gemini_2_5_flash_audit": {
+      "success": false,
+      "model": "gemini-2.5-flash",
+      "latency_ms": 2998.18,
+      "text": null,
+      "error": "404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the In"
+    },
+    "gemini_3_8_flash_live_results": [
+      {
+        "monument_key": "mysore_palace",
+        "true_name": "Mysore Palace, Karnataka",
+        "model": "gemini-3.8-flash",
+        "latency_ms": 1656.86,
+        "success": false,
+        "analysis_text": null,
+        "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your curren"
+      },
+      {
+        "monument_key": "red_fort",
+        "true_name": "Red Fort, Delhi",
+        "model": "gemini-3.8-flash",
+        "latency_ms": 1729.6,
+        "success": false,
+        "analysis_text": null,
+        "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your curren"
+      },
+      {
+        "monument_key": "india_gate",
+        "true_name": "India Gate, New Delhi",
+        "model": "gemini-3.8-flash",
+        "latency_ms": 1742.35,
+        "success": false,
+        "analysis_text": null,
+        "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your curren"
+      },
+      {
+        "monument_key": "golden_temple",
+        "true_name": "Harmandir Sahib, Amritsar",
+        "model": "gemini-3.8-flash",
+        "latency_ms": 1720.31,
+        "success": false,
+        "analysis_text": null,
+        "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your curren"
+      },
+      {
+        "monument_key": "eiffel_tower",
+        "true_name": "Eiffel Tower, Paris",
+        "model": "gemini-3.8-flash",
+        "latency_ms": 1544.18,
+        "success": false,
+        "analysis_text": null,
+        "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your curren"
+      },
+      {
+        "monument_key": "colosseum",
+        "true_name": "Colosseum, Rome",
+        "model": "gemini-3.8-flash",
+        "latency_ms": 1632.3,
+        "success": false,
+        "analysis_text": null,
+        "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your curren"
+      },
+      {
+        "monument_key": "statue_of_liberty",
+        "true_name": "Statue of Liberty, New York",
+        "model": "gemini-3.8-flash",
+        "latency_ms": 2013.52,
+        "success": false,
+        "analysis_text": null,
+        "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your curren"
+      },
+      {
+        "monument_key": "big_ben",
+        "true_name": "Big Ben / Elizabeth Tower, London",
+        "model": "gemini-3.8-flash",
+        "latency_ms": 1567.06,
+        "success": false,
+        "analysis_text": null,
+        "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your curren"
+      }
+    ]
+  },
+  "task_5_gemini_offline_fallback": [
+    {
+      "monument_key": "eiffel_tower",
+      "is_offline_fallback": true,
+      "visible_observations_count": 1,
+      "candidate_styles": [
+        "Style unindexed in primary gallery"
+      ],
+      "visual_evidence": "Offline Curatorial Mode: Tier-1 CLIP similarity remained below 0.80 threshold with no confident nearest neighbor.",
+      "curatorial_caveat": "Visual analysis is exploratory and does not establish verified historical identity without epigraphical or archival records.",
+      "latency_ms": 2.37
+    },
+    {
+      "monument_key": "colosseum",
+      "is_offline_fallback": true,
+      "visible_observations_count": 1,
+      "candidate_styles": [
+        "Style unindexed in primary gallery"
+      ],
+      "visual_evidence": "Offline Curatorial Mode: Tier-1 CLIP similarity remained below 0.80 threshold with no confident nearest neighbor.",
+      "curatorial_caveat": "Visual analysis is exploratory and does not establish verified historical identity without epigraphical or archival records.",
+      "latency_ms": 6.73
+    },
+    {
+      "monument_key": "mysore_palace",
+      "is_offline_fallback": true,
+      "visible_observations_count": 1,
+      "candidate_styles": [
+        "Style unindexed in primary gallery"
+      ],
+      "visual_evidence": "Offline Curatorial Mode: Tier-1 CLIP similarity remained below 0.80 threshold with no confident nearest neighbor.",
+      "curatorial_caveat": "Visual analysis is exploratory and does not establish verified historical identity without epigraphical or archival records.",
+      "latency_ms": 5.12
+    },
+    {
+      "monument_key": "golden_temple",
+      "is_offline_fallback": true,
+      "visible_observations_count": 1,
+      "candidate_styles": [
+        "Style unindexed in primary gallery"
+      ],
+      "visual_evidence": "Offline Curatorial Mode: Tier-1 CLIP similarity remained below 0.80 threshold with no confident nearest neighbor.",
+      "curatorial_caveat": "Visual analysis is exploratory and does not establish verified historical identity without epigraphical or archival records.",
+      "latency_ms": 7.22
+    }
+  ],
+  "task_7_complete_test_matrix": {
+    "A_catalogue_positives": [
+      {
+        "name": "Taj Mahal",
+        "path": "backend/dataset/taj_mahal/img_1.jpg",
+        "verification_status": "VERIFIED_MATCH",
+        "monument_name": "Taj Mahal",
+        "confidence_score": 99.8,
+        "top1_similarity": 1.0,
+        "similarity_margin": 1.0,
+        "gatekeeper_score": 0.7158,
+        "latency_ms": 154.82
+      },
+      {
+        "name": "Qutub Minar",
+        "path": "backend/dataset/qutub_minar/img_1.jpg",
+        "verification_status": "VERIFIED_MATCH",
+        "monument_name": "Qutub Minar",
+        "confidence_score": 99.8,
+        "top1_similarity": 1.0,
+        "similarity_margin": 0.1653,
+        "gatekeeper_score": 0.7697,
+        "latency_ms": 163.9
+      },
+      {
+        "name": "Charminar",
+        "path": "backend/dataset/charminar/img_1.jpg",
+        "verification_status": "VERIFIED_MATCH",
+        "monument_name": "Charminar",
+        "confidence_score": 99.8,
+        "top1_similarity": 1.0,
+        "similarity_margin": 0.1358,
+        "gatekeeper_score": 0.7197,
+        "latency_ms": 527.99
+      },
+      {
+        "name": "Hawa Mahal",
+        "path": "backend/dataset/hawa_mahal/img_1.jpg",
+        "verification_status": "VERIFIED_MATCH",
+        "monument_name": "Hawa Mahal",
+        "confidence_score": 99.8,
+        "top1_similarity": 1.0,
+        "similarity_margin": 0.2073,
+        "gatekeeper_score": 0.7806,
+        "latency_ms": 248.74
+      },
+      {
+        "name": "Konark Sun Temple",
+        "path": "backend/dataset/konark_sun_temple/img_1.jpg",
+        "verification_status": "VERIFIED_MATCH",
+        "monument_name": "Konark Sun Temple",
+        "confidence_score": 99.8,
+        "top1_similarity": 1.0,
+        "similarity_margin": 0.1624,
+        "gatekeeper_score": 0.7169,
+        "latency_ms": 274.26
+      }
+    ],
+    "B_out_of_catalog_indian": [
+      {
+        "name": "Mysore Palace",
+        "path": "backend/datasets/phase_8_5c_ooc_eval/mysore_palace.jpg",
+        "verification_status": "UNCERTAIN_MATCH",
+        "monument_name": "Gateway of India",
+        "confidence_score": 78.7,
+        "top1_similarity": 0.7869,
+        "similarity_margin": 0.0013,
+        "gatekeeper_score": 0.7818,
+        "latency_ms": 865.84
+      },
+      {
+        "name": "Red Fort",
+        "path": "backend/datasets/phase_8_5c_ooc_eval/red_fort.jpg",
+        "verification_status": "UNCERTAIN_MATCH",
+        "monument_name": "Taj Mahal",
+        "confidence_score": 84.0,
+        "top1_similarity": 0.8402,
+        "similarity_margin": 0.0336,
+        "gatekeeper_score": 0.7629,
+        "latency_ms": 1135.23
+      },
+      {
+        "name": "India Gate",
+        "path": "backend/datasets/phase_8_5c_ooc_eval/india_gate.jpg",
+        "verification_status": "UNCERTAIN_MATCH",
+        "monument_name": "Gateway of India",
+        "confidence_score": 85.4,
+        "top1_similarity": 0.8542,
+        "similarity_margin": 0.023,
+        "gatekeeper_score": 0.7709,
+        "latency_ms": 1511.89
+      },
+      {
+        "name": "Golden Temple",
+        "path": "backend/datasets/phase_8_5c_ooc_eval/golden_temple.jpg",
+        "verification_status": "UNCERTAIN_MATCH",
+        "monument_name": "Charminar",
+        "confidence_score": 83.2,
+        "top1_similarity": 0.8324,
+        "similarity_margin": 0.016,
+        "gatekeeper_score": 0.7556,
+        "latency_ms": 1160.15
+      }
+    ],
+    "C_international_heritage": [
+      {
+        "name": "Eiffel Tower",
+        "path": "backend/datasets/phase_8_5c_ooc_eval/eiffel_tower.jpg",
+        "verification_status": "UNKNOWN_HERITAGE_SPECIMEN",
+        "monument_name": "Unindexed / Ambiguous Heritage Site",
+        "confidence_score": 72.2,
+        "top1_similarity": 0.7223,
+        "similarity_margin": 0.0395,
+        "gatekeeper_score": 0.633,
+        "latency_ms": 2005.34
+      },
+      {
+        "name": "Colosseum",
+        "path": "backend/datasets/phase_8_5c_ooc_eval/colosseum.jpg",
+        "verification_status": "UNKNOWN_HERITAGE_SPECIMEN",
+        "monument_name": "Unindexed / Ambiguous Heritage Site",
+        "confidence_score": 72.5,
+        "top1_similarity": 0.7249,
+        "similarity_margin": 0.0169,
+        "gatekeeper_score": 0.6369,
+        "latency_ms": 2454.69
+      },
+      {
+        "name": "Statue of Liberty",
+        "path": "backend/datasets/phase_8_5c_ooc_eval/statue_of_liberty.jpg",
+        "verification_status": "UNKNOWN_HERITAGE_SPECIMEN",
+        "monument_name": "Unindexed / Ambiguous Heritage Site",
+        "confidence_score": 67.9,
+        "top1_similarity": 0.6791,
+        "similarity_margin": 0.0111,
+        "gatekeeper_score": 0.5993,
+        "latency_ms": 2628.68
+      },
+      {
+        "name": "Big Ben",
+        "path": "backend/datasets/phase_8_5c_ooc_eval/big_ben.jpg",
+        "verification_status": "UNKNOWN_HERITAGE_SPECIMEN",
+        "monument_name": "Unindexed / Ambiguous Heritage Site",
+        "confidence_score": 73.7,
+        "top1_similarity": 0.7373,
+        "similarity_margin": 0.0178,
+        "gatekeeper_score": 0.6313,
+        "latency_ms": 2482.3
+      }
+    ],
+    "D_non_monuments": [
+      {
+        "name": "Mathematics Paper",
+        "path": "C:\\Users\\humai\\Pictures\\Screenshots\\CSE 306 screenshot.png",
+        "verification_status": "NON_MONUMENT_REJECTED",
+        "monument_name": null,
+        "confidence_score": 67.4,
+        "top1_similarity": 0.4824,
+        "similarity_margin": 0.012,
+        "gatekeeper_score": 0.3264,
+        "latency_ms": 196.73
+      },
+      {
+        "name": "Receipt Distractor",
+        "path": "backend/datasets/receipt_distractor.jpg",
+        "verification_status": "NON_MONUMENT_REJECTED",
+        "monument_name": null,
+        "confidence_score": 62.6,
+        "top1_similarity": 0.6099,
+        "similarity_margin": 0.0017,
+        "gatekeeper_score": 0.374,
+        "latency_ms": 126.69
+      },
+      {
+        "name": "Ordinary Building",
+        "path": "backend/datasets/independent_final_test_v4/split_d_063_non_monument.jpg",
+        "verification_status": "UNKNOWN_HERITAGE_SPECIMEN",
+        "monument_name": "Unindexed / Ambiguous Heritage Site",
+        "confidence_score": 69.9,
+        "top1_similarity": 0.6987,
+        "similarity_margin": 0.0384,
+        "gatekeeper_score": 0.4974,
+        "latency_ms": 1412.88
+      },
+      {
+        "name": "Everyday Object",
+        "path": "backend/datasets/independent_final_test_v4/split_d_064_non_monument.jpg",
+        "verification_status": "NON_MONUMENT_REJECTED",
+        "monument_name": null,
+        "confidence_score": 70.3,
+        "top1_similarity": 0.5972,
+        "similarity_margin": 0.0062,
+        "gatekeeper_score": 0.2971,
+        "latency_ms": 136.83
+      }
+    ],
+    "E_ambiguous_and_stress_cases": [
+      {
+        "name": "Qutub Minar (Close View)",
+        "path": "C:\\Users\\humai\\Pictures\\Screenshots\\Screenshot 2026-10-01 002328.png",
+        "verification_status": "VERIFIED_MATCH",
+        "monument_name": "Qutub Minar",
+        "confidence_score": 91.1,
+        "top1_similarity": 0.9115,
+        "similarity_margin": 0.074,
+        "gatekeeper_score": 0.7595,
+        "latency_ms": 924.7
+      },
+      {
+        "name": "Hampi Architectural View",
+        "path": "backend/datasets/independent_final_test_v4/split_d_019_hampi_stone_chariot.jpg",
+        "verification_status": "UNCERTAIN_MATCH",
+        "monument_name": "Hampi Stone Chariot",
+        "confidence_score": 87.6,
+        "top1_similarity": 0.876,
+        "similarity_margin": 0.0402,
+        "gatekeeper_score": 0.729,
+        "latency_ms": 1075.86
+      },
+      {
+        "name": "Mysore Palace (Indo-Saracenic)",
+        "path": "backend/datasets/independent_final_test_v4/split_d_086_mysore_palace.jpg",
+        "verification_status": "UNCERTAIN_MATCH",
+        "monument_name": "Gateway of India",
+        "confidence_score": 78.7,
+        "top1_similarity": 0.7869,
+        "similarity_margin": 0.0013,
+        "gatekeeper_score": 0.7818,
+        "latency_ms": 1356.71
+      }
+    ]
+  }
+}

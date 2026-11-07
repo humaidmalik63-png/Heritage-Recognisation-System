@@ -66,7 +66,17 @@ export function AuthProvider({ children }) {
           localStorage.setItem(userHistoryKey, JSON.stringify(INITIAL_DEMO_SCANS));
         }
       } else {
-        // Automatically seed demo user in storage
+        // Automatically log in default demo user for seamless access
+        const demoUser = {
+          ...DEFAULT_DEMO_USER,
+        };
+        setUser(demoUser);
+        localStorage.setItem('heritage_current_user', JSON.stringify(demoUser));
+        const userHistoryKey = `heritage_history_${demoUser.email}`;
+        setHistory(INITIAL_DEMO_SCANS);
+        localStorage.setItem(userHistoryKey, JSON.stringify(INITIAL_DEMO_SCANS));
+
+        // Seed demo user in registered users list
         const existingUsers = JSON.parse(localStorage.getItem('heritage_users') || '[]');
         if (!existingUsers.some((u) => u.email === DEFAULT_DEMO_USER.email)) {
           existingUsers.push({

@@ -1,0 +1,34 @@
+{
+  "methodology_verification": {
+    "clip_model_loading_excluded": true,
+    "clip_model_loading_handling": "CLIPModel and CLIPProcessor are instantiated once during startup; warm inference timing excludes model weights download and initialization.",
+    "embedding_time_separated_from_faiss": true,
+    "measured_global_embedding_mean_ms": 284.56,
+    "measured_faiss_search_mean_ms": 0.1,
+    "local_feature_extraction_measured_separately": true,
+    "measured_sift_extraction_mean_ms": 163.36,
+    "measured_local_clip_multi_crop_mean_ms": 460.55,
+    "total_local_pipeline_mean_ms": 623.91,
+    "warmup_cycles_documented": 5,
+    "measured_iterations_documented": 30
+  },
+  "split_difficulty_divergence": {
+    "split_c_mean_latency_ms": 680.07,
+    "split_c_fast_path_pct": 0.0,
+    "split_c_local_invoked_pct": 96.43,
+    "split_c_difficulty_note": "Specimens in Split C consist of extreme close-up carvings, night views, and partial structures that create ambiguous margins (<0.10), triggering full local feature verification on 27/28 specimens.",
+    "split_b_mean_latency_ms": 237.87,
+    "split_b_fast_path_pct": 18.18,
+    "split_b_local_invoked_pct": 74.55,
+    "split_b_difficulty_note": "Specimens in Split B contain more standard frontal architectural views where global CLIP provides clear separation, allowing 18.18% to exit via the fast-path.",
+    "combined_corpus_mean_latency_ms": 387.04
+  },
+  "phase_cross_comparison": {
+    "phase_8_1_mean_latency_ms": 909.2,
+    "phase_8_1_explanation": "Unconditionally executed SIFT + FLANN + Local CLIP multi-crop on 100% of queries on CPU (285 + 163 + 461 = 909 ms).",
+    "phase_8_2_mean_latency_ms": 178.6,
+    "phase_8_2_explanation": "Measured primarily on fast-path-dominated runs where local features were bypassed on clear views.",
+    "phase_8_2d_mean_latency_ms": 387.04,
+    "phase_8_2d_explanation": "Measured across the combined realistic corpus (Split B + Split C, N=83) with conditional gating active."
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "gallery_version": "v2.0.0",
+  "timestamp_utc": "2026-11-05T04:29:00.817871+00:00",
+  "total_monuments": 10,
+  "total_reference_images": 200,
+  "average_images_per_monument": 20.0,
+  "target_per_monument": 20,
+  "structural_views_total": 200,
+  "detail_views_total": 0,
+  "structural_ratio_pct": 100.0,
+  "per_monument_counts": {
+    "taj_mahal": {
+      "total": 20,
+      "structural": 20,
+      "detail": 0
+    },
+    "qutub_minar": {
+      "total": 20,
+      "structural": 20,
+      "detail": 0
+    },
+    "hawa_mahal": {
+      "total": 20,
+      "structural": 20,
+      "detail": 0
+    },
+    "konark_sun_temple": {
+      "total": 20,
+      "structural": 20,
+      "detail": 0
+    },
+    "gateway_of_india": {
+      "total": 20,
+      "structural": 20,
+      "detail": 0
+    },
+    "charminar": {
+      "total": 20,
+      "structural": 20,
+      "detail": 0
+    },
+    "hampi_stone_chariot": {
+      "total": 20,
+      "structural": 20,
+      "detail": 0
+    },
+    "sanchi_stupa": {
+      "total": 20,
+      "structural": 20,
+      "detail": 0
+    },
+    "victoria_memorial": {
+      "total": 20,
+      "structural": 20,
+      "detail": 0
+    },
+    "brihadeeswarar_temple": {
+      "total": 20,
+      "structural": 20,
+      "detail": 0
+    }
+  },
+  "view_type_distribution": {
+    "full_structure": 82,
+    "front_view": 101,
+    "side_view": 14,
+    "distant_view": 3
+  },
+  "lighting_distribution": {
+    "daylight": 200
+  },
+  "license_distribution": {
+    "Creative Commons / Educational Fair Use": 40,
+    "CC BY-SA 2.0": 7,
+    "CC BY 2.0": 4,
+    "CC BY 3.0": 13,
+    "CC BY 4.0": 5,
+    "GFDL 1.2": 1,
+    "CC BY-SA 3.0": 38,
+    "CC BY-SA 4.0": 79,
+    "CC0": 9,
+    "CC BY 2.5": 1,
+    "Public domain": 2,
+    "CC BY-SA 2.5": 1
+  },
+  "integrity_metrics": {
+    "exact_duplicates_rejected": 1,
+    "near_duplicates_rejected": 11,
+    "quality_failures_rejected": 0,
+    "evaluation_leakage_prevented": 0,
+    "evaluation_leakage_detected_in_final": 0
+  }
+}

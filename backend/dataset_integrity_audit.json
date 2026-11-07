@@ -1,0 +1,497 @@
+{
+  "audit_name": "Phase 8.2B Dataset Integrity Audit",
+  "dataset_audited": "calibration_dataset_v3",
+  "total_specimens": 265,
+  "file_validity": {
+    "total_files_on_disk": 265,
+    "total_manifest_entries": 265,
+    "unreadable_corrupt_files": [],
+    "zero_byte_files": [],
+    "manifest_missing_files": [],
+    "disk_untracked_files": []
+  },
+  "class_breakdown": {
+    "taj_mahal": 33,
+    "qutub_minar": 15,
+    "konark_sun_temple": 23,
+    "gateway_of_india": 26,
+    "hampi_stone_chariot": 22,
+    "sanchi_stupa": 8,
+    "victoria_memorial": 33,
+    "unknown_heritage": 33,
+    "non_monument": 33,
+    "hawa_mahal": 8,
+    "charminar": 25,
+    "brihadeeswarar_temple": 6
+  },
+  "is_positive_breakdown": {
+    "positive_catalog_monument": 199,
+    "negative_or_unknown": 66
+  },
+  "condition_breakdown": {
+    "night_time": 19,
+    "low_light": 26,
+    "architectural_carving": 47,
+    "distant_monument": 34,
+    "unusual_angle": 6,
+    "partial_monument": 22,
+    "occluded_monument": 1,
+    "out_of_catalog_heritage": 25,
+    "non_monument_distractor": 25,
+    "general_photograph": 60
+  },
+  "author_statistics": {
+    "unique_authors": 180,
+    "top_10_authors": [
+      [
+        "Wikimedia Contributor",
+        13
+      ],
+      [
+        "Ingo Mehling",
+        11
+      ],
+      [
+        "xiquinhosilva",
+        9
+      ],
+      [
+        "Pinakpani",
+        8
+      ],
+      [
+        "Joydeep",
+        7
+      ],
+      [
+        "Jmadhu",
+        5
+      ],
+      [
+        "Aleksandr Zykov from Russia",
+        5
+      ],
+      [
+        "iMahesh",
+        4
+      ],
+      [
+        "Rashid Jorvee",
+        4
+      ],
+      [
+        "Aazam4u",
+        3
+      ]
+    ],
+    "max_specimens_per_author": 13,
+    "min_specimens_per_author": 1
+  },
+  "internal_duplicates": {
+    "exact_sha256_duplicate_count": 0,
+    "exact_duplicates": [],
+    "near_perceptual_duplicates_hamming_le_4_count": 43,
+    "near_duplicates": [
+      {
+        "item1": "calib3_taj_mahal_010",
+        "item2": "calib3_taj_mahal_017",
+        "hamming_distance": 3,
+        "class1": "taj_mahal",
+        "class2": "taj_mahal"
+      },
+      {
+        "item1": "calib3_taj_mahal_010",
+        "item2": "calib3_victoria_memorial_016",
+        "hamming_distance": 3,
+        "class1": "taj_mahal",
+        "class2": "victoria_memorial"
+      },
+      {
+        "item1": "calib3_taj_mahal_014",
+        "item2": "calib3_gateway_of_india_006",
+        "hamming_distance": 4,
+        "class1": "taj_mahal",
+        "class2": "gateway_of_india"
+      },
+      {
+        "item1": "calib3_taj_mahal_014",
+        "item2": "calib3_gateway_of_india_011",
+        "hamming_distance": 4,
+        "class1": "taj_mahal",
+        "class2": "gateway_of_india"
+      },
+      {
+        "item1": "calib3_taj_mahal_014",
+        "item2": "calib3_gateway_of_india_023",
+        "hamming_distance": 4,
+        "class1": "taj_mahal",
+        "class2": "gateway_of_india"
+      },
+      {
+        "item1": "calib3_taj_mahal_014",
+        "item2": "calib3_non_monument_030",
+        "hamming_distance": 4,
+        "class1": "taj_mahal",
+        "class2": "non_monument"
+      },
+      {
+        "item1": "calib3_taj_mahal_017",
+        "item2": "calib3_gateway_of_india_021",
+        "hamming_distance": 3,
+        "class1": "taj_mahal",
+        "class2": "gateway_of_india"
+      },
+      {
+        "item1": "calib3_taj_mahal_017",
+        "item2": "calib3_victoria_memorial_016",
+        "hamming_distance": 0,
+        "class1": "taj_mahal",
+        "class2": "victoria_memorial"
+      },
+      {
+        "item1": "calib3_gateway_of_india_006",
+        "item2": "calib3_gateway_of_india_010",
+        "hamming_distance": 3,
+        "class1": "gateway_of_india",
+        "class2": "gateway_of_india"
+      },
+      {
+        "item1": "calib3_gateway_of_india_006",
+        "item2": "calib3_gateway_of_india_011",
+        "hamming_distance": 0,
+        "class1": "gateway_of_india",
+        "class2": "gateway_of_india"
+      },
+      {
+        "item1": "calib3_gateway_of_india_006",
+        "item2": "calib3_gateway_of_india_014",
+        "hamming_distance": 2,
+        "class1": "gateway_of_india",
+        "class2": "gateway_of_india"
+      },
+      {
+        "item1": "calib3_gateway_of_india_006",
+        "item2": "calib3_gateway_of_india_023",
+        "hamming_distance": 0,
+        "class1": "gateway_of_india",
+        "class2": "gateway_of_india"
+      },
+      {
+        "item1": "calib3_gateway_of_india_006",
+        "item2": "calib3_victoria_memorial_014",
+        "hamming_distance": 3,
+        "class1": "gateway_of_india",
+        "class2": "victoria_memorial"
+      },
+      {
+        "item1": "calib3_gateway_of_india_006",
+        "item2": "calib3_victoria_memorial_021",
+        "hamming_distance": 2,
+        "class1": "gateway_of_india",
+        "class2": "victoria_memorial"
+      },
+      {
+        "item1": "calib3_gateway_of_india_006",
+        "item2": "calib3_non_monument_018",
+        "hamming_distance": 3,
+        "class1": "gateway_of_india",
+        "class2": "non_monument"
+      },
+      {
+        "item1": "calib3_gateway_of_india_006",
+        "item2": "calib3_non_monument_030",
+        "hamming_distance": 0,
+        "class1": "gateway_of_india",
+        "class2": "non_monument"
+      },
+      {
+        "item1": "calib3_gateway_of_india_010",
+        "item2": "calib3_gateway_of_india_011",
+        "hamming_distance": 3,
+        "class1": "gateway_of_india",
+        "class2": "gateway_of_india"
+      },
+      {
+        "item1": "calib3_gateway_of_india_010",
+        "item2": "calib3_gateway_of_india_023",
+        "hamming_distance": 3,
+        "class1": "gateway_of_india",
+        "class2": "gateway_of_india"
+      },
+      {
+        "item1": "calib3_gateway_of_india_010",
+        "item2": "calib3_victoria_memorial_014",
+        "hamming_distance": 4,
+        "class1": "gateway_of_india",
+        "class2": "victoria_memorial"
+      },
+      {
+        "item1": "calib3_gateway_of_india_010",
+        "item2": "calib3_victoria_memorial_021",
+        "hamming_distance": 3,
+        "class1": "gateway_of_india",
+        "class2": "victoria_memorial"
+      },
+      {
+        "item1": "calib3_gateway_of_india_010",
+        "item2": "calib3_non_monument_018",
+        "hamming_distance": 0,
+        "class1": "gateway_of_india",
+        "class2": "non_monument"
+      },
+      {
+        "item1": "calib3_gateway_of_india_010",
+        "item2": "calib3_non_monument_030",
+        "hamming_distance": 3,
+        "class1": "gateway_of_india",
+        "class2": "non_monument"
+      },
+      {
+        "item1": "calib3_gateway_of_india_011",
+        "item2": "calib3_gateway_of_india_014",
+        "hamming_distance": 2,
+        "class1": "gateway_of_india",
+        "class2": "gateway_of_india"
+      },
+      {
+        "item1": "calib3_gateway_of_india_011",
+        "item2": "calib3_gateway_of_india_023",
+        "hamming_distance": 0,
+        "class1": "gateway_of_india",
+        "class2": "gateway_of_india"
+      },
+      {
+        "item1": "calib3_gateway_of_india_011",
+        "item2": "calib3_victoria_memorial_014",
+        "hamming_distance": 3,
+        "class1": "gateway_of_india",
+        "class2": "victoria_memorial"
+      },
+      {
+        "item1": "calib3_gateway_of_india_011",
+        "item2": "calib3_victoria_memorial_021",
+        "hamming_distance": 2,
+        "class1": "gateway_of_india",
+        "class2": "victoria_memorial"
+      },
+      {
+        "item1": "calib3_gateway_of_india_011",
+        "item2": "calib3_non_monument_018",
+        "hamming_distance": 3,
+        "class1": "gateway_of_india",
+        "class2": "non_monument"
+      },
+      {
+        "item1": "calib3_gateway_of_india_011",
+        "item2": "calib3_non_monument_030",
+        "hamming_distance": 0,
+        "class1": "gateway_of_india",
+        "class2": "non_monument"
+      },
+      {
+        "item1": "calib3_gateway_of_india_014",
+        "item2": "calib3_gateway_of_india_023",
+        "hamming_distance": 2,
+        "class1": "gateway_of_india",
+        "class2": "gateway_of_india"
+      },
+      {
+        "item1": "calib3_gateway_of_india_014",
+        "item2": "calib3_victoria_memorial_021",
+        "hamming_distance": 2,
+        "class1": "gateway_of_india",
+        "class2": "victoria_memorial"
+      },
+      {
+        "item1": "calib3_gateway_of_india_014",
+        "item2": "calib3_non_monument_030",
+        "hamming_distance": 2,
+        "class1": "gateway_of_india",
+        "class2": "non_monument"
+      },
+      {
+        "item1": "calib3_gateway_of_india_021",
+        "item2": "calib3_victoria_memorial_016",
+        "hamming_distance": 3,
+        "class1": "gateway_of_india",
+        "class2": "victoria_memorial"
+      },
+      {
+        "item1": "calib3_gateway_of_india_023",
+        "item2": "calib3_victoria_memorial_014",
+        "hamming_distance": 3,
+        "class1": "gateway_of_india",
+        "class2": "victoria_memorial"
+      },
+      {
+        "item1": "calib3_gateway_of_india_023",
+        "item2": "calib3_victoria_memorial_021",
+        "hamming_distance": 2,
+        "class1": "gateway_of_india",
+        "class2": "victoria_memorial"
+      },
+      {
+        "item1": "calib3_gateway_of_india_023",
+        "item2": "calib3_non_monument_018",
+        "hamming_distance": 3,
+        "class1": "gateway_of_india",
+        "class2": "non_monument"
+      },
+      {
+        "item1": "calib3_gateway_of_india_023",
+        "item2": "calib3_non_monument_030",
+        "hamming_distance": 0,
+        "class1": "gateway_of_india",
+        "class2": "non_monument"
+      },
+      {
+        "item1": "calib3_victoria_memorial_014",
+        "item2": "calib3_non_monument_018",
+        "hamming_distance": 4,
+        "class1": "victoria_memorial",
+        "class2": "non_monument"
+      },
+      {
+        "item1": "calib3_victoria_memorial_014",
+        "item2": "calib3_non_monument_030",
+        "hamming_distance": 3,
+        "class1": "victoria_memorial",
+        "class2": "non_monument"
+      },
+      {
+        "item1": "calib3_victoria_memorial_021",
+        "item2": "calib3_non_monument_018",
+        "hamming_distance": 3,
+        "class1": "victoria_memorial",
+        "class2": "non_monument"
+      },
+      {
+        "item1": "calib3_victoria_memorial_021",
+        "item2": "calib3_non_monument_030",
+        "hamming_distance": 2,
+        "class1": "victoria_memorial",
+        "class2": "non_monument"
+      },
+      {
+        "item1": "calib3_non_monument_010",
+        "item2": "calib3_non_monument_011",
+        "hamming_distance": 3,
+        "class1": "non_monument",
+        "class2": "non_monument"
+      },
+      {
+        "item1": "calib3_non_monument_018",
+        "item2": "calib3_non_monument_030",
+        "hamming_distance": 3,
+        "class1": "non_monument",
+        "class2": "non_monument"
+      },
+      {
+        "item1": "calib3_non_monument_021",
+        "item2": "calib3_non_monument_022",
+        "hamming_distance": 0,
+        "class1": "non_monument",
+        "class2": "non_monument"
+      }
+    ]
+  },
+  "cross_split_contamination": {
+    "exact_sha256_matches_with_reference_gallery": 0,
+    "exact_sha256_matches_with_independent_eval_v1": 0,
+    "exact_sha256_matches_with_independent_eval_v2": 0,
+    "exact_sha256_matches_with_dev_v1": 0,
+    "near_dhash_matches_with_reference_gallery": 5,
+    "near_dhash_matches_with_independent_eval_v1": 1,
+    "near_dhash_matches_with_independent_eval_v2": 0,
+    "near_dhash_matches_with_dev_v1": 0,
+    "details": {
+      "ref_exact": [],
+      "ref_near": [
+        {
+          "calib_file": "calib3_konark_sun_temple_002",
+          "external_file": "ref_konark_sun_temple_04",
+          "dataset": "reference_gallery_v2",
+          "hamming_distance": 0
+        },
+        {
+          "calib_file": "calib3_sanchi_stupa_007",
+          "external_file": "ref_sanchi_stupa_10",
+          "dataset": "reference_gallery_v2",
+          "hamming_distance": 1
+        },
+        {
+          "calib_file": "calib3_hampi_stone_chariot_004",
+          "external_file": "ref_hampi_stone_chariot_10",
+          "dataset": "reference_gallery_v2",
+          "hamming_distance": 1
+        },
+        {
+          "calib_file": "calib3_hampi_stone_chariot_017",
+          "external_file": "ref_hampi_stone_chariot_20",
+          "dataset": "reference_gallery_v2",
+          "hamming_distance": 0
+        },
+        {
+          "calib_file": "calib3_hampi_stone_chariot_019",
+          "external_file": "ref_hampi_stone_chariot_12",
+          "dataset": "reference_gallery_v2",
+          "hamming_distance": 0
+        }
+      ],
+      "ind1_exact": [],
+      "ind1_near": [
+        {
+          "calib_file": "calib3_sanchi_stupa_008",
+          "external_file": "indep_sanc_02",
+          "dataset": "independent_eval_v1",
+          "hamming_distance": 1
+        }
+      ],
+      "ind2_exact": [],
+      "ind2_near": [],
+      "dev1_exact": [],
+      "dev1_near": []
+    }
+  },
+  "author_overlap_audit": {
+    "overlap_with_reference_gallery": [
+      "Mohit Prasad",
+      "Subhrajyoti07",
+      "Raki_Man",
+      "Suyash Dwivedi",
+      "Rashid Jorvee",
+      "Rohit Sharma",
+      "SpeakingArch",
+      "Joydeep",
+      "Reema Jalihal",
+      "Sclickp",
+      "Sujay GR"
+    ],
+    "overlap_with_independent_eval_v1": [
+      "iMahesh",
+      "Subhrajyoti07",
+      "Rohit Sharma",
+      "SpeakingArch",
+      "Joydeep"
+    ],
+    "overlap_with_independent_eval_v2": [
+      "Dietmar Rabich",
+      "Rashid Jorvee",
+      "Philip Nalangan",
+      "A.Savin",
+      "Kdas1977"
+    ],
+    "overlap_with_dev_v1": [
+      "Internet Archive Book Images",
+      "Rohit Sharma"
+    ]
+  },
+  "integrity_verdict": {
+    "zero_byte_files_found": true,
+    "corrupt_files_found": true,
+    "manifest_file_parity": true,
+    "zero_internal_exact_duplicates": true,
+    "zero_cross_split_exact_leakage": true,
+    "zero_eval_author_leakage": false
+  }
+}

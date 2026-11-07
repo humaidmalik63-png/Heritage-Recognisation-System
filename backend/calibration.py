@@ -103,9 +103,15 @@ class CalibrationEngine:
         if not isinstance(raw, dict):
             return clean
 
-        for key in ["version", "method", "calibration_status"]:
+        for key in ["version", "method", "calibration_status", "active_method"]:
             if key in raw and isinstance(raw[key], str):
                 clean[key] = raw[key]
+
+        if "parameters" in raw and isinstance(raw["parameters"], dict):
+            clean["parameters"] = raw["parameters"]
+
+        if "metrics_on_development" in raw and isinstance(raw["metrics_on_development"], dict):
+            clean["metrics_on_development"] = raw["metrics_on_development"]
 
         for float_key in [
             "temperature",
@@ -135,7 +141,7 @@ class CalibrationEngine:
     @property
     def is_calibrated(self) -> bool:
         """True if the model has a validated, active calibration mapping."""
-        return self.config.get("calibration_status") == "CALIBRATED"
+        return self.config.get("calibration_status") in ["CALIBRATED", "EXPERIMENTAL_CALIBRATED"]
 
     @property
     def calibration_status(self) -> str:
@@ -174,7 +180,14 @@ class CalibrationEngine:
         return self.config.get("image_quality", DEFAULT_CONFIG["image_quality"])
 
     def calibrate_similarity(
-        self, similarity: float, logits: Optional[np.ndarray] = None
+        self,
+        similarity: float,
+        logits: Optional[np.ndarray] = None,
+        margin: Optional[float] = None,
+        gatekeeper: Optional[float] = None,
+        quality: Optional[float] = None,
+        sift_inliers: Optional[int] = None,
+        agreement: Optional[float] = None,
     ) -> Optional[float]:
         """
         Calibrates similarity to a posterior probability.
@@ -184,7 +197,39 @@ class CalibrationEngine:
         if not self.is_calibrated:
             return None
 
-        # Temperature scaling on scaled cosine logit
+        params = self.config.get("parameters", {})
+        method = self.config.get("active_method", params.get("method", "temperature_scaling"))
+
+        if method == "multivariable_logistic" and "weights" in params:
+            weights = params.get("weights", {})
+            bias = params.get("bias", 0.0)
+            x_top1 = float(similarity)
+            x_margin = float(margin if margin is not None else 0.05)
+            x_gate = float(gatekeeper if gatekeeper is not None else 0.5)
+            x_qual = float(quality if quality is not None else 0.8)
+            x_sift = float(sift_inliers if sift_inliers is not None else 5)
+            x_agree = float(agreement if agreement is not None else 1.0)
+
+            z = (
+                bias
+                + weights.get("top1_sim", 0.0) * x_top1
+                + weights.get("margin", 0.0) * x_margin
+                + weights.get("gatekeeper", 0.0) * x_gate
+                + weights.get("quality", 0.0) * x_qual
+                + weights.get("sift_inliers", 0.0) * x_sift
+                + weights.get("agreement", 0.0) * x_agree
+            )
+            prob = 1.0 / (1.0 + math.exp(-max(min(z, 20.0), -20.0)))
+            return float(round(prob, 4))
+
+        if method == "platt_scaling":
+            A = float(params.get("A", params.get("a", 1.0)))
+            B = float(params.get("B", params.get("b", 0.0)))
+            z = A * float(similarity) + B
+            prob = 1.0 / (1.0 + math.exp(-max(min(z, 20.0), -20.0)))
+            return float(round(prob, 4))
+
+        # Temperature scaling fallback
         T = max(self.temperature, 1e-4)
         if logits is not None and len(logits) > 0:
             # Softmax over temperature-scaled logits

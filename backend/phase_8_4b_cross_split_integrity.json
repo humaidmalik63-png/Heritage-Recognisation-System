@@ -1,0 +1,102 @@
+{
+  "audit_title": "Phase 8.4B Complete Cross-Split Dataset Independence Audit",
+  "eval_dataset": "independent_final_test_v4 (Split D, N=100)",
+  "audit_summary": {
+    "total_prior_datasets_checked": 5,
+    "total_prior_specimens_audited": 595,
+    "total_exact_sha256_collisions": 0,
+    "total_source_url_collisions": 0,
+    "total_same_monument_author_collisions": 0,
+    "overall_independence_verdict": "CONFIRMED_INDEPENDENT"
+  },
+  "cross_split_matrix": {
+    "reference_gallery_v2": {
+      "prior_dataset_name": "reference_gallery_v2",
+      "specimen_count": 200,
+      "exact_sha256_collisions": 0,
+      "exact_source_url_collisions": 0,
+      "near_duplicate_dhash_collisions_distance_under_8": 0,
+      "same_monument_author_collisions": 0,
+      "same_monument_author_collision_details": [],
+      "cross_monument_shared_authors_count": 6,
+      "cross_monument_shared_authors": [
+        "bernard gagnon",
+        "rohit sharma",
+        "sharvarism",
+        "subhrajyoti07",
+        "syed sajidul islam",
+        "vyacheslav argenberg"
+      ],
+      "dataset_independence_status": "CONFIRMED_INDEPENDENT"
+    },
+    "calibration_dataset_v3": {
+      "prior_dataset_name": "calibration_dataset_v3",
+      "specimen_count": 265,
+      "exact_sha256_collisions": 0,
+      "exact_source_url_collisions": 0,
+      "near_duplicate_dhash_collisions_distance_under_8": 0,
+      "same_monument_author_collisions": 0,
+      "same_monument_author_collision_details": [],
+      "cross_monument_shared_authors_count": 8,
+      "cross_monument_shared_authors": [
+        "a.savin",
+        "basavaraj m",
+        "imahesh",
+        "internet archive book images",
+        "pinakpani",
+        "rohit sharma",
+        "rounik ghosh",
+        "subhrajyoti07"
+      ],
+      "dataset_independence_status": "CONFIRMED_INDEPENDENT"
+    },
+    "split_b_eval_v2": {
+      "prior_dataset_name": "split_b_eval_v2",
+      "specimen_count": 55,
+      "exact_sha256_collisions": 0,
+      "exact_source_url_collisions": 0,
+      "near_duplicate_dhash_collisions_distance_under_8": 0,
+      "same_monument_author_collisions": 0,
+      "same_monument_author_collision_details": [],
+      "cross_monument_shared_authors_count": 4,
+      "cross_monument_shared_authors": [
+        "a.savin",
+        "aliva sahoo",
+        "bernard gagnon",
+        "vyacheslav argenberg"
+      ],
+      "dataset_independence_status": "CONFIRMED_INDEPENDENT"
+    },
+    "split_c_final_v3": {
+      "prior_dataset_name": "split_c_final_v3",
+      "specimen_count": 28,
+      "exact_sha256_collisions": 0,
+      "exact_source_url_collisions": 0,
+      "near_duplicate_dhash_collisions_distance_under_8": 0,
+      "same_monument_author_collisions": 0,
+      "same_monument_author_collision_details": [],
+      "cross_monument_shared_authors_count": 3,
+      "cross_monument_shared_authors": [
+        "bernard gagnon",
+        "imahesh",
+        "syed sajidul islam"
+      ],
+      "dataset_independence_status": "CONFIRMED_INDEPENDENT"
+    },
+    "calibration_development": {
+      "prior_dataset_name": "calibration_development",
+      "specimen_count": 47,
+      "exact_sha256_collisions": 0,
+      "exact_source_url_collisions": 0,
+      "near_duplicate_dhash_collisions_distance_under_8": 0,
+      "same_monument_author_collisions": 0,
+      "same_monument_author_collision_details": [],
+      "cross_monument_shared_authors_count": 2,
+      "cross_monument_shared_authors": [
+        "internet archive book images",
+        "rohit sharma"
+      ],
+      "dataset_independence_status": "CONFIRMED_INDEPENDENT"
+    }
+  }
+}
