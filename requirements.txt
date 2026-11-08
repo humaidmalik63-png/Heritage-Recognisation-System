@@ -11,7 +11,5 @@ pydantic
 duckduckgo-search
 requests
 python-dotenv
-gradio
 opencv-python-headless
-streamlit
 
