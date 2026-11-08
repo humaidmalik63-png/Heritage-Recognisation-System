@@ -432,11 +432,26 @@ def execute_gemini_fallback(image: Image.Image) -> Optional[Dict[str, Any]]:
         return None
 
 
-# --- Lifespan Initialization ---
+# --- Backend Initialization Helper ---
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
+def initialize_backend_resources(gemini_api_key: Optional[str] = None) -> Dict[str, Any]:
+    """
+    Initializes CLIP, FAISS, Gatekeeper embeddings, and Tier-2 services.
+    Idempotent: Reuses existing in-memory models if already loaded.
+    """
+    if state.get("clip_model") is not None and state.get("faiss_index") is not None:
+        if gemini_api_key and not state.get("gemini_configured"):
+            os.environ["GEMINI_API_KEY"] = gemini_api_key
+            if hasattr(gemini_service, "initialize"):
+                gemini_service.initialize()
+            state["gemini_service"] = gemini_service
+            state["gemini_client"] = getattr(gemini_service, "client", None)
+            state["gemini_configured"] = gemini_service.is_available()
+        return state
+
     logger.info("Initializing Heritage Monument Recognition Engine (SIH 2025)...")
+    if gemini_api_key:
+        os.environ["GEMINI_API_KEY"] = gemini_api_key
 
     # 1. Device configuration
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -549,6 +564,14 @@ async def lifespan(app: FastAPI):
     )
 
     logger.info("Engine startup complete. Service ready.")
+    return state
+
+
+# --- Lifespan Initialization ---
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    initialize_backend_resources()
     yield
     logger.info("Service shutting down...")
     shadow_engine.shutdown()
@@ -578,6 +601,19 @@ if DATASET_DIR.exists():
 
 
 # --- API Routes ---
+
+@app.get("/")
+def get_root():
+    """Root entry point providing discovery links for documentation and health checks."""
+    return {
+        "platform": "Visual Heritage Recognition & Grounded Cultural Discovery Platform",
+        "status": "online",
+        "documentation": "/docs",
+        "health_check": "/api/health",
+        "catalogue": "/api/catalogue",
+        "verify_endpoint": "POST /api/verify-monument",
+    }
+
 
 @app.get("/api/health")
 def get_health():
@@ -889,22 +925,13 @@ def resolve_exception(exception_id: str, payload: ResolveExceptionRequest):
     }
 
 
-@app.post("/api/verify-monument", response_model=VerificationResponse)
-async def verify_monument(file: UploadFile = File(...)):
+async def process_verification_pipeline(image_bytes: bytes, filename: str = "upload.jpg") -> VerificationResponse:
     """
-    Phase 6.2 Advanced Recognition & Calibrated Uncertainty Pipeline:
-    - Step 1: Read, validate, and compute image hash.
-    - Step 2: Quality Inspection (Resolution, Laplacian blur, Exposure).
-    - Step 3: Zero-Shot Architectural Gatekeeper & CLIP Feature Extraction.
-    - Step 4: Multi-Candidate Unique-Monument FAISS Aggregation.
-    - Step 5: Geodetic EXIF GPS Verification & Spatial Conflict Detection.
-    - Step 6: Uncertainty Engine Evaluation across 5 Explicit States.
-    - Step 7: Tier 2 Gemini VLM Fallback (if configured & justified).
-    - Step 8: Curator Review Exception Logging (with duplicate suppression).
+    Core Phase 6.2 Advanced Recognition & Calibrated Uncertainty Pipeline.
+    Can be invoked directly by FastAPI endpoints, Streamlit applications, or scripts.
     """
-    # 1. Read & validate image bytes
+    # 1. Validate image bytes
     try:
-        image_bytes = await file.read()
         if not image_bytes:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Uploaded file is empty.")
 
@@ -1114,10 +1141,13 @@ async def verify_monument(file: UploadFile = File(...)):
             is_catalog_metadata_only = False
             final_catalogue_status = CatalogueStatus.OUT_OF_CATALOG.value
 
-        # B3. Flagship / Recognition-Ready Monument (e.g. Taj Mahal, Qutub Minar confirmed under uncertainty):
+        # B3. Flagship / Recognition-Ready Monument (e.g. Taj Mahal, Qutub Minar, Ajanta Caves confirmed under uncertainty):
         elif (
             gemini_adjudication.is_heritage_structure
             and gemini_adjudication.proposed_identity
+            and len(gemini_adjudication.proposed_identity.strip()) > 3
+            and len(gemini_adjudication.visible_architectural_evidence.strip()) >= 20
+            and gemini_adjudication.qualitative_confidence.upper() in ["HIGH", "MEDIUM"]
             and adjudicated_membership.status == CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY
             and not gemini_adjudication.is_offline_fallback
         ):
@@ -1125,6 +1155,15 @@ async def verify_monument(file: UploadFile = File(...)):
                 f"Gemini adjudication confirmed RECOGNITION-READY catalog monument: "
                 f"'{gemini_adjudication.proposed_identity}' -> ID '{adjudicated_membership.monument_id}'"
             )
+            final_decision = DecisionState.VERIFIED_MATCH
+            best_key = adjudicated_membership.monument_id
+            best_name = adjudicated_membership.monument_name or gemini_adjudication.proposed_identity
+            cand_match = next((c for c in top_candidates_agg if getattr(c, "monument_key", None) == best_key), None)
+            if cand_match:
+                best_cand = cand_match
+                best_score = max(best_score, getattr(cand_match, "max_similarity", 0.85))
+            else:
+                best_score = max(best_score, 0.88)
             is_out_of_catalog_identified = False
             is_catalog_metadata_only = False
             final_catalogue_status = CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY.value
@@ -1137,7 +1176,10 @@ async def verify_monument(file: UploadFile = File(...)):
 
     # 6. Handle Human Review Exception Logging
     exception_id = None
-    if uncertainty_res.requires_human_review or final_decision in [DecisionState.UNCERTAIN_MATCH, DecisionState.UNKNOWN_HERITAGE_SPECIMEN, DecisionState.REVIEW_REQUIRED]:
+    if final_decision != DecisionState.VERIFIED_MATCH and (
+        uncertainty_res.requires_human_review
+        or final_decision in [DecisionState.UNCERTAIN_MATCH, DecisionState.UNKNOWN_HERITAGE_SPECIMEN, DecisionState.REVIEW_REQUIRED]
+    ):
         exc_reason = (
             f"Out-of-catalog monument identified: {gemini_adjudication.proposed_identity}"
             if is_out_of_catalog_identified and gemini_adjudication and gemini_adjudication.proposed_identity
@@ -1159,37 +1201,45 @@ async def verify_monument(file: UploadFile = File(...)):
     decision = final_decision
 
     # --- CASE A: VERIFIED MATCH ---
-    if decision == DecisionState.VERIFIED_MATCH and best_key in state["metadata"]:
-        m_data = state["metadata"][best_key]
+    if decision == DecisionState.VERIFIED_MATCH and (best_key in state["metadata"] or best_key in state.get("catalogue_100", {})):
+        m_data = state["metadata"].get(best_key) or state.get("catalogue_100", {}).get(best_key, {})
         catalog_id = CATALOG_ID_MAP.get(best_key, f"ASI-ARCH-{best_key[:3].upper()}-00")
         heuristic_conf_pct = round(min(best_score * 100.0, 99.8), 1)
 
         citations = None
-        if "grounded_citations" in m_data:
+        if "grounded_citations" in m_data and m_data["grounded_citations"]:
             citations = GroundedCitations(**m_data["grounded_citations"])
+
+        # Determine tier: if resolved by Tier 2 adjudication, specify Tier 2
+        if gemini_adjudication and uncertainty_res.decision != DecisionState.VERIFIED_MATCH:
+            tier_str = f"TIER 2 // {gemini_service.model_name.upper()} ADJUDICATION"
+            decision_expl = f"Candidate ambiguity resolved via Tier 2 Multimodal Adjudication ({gemini_service.model_name}): Confirmed '{best_name}'."
+        else:
+            tier_str = "TIER 1 // LOCAL CLIP + FAISS VECTOR INDEX"
+            decision_expl = uncertainty_res.explanation
 
         response_obj = VerificationResponse(
             is_monument=True,
             verification_status=DecisionState.VERIFIED_MATCH.value,
             is_uncertain=False,
-            verification_tier="TIER 1 // LOCAL CLIP + FAISS VECTOR INDEX",
+            verification_tier=tier_str,
             confidence_score=heuristic_conf_pct,
             catalog_id=catalog_id,
             monument_key=best_key,
-            monument_name=m_data["monument_name"],
-            location=m_data["location"],
-            coordinates=m_data["coordinates"],
-            architectural_style=m_data["architectural_style"],
-            built_by_or_era=m_data["built_by_or_era"],
-            historical_summary=m_data["historical_summary"],
-            structural_features_detected=m_data["structural_features_detected"],
+            monument_name=m_data.get("monument_name", best_name),
+            location=m_data.get("location"),
+            coordinates=m_data.get("coordinates"),
+            architectural_style=m_data.get("architectural_style"),
+            built_by_or_era=m_data.get("built_by_or_era"),
+            historical_summary=m_data.get("historical_summary"),
+            structural_features_detected=m_data.get("structural_features_detected", []),
             preservation_status=m_data.get("preservation_status"),
             grounded_citations=citations,
             pipeline_telemetry=PipelineTelemetry(
                 exif_gps=exif_gps,
                 architectural_gatekeeper_score=arch_prob,
                 top_3_candidates=top_3_telemetry,
-                decision_reason=uncertainty_res.explanation,
+                decision_reason=decision_expl,
                 geo_boost_applied=geo_boost,
                 margin_threshold=round(uncertainty_engine.calibration.uncertainty_margin_threshold, 4),
             ),
@@ -1418,6 +1468,15 @@ async def verify_monument(file: UploadFile = File(...)):
             logger.warning(f"Shadow staging submission failed silently without affecting response: {shadow_exc}")
 
     return response_obj
+
+
+@app.post("/api/verify-monument", response_model=VerificationResponse)
+async def verify_monument(file: UploadFile = File(...)):
+    """
+    FastAPI endpoint for monument verification.
+    """
+    image_bytes = await file.read()
+    return await process_verification_pipeline(image_bytes, filename=file.filename or "upload.jpg")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,17 @@
+fastapi
+uvicorn
+python-multipart
+pillow
+exifread
+torch
+transformers
+faiss-cpu
+google-genai
+pydantic
+duckduckgo-search
+requests
+python-dotenv
+gradio
+opencv-python-headless
+streamlit
+
