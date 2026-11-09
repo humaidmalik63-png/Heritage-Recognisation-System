@@ -25,7 +25,7 @@ const INITIAL_DEMO_SCANS = [
     location: 'Agra, Uttar Pradesh',
     architectural_style: 'Mughal Architecture',
     built_by_or_era: 'Mughal Emperor Shah Jahan (c. 1631–1653)',
-    thumbnail: `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8001'}/dataset/taj_mahal/img_1.jpg`,
+    thumbnail: '/assets/heritage/taj-mahal.jpg',
     coordinates: { lat: 27.1751, lng: 78.0421 },
   },
   {
@@ -39,7 +39,7 @@ const INITIAL_DEMO_SCANS = [
     location: 'Hyderabad, Telangana',
     architectural_style: 'Indo-Islamic (Qutb Shahi) Architecture',
     built_by_or_era: 'Muhammad Quli Qutb Shah (c. 1591)',
-    thumbnail: 'http://localhost:8000/dataset/charminar/img_2.jpg',
+    thumbnail: '/assets/heritage/qutub-minar.jpg',
     coordinates: { lat: 17.3616, lng: 78.4747 },
   },
 ];
@@ -180,7 +180,7 @@ export function AuthProvider({ children }) {
       location: scanResult.location || 'Location Recorded',
       architectural_style: scanResult.architectural_style || 'Historic Heritage',
       built_by_or_era: scanResult.built_by_or_era || 'Historical Era',
-      thumbnail: thumbnailSrc || `http://localhost:8000/dataset/${scanResult.monument_key}/img_1.jpg`,
+      thumbnail: thumbnailSrc || '/assets/heritage/taj-mahal.jpg',
       coordinates: scanResult.coordinates,
       historical_summary: scanResult.historical_summary,
       structural_features_detected: scanResult.structural_features_detected || [],

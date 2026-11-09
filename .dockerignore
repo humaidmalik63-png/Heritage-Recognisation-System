@@ -19,8 +19,7 @@ __pycache__/
 # Frontend (deployed independently to Vercel)
 frontend/
 
-# Local raw image dataset archives (not required for FAISS vector inference)
-backend/dataset/
+# Raw evaluation splits and legacy benchmarks (not needed for production)
 backend/datasets/independent_eval/
 backend/datasets/calibration_dataset_v3/
 backend/datasets/reference_gallery_v2/

@@ -164,7 +164,8 @@ export default function History() {
                     alt={item.monument_name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 filter contrast-105"
                     onError={(e) => {
-                      e.target.src = `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8001'}/dataset/${item.monument_key}/img_1.jpg`;
+                      e.target.onerror = null;
+                      e.target.src = '/assets/heritage/taj-mahal.jpg';
                     }}
                   />
                   <div className="absolute top-2.5 left-2.5">
