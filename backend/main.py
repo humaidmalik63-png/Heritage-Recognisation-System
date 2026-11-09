@@ -967,9 +967,8 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
         with Image.open(io.BytesIO(image_bytes)) as valid_img:
             image_rgb = valid_img.convert("RGB")
             # Dynamic image dimension clamping to mitigate inference allocation spikes
-            if image_rgb.width > 1024 or image_rgb.height > 1024:
-                image_rgb.thumbnail((1024, 1024), Image.Resampling.LANCZOS)
-            image_rgb = valid_img.convert("RGB")
+            if image_rgb.width > 768 or image_rgb.height > 768:
+                image_rgb.thumbnail((768, 768), Image.Resampling.LANCZOS)
     except Exception as exc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Invalid or corrupted image: {exc}")
 
