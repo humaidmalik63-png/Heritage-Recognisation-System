@@ -11,4 +11,6 @@ pydantic
 duckduckgo-search
 requests
 python-dotenv
+opencv-python-headless
+psutil
 

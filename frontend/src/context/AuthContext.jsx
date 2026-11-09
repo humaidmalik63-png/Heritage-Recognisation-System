@@ -25,7 +25,7 @@ const INITIAL_DEMO_SCANS = [
     location: 'Agra, Uttar Pradesh',
     architectural_style: 'Mughal Architecture',
     built_by_or_era: 'Mughal Emperor Shah Jahan (c. 1631–1653)',
-    thumbnail: 'http://localhost:8000/dataset/taj_mahal/img_1.jpg',
+    thumbnail: `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8001'}/dataset/taj_mahal/img_1.jpg`,
     coordinates: { lat: 27.1751, lng: 78.0421 },
   },
   {

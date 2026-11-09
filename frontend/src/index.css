@@ -4,14 +4,33 @@
 
 @layer base {
   body {
-    background-color: #F7F5F0;
-    color: #18181B;
+    background-color: #F5F3ED;
+    color: #171816;
     min-height: 100dvh;
     overflow-x: hidden;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Classical subtle scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #EFECE4;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #C5BDB2;
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #A9472D;
   }
 }
 
-/* Curatorial Archival & Liquid Glass Utilities */
+/* Authentic Archival Borders & Paper Surfaces */
 .double-border-bottom {
   border-bottom: 3px double #E2DDD5;
 }
@@ -20,73 +39,81 @@
   border-top: 3px double #E2DDD5;
 }
 
-.liquid-glass {
-  background: rgba(253, 251, 247, 0.88);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(226, 221, 213, 0.9);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+/* Archival Surface Plate - Solid, tactile, non-glassmorphic */
+.archival-plate {
+  background-color: #FDFBF7;
+  border: 1px solid #E2DDD5;
+  box-shadow: 0 1px 3px rgba(24, 24, 27, 0.04), 0 4px 12px rgba(24, 24, 27, 0.02);
 }
 
+/* Legacy utility alias mapped to clean archival plate */
+.liquid-glass {
+  background-color: #FDFBF7;
+  border: 1px solid #E2DDD5;
+  box-shadow: 0 1px 4px rgba(24, 24, 27, 0.04);
+}
+
+/* Authoritative Curatorial Inked Stamps */
 .archival-stamp {
   position: relative;
-  border: 1.5px solid #9E3B24;
-  padding: 3px 10px;
+  border: 1px solid #9E3B24;
+  padding: 2px 8px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
   color: #9E3B24;
   text-transform: uppercase;
-  background: rgba(158, 59, 36, 0.04);
-  box-shadow: 0 0 0 1px rgba(158, 59, 36, 0.12);
+  background-color: #F8ECE9;
   display: inline-flex;
   align-items: center;
   gap: 5px;
+  border-radius: 2px;
 }
 
 .archival-stamp-tier2 {
   position: relative;
-  border: 1.5px solid #B4833E;
-  padding: 3px 10px;
+  border: 1px solid #B4833E;
+  padding: 2px 8px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
-  color: #B4833E;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: #7A531A;
   text-transform: uppercase;
-  background: rgba(180, 131, 62, 0.05);
-  box-shadow: 0 0 0 1px rgba(180, 131, 62, 0.12);
+  background-color: #FBF6ED;
   display: inline-flex;
   align-items: center;
   gap: 5px;
+  border-radius: 2px;
 }
 
 .archival-stamp-rejected {
   position: relative;
-  border: 1.5px solid #71717A;
-  padding: 3px 10px;
+  border: 1px solid #71717A;
+  padding: 2px 8px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
-  color: #52525B;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: #3F3F46;
   text-transform: uppercase;
-  background: rgba(113, 113, 122, 0.05);
+  background-color: #F4F4F5;
   display: inline-flex;
   align-items: center;
   gap: 5px;
+  border-radius: 2px;
 }
 
-/* Scanning Reticle Animation */
+/* Restrained Photographic Specimen Scanner Indicator (No Neon Glow) */
 @keyframes scanline {
   0% {
-    top: 2%;
-    opacity: 0.9;
+    top: 4%;
+    opacity: 0.85;
   }
   50% {
-    opacity: 1;
+    opacity: 0.95;
   }
   100% {
-    top: 98%;
-    opacity: 0.4;
+    top: 96%;
+    opacity: 0.7;
   }
 }
 
@@ -94,13 +121,13 @@
   position: absolute;
   left: 0;
   right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #9E3B24 40%, #9E3B24 60%, transparent);
-  box-shadow: 0 0 14px 3px rgba(158, 59, 36, 0.65);
-  animation: scanline 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+  height: 1px;
+  background-color: #9E3B24;
+  opacity: 0.85;
+  animation: scanline 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
 }
 
-/* Skeletal Shimmer Reflection */
+/* Subtle Archival Ingestion Progress Shimmer */
 @keyframes shimmer {
   100% {
     transform: translateX(100%);
@@ -122,11 +149,11 @@
   transform: translateX(-100%);
   background-image: linear-gradient(
     90deg,
-    rgba(255, 255, 255, 0) 0,
-    rgba(255, 255, 255, 0.4) 50%,
-    rgba(255, 255, 255, 0) 100%
+    rgba(253, 251, 247, 0) 0,
+    rgba(253, 251, 247, 0.6) 50%,
+    rgba(253, 251, 247, 0) 100%
   );
-  animation: shimmer 1.8s infinite;
+  animation: shimmer 2s infinite;
   content: '';
 }
 
@@ -137,4 +164,22 @@
   font-family: 'Plus Jakarta Sans', sans-serif;
   z-index: 10 !important;
   background: #EFECE6;
+}
+
+/* Custom Leaflet Archival Popup */
+.archival-popup .leaflet-popup-content-wrapper {
+  background-color: #FDFBF7;
+  color: #18181B;
+  border: 1px solid #E2DDD5;
+  border-radius: 4px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  padding: 0;
+}
+.archival-popup .leaflet-popup-content {
+  margin: 10px 12px;
+  line-height: 1.4;
+}
+.archival-popup .leaflet-popup-tip {
+  background-color: #FDFBF7;
+  border: 1px solid #E2DDD5;
 }

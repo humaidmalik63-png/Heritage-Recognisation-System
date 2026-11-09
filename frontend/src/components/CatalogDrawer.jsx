@@ -74,14 +74,14 @@ export default function CatalogDrawer({ isOpen, onClose, monuments }) {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex justify-end">
+      <div className="fixed inset-0 z-[100] flex justify-end">
         {/* Backdrop Fade */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 bg-archive-charcoal/50 backdrop-blur-sm"
+          className="fixed inset-0 bg-archive-charcoal/50 backdrop-blur-sm z-0"
         />
 
         {/* Slide-in Drawer */}

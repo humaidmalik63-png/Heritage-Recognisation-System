@@ -1,0 +1,33 @@
+# Git and IDE metadata
+.git/
+.gitignore
+.gitattributes
+.agents/
+.gemini/
+.idea/
+.vscode/
+
+# Python caches and virtual environments
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Frontend (deployed independently to Vercel)
+frontend/
+
+# Local raw image dataset archives (not required for FAISS vector inference)
+backend/dataset/
+backend/datasets/independent_eval/
+backend/datasets/calibration_dataset_v3/
+backend/datasets/reference_gallery_v2/
+backend/datasets/reference_gallery_v1_backup/
+
+# Logs and scratch files
+*.log
+console.log
+backend/telemetry/*.jsonl
+

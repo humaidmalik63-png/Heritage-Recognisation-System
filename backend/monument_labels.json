@@ -3054,7 +3054,7 @@
     "source": "ajanta_caves/ref_01.jpg",
     "file_path": "datasets/reference_gallery_100/ajanta_caves/ref_01.jpg",
     "is_centroid": false,
-    "view_type": "reference_view",
+    "view_type": "full_structure",
     "is_structural_view": true,
     "lighting_condition": "daylight",
     "image_id": "ref_ajanta_caves_ref_01"
@@ -3066,7 +3066,7 @@
     "source": "ajanta_caves/ref_02.jpg",
     "file_path": "datasets/reference_gallery_100/ajanta_caves/ref_02.jpg",
     "is_centroid": false,
-    "view_type": "reference_view",
+    "view_type": "full_structure",
     "is_structural_view": true,
     "lighting_condition": "daylight",
     "image_id": "ref_ajanta_caves_ref_02"
@@ -3078,7 +3078,7 @@
     "source": "ajanta_caves/ref_03.jpg",
     "file_path": "datasets/reference_gallery_100/ajanta_caves/ref_03.jpg",
     "is_centroid": false,
-    "view_type": "reference_view",
+    "view_type": "full_structure",
     "is_structural_view": true,
     "lighting_condition": "daylight",
     "image_id": "ref_ajanta_caves_ref_03"
@@ -3087,16 +3087,100 @@
     "index_id": 257,
     "monument_key": "ajanta_caves",
     "monument_name": "Ajanta Caves",
+    "source": "ajanta_caves/ref_04.jpg",
+    "file_path": "datasets/reference_gallery_100/ajanta_caves/ref_04.jpg",
+    "is_centroid": false,
+    "view_type": "full_structure",
+    "is_structural_view": true,
+    "lighting_condition": "daylight",
+    "image_id": "ref_ajanta_caves_ref_04"
+  },
+  {
+    "index_id": 258,
+    "monument_key": "ajanta_caves",
+    "monument_name": "Ajanta Caves",
+    "source": "ajanta_caves/ref_05.jpg",
+    "file_path": "datasets/reference_gallery_100/ajanta_caves/ref_05.jpg",
+    "is_centroid": false,
+    "view_type": "full_structure",
+    "is_structural_view": true,
+    "lighting_condition": "daylight",
+    "image_id": "ref_ajanta_caves_ref_05"
+  },
+  {
+    "index_id": 259,
+    "monument_key": "ajanta_caves",
+    "monument_name": "Ajanta Caves",
+    "source": "ajanta_caves/ref_06.jpg",
+    "file_path": "datasets/reference_gallery_100/ajanta_caves/ref_06.jpg",
+    "is_centroid": false,
+    "view_type": "full_structure",
+    "is_structural_view": true,
+    "lighting_condition": "daylight",
+    "image_id": "ref_ajanta_caves_ref_06"
+  },
+  {
+    "index_id": 260,
+    "monument_key": "ajanta_caves",
+    "monument_name": "Ajanta Caves",
+    "source": "ajanta_caves/ref_07.jpg",
+    "file_path": "datasets/reference_gallery_100/ajanta_caves/ref_07.jpg",
+    "is_centroid": false,
+    "view_type": "full_structure",
+    "is_structural_view": true,
+    "lighting_condition": "daylight",
+    "image_id": "ref_ajanta_caves_ref_07"
+  },
+  {
+    "index_id": 261,
+    "monument_key": "ajanta_caves",
+    "monument_name": "Ajanta Caves",
+    "source": "ajanta_caves/ref_08.jpg",
+    "file_path": "datasets/reference_gallery_100/ajanta_caves/ref_08.jpg",
+    "is_centroid": false,
+    "view_type": "contextual_element",
+    "is_structural_view": true,
+    "lighting_condition": "daylight",
+    "image_id": "ref_ajanta_caves_ref_08"
+  },
+  {
+    "index_id": 262,
+    "monument_key": "ajanta_caves",
+    "monument_name": "Ajanta Caves",
+    "source": "ajanta_caves/ref_09.jpg",
+    "file_path": "datasets/reference_gallery_100/ajanta_caves/ref_09.jpg",
+    "is_centroid": false,
+    "view_type": "panoramic_context",
+    "is_structural_view": true,
+    "lighting_condition": "daylight",
+    "image_id": "ref_ajanta_caves_ref_09"
+  },
+  {
+    "index_id": 263,
+    "monument_key": "ajanta_caves",
+    "monument_name": "Ajanta Caves",
+    "source": "ajanta_caves/ref_10.jpg",
+    "file_path": "datasets/reference_gallery_100/ajanta_caves/ref_10.jpg",
+    "is_centroid": false,
+    "view_type": "panoramic_context",
+    "is_structural_view": true,
+    "lighting_condition": "daylight",
+    "image_id": "ref_ajanta_caves_ref_10"
+  },
+  {
+    "index_id": 264,
+    "monument_key": "ajanta_caves",
+    "monument_name": "Ajanta Caves",
     "source": "ajanta_caves/centroid",
     "file_path": "datasets/reference_gallery_100/ajanta_caves/centroid",
     "is_centroid": true,
     "view_type": "centroid_anchor",
     "is_structural_view": true,
-    "lighting_condition": "ambient",
+    "lighting_condition": "normalized_aggregate",
     "image_id": "ref_ajanta_caves_centroid"
   },
   {
-    "index_id": 258,
+    "index_id": 265,
     "monument_key": "khajuraho_temples",
     "monument_name": "Khajuraho Group of Monuments",
     "source": "khajuraho_temples/ref_01.jpg",
@@ -3108,7 +3192,7 @@
     "image_id": "ref_khajuraho_temples_ref_01"
   },
   {
-    "index_id": 259,
+    "index_id": 266,
     "monument_key": "khajuraho_temples",
     "monument_name": "Khajuraho Group of Monuments",
     "source": "khajuraho_temples/ref_02.jpg",
@@ -3120,7 +3204,7 @@
     "image_id": "ref_khajuraho_temples_ref_02"
   },
   {
-    "index_id": 260,
+    "index_id": 267,
     "monument_key": "khajuraho_temples",
     "monument_name": "Khajuraho Group of Monuments",
     "source": "khajuraho_temples/ref_03.jpg",
@@ -3132,7 +3216,7 @@
     "image_id": "ref_khajuraho_temples_ref_03"
   },
   {
-    "index_id": 261,
+    "index_id": 268,
     "monument_key": "khajuraho_temples",
     "monument_name": "Khajuraho Group of Monuments",
     "source": "khajuraho_temples/centroid",
@@ -3144,7 +3228,7 @@
     "image_id": "ref_khajuraho_temples_centroid"
   },
   {
-    "index_id": 262,
+    "index_id": 269,
     "monument_key": "elephanta_caves",
     "monument_name": "Elephanta Caves",
     "source": "elephanta_caves/ref_01.jpg",
@@ -3156,7 +3240,7 @@
     "image_id": "ref_elephanta_caves_ref_01"
   },
   {
-    "index_id": 263,
+    "index_id": 270,
     "monument_key": "elephanta_caves",
     "monument_name": "Elephanta Caves",
     "source": "elephanta_caves/ref_02.jpg",
@@ -3168,7 +3252,7 @@
     "image_id": "ref_elephanta_caves_ref_02"
   },
   {
-    "index_id": 264,
+    "index_id": 271,
     "monument_key": "elephanta_caves",
     "monument_name": "Elephanta Caves",
     "source": "elephanta_caves/ref_03.jpg",
@@ -3180,7 +3264,7 @@
     "image_id": "ref_elephanta_caves_ref_03"
   },
   {
-    "index_id": 265,
+    "index_id": 272,
     "monument_key": "elephanta_caves",
     "monument_name": "Elephanta Caves",
     "source": "elephanta_caves/centroid",
@@ -3192,7 +3276,7 @@
     "image_id": "ref_elephanta_caves_centroid"
   },
   {
-    "index_id": 266,
+    "index_id": 273,
     "monument_key": "nalanda_mahavihara",
     "monument_name": "Nalanda Mahavihara",
     "source": "nalanda_mahavihara/ref_01.jpg",
@@ -3204,7 +3288,7 @@
     "image_id": "ref_nalanda_mahavihara_ref_01"
   },
   {
-    "index_id": 267,
+    "index_id": 274,
     "monument_key": "nalanda_mahavihara",
     "monument_name": "Nalanda Mahavihara",
     "source": "nalanda_mahavihara/ref_02.jpg",
@@ -3216,7 +3300,7 @@
     "image_id": "ref_nalanda_mahavihara_ref_02"
   },
   {
-    "index_id": 268,
+    "index_id": 275,
     "monument_key": "nalanda_mahavihara",
     "monument_name": "Nalanda Mahavihara",
     "source": "nalanda_mahavihara/ref_03.jpg",
@@ -3228,7 +3312,7 @@
     "image_id": "ref_nalanda_mahavihara_ref_03"
   },
   {
-    "index_id": 269,
+    "index_id": 276,
     "monument_key": "nalanda_mahavihara",
     "monument_name": "Nalanda Mahavihara",
     "source": "nalanda_mahavihara/centroid",
@@ -3240,7 +3324,7 @@
     "image_id": "ref_nalanda_mahavihara_centroid"
   },
   {
-    "index_id": 270,
+    "index_id": 277,
     "monument_key": "chhatrapati_shivaji_terminus",
     "monument_name": "Chhatrapati Shivaji Maharaj Terminus",
     "source": "chhatrapati_shivaji_terminus/ref_01.jpg",
@@ -3252,7 +3336,7 @@
     "image_id": "ref_chhatrapati_shivaji_terminus_ref_01"
   },
   {
-    "index_id": 271,
+    "index_id": 278,
     "monument_key": "chhatrapati_shivaji_terminus",
     "monument_name": "Chhatrapati Shivaji Maharaj Terminus",
     "source": "chhatrapati_shivaji_terminus/ref_02.jpg",
@@ -3264,7 +3348,7 @@
     "image_id": "ref_chhatrapati_shivaji_terminus_ref_02"
   },
   {
-    "index_id": 272,
+    "index_id": 279,
     "monument_key": "chhatrapati_shivaji_terminus",
     "monument_name": "Chhatrapati Shivaji Maharaj Terminus",
     "source": "chhatrapati_shivaji_terminus/ref_03.jpg",
@@ -3276,7 +3360,7 @@
     "image_id": "ref_chhatrapati_shivaji_terminus_ref_03"
   },
   {
-    "index_id": 273,
+    "index_id": 280,
     "monument_key": "chhatrapati_shivaji_terminus",
     "monument_name": "Chhatrapati Shivaji Maharaj Terminus",
     "source": "chhatrapati_shivaji_terminus/centroid",
@@ -3288,7 +3372,7 @@
     "image_id": "ref_chhatrapati_shivaji_terminus_centroid"
   },
   {
-    "index_id": 274,
+    "index_id": 281,
     "monument_key": "amer_fort",
     "monument_name": "Amer Fort",
     "source": "amer_fort/ref_01.jpg",
@@ -3300,7 +3384,7 @@
     "image_id": "ref_amer_fort_ref_01"
   },
   {
-    "index_id": 275,
+    "index_id": 282,
     "monument_key": "amer_fort",
     "monument_name": "Amer Fort",
     "source": "amer_fort/ref_02.jpg",
@@ -3312,7 +3396,7 @@
     "image_id": "ref_amer_fort_ref_02"
   },
   {
-    "index_id": 276,
+    "index_id": 283,
     "monument_key": "amer_fort",
     "monument_name": "Amer Fort",
     "source": "amer_fort/ref_03.jpg",
@@ -3324,7 +3408,7 @@
     "image_id": "ref_amer_fort_ref_03"
   },
   {
-    "index_id": 277,
+    "index_id": 284,
     "monument_key": "amer_fort",
     "monument_name": "Amer Fort",
     "source": "amer_fort/centroid",
@@ -3336,7 +3420,7 @@
     "image_id": "ref_amer_fort_centroid"
   },
   {
-    "index_id": 278,
+    "index_id": 285,
     "monument_key": "golconda_fort",
     "monument_name": "Golconda Fort",
     "source": "golconda_fort/ref_01.jpg",
@@ -3348,7 +3432,7 @@
     "image_id": "ref_golconda_fort_ref_01"
   },
   {
-    "index_id": 279,
+    "index_id": 286,
     "monument_key": "golconda_fort",
     "monument_name": "Golconda Fort",
     "source": "golconda_fort/ref_02.jpg",
@@ -3360,7 +3444,7 @@
     "image_id": "ref_golconda_fort_ref_02"
   },
   {
-    "index_id": 280,
+    "index_id": 287,
     "monument_key": "golconda_fort",
     "monument_name": "Golconda Fort",
     "source": "golconda_fort/ref_03.jpg",
@@ -3372,7 +3456,7 @@
     "image_id": "ref_golconda_fort_ref_03"
   },
   {
-    "index_id": 281,
+    "index_id": 288,
     "monument_key": "golconda_fort",
     "monument_name": "Golconda Fort",
     "source": "golconda_fort/centroid",
@@ -3384,7 +3468,7 @@
     "image_id": "ref_golconda_fort_centroid"
   },
   {
-    "index_id": 282,
+    "index_id": 289,
     "monument_key": "somnath_temple",
     "monument_name": "Somnath Temple",
     "source": "somnath_temple/ref_01.jpg",
@@ -3396,7 +3480,7 @@
     "image_id": "ref_somnath_temple_ref_01"
   },
   {
-    "index_id": 283,
+    "index_id": 290,
     "monument_key": "somnath_temple",
     "monument_name": "Somnath Temple",
     "source": "somnath_temple/ref_02.jpg",
@@ -3408,7 +3492,7 @@
     "image_id": "ref_somnath_temple_ref_02"
   },
   {
-    "index_id": 284,
+    "index_id": 291,
     "monument_key": "somnath_temple",
     "monument_name": "Somnath Temple",
     "source": "somnath_temple/ref_03.jpg",
@@ -3420,7 +3504,7 @@
     "image_id": "ref_somnath_temple_ref_03"
   },
   {
-    "index_id": 285,
+    "index_id": 292,
     "monument_key": "somnath_temple",
     "monument_name": "Somnath Temple",
     "source": "somnath_temple/centroid",
@@ -3432,7 +3516,7 @@
     "image_id": "ref_somnath_temple_centroid"
   },
   {
-    "index_id": 286,
+    "index_id": 293,
     "monument_key": "jantar_mantar_jaipur",
     "monument_name": "Jantar Mantar Jaipur",
     "source": "jantar_mantar_jaipur/ref_01.jpg",
@@ -3444,7 +3528,7 @@
     "image_id": "ref_jantar_mantar_jaipur_ref_01"
   },
   {
-    "index_id": 287,
+    "index_id": 294,
     "monument_key": "jantar_mantar_jaipur",
     "monument_name": "Jantar Mantar Jaipur",
     "source": "jantar_mantar_jaipur/ref_02.jpg",
@@ -3456,7 +3540,7 @@
     "image_id": "ref_jantar_mantar_jaipur_ref_02"
   },
   {
-    "index_id": 288,
+    "index_id": 295,
     "monument_key": "jantar_mantar_jaipur",
     "monument_name": "Jantar Mantar Jaipur",
     "source": "jantar_mantar_jaipur/ref_03.jpg",
@@ -3468,7 +3552,7 @@
     "image_id": "ref_jantar_mantar_jaipur_ref_03"
   },
   {
-    "index_id": 289,
+    "index_id": 296,
     "monument_key": "jantar_mantar_jaipur",
     "monument_name": "Jantar Mantar Jaipur",
     "source": "jantar_mantar_jaipur/centroid",
@@ -3480,7 +3564,7 @@
     "image_id": "ref_jantar_mantar_jaipur_centroid"
   },
   {
-    "index_id": 290,
+    "index_id": 297,
     "monument_key": "mahabodhi_temple",
     "monument_name": "Mahabodhi Temple Complex",
     "source": "mahabodhi_temple/ref_01.jpg",
@@ -3492,7 +3576,7 @@
     "image_id": "ref_mahabodhi_temple_ref_01"
   },
   {
-    "index_id": 291,
+    "index_id": 298,
     "monument_key": "mahabodhi_temple",
     "monument_name": "Mahabodhi Temple Complex",
     "source": "mahabodhi_temple/ref_02.jpg",
@@ -3504,7 +3588,7 @@
     "image_id": "ref_mahabodhi_temple_ref_02"
   },
   {
-    "index_id": 292,
+    "index_id": 299,
     "monument_key": "mahabodhi_temple",
     "monument_name": "Mahabodhi Temple Complex",
     "source": "mahabodhi_temple/ref_03.jpg",
@@ -3516,7 +3600,7 @@
     "image_id": "ref_mahabodhi_temple_ref_03"
   },
   {
-    "index_id": 293,
+    "index_id": 300,
     "monument_key": "mahabodhi_temple",
     "monument_name": "Mahabodhi Temple Complex",
     "source": "mahabodhi_temple/centroid",
@@ -3528,7 +3612,7 @@
     "image_id": "ref_mahabodhi_temple_centroid"
   },
   {
-    "index_id": 294,
+    "index_id": 301,
     "monument_key": "rani_ki_vav",
     "monument_name": "Rani ki Vav",
     "source": "rani_ki_vav/ref_01.jpg",
@@ -3540,7 +3624,7 @@
     "image_id": "ref_rani_ki_vav_ref_01"
   },
   {
-    "index_id": 295,
+    "index_id": 302,
     "monument_key": "rani_ki_vav",
     "monument_name": "Rani ki Vav",
     "source": "rani_ki_vav/ref_02.jpg",
@@ -3552,7 +3636,7 @@
     "image_id": "ref_rani_ki_vav_ref_02"
   },
   {
-    "index_id": 296,
+    "index_id": 303,
     "monument_key": "rani_ki_vav",
     "monument_name": "Rani ki Vav",
     "source": "rani_ki_vav/ref_03.jpg",
@@ -3564,7 +3648,7 @@
     "image_id": "ref_rani_ki_vav_ref_03"
   },
   {
-    "index_id": 297,
+    "index_id": 304,
     "monument_key": "rani_ki_vav",
     "monument_name": "Rani ki Vav",
     "source": "rani_ki_vav/centroid",
@@ -3576,7 +3660,7 @@
     "image_id": "ref_rani_ki_vav_centroid"
   },
   {
-    "index_id": 298,
+    "index_id": 305,
     "monument_key": "chittorgarh_fort",
     "monument_name": "Chittorgarh Fort",
     "source": "chittorgarh_fort/ref_01.jpg",
@@ -3588,7 +3672,7 @@
     "image_id": "ref_chittorgarh_fort_ref_01"
   },
   {
-    "index_id": 299,
+    "index_id": 306,
     "monument_key": "chittorgarh_fort",
     "monument_name": "Chittorgarh Fort",
     "source": "chittorgarh_fort/ref_02.jpg",
@@ -3600,7 +3684,7 @@
     "image_id": "ref_chittorgarh_fort_ref_02"
   },
   {
-    "index_id": 300,
+    "index_id": 307,
     "monument_key": "chittorgarh_fort",
     "monument_name": "Chittorgarh Fort",
     "source": "chittorgarh_fort/ref_03.jpg",
@@ -3612,7 +3696,7 @@
     "image_id": "ref_chittorgarh_fort_ref_03"
   },
   {
-    "index_id": 301,
+    "index_id": 308,
     "monument_key": "chittorgarh_fort",
     "monument_name": "Chittorgarh Fort",
     "source": "chittorgarh_fort/centroid",
@@ -3624,7 +3708,7 @@
     "image_id": "ref_chittorgarh_fort_centroid"
   },
   {
-    "index_id": 302,
+    "index_id": 309,
     "monument_key": "gwalior_fort",
     "monument_name": "Gwalior Fort",
     "source": "gwalior_fort/ref_01.jpg",
@@ -3636,7 +3720,7 @@
     "image_id": "ref_gwalior_fort_ref_01"
   },
   {
-    "index_id": 303,
+    "index_id": 310,
     "monument_key": "gwalior_fort",
     "monument_name": "Gwalior Fort",
     "source": "gwalior_fort/ref_02.jpg",
@@ -3648,7 +3732,7 @@
     "image_id": "ref_gwalior_fort_ref_02"
   },
   {
-    "index_id": 304,
+    "index_id": 311,
     "monument_key": "gwalior_fort",
     "monument_name": "Gwalior Fort",
     "source": "gwalior_fort/ref_03.jpg",
@@ -3660,7 +3744,7 @@
     "image_id": "ref_gwalior_fort_ref_03"
   },
   {
-    "index_id": 305,
+    "index_id": 312,
     "monument_key": "gwalior_fort",
     "monument_name": "Gwalior Fort",
     "source": "gwalior_fort/centroid",
@@ -3672,7 +3756,7 @@
     "image_id": "ref_gwalior_fort_centroid"
   },
   {
-    "index_id": 306,
+    "index_id": 313,
     "monument_key": "badami_cave_temples",
     "monument_name": "Badami Cave Temples",
     "source": "badami_cave_temples/ref_01.jpg",
@@ -3684,7 +3768,7 @@
     "image_id": "ref_badami_cave_temples_ref_01"
   },
   {
-    "index_id": 307,
+    "index_id": 314,
     "monument_key": "badami_cave_temples",
     "monument_name": "Badami Cave Temples",
     "source": "badami_cave_temples/ref_02.jpg",
@@ -3696,7 +3780,7 @@
     "image_id": "ref_badami_cave_temples_ref_02"
   },
   {
-    "index_id": 308,
+    "index_id": 315,
     "monument_key": "badami_cave_temples",
     "monument_name": "Badami Cave Temples",
     "source": "badami_cave_temples/ref_03.jpg",
@@ -3708,7 +3792,7 @@
     "image_id": "ref_badami_cave_temples_ref_03"
   },
   {
-    "index_id": 309,
+    "index_id": 316,
     "monument_key": "badami_cave_temples",
     "monument_name": "Badami Cave Temples",
     "source": "badami_cave_temples/centroid",
@@ -3720,7 +3804,7 @@
     "image_id": "ref_badami_cave_temples_centroid"
   },
   {
-    "index_id": 310,
+    "index_id": 317,
     "monument_key": "belur_chennakeshava_temple",
     "monument_name": "Chennakeshava Temple Belur",
     "source": "belur_chennakeshava_temple/ref_01.jpg",
@@ -3732,7 +3816,7 @@
     "image_id": "ref_belur_chennakeshava_temple_ref_01"
   },
   {
-    "index_id": 311,
+    "index_id": 318,
     "monument_key": "belur_chennakeshava_temple",
     "monument_name": "Chennakeshava Temple Belur",
     "source": "belur_chennakeshava_temple/ref_02.jpg",
@@ -3744,7 +3828,7 @@
     "image_id": "ref_belur_chennakeshava_temple_ref_02"
   },
   {
-    "index_id": 312,
+    "index_id": 319,
     "monument_key": "belur_chennakeshava_temple",
     "monument_name": "Chennakeshava Temple Belur",
     "source": "belur_chennakeshava_temple/ref_03.jpg",
@@ -3756,7 +3840,7 @@
     "image_id": "ref_belur_chennakeshava_temple_ref_03"
   },
   {
-    "index_id": 313,
+    "index_id": 320,
     "monument_key": "belur_chennakeshava_temple",
     "monument_name": "Chennakeshava Temple Belur",
     "source": "belur_chennakeshava_temple/centroid",
@@ -3768,7 +3852,7 @@
     "image_id": "ref_belur_chennakeshava_temple_centroid"
   },
   {
-    "index_id": 314,
+    "index_id": 321,
     "monument_key": "halebidu_hoysaleswara_temple",
     "monument_name": "Hoysaleswara Temple Halebidu",
     "source": "halebidu_hoysaleswara_temple/ref_01.jpg",
@@ -3780,7 +3864,7 @@
     "image_id": "ref_halebidu_hoysaleswara_temple_ref_01"
   },
   {
-    "index_id": 315,
+    "index_id": 322,
     "monument_key": "halebidu_hoysaleswara_temple",
     "monument_name": "Hoysaleswara Temple Halebidu",
     "source": "halebidu_hoysaleswara_temple/ref_02.jpg",
@@ -3792,7 +3876,7 @@
     "image_id": "ref_halebidu_hoysaleswara_temple_ref_02"
   },
   {
-    "index_id": 316,
+    "index_id": 323,
     "monument_key": "halebidu_hoysaleswara_temple",
     "monument_name": "Hoysaleswara Temple Halebidu",
     "source": "halebidu_hoysaleswara_temple/ref_03.jpg",
@@ -3804,7 +3888,7 @@
     "image_id": "ref_halebidu_hoysaleswara_temple_ref_03"
   },
   {
-    "index_id": 317,
+    "index_id": 324,
     "monument_key": "halebidu_hoysaleswara_temple",
     "monument_name": "Hoysaleswara Temple Halebidu",
     "source": "halebidu_hoysaleswara_temple/centroid",
@@ -3816,7 +3900,7 @@
     "image_id": "ref_halebidu_hoysaleswara_temple_centroid"
   },
   {
-    "index_id": 318,
+    "index_id": 325,
     "monument_key": "mehrangarh_fort",
     "monument_name": "Mehrangarh Fort",
     "source": "mehrangarh_fort/ref_01.jpg",
@@ -3828,7 +3912,7 @@
     "image_id": "ref_mehrangarh_fort_ref_01"
   },
   {
-    "index_id": 319,
+    "index_id": 326,
     "monument_key": "mehrangarh_fort",
     "monument_name": "Mehrangarh Fort",
     "source": "mehrangarh_fort/ref_02.jpg",
@@ -3840,7 +3924,7 @@
     "image_id": "ref_mehrangarh_fort_ref_02"
   },
   {
-    "index_id": 320,
+    "index_id": 327,
     "monument_key": "mehrangarh_fort",
     "monument_name": "Mehrangarh Fort",
     "source": "mehrangarh_fort/ref_03.jpg",
@@ -3852,7 +3936,7 @@
     "image_id": "ref_mehrangarh_fort_ref_03"
   },
   {
-    "index_id": 321,
+    "index_id": 328,
     "monument_key": "mehrangarh_fort",
     "monument_name": "Mehrangarh Fort",
     "source": "mehrangarh_fort/centroid",
@@ -3864,7 +3948,7 @@
     "image_id": "ref_mehrangarh_fort_centroid"
   },
   {
-    "index_id": 322,
+    "index_id": 329,
     "monument_key": "agra_fort",
     "monument_name": "Agra Fort",
     "source": "agra_fort/ref_01.jpg",
@@ -3876,7 +3960,7 @@
     "image_id": "ref_agra_fort_ref_01"
   },
   {
-    "index_id": 323,
+    "index_id": 330,
     "monument_key": "agra_fort",
     "monument_name": "Agra Fort",
     "source": "agra_fort/ref_02.jpg",
@@ -3888,7 +3972,7 @@
     "image_id": "ref_agra_fort_ref_02"
   },
   {
-    "index_id": 324,
+    "index_id": 331,
     "monument_key": "agra_fort",
     "monument_name": "Agra Fort",
     "source": "agra_fort/ref_03.jpg",
@@ -3900,7 +3984,7 @@
     "image_id": "ref_agra_fort_ref_03"
   },
   {
-    "index_id": 325,
+    "index_id": 332,
     "monument_key": "agra_fort",
     "monument_name": "Agra Fort",
     "source": "agra_fort/centroid",
@@ -3912,7 +3996,7 @@
     "image_id": "ref_agra_fort_centroid"
   },
   {
-    "index_id": 326,
+    "index_id": 333,
     "monument_key": "padmanabhaswamy_temple",
     "monument_name": "Padmanabhaswamy Temple",
     "source": "padmanabhaswamy_temple/ref_01.jpg",
@@ -3924,7 +4008,7 @@
     "image_id": "ref_padmanabhaswamy_temple_ref_01"
   },
   {
-    "index_id": 327,
+    "index_id": 334,
     "monument_key": "padmanabhaswamy_temple",
     "monument_name": "Padmanabhaswamy Temple",
     "source": "padmanabhaswamy_temple/ref_02.jpg",
@@ -3936,7 +4020,7 @@
     "image_id": "ref_padmanabhaswamy_temple_ref_02"
   },
   {
-    "index_id": 328,
+    "index_id": 335,
     "monument_key": "padmanabhaswamy_temple",
     "monument_name": "Padmanabhaswamy Temple",
     "source": "padmanabhaswamy_temple/ref_03.jpg",
@@ -3948,7 +4032,7 @@
     "image_id": "ref_padmanabhaswamy_temple_ref_03"
   },
   {
-    "index_id": 329,
+    "index_id": 336,
     "monument_key": "padmanabhaswamy_temple",
     "monument_name": "Padmanabhaswamy Temple",
     "source": "padmanabhaswamy_temple/centroid",
@@ -3960,7 +4044,7 @@
     "image_id": "ref_padmanabhaswamy_temple_centroid"
   },
   {
-    "index_id": 330,
+    "index_id": 337,
     "monument_key": "ranganathaswamy_temple",
     "monument_name": "Ranganathaswamy Temple Srirangam",
     "source": "ranganathaswamy_temple/ref_01.jpg",
@@ -3972,7 +4056,7 @@
     "image_id": "ref_ranganathaswamy_temple_ref_01"
   },
   {
-    "index_id": 331,
+    "index_id": 338,
     "monument_key": "ranganathaswamy_temple",
     "monument_name": "Ranganathaswamy Temple Srirangam",
     "source": "ranganathaswamy_temple/ref_02.jpg",
@@ -3984,7 +4068,7 @@
     "image_id": "ref_ranganathaswamy_temple_ref_02"
   },
   {
-    "index_id": 332,
+    "index_id": 339,
     "monument_key": "ranganathaswamy_temple",
     "monument_name": "Ranganathaswamy Temple Srirangam",
     "source": "ranganathaswamy_temple/ref_03.jpg",
@@ -3996,7 +4080,7 @@
     "image_id": "ref_ranganathaswamy_temple_ref_03"
   },
   {
-    "index_id": 333,
+    "index_id": 340,
     "monument_key": "ranganathaswamy_temple",
     "monument_name": "Ranganathaswamy Temple Srirangam",
     "source": "ranganathaswamy_temple/centroid",
@@ -4008,7 +4092,7 @@
     "image_id": "ref_ranganathaswamy_temple_centroid"
   },
   {
-    "index_id": 334,
+    "index_id": 341,
     "monument_key": "ramappa_temple",
     "monument_name": "Ramappa Temple",
     "source": "ramappa_temple/ref_01.jpg",
@@ -4020,7 +4104,7 @@
     "image_id": "ref_ramappa_temple_ref_01"
   },
   {
-    "index_id": 335,
+    "index_id": 342,
     "monument_key": "ramappa_temple",
     "monument_name": "Ramappa Temple",
     "source": "ramappa_temple/ref_02.jpg",
@@ -4032,7 +4116,7 @@
     "image_id": "ref_ramappa_temple_ref_02"
   },
   {
-    "index_id": 336,
+    "index_id": 343,
     "monument_key": "ramappa_temple",
     "monument_name": "Ramappa Temple",
     "source": "ramappa_temple/ref_03.jpg",
@@ -4044,7 +4128,7 @@
     "image_id": "ref_ramappa_temple_ref_03"
   },
   {
-    "index_id": 337,
+    "index_id": 344,
     "monument_key": "ramappa_temple",
     "monument_name": "Ramappa Temple",
     "source": "ramappa_temple/centroid",
@@ -4056,7 +4140,7 @@
     "image_id": "ref_ramappa_temple_centroid"
   },
   {
-    "index_id": 338,
+    "index_id": 345,
     "monument_key": "dholavira",
     "monument_name": "Dholavira Harappan City",
     "source": "dholavira/ref_01.jpg",
@@ -4068,7 +4152,7 @@
     "image_id": "ref_dholavira_ref_01"
   },
   {
-    "index_id": 339,
+    "index_id": 346,
     "monument_key": "dholavira",
     "monument_name": "Dholavira Harappan City",
     "source": "dholavira/ref_02.jpg",
@@ -4080,7 +4164,7 @@
     "image_id": "ref_dholavira_ref_02"
   },
   {
-    "index_id": 340,
+    "index_id": 347,
     "monument_key": "dholavira",
     "monument_name": "Dholavira Harappan City",
     "source": "dholavira/ref_03.jpg",
@@ -4092,7 +4176,7 @@
     "image_id": "ref_dholavira_ref_03"
   },
   {
-    "index_id": 341,
+    "index_id": 348,
     "monument_key": "dholavira",
     "monument_name": "Dholavira Harappan City",
     "source": "dholavira/centroid",
@@ -4104,7 +4188,7 @@
     "image_id": "ref_dholavira_centroid"
   },
   {
-    "index_id": 342,
+    "index_id": 349,
     "monument_key": "basilica_of_bom_jesus",
     "monument_name": "Basilica of Bom Jesus",
     "source": "basilica_of_bom_jesus/ref_01.jpg",
@@ -4116,7 +4200,7 @@
     "image_id": "ref_basilica_of_bom_jesus_ref_01"
   },
   {
-    "index_id": 343,
+    "index_id": 350,
     "monument_key": "basilica_of_bom_jesus",
     "monument_name": "Basilica of Bom Jesus",
     "source": "basilica_of_bom_jesus/ref_02.jpg",
@@ -4128,7 +4212,7 @@
     "image_id": "ref_basilica_of_bom_jesus_ref_02"
   },
   {
-    "index_id": 344,
+    "index_id": 351,
     "monument_key": "basilica_of_bom_jesus",
     "monument_name": "Basilica of Bom Jesus",
     "source": "basilica_of_bom_jesus/ref_03.jpg",
@@ -4140,7 +4224,7 @@
     "image_id": "ref_basilica_of_bom_jesus_ref_03"
   },
   {
-    "index_id": 345,
+    "index_id": 352,
     "monument_key": "basilica_of_bom_jesus",
     "monument_name": "Basilica of Bom Jesus",
     "source": "basilica_of_bom_jesus/centroid",
@@ -4152,7 +4236,7 @@
     "image_id": "ref_basilica_of_bom_jesus_centroid"
   },
   {
-    "index_id": 346,
+    "index_id": 353,
     "monument_key": "rashtrapati_bhavan",
     "monument_name": "Rashtrapati Bhavan",
     "source": "rashtrapati_bhavan/ref_01.jpg",
@@ -4164,7 +4248,7 @@
     "image_id": "ref_rashtrapati_bhavan_ref_01"
   },
   {
-    "index_id": 347,
+    "index_id": 354,
     "monument_key": "rashtrapati_bhavan",
     "monument_name": "Rashtrapati Bhavan",
     "source": "rashtrapati_bhavan/ref_02.jpg",
@@ -4176,7 +4260,7 @@
     "image_id": "ref_rashtrapati_bhavan_ref_02"
   },
   {
-    "index_id": 348,
+    "index_id": 355,
     "monument_key": "rashtrapati_bhavan",
     "monument_name": "Rashtrapati Bhavan",
     "source": "rashtrapati_bhavan/ref_03.jpg",
@@ -4188,7 +4272,7 @@
     "image_id": "ref_rashtrapati_bhavan_ref_03"
   },
   {
-    "index_id": 349,
+    "index_id": 356,
     "monument_key": "rashtrapati_bhavan",
     "monument_name": "Rashtrapati Bhavan",
     "source": "rashtrapati_bhavan/centroid",
@@ -4200,7 +4284,7 @@
     "image_id": "ref_rashtrapati_bhavan_centroid"
   },
   {
-    "index_id": 350,
+    "index_id": 357,
     "monument_key": "lotus_temple",
     "monument_name": "Lotus Temple",
     "source": "lotus_temple/ref_01.jpg",
@@ -4212,7 +4296,7 @@
     "image_id": "ref_lotus_temple_ref_01"
   },
   {
-    "index_id": 351,
+    "index_id": 358,
     "monument_key": "lotus_temple",
     "monument_name": "Lotus Temple",
     "source": "lotus_temple/ref_02.jpg",
@@ -4224,7 +4308,7 @@
     "image_id": "ref_lotus_temple_ref_02"
   },
   {
-    "index_id": 352,
+    "index_id": 359,
     "monument_key": "lotus_temple",
     "monument_name": "Lotus Temple",
     "source": "lotus_temple/ref_03.jpg",
@@ -4236,7 +4320,7 @@
     "image_id": "ref_lotus_temple_ref_03"
   },
   {
-    "index_id": 353,
+    "index_id": 360,
     "monument_key": "lotus_temple",
     "monument_name": "Lotus Temple",
     "source": "lotus_temple/centroid",
@@ -4248,7 +4332,7 @@
     "image_id": "ref_lotus_temple_centroid"
   },
   {
-    "index_id": 354,
+    "index_id": 361,
     "monument_key": "akshardham_delhi",
     "monument_name": "Akshardham Temple Delhi",
     "source": "akshardham_delhi/ref_01.jpg",
@@ -4260,7 +4344,7 @@
     "image_id": "ref_akshardham_delhi_ref_01"
   },
   {
-    "index_id": 355,
+    "index_id": 362,
     "monument_key": "akshardham_delhi",
     "monument_name": "Akshardham Temple Delhi",
     "source": "akshardham_delhi/ref_02.jpg",
@@ -4272,7 +4356,7 @@
     "image_id": "ref_akshardham_delhi_ref_02"
   },
   {
-    "index_id": 356,
+    "index_id": 363,
     "monument_key": "akshardham_delhi",
     "monument_name": "Akshardham Temple Delhi",
     "source": "akshardham_delhi/ref_03.jpg",
@@ -4284,7 +4368,7 @@
     "image_id": "ref_akshardham_delhi_ref_03"
   },
   {
-    "index_id": 357,
+    "index_id": 364,
     "monument_key": "akshardham_delhi",
     "monument_name": "Akshardham Temple Delhi",
     "source": "akshardham_delhi/centroid",
@@ -4296,7 +4380,7 @@
     "image_id": "ref_akshardham_delhi_centroid"
   },
   {
-    "index_id": 358,
+    "index_id": 365,
     "monument_key": "jaisalmer_fort",
     "monument_name": "Jaisalmer Fort",
     "source": "jaisalmer_fort/ref_01.jpg",
@@ -4308,7 +4392,7 @@
     "image_id": "ref_jaisalmer_fort_ref_01"
   },
   {
-    "index_id": 359,
+    "index_id": 366,
     "monument_key": "jaisalmer_fort",
     "monument_name": "Jaisalmer Fort",
     "source": "jaisalmer_fort/ref_02.jpg",
@@ -4320,7 +4404,7 @@
     "image_id": "ref_jaisalmer_fort_ref_02"
   },
   {
-    "index_id": 360,
+    "index_id": 367,
     "monument_key": "jaisalmer_fort",
     "monument_name": "Jaisalmer Fort",
     "source": "jaisalmer_fort/ref_03.jpg",
@@ -4332,7 +4416,7 @@
     "image_id": "ref_jaisalmer_fort_ref_03"
   },
   {
-    "index_id": 361,
+    "index_id": 368,
     "monument_key": "jaisalmer_fort",
     "monument_name": "Jaisalmer Fort",
     "source": "jaisalmer_fort/centroid",
@@ -4344,7 +4428,7 @@
     "image_id": "ref_jaisalmer_fort_centroid"
   },
   {
-    "index_id": 362,
+    "index_id": 369,
     "monument_key": "kumbhalgarh_fort",
     "monument_name": "Kumbhalgarh Fort",
     "source": "kumbhalgarh_fort/ref_01.jpg",
@@ -4356,7 +4440,7 @@
     "image_id": "ref_kumbhalgarh_fort_ref_01"
   },
   {
-    "index_id": 363,
+    "index_id": 370,
     "monument_key": "kumbhalgarh_fort",
     "monument_name": "Kumbhalgarh Fort",
     "source": "kumbhalgarh_fort/ref_02.jpg",
@@ -4368,7 +4452,7 @@
     "image_id": "ref_kumbhalgarh_fort_ref_02"
   },
   {
-    "index_id": 364,
+    "index_id": 371,
     "monument_key": "kumbhalgarh_fort",
     "monument_name": "Kumbhalgarh Fort",
     "source": "kumbhalgarh_fort/ref_03.jpg",
@@ -4380,7 +4464,7 @@
     "image_id": "ref_kumbhalgarh_fort_ref_03"
   },
   {
-    "index_id": 365,
+    "index_id": 372,
     "monument_key": "kumbhalgarh_fort",
     "monument_name": "Kumbhalgarh Fort",
     "source": "kumbhalgarh_fort/centroid",
@@ -4392,7 +4476,7 @@
     "image_id": "ref_kumbhalgarh_fort_centroid"
   },
   {
-    "index_id": 366,
+    "index_id": 373,
     "monument_key": "cellular_jail",
     "monument_name": "Cellular Jail",
     "source": "cellular_jail/ref_01.jpg",
@@ -4404,7 +4488,7 @@
     "image_id": "ref_cellular_jail_ref_01"
   },
   {
-    "index_id": 367,
+    "index_id": 374,
     "monument_key": "cellular_jail",
     "monument_name": "Cellular Jail",
     "source": "cellular_jail/ref_02.jpg",
@@ -4416,7 +4500,7 @@
     "image_id": "ref_cellular_jail_ref_02"
   },
   {
-    "index_id": 368,
+    "index_id": 375,
     "monument_key": "cellular_jail",
     "monument_name": "Cellular Jail",
     "source": "cellular_jail/ref_03.jpg",
@@ -4428,7 +4512,7 @@
     "image_id": "ref_cellular_jail_ref_03"
   },
   {
-    "index_id": 369,
+    "index_id": 376,
     "monument_key": "cellular_jail",
     "monument_name": "Cellular Jail",
     "source": "cellular_jail/centroid",
@@ -4440,7 +4524,7 @@
     "image_id": "ref_cellular_jail_centroid"
   },
   {
-    "index_id": 370,
+    "index_id": 377,
     "monument_key": "florence_cathedral",
     "monument_name": "Cathedral of Santa Maria del Fiore (Florence Duomo)",
     "source": "florence_cathedral/ref_01.jpg",
@@ -4452,7 +4536,7 @@
     "image_id": "ref_florence_cathedral_ref_01"
   },
   {
-    "index_id": 371,
+    "index_id": 378,
     "monument_key": "florence_cathedral",
     "monument_name": "Cathedral of Santa Maria del Fiore (Florence Duomo)",
     "source": "florence_cathedral/ref_02.jpg",
@@ -4464,7 +4548,7 @@
     "image_id": "ref_florence_cathedral_ref_02"
   },
   {
-    "index_id": 372,
+    "index_id": 379,
     "monument_key": "florence_cathedral",
     "monument_name": "Cathedral of Santa Maria del Fiore (Florence Duomo)",
     "source": "florence_cathedral/ref_03.jpg",
@@ -4476,7 +4560,7 @@
     "image_id": "ref_florence_cathedral_ref_03"
   },
   {
-    "index_id": 373,
+    "index_id": 380,
     "monument_key": "florence_cathedral",
     "monument_name": "Cathedral of Santa Maria del Fiore (Florence Duomo)",
     "source": "florence_cathedral/centroid",
@@ -4488,7 +4572,7 @@
     "image_id": "ref_florence_cathedral_centroid"
   },
   {
-    "index_id": 374,
+    "index_id": 381,
     "monument_key": "colosseum",
     "monument_name": "Colosseum",
     "source": "colosseum/ref_01.jpg",
@@ -4500,7 +4584,7 @@
     "image_id": "ref_colosseum_ref_01"
   },
   {
-    "index_id": 375,
+    "index_id": 382,
     "monument_key": "colosseum",
     "monument_name": "Colosseum",
     "source": "colosseum/ref_02.jpg",
@@ -4512,7 +4596,7 @@
     "image_id": "ref_colosseum_ref_02"
   },
   {
-    "index_id": 376,
+    "index_id": 383,
     "monument_key": "colosseum",
     "monument_name": "Colosseum",
     "source": "colosseum/ref_03.jpg",
@@ -4524,7 +4608,7 @@
     "image_id": "ref_colosseum_ref_03"
   },
   {
-    "index_id": 377,
+    "index_id": 384,
     "monument_key": "colosseum",
     "monument_name": "Colosseum",
     "source": "colosseum/centroid",
@@ -4536,7 +4620,7 @@
     "image_id": "ref_colosseum_centroid"
   },
   {
-    "index_id": 378,
+    "index_id": 385,
     "monument_key": "statue_of_liberty",
     "monument_name": "Statue of Liberty",
     "source": "statue_of_liberty/ref_01.jpg",
@@ -4548,7 +4632,7 @@
     "image_id": "ref_statue_of_liberty_ref_01"
   },
   {
-    "index_id": 379,
+    "index_id": 386,
     "monument_key": "statue_of_liberty",
     "monument_name": "Statue of Liberty",
     "source": "statue_of_liberty/ref_02.jpg",
@@ -4560,7 +4644,7 @@
     "image_id": "ref_statue_of_liberty_ref_02"
   },
   {
-    "index_id": 380,
+    "index_id": 387,
     "monument_key": "statue_of_liberty",
     "monument_name": "Statue of Liberty",
     "source": "statue_of_liberty/ref_03.jpg",
@@ -4572,7 +4656,7 @@
     "image_id": "ref_statue_of_liberty_ref_03"
   },
   {
-    "index_id": 381,
+    "index_id": 388,
     "monument_key": "statue_of_liberty",
     "monument_name": "Statue of Liberty",
     "source": "statue_of_liberty/centroid",
@@ -4584,7 +4668,7 @@
     "image_id": "ref_statue_of_liberty_centroid"
   },
   {
-    "index_id": 382,
+    "index_id": 389,
     "monument_key": "big_ben",
     "monument_name": "Big Ben and Elizabeth Tower",
     "source": "big_ben/ref_01.jpg",
@@ -4596,7 +4680,7 @@
     "image_id": "ref_big_ben_ref_01"
   },
   {
-    "index_id": 383,
+    "index_id": 390,
     "monument_key": "big_ben",
     "monument_name": "Big Ben and Elizabeth Tower",
     "source": "big_ben/ref_02.jpg",
@@ -4608,7 +4692,7 @@
     "image_id": "ref_big_ben_ref_02"
   },
   {
-    "index_id": 384,
+    "index_id": 391,
     "monument_key": "big_ben",
     "monument_name": "Big Ben and Elizabeth Tower",
     "source": "big_ben/ref_03.jpg",
@@ -4620,7 +4704,7 @@
     "image_id": "ref_big_ben_ref_03"
   },
   {
-    "index_id": 385,
+    "index_id": 392,
     "monument_key": "big_ben",
     "monument_name": "Big Ben and Elizabeth Tower",
     "source": "big_ben/centroid",
@@ -4632,7 +4716,7 @@
     "image_id": "ref_big_ben_centroid"
   },
   {
-    "index_id": 386,
+    "index_id": 393,
     "monument_key": "great_wall_of_china",
     "monument_name": "Great Wall of China",
     "source": "great_wall_of_china/ref_01.jpg",
@@ -4644,7 +4728,7 @@
     "image_id": "ref_great_wall_of_china_ref_01"
   },
   {
-    "index_id": 387,
+    "index_id": 394,
     "monument_key": "great_wall_of_china",
     "monument_name": "Great Wall of China",
     "source": "great_wall_of_china/ref_02.jpg",
@@ -4656,7 +4740,7 @@
     "image_id": "ref_great_wall_of_china_ref_02"
   },
   {
-    "index_id": 388,
+    "index_id": 395,
     "monument_key": "great_wall_of_china",
     "monument_name": "Great Wall of China",
     "source": "great_wall_of_china/ref_03.jpg",
@@ -4668,7 +4752,7 @@
     "image_id": "ref_great_wall_of_china_ref_03"
   },
   {
-    "index_id": 389,
+    "index_id": 396,
     "monument_key": "great_wall_of_china",
     "monument_name": "Great Wall of China",
     "source": "great_wall_of_china/centroid",
@@ -4680,7 +4764,7 @@
     "image_id": "ref_great_wall_of_china_centroid"
   },
   {
-    "index_id": 390,
+    "index_id": 397,
     "monument_key": "machu_picchu",
     "monument_name": "Machu Picchu",
     "source": "machu_picchu/ref_01.jpg",
@@ -4692,7 +4776,7 @@
     "image_id": "ref_machu_picchu_ref_01"
   },
   {
-    "index_id": 391,
+    "index_id": 398,
     "monument_key": "machu_picchu",
     "monument_name": "Machu Picchu",
     "source": "machu_picchu/ref_02.jpg",
@@ -4704,7 +4788,7 @@
     "image_id": "ref_machu_picchu_ref_02"
   },
   {
-    "index_id": 392,
+    "index_id": 399,
     "monument_key": "machu_picchu",
     "monument_name": "Machu Picchu",
     "source": "machu_picchu/ref_03.jpg",
@@ -4716,7 +4800,7 @@
     "image_id": "ref_machu_picchu_ref_03"
   },
   {
-    "index_id": 393,
+    "index_id": 400,
     "monument_key": "machu_picchu",
     "monument_name": "Machu Picchu",
     "source": "machu_picchu/centroid",
@@ -4728,7 +4812,7 @@
     "image_id": "ref_machu_picchu_centroid"
   },
   {
-    "index_id": 394,
+    "index_id": 401,
     "monument_key": "petra",
     "monument_name": "Petra",
     "source": "petra/ref_01.jpg",
@@ -4740,7 +4824,7 @@
     "image_id": "ref_petra_ref_01"
   },
   {
-    "index_id": 395,
+    "index_id": 402,
     "monument_key": "petra",
     "monument_name": "Petra",
     "source": "petra/ref_02.jpg",
@@ -4752,7 +4836,7 @@
     "image_id": "ref_petra_ref_02"
   },
   {
-    "index_id": 396,
+    "index_id": 403,
     "monument_key": "petra",
     "monument_name": "Petra",
     "source": "petra/ref_03.jpg",
@@ -4764,7 +4848,7 @@
     "image_id": "ref_petra_ref_03"
   },
   {
-    "index_id": 397,
+    "index_id": 404,
     "monument_key": "petra",
     "monument_name": "Petra",
     "source": "petra/centroid",
@@ -4776,7 +4860,7 @@
     "image_id": "ref_petra_centroid"
   },
   {
-    "index_id": 398,
+    "index_id": 405,
     "monument_key": "christ_the_redeemer",
     "monument_name": "Christ the Redeemer",
     "source": "christ_the_redeemer/ref_01.jpg",
@@ -4788,7 +4872,7 @@
     "image_id": "ref_christ_the_redeemer_ref_01"
   },
   {
-    "index_id": 399,
+    "index_id": 406,
     "monument_key": "christ_the_redeemer",
     "monument_name": "Christ the Redeemer",
     "source": "christ_the_redeemer/ref_02.jpg",
@@ -4800,7 +4884,7 @@
     "image_id": "ref_christ_the_redeemer_ref_02"
   },
   {
-    "index_id": 400,
+    "index_id": 407,
     "monument_key": "christ_the_redeemer",
     "monument_name": "Christ the Redeemer",
     "source": "christ_the_redeemer/ref_03.jpg",
@@ -4812,7 +4896,7 @@
     "image_id": "ref_christ_the_redeemer_ref_03"
   },
   {
-    "index_id": 401,
+    "index_id": 408,
     "monument_key": "christ_the_redeemer",
     "monument_name": "Christ the Redeemer",
     "source": "christ_the_redeemer/centroid",
@@ -4824,7 +4908,7 @@
     "image_id": "ref_christ_the_redeemer_centroid"
   },
   {
-    "index_id": 402,
+    "index_id": 409,
     "monument_key": "chichen_itza",
     "monument_name": "Chichen Itza El Castillo",
     "source": "chichen_itza/ref_01.jpg",
@@ -4836,7 +4920,7 @@
     "image_id": "ref_chichen_itza_ref_01"
   },
   {
-    "index_id": 403,
+    "index_id": 410,
     "monument_key": "chichen_itza",
     "monument_name": "Chichen Itza El Castillo",
     "source": "chichen_itza/ref_02.jpg",
@@ -4848,7 +4932,7 @@
     "image_id": "ref_chichen_itza_ref_02"
   },
   {
-    "index_id": 404,
+    "index_id": 411,
     "monument_key": "chichen_itza",
     "monument_name": "Chichen Itza El Castillo",
     "source": "chichen_itza/ref_03.jpg",
@@ -4860,7 +4944,7 @@
     "image_id": "ref_chichen_itza_ref_03"
   },
   {
-    "index_id": 405,
+    "index_id": 412,
     "monument_key": "chichen_itza",
     "monument_name": "Chichen Itza El Castillo",
     "source": "chichen_itza/centroid",
@@ -4872,7 +4956,7 @@
     "image_id": "ref_chichen_itza_centroid"
   },
   {
-    "index_id": 406,
+    "index_id": 413,
     "monument_key": "great_pyramid_of_giza",
     "monument_name": "Great Pyramid of Giza",
     "source": "great_pyramid_of_giza/ref_01.jpg",
@@ -4884,7 +4968,7 @@
     "image_id": "ref_great_pyramid_of_giza_ref_01"
   },
   {
-    "index_id": 407,
+    "index_id": 414,
     "monument_key": "great_pyramid_of_giza",
     "monument_name": "Great Pyramid of Giza",
     "source": "great_pyramid_of_giza/ref_02.jpg",
@@ -4896,7 +4980,7 @@
     "image_id": "ref_great_pyramid_of_giza_ref_02"
   },
   {
-    "index_id": 408,
+    "index_id": 415,
     "monument_key": "great_pyramid_of_giza",
     "monument_name": "Great Pyramid of Giza",
     "source": "great_pyramid_of_giza/ref_03.jpg",
@@ -4908,7 +4992,7 @@
     "image_id": "ref_great_pyramid_of_giza_ref_03"
   },
   {
-    "index_id": 409,
+    "index_id": 416,
     "monument_key": "great_pyramid_of_giza",
     "monument_name": "Great Pyramid of Giza",
     "source": "great_pyramid_of_giza/centroid",
@@ -4920,7 +5004,7 @@
     "image_id": "ref_great_pyramid_of_giza_centroid"
   },
   {
-    "index_id": 410,
+    "index_id": 417,
     "monument_key": "acropolis_of_athens",
     "monument_name": "Acropolis of Athens",
     "source": "acropolis_of_athens/ref_01.jpg",
@@ -4932,7 +5016,7 @@
     "image_id": "ref_acropolis_of_athens_ref_01"
   },
   {
-    "index_id": 411,
+    "index_id": 418,
     "monument_key": "acropolis_of_athens",
     "monument_name": "Acropolis of Athens",
     "source": "acropolis_of_athens/ref_02.jpg",
@@ -4944,7 +5028,7 @@
     "image_id": "ref_acropolis_of_athens_ref_02"
   },
   {
-    "index_id": 412,
+    "index_id": 419,
     "monument_key": "acropolis_of_athens",
     "monument_name": "Acropolis of Athens",
     "source": "acropolis_of_athens/ref_03.jpg",
@@ -4956,7 +5040,7 @@
     "image_id": "ref_acropolis_of_athens_ref_03"
   },
   {
-    "index_id": 413,
+    "index_id": 420,
     "monument_key": "acropolis_of_athens",
     "monument_name": "Acropolis of Athens",
     "source": "acropolis_of_athens/centroid",
@@ -4968,7 +5052,7 @@
     "image_id": "ref_acropolis_of_athens_centroid"
   },
   {
-    "index_id": 414,
+    "index_id": 421,
     "monument_key": "stonehenge",
     "monument_name": "Stonehenge",
     "source": "stonehenge/ref_01.jpg",
@@ -4980,7 +5064,7 @@
     "image_id": "ref_stonehenge_ref_01"
   },
   {
-    "index_id": 415,
+    "index_id": 422,
     "monument_key": "stonehenge",
     "monument_name": "Stonehenge",
     "source": "stonehenge/ref_02.jpg",
@@ -4992,7 +5076,7 @@
     "image_id": "ref_stonehenge_ref_02"
   },
   {
-    "index_id": 416,
+    "index_id": 423,
     "monument_key": "stonehenge",
     "monument_name": "Stonehenge",
     "source": "stonehenge/ref_03.jpg",
@@ -5004,7 +5088,7 @@
     "image_id": "ref_stonehenge_ref_03"
   },
   {
-    "index_id": 417,
+    "index_id": 424,
     "monument_key": "stonehenge",
     "monument_name": "Stonehenge",
     "source": "stonehenge/centroid",
@@ -5016,7 +5100,7 @@
     "image_id": "ref_stonehenge_centroid"
   },
   {
-    "index_id": 418,
+    "index_id": 425,
     "monument_key": "angkor_wat",
     "monument_name": "Angkor Wat",
     "source": "angkor_wat/ref_01.jpg",
@@ -5028,7 +5112,7 @@
     "image_id": "ref_angkor_wat_ref_01"
   },
   {
-    "index_id": 419,
+    "index_id": 426,
     "monument_key": "angkor_wat",
     "monument_name": "Angkor Wat",
     "source": "angkor_wat/ref_02.jpg",
@@ -5040,7 +5124,7 @@
     "image_id": "ref_angkor_wat_ref_02"
   },
   {
-    "index_id": 420,
+    "index_id": 427,
     "monument_key": "angkor_wat",
     "monument_name": "Angkor Wat",
     "source": "angkor_wat/ref_03.jpg",
@@ -5052,7 +5136,7 @@
     "image_id": "ref_angkor_wat_ref_03"
   },
   {
-    "index_id": 421,
+    "index_id": 428,
     "monument_key": "angkor_wat",
     "monument_name": "Angkor Wat",
     "source": "angkor_wat/centroid",
@@ -5064,7 +5148,7 @@
     "image_id": "ref_angkor_wat_centroid"
   },
   {
-    "index_id": 422,
+    "index_id": 429,
     "monument_key": "alhambra",
     "monument_name": "Alhambra",
     "source": "alhambra/ref_01.jpg",
@@ -5076,7 +5160,7 @@
     "image_id": "ref_alhambra_ref_01"
   },
   {
-    "index_id": 423,
+    "index_id": 430,
     "monument_key": "alhambra",
     "monument_name": "Alhambra",
     "source": "alhambra/ref_02.jpg",
@@ -5088,7 +5172,7 @@
     "image_id": "ref_alhambra_ref_02"
   },
   {
-    "index_id": 424,
+    "index_id": 431,
     "monument_key": "alhambra",
     "monument_name": "Alhambra",
     "source": "alhambra/ref_03.jpg",
@@ -5100,7 +5184,7 @@
     "image_id": "ref_alhambra_ref_03"
   },
   {
-    "index_id": 425,
+    "index_id": 432,
     "monument_key": "alhambra",
     "monument_name": "Alhambra",
     "source": "alhambra/centroid",
@@ -5112,9 +5196,9 @@
     "image_id": "ref_alhambra_centroid"
   },
   {
-    "index_id": 426,
+    "index_id": 433,
     "monument_key": "sagrada_familia",
-    "monument_name": "Basílica de la Sagrada Família",
+    "monument_name": "Bas\u00edlica de la Sagrada Fam\u00edlia",
     "source": "sagrada_familia/ref_01.jpg",
     "file_path": "datasets/reference_gallery_100/sagrada_familia/ref_01.jpg",
     "is_centroid": false,
@@ -5124,9 +5208,9 @@
     "image_id": "ref_sagrada_familia_ref_01"
   },
   {
-    "index_id": 427,
+    "index_id": 434,
     "monument_key": "sagrada_familia",
-    "monument_name": "Basílica de la Sagrada Família",
+    "monument_name": "Bas\u00edlica de la Sagrada Fam\u00edlia",
     "source": "sagrada_familia/ref_02.jpg",
     "file_path": "datasets/reference_gallery_100/sagrada_familia/ref_02.jpg",
     "is_centroid": false,
@@ -5136,9 +5220,9 @@
     "image_id": "ref_sagrada_familia_ref_02"
   },
   {
-    "index_id": 428,
+    "index_id": 435,
     "monument_key": "sagrada_familia",
-    "monument_name": "Basílica de la Sagrada Família",
+    "monument_name": "Bas\u00edlica de la Sagrada Fam\u00edlia",
     "source": "sagrada_familia/ref_03.jpg",
     "file_path": "datasets/reference_gallery_100/sagrada_familia/ref_03.jpg",
     "is_centroid": false,
@@ -5148,9 +5232,9 @@
     "image_id": "ref_sagrada_familia_ref_03"
   },
   {
-    "index_id": 429,
+    "index_id": 436,
     "monument_key": "sagrada_familia",
-    "monument_name": "Basílica de la Sagrada Família",
+    "monument_name": "Bas\u00edlica de la Sagrada Fam\u00edlia",
     "source": "sagrada_familia/centroid",
     "file_path": "datasets/reference_gallery_100/sagrada_familia/centroid",
     "is_centroid": true,
@@ -5160,7 +5244,7 @@
     "image_id": "ref_sagrada_familia_centroid"
   },
   {
-    "index_id": 430,
+    "index_id": 437,
     "monument_key": "sydney_opera_house",
     "monument_name": "Sydney Opera House",
     "source": "sydney_opera_house/ref_01.jpg",
@@ -5172,7 +5256,7 @@
     "image_id": "ref_sydney_opera_house_ref_01"
   },
   {
-    "index_id": 431,
+    "index_id": 438,
     "monument_key": "sydney_opera_house",
     "monument_name": "Sydney Opera House",
     "source": "sydney_opera_house/ref_02.jpg",
@@ -5184,7 +5268,7 @@
     "image_id": "ref_sydney_opera_house_ref_02"
   },
   {
-    "index_id": 432,
+    "index_id": 439,
     "monument_key": "sydney_opera_house",
     "monument_name": "Sydney Opera House",
     "source": "sydney_opera_house/ref_03.jpg",
@@ -5196,7 +5280,7 @@
     "image_id": "ref_sydney_opera_house_ref_03"
   },
   {
-    "index_id": 433,
+    "index_id": 440,
     "monument_key": "sydney_opera_house",
     "monument_name": "Sydney Opera House",
     "source": "sydney_opera_house/centroid",
@@ -5208,7 +5292,7 @@
     "image_id": "ref_sydney_opera_house_centroid"
   },
   {
-    "index_id": 434,
+    "index_id": 441,
     "monument_key": "leaning_tower_of_pisa",
     "monument_name": "Leaning Tower of Pisa",
     "source": "leaning_tower_of_pisa/ref_01.jpg",
@@ -5220,7 +5304,7 @@
     "image_id": "ref_leaning_tower_of_pisa_ref_01"
   },
   {
-    "index_id": 435,
+    "index_id": 442,
     "monument_key": "leaning_tower_of_pisa",
     "monument_name": "Leaning Tower of Pisa",
     "source": "leaning_tower_of_pisa/ref_02.jpg",
@@ -5232,7 +5316,7 @@
     "image_id": "ref_leaning_tower_of_pisa_ref_02"
   },
   {
-    "index_id": 436,
+    "index_id": 443,
     "monument_key": "leaning_tower_of_pisa",
     "monument_name": "Leaning Tower of Pisa",
     "source": "leaning_tower_of_pisa/ref_03.jpg",
@@ -5244,7 +5328,7 @@
     "image_id": "ref_leaning_tower_of_pisa_ref_03"
   },
   {
-    "index_id": 437,
+    "index_id": 444,
     "monument_key": "leaning_tower_of_pisa",
     "monument_name": "Leaning Tower of Pisa",
     "source": "leaning_tower_of_pisa/centroid",
@@ -5256,7 +5340,7 @@
     "image_id": "ref_leaning_tower_of_pisa_centroid"
   },
   {
-    "index_id": 438,
+    "index_id": 445,
     "monument_key": "notre_dame_cathedral",
     "monument_name": "Notre-Dame de Paris",
     "source": "notre_dame_cathedral/ref_01.jpg",
@@ -5268,7 +5352,7 @@
     "image_id": "ref_notre_dame_cathedral_ref_01"
   },
   {
-    "index_id": 439,
+    "index_id": 446,
     "monument_key": "notre_dame_cathedral",
     "monument_name": "Notre-Dame de Paris",
     "source": "notre_dame_cathedral/ref_02.jpg",
@@ -5280,7 +5364,7 @@
     "image_id": "ref_notre_dame_cathedral_ref_02"
   },
   {
-    "index_id": 440,
+    "index_id": 447,
     "monument_key": "notre_dame_cathedral",
     "monument_name": "Notre-Dame de Paris",
     "source": "notre_dame_cathedral/ref_03.jpg",
@@ -5292,7 +5376,7 @@
     "image_id": "ref_notre_dame_cathedral_ref_03"
   },
   {
-    "index_id": 441,
+    "index_id": 448,
     "monument_key": "notre_dame_cathedral",
     "monument_name": "Notre-Dame de Paris",
     "source": "notre_dame_cathedral/centroid",
@@ -5304,7 +5388,7 @@
     "image_id": "ref_notre_dame_cathedral_centroid"
   },
   {
-    "index_id": 442,
+    "index_id": 449,
     "monument_key": "louvre_pyramid",
     "monument_name": "Louvre Pyramid",
     "source": "louvre_pyramid/ref_01.jpg",
@@ -5316,7 +5400,7 @@
     "image_id": "ref_louvre_pyramid_ref_01"
   },
   {
-    "index_id": 443,
+    "index_id": 450,
     "monument_key": "louvre_pyramid",
     "monument_name": "Louvre Pyramid",
     "source": "louvre_pyramid/ref_02.jpg",
@@ -5328,7 +5412,7 @@
     "image_id": "ref_louvre_pyramid_ref_02"
   },
   {
-    "index_id": 444,
+    "index_id": 451,
     "monument_key": "louvre_pyramid",
     "monument_name": "Louvre Pyramid",
     "source": "louvre_pyramid/ref_03.jpg",
@@ -5340,7 +5424,7 @@
     "image_id": "ref_louvre_pyramid_ref_03"
   },
   {
-    "index_id": 445,
+    "index_id": 452,
     "monument_key": "louvre_pyramid",
     "monument_name": "Louvre Pyramid",
     "source": "louvre_pyramid/centroid",
@@ -5352,7 +5436,7 @@
     "image_id": "ref_louvre_pyramid_centroid"
   },
   {
-    "index_id": 446,
+    "index_id": 453,
     "monument_key": "st_basils_cathedral",
     "monument_name": "Saint Basil's Cathedral",
     "source": "st_basils_cathedral/ref_01.jpg",
@@ -5364,7 +5448,7 @@
     "image_id": "ref_st_basils_cathedral_ref_01"
   },
   {
-    "index_id": 447,
+    "index_id": 454,
     "monument_key": "st_basils_cathedral",
     "monument_name": "Saint Basil's Cathedral",
     "source": "st_basils_cathedral/ref_02.jpg",
@@ -5376,7 +5460,7 @@
     "image_id": "ref_st_basils_cathedral_ref_02"
   },
   {
-    "index_id": 448,
+    "index_id": 455,
     "monument_key": "st_basils_cathedral",
     "monument_name": "Saint Basil's Cathedral",
     "source": "st_basils_cathedral/ref_03.jpg",
@@ -5388,7 +5472,7 @@
     "image_id": "ref_st_basils_cathedral_ref_03"
   },
   {
-    "index_id": 449,
+    "index_id": 456,
     "monument_key": "st_basils_cathedral",
     "monument_name": "Saint Basil's Cathedral",
     "source": "st_basils_cathedral/centroid",
@@ -5400,7 +5484,7 @@
     "image_id": "ref_st_basils_cathedral_centroid"
   },
   {
-    "index_id": 450,
+    "index_id": 457,
     "monument_key": "parthenon",
     "monument_name": "Parthenon",
     "source": "parthenon/ref_01.jpg",
@@ -5412,7 +5496,7 @@
     "image_id": "ref_parthenon_ref_01"
   },
   {
-    "index_id": 451,
+    "index_id": 458,
     "monument_key": "parthenon",
     "monument_name": "Parthenon",
     "source": "parthenon/ref_02.jpg",
@@ -5424,7 +5508,7 @@
     "image_id": "ref_parthenon_ref_02"
   },
   {
-    "index_id": 452,
+    "index_id": 459,
     "monument_key": "parthenon",
     "monument_name": "Parthenon",
     "source": "parthenon/ref_03.jpg",
@@ -5436,7 +5520,7 @@
     "image_id": "ref_parthenon_ref_03"
   },
   {
-    "index_id": 453,
+    "index_id": 460,
     "monument_key": "parthenon",
     "monument_name": "Parthenon",
     "source": "parthenon/centroid",
@@ -5448,7 +5532,7 @@
     "image_id": "ref_parthenon_centroid"
   },
   {
-    "index_id": 454,
+    "index_id": 461,
     "monument_key": "moai_easter_island",
     "monument_name": "Moai of Easter Island",
     "source": "moai_easter_island/ref_01.jpg",
@@ -5460,7 +5544,7 @@
     "image_id": "ref_moai_easter_island_ref_01"
   },
   {
-    "index_id": 455,
+    "index_id": 462,
     "monument_key": "moai_easter_island",
     "monument_name": "Moai of Easter Island",
     "source": "moai_easter_island/ref_02.jpg",
@@ -5472,7 +5556,7 @@
     "image_id": "ref_moai_easter_island_ref_02"
   },
   {
-    "index_id": 456,
+    "index_id": 463,
     "monument_key": "moai_easter_island",
     "monument_name": "Moai of Easter Island",
     "source": "moai_easter_island/ref_03.jpg",
@@ -5484,7 +5568,7 @@
     "image_id": "ref_moai_easter_island_ref_03"
   },
   {
-    "index_id": 457,
+    "index_id": 464,
     "monument_key": "moai_easter_island",
     "monument_name": "Moai of Easter Island",
     "source": "moai_easter_island/centroid",
@@ -5496,7 +5580,7 @@
     "image_id": "ref_moai_easter_island_centroid"
   },
   {
-    "index_id": 458,
+    "index_id": 465,
     "monument_key": "borobudur",
     "monument_name": "Borobudur Temple",
     "source": "borobudur/ref_01.jpg",
@@ -5508,7 +5592,7 @@
     "image_id": "ref_borobudur_ref_01"
   },
   {
-    "index_id": 459,
+    "index_id": 466,
     "monument_key": "borobudur",
     "monument_name": "Borobudur Temple",
     "source": "borobudur/ref_02.jpg",
@@ -5520,7 +5604,7 @@
     "image_id": "ref_borobudur_ref_02"
   },
   {
-    "index_id": 460,
+    "index_id": 467,
     "monument_key": "borobudur",
     "monument_name": "Borobudur Temple",
     "source": "borobudur/ref_03.jpg",
@@ -5532,7 +5616,7 @@
     "image_id": "ref_borobudur_ref_03"
   },
   {
-    "index_id": 461,
+    "index_id": 468,
     "monument_key": "borobudur",
     "monument_name": "Borobudur Temple",
     "source": "borobudur/centroid",
@@ -5544,7 +5628,7 @@
     "image_id": "ref_borobudur_centroid"
   },
   {
-    "index_id": 462,
+    "index_id": 469,
     "monument_key": "prambanan",
     "monument_name": "Prambanan Temple Complex",
     "source": "prambanan/ref_01.jpg",
@@ -5556,7 +5640,7 @@
     "image_id": "ref_prambanan_ref_01"
   },
   {
-    "index_id": 463,
+    "index_id": 470,
     "monument_key": "prambanan",
     "monument_name": "Prambanan Temple Complex",
     "source": "prambanan/ref_02.jpg",
@@ -5568,7 +5652,7 @@
     "image_id": "ref_prambanan_ref_02"
   },
   {
-    "index_id": 464,
+    "index_id": 471,
     "monument_key": "prambanan",
     "monument_name": "Prambanan Temple Complex",
     "source": "prambanan/ref_03.jpg",
@@ -5580,7 +5664,7 @@
     "image_id": "ref_prambanan_ref_03"
   },
   {
-    "index_id": 465,
+    "index_id": 472,
     "monument_key": "prambanan",
     "monument_name": "Prambanan Temple Complex",
     "source": "prambanan/centroid",
@@ -5592,7 +5676,7 @@
     "image_id": "ref_prambanan_centroid"
   },
   {
-    "index_id": 466,
+    "index_id": 473,
     "monument_key": "hagia_sophia",
     "monument_name": "Hagia Sophia",
     "source": "hagia_sophia/ref_01.jpg",
@@ -5604,7 +5688,7 @@
     "image_id": "ref_hagia_sophia_ref_01"
   },
   {
-    "index_id": 467,
+    "index_id": 474,
     "monument_key": "hagia_sophia",
     "monument_name": "Hagia Sophia",
     "source": "hagia_sophia/ref_02.jpg",
@@ -5616,7 +5700,7 @@
     "image_id": "ref_hagia_sophia_ref_02"
   },
   {
-    "index_id": 468,
+    "index_id": 475,
     "monument_key": "hagia_sophia",
     "monument_name": "Hagia Sophia",
     "source": "hagia_sophia/ref_03.jpg",
@@ -5628,7 +5712,7 @@
     "image_id": "ref_hagia_sophia_ref_03"
   },
   {
-    "index_id": 469,
+    "index_id": 476,
     "monument_key": "hagia_sophia",
     "monument_name": "Hagia Sophia",
     "source": "hagia_sophia/centroid",
@@ -5640,7 +5724,7 @@
     "image_id": "ref_hagia_sophia_centroid"
   },
   {
-    "index_id": 470,
+    "index_id": 477,
     "monument_key": "blue_mosque",
     "monument_name": "Sultan Ahmed Mosque",
     "source": "blue_mosque/ref_01.jpg",
@@ -5652,7 +5736,7 @@
     "image_id": "ref_blue_mosque_ref_01"
   },
   {
-    "index_id": 471,
+    "index_id": 478,
     "monument_key": "blue_mosque",
     "monument_name": "Sultan Ahmed Mosque",
     "source": "blue_mosque/ref_02.jpg",
@@ -5664,7 +5748,7 @@
     "image_id": "ref_blue_mosque_ref_02"
   },
   {
-    "index_id": 472,
+    "index_id": 479,
     "monument_key": "blue_mosque",
     "monument_name": "Sultan Ahmed Mosque",
     "source": "blue_mosque/ref_03.jpg",
@@ -5676,7 +5760,7 @@
     "image_id": "ref_blue_mosque_ref_03"
   },
   {
-    "index_id": 473,
+    "index_id": 480,
     "monument_key": "blue_mosque",
     "monument_name": "Sultan Ahmed Mosque",
     "source": "blue_mosque/centroid",
@@ -5688,7 +5772,7 @@
     "image_id": "ref_blue_mosque_centroid"
   },
   {
-    "index_id": 474,
+    "index_id": 481,
     "monument_key": "pantheon_rome",
     "monument_name": "Pantheon Rome",
     "source": "pantheon_rome/ref_01.jpg",
@@ -5700,7 +5784,7 @@
     "image_id": "ref_pantheon_rome_ref_01"
   },
   {
-    "index_id": 475,
+    "index_id": 482,
     "monument_key": "pantheon_rome",
     "monument_name": "Pantheon Rome",
     "source": "pantheon_rome/ref_02.jpg",
@@ -5712,7 +5796,7 @@
     "image_id": "ref_pantheon_rome_ref_02"
   },
   {
-    "index_id": 476,
+    "index_id": 483,
     "monument_key": "pantheon_rome",
     "monument_name": "Pantheon Rome",
     "source": "pantheon_rome/ref_03.jpg",
@@ -5724,7 +5808,7 @@
     "image_id": "ref_pantheon_rome_ref_03"
   },
   {
-    "index_id": 477,
+    "index_id": 484,
     "monument_key": "pantheon_rome",
     "monument_name": "Pantheon Rome",
     "source": "pantheon_rome/centroid",
@@ -5736,7 +5820,7 @@
     "image_id": "ref_pantheon_rome_centroid"
   },
   {
-    "index_id": 478,
+    "index_id": 485,
     "monument_key": "brandenburg_gate",
     "monument_name": "Brandenburg Gate",
     "source": "brandenburg_gate/ref_01.jpg",
@@ -5748,7 +5832,7 @@
     "image_id": "ref_brandenburg_gate_ref_01"
   },
   {
-    "index_id": 479,
+    "index_id": 486,
     "monument_key": "brandenburg_gate",
     "monument_name": "Brandenburg Gate",
     "source": "brandenburg_gate/ref_02.jpg",
@@ -5760,7 +5844,7 @@
     "image_id": "ref_brandenburg_gate_ref_02"
   },
   {
-    "index_id": 480,
+    "index_id": 487,
     "monument_key": "brandenburg_gate",
     "monument_name": "Brandenburg Gate",
     "source": "brandenburg_gate/ref_03.jpg",
@@ -5772,7 +5856,7 @@
     "image_id": "ref_brandenburg_gate_ref_03"
   },
   {
-    "index_id": 481,
+    "index_id": 488,
     "monument_key": "brandenburg_gate",
     "monument_name": "Brandenburg Gate",
     "source": "brandenburg_gate/centroid",
@@ -5784,7 +5868,7 @@
     "image_id": "ref_brandenburg_gate_centroid"
   },
   {
-    "index_id": 482,
+    "index_id": 489,
     "monument_key": "neuschwanstein_castle",
     "monument_name": "Neuschwanstein Castle",
     "source": "neuschwanstein_castle/ref_01.jpg",
@@ -5796,7 +5880,7 @@
     "image_id": "ref_neuschwanstein_castle_ref_01"
   },
   {
-    "index_id": 483,
+    "index_id": 490,
     "monument_key": "neuschwanstein_castle",
     "monument_name": "Neuschwanstein Castle",
     "source": "neuschwanstein_castle/ref_02.jpg",
@@ -5808,7 +5892,7 @@
     "image_id": "ref_neuschwanstein_castle_ref_02"
   },
   {
-    "index_id": 484,
+    "index_id": 491,
     "monument_key": "neuschwanstein_castle",
     "monument_name": "Neuschwanstein Castle",
     "source": "neuschwanstein_castle/ref_03.jpg",
@@ -5820,7 +5904,7 @@
     "image_id": "ref_neuschwanstein_castle_ref_03"
   },
   {
-    "index_id": 485,
+    "index_id": 492,
     "monument_key": "neuschwanstein_castle",
     "monument_name": "Neuschwanstein Castle",
     "source": "neuschwanstein_castle/centroid",
@@ -5832,7 +5916,7 @@
     "image_id": "ref_neuschwanstein_castle_centroid"
   },
   {
-    "index_id": 486,
+    "index_id": 493,
     "monument_key": "tower_bridge",
     "monument_name": "Tower Bridge",
     "source": "tower_bridge/ref_01.jpg",
@@ -5844,7 +5928,7 @@
     "image_id": "ref_tower_bridge_ref_01"
   },
   {
-    "index_id": 487,
+    "index_id": 494,
     "monument_key": "tower_bridge",
     "monument_name": "Tower Bridge",
     "source": "tower_bridge/ref_02.jpg",
@@ -5856,7 +5940,7 @@
     "image_id": "ref_tower_bridge_ref_02"
   },
   {
-    "index_id": 488,
+    "index_id": 495,
     "monument_key": "tower_bridge",
     "monument_name": "Tower Bridge",
     "source": "tower_bridge/ref_03.jpg",
@@ -5868,7 +5952,7 @@
     "image_id": "ref_tower_bridge_ref_03"
   },
   {
-    "index_id": 489,
+    "index_id": 496,
     "monument_key": "tower_bridge",
     "monument_name": "Tower Bridge",
     "source": "tower_bridge/centroid",
@@ -5880,7 +5964,7 @@
     "image_id": "ref_tower_bridge_centroid"
   },
   {
-    "index_id": 490,
+    "index_id": 497,
     "monument_key": "westminster_abbey",
     "monument_name": "Westminster Abbey",
     "source": "westminster_abbey/ref_01.jpg",
@@ -5892,7 +5976,7 @@
     "image_id": "ref_westminster_abbey_ref_01"
   },
   {
-    "index_id": 491,
+    "index_id": 498,
     "monument_key": "westminster_abbey",
     "monument_name": "Westminster Abbey",
     "source": "westminster_abbey/ref_02.jpg",
@@ -5904,7 +5988,7 @@
     "image_id": "ref_westminster_abbey_ref_02"
   },
   {
-    "index_id": 492,
+    "index_id": 499,
     "monument_key": "westminster_abbey",
     "monument_name": "Westminster Abbey",
     "source": "westminster_abbey/ref_03.jpg",
@@ -5916,7 +6000,7 @@
     "image_id": "ref_westminster_abbey_ref_03"
   },
   {
-    "index_id": 493,
+    "index_id": 500,
     "monument_key": "westminster_abbey",
     "monument_name": "Westminster Abbey",
     "source": "westminster_abbey/centroid",
@@ -5928,7 +6012,7 @@
     "image_id": "ref_westminster_abbey_centroid"
   },
   {
-    "index_id": 494,
+    "index_id": 501,
     "monument_key": "arc_de_triomphe",
     "monument_name": "Arc de Triomphe",
     "source": "arc_de_triomphe/ref_01.jpg",
@@ -5940,7 +6024,7 @@
     "image_id": "ref_arc_de_triomphe_ref_01"
   },
   {
-    "index_id": 495,
+    "index_id": 502,
     "monument_key": "arc_de_triomphe",
     "monument_name": "Arc de Triomphe",
     "source": "arc_de_triomphe/ref_02.jpg",
@@ -5952,7 +6036,7 @@
     "image_id": "ref_arc_de_triomphe_ref_02"
   },
   {
-    "index_id": 496,
+    "index_id": 503,
     "monument_key": "arc_de_triomphe",
     "monument_name": "Arc de Triomphe",
     "source": "arc_de_triomphe/ref_03.jpg",
@@ -5964,7 +6048,7 @@
     "image_id": "ref_arc_de_triomphe_ref_03"
   },
   {
-    "index_id": 497,
+    "index_id": 504,
     "monument_key": "arc_de_triomphe",
     "monument_name": "Arc de Triomphe",
     "source": "arc_de_triomphe/centroid",
@@ -5976,7 +6060,7 @@
     "image_id": "ref_arc_de_triomphe_centroid"
   },
   {
-    "index_id": 498,
+    "index_id": 505,
     "monument_key": "palace_of_versailles",
     "monument_name": "Palace of Versailles",
     "source": "palace_of_versailles/ref_01.jpg",
@@ -5988,7 +6072,7 @@
     "image_id": "ref_palace_of_versailles_ref_01"
   },
   {
-    "index_id": 499,
+    "index_id": 506,
     "monument_key": "palace_of_versailles",
     "monument_name": "Palace of Versailles",
     "source": "palace_of_versailles/ref_02.jpg",
@@ -6000,7 +6084,7 @@
     "image_id": "ref_palace_of_versailles_ref_02"
   },
   {
-    "index_id": 500,
+    "index_id": 507,
     "monument_key": "palace_of_versailles",
     "monument_name": "Palace of Versailles",
     "source": "palace_of_versailles/ref_03.jpg",
@@ -6012,7 +6096,7 @@
     "image_id": "ref_palace_of_versailles_ref_03"
   },
   {
-    "index_id": 501,
+    "index_id": 508,
     "monument_key": "palace_of_versailles",
     "monument_name": "Palace of Versailles",
     "source": "palace_of_versailles/centroid",
@@ -6024,7 +6108,7 @@
     "image_id": "ref_palace_of_versailles_centroid"
   },
   {
-    "index_id": 502,
+    "index_id": 509,
     "monument_key": "mont_saint_michel",
     "monument_name": "Mont-Saint-Michel",
     "source": "mont_saint_michel/ref_01.jpg",
@@ -6036,7 +6120,7 @@
     "image_id": "ref_mont_saint_michel_ref_01"
   },
   {
-    "index_id": 503,
+    "index_id": 510,
     "monument_key": "mont_saint_michel",
     "monument_name": "Mont-Saint-Michel",
     "source": "mont_saint_michel/ref_02.jpg",
@@ -6048,7 +6132,7 @@
     "image_id": "ref_mont_saint_michel_ref_02"
   },
   {
-    "index_id": 504,
+    "index_id": 511,
     "monument_key": "mont_saint_michel",
     "monument_name": "Mont-Saint-Michel",
     "source": "mont_saint_michel/ref_03.jpg",
@@ -6060,7 +6144,7 @@
     "image_id": "ref_mont_saint_michel_ref_03"
   },
   {
-    "index_id": 505,
+    "index_id": 512,
     "monument_key": "mont_saint_michel",
     "monument_name": "Mont-Saint-Michel",
     "source": "mont_saint_michel/centroid",
@@ -6072,7 +6156,7 @@
     "image_id": "ref_mont_saint_michel_centroid"
   },
   {
-    "index_id": 506,
+    "index_id": 513,
     "monument_key": "kremlin",
     "monument_name": "Moscow Kremlin",
     "source": "kremlin/ref_01.jpg",
@@ -6084,7 +6168,7 @@
     "image_id": "ref_kremlin_ref_01"
   },
   {
-    "index_id": 507,
+    "index_id": 514,
     "monument_key": "kremlin",
     "monument_name": "Moscow Kremlin",
     "source": "kremlin/ref_02.jpg",
@@ -6096,7 +6180,7 @@
     "image_id": "ref_kremlin_ref_02"
   },
   {
-    "index_id": 508,
+    "index_id": 515,
     "monument_key": "kremlin",
     "monument_name": "Moscow Kremlin",
     "source": "kremlin/ref_03.jpg",
@@ -6108,7 +6192,7 @@
     "image_id": "ref_kremlin_ref_03"
   },
   {
-    "index_id": 509,
+    "index_id": 516,
     "monument_key": "kremlin",
     "monument_name": "Moscow Kremlin",
     "source": "kremlin/centroid",
@@ -6120,7 +6204,7 @@
     "image_id": "ref_kremlin_centroid"
   },
   {
-    "index_id": 510,
+    "index_id": 517,
     "monument_key": "forbidden_city",
     "monument_name": "Forbidden City",
     "source": "forbidden_city/ref_01.jpg",
@@ -6132,7 +6216,7 @@
     "image_id": "ref_forbidden_city_ref_01"
   },
   {
-    "index_id": 511,
+    "index_id": 518,
     "monument_key": "forbidden_city",
     "monument_name": "Forbidden City",
     "source": "forbidden_city/ref_02.jpg",
@@ -6144,7 +6228,7 @@
     "image_id": "ref_forbidden_city_ref_02"
   },
   {
-    "index_id": 512,
+    "index_id": 519,
     "monument_key": "forbidden_city",
     "monument_name": "Forbidden City",
     "source": "forbidden_city/ref_03.jpg",
@@ -6156,7 +6240,7 @@
     "image_id": "ref_forbidden_city_ref_03"
   },
   {
-    "index_id": 513,
+    "index_id": 520,
     "monument_key": "forbidden_city",
     "monument_name": "Forbidden City",
     "source": "forbidden_city/centroid",
@@ -6168,7 +6252,7 @@
     "image_id": "ref_forbidden_city_centroid"
   },
   {
-    "index_id": 514,
+    "index_id": 521,
     "monument_key": "terracotta_army",
     "monument_name": "Terracotta Army of Qin Shi Huang",
     "source": "terracotta_army/ref_01.jpg",
@@ -6180,7 +6264,7 @@
     "image_id": "ref_terracotta_army_ref_01"
   },
   {
-    "index_id": 515,
+    "index_id": 522,
     "monument_key": "terracotta_army",
     "monument_name": "Terracotta Army of Qin Shi Huang",
     "source": "terracotta_army/ref_02.jpg",
@@ -6192,7 +6276,7 @@
     "image_id": "ref_terracotta_army_ref_02"
   },
   {
-    "index_id": 516,
+    "index_id": 523,
     "monument_key": "terracotta_army",
     "monument_name": "Terracotta Army of Qin Shi Huang",
     "source": "terracotta_army/ref_03.jpg",
@@ -6204,7 +6288,7 @@
     "image_id": "ref_terracotta_army_ref_03"
   },
   {
-    "index_id": 517,
+    "index_id": 524,
     "monument_key": "terracotta_army",
     "monument_name": "Terracotta Army of Qin Shi Huang",
     "source": "terracotta_army/centroid",
@@ -6216,7 +6300,7 @@
     "image_id": "ref_terracotta_army_centroid"
   },
   {
-    "index_id": 518,
+    "index_id": 525,
     "monument_key": "fushimi_inari_taisha",
     "monument_name": "Fushimi Inari Taisha",
     "source": "fushimi_inari_taisha/ref_01.jpg",
@@ -6228,7 +6312,7 @@
     "image_id": "ref_fushimi_inari_taisha_ref_01"
   },
   {
-    "index_id": 519,
+    "index_id": 526,
     "monument_key": "fushimi_inari_taisha",
     "monument_name": "Fushimi Inari Taisha",
     "source": "fushimi_inari_taisha/ref_02.jpg",
@@ -6240,7 +6324,7 @@
     "image_id": "ref_fushimi_inari_taisha_ref_02"
   },
   {
-    "index_id": 520,
+    "index_id": 527,
     "monument_key": "fushimi_inari_taisha",
     "monument_name": "Fushimi Inari Taisha",
     "source": "fushimi_inari_taisha/ref_03.jpg",
@@ -6252,7 +6336,7 @@
     "image_id": "ref_fushimi_inari_taisha_ref_03"
   },
   {
-    "index_id": 521,
+    "index_id": 528,
     "monument_key": "fushimi_inari_taisha",
     "monument_name": "Fushimi Inari Taisha",
     "source": "fushimi_inari_taisha/centroid",
@@ -6264,7 +6348,7 @@
     "image_id": "ref_fushimi_inari_taisha_centroid"
   },
   {
-    "index_id": 522,
+    "index_id": 529,
     "monument_key": "kinkaku_ji",
     "monument_name": "Kinkaku-ji",
     "source": "kinkaku_ji/ref_01.jpg",
@@ -6276,7 +6360,7 @@
     "image_id": "ref_kinkaku_ji_ref_01"
   },
   {
-    "index_id": 523,
+    "index_id": 530,
     "monument_key": "kinkaku_ji",
     "monument_name": "Kinkaku-ji",
     "source": "kinkaku_ji/ref_02.jpg",
@@ -6288,7 +6372,7 @@
     "image_id": "ref_kinkaku_ji_ref_02"
   },
   {
-    "index_id": 524,
+    "index_id": 531,
     "monument_key": "kinkaku_ji",
     "monument_name": "Kinkaku-ji",
     "source": "kinkaku_ji/ref_03.jpg",
@@ -6300,7 +6384,7 @@
     "image_id": "ref_kinkaku_ji_ref_03"
   },
   {
-    "index_id": 525,
+    "index_id": 532,
     "monument_key": "kinkaku_ji",
     "monument_name": "Kinkaku-ji",
     "source": "kinkaku_ji/centroid",
@@ -6312,7 +6396,7 @@
     "image_id": "ref_kinkaku_ji_centroid"
   },
   {
-    "index_id": 526,
+    "index_id": 533,
     "monument_key": "himeji_castle",
     "monument_name": "Himeji Castle",
     "source": "himeji_castle/ref_01.jpg",
@@ -6324,7 +6408,7 @@
     "image_id": "ref_himeji_castle_ref_01"
   },
   {
-    "index_id": 527,
+    "index_id": 534,
     "monument_key": "himeji_castle",
     "monument_name": "Himeji Castle",
     "source": "himeji_castle/ref_02.jpg",
@@ -6336,7 +6420,7 @@
     "image_id": "ref_himeji_castle_ref_02"
   },
   {
-    "index_id": 528,
+    "index_id": 535,
     "monument_key": "himeji_castle",
     "monument_name": "Himeji Castle",
     "source": "himeji_castle/ref_03.jpg",
@@ -6348,7 +6432,7 @@
     "image_id": "ref_himeji_castle_ref_03"
   },
   {
-    "index_id": 529,
+    "index_id": 536,
     "monument_key": "himeji_castle",
     "monument_name": "Himeji Castle",
     "source": "himeji_castle/centroid",
@@ -6360,7 +6444,7 @@
     "image_id": "ref_himeji_castle_centroid"
   },
   {
-    "index_id": 530,
+    "index_id": 537,
     "monument_key": "senso_ji",
     "monument_name": "Senso-ji Temple",
     "source": "senso_ji/ref_01.jpg",
@@ -6372,7 +6456,7 @@
     "image_id": "ref_senso_ji_ref_01"
   },
   {
-    "index_id": 531,
+    "index_id": 538,
     "monument_key": "senso_ji",
     "monument_name": "Senso-ji Temple",
     "source": "senso_ji/ref_02.jpg",
@@ -6384,7 +6468,7 @@
     "image_id": "ref_senso_ji_ref_02"
   },
   {
-    "index_id": 532,
+    "index_id": 539,
     "monument_key": "senso_ji",
     "monument_name": "Senso-ji Temple",
     "source": "senso_ji/ref_03.jpg",
@@ -6396,7 +6480,7 @@
     "image_id": "ref_senso_ji_ref_03"
   },
   {
-    "index_id": 533,
+    "index_id": 540,
     "monument_key": "senso_ji",
     "monument_name": "Senso-ji Temple",
     "source": "senso_ji/centroid",
@@ -6408,7 +6492,7 @@
     "image_id": "ref_senso_ji_centroid"
   },
   {
-    "index_id": 534,
+    "index_id": 541,
     "monument_key": "petronas_towers",
     "monument_name": "Petronas Twin Towers",
     "source": "petronas_towers/ref_01.jpg",
@@ -6420,7 +6504,7 @@
     "image_id": "ref_petronas_towers_ref_01"
   },
   {
-    "index_id": 535,
+    "index_id": 542,
     "monument_key": "petronas_towers",
     "monument_name": "Petronas Twin Towers",
     "source": "petronas_towers/ref_02.jpg",
@@ -6432,7 +6516,7 @@
     "image_id": "ref_petronas_towers_ref_02"
   },
   {
-    "index_id": 536,
+    "index_id": 543,
     "monument_key": "petronas_towers",
     "monument_name": "Petronas Twin Towers",
     "source": "petronas_towers/ref_03.jpg",
@@ -6444,7 +6528,7 @@
     "image_id": "ref_petronas_towers_ref_03"
   },
   {
-    "index_id": 537,
+    "index_id": 544,
     "monument_key": "petronas_towers",
     "monument_name": "Petronas Twin Towers",
     "source": "petronas_towers/centroid",
@@ -6456,7 +6540,7 @@
     "image_id": "ref_petronas_towers_centroid"
   },
   {
-    "index_id": 538,
+    "index_id": 545,
     "monument_key": "burj_khalifa",
     "monument_name": "Burj Khalifa",
     "source": "burj_khalifa/ref_01.jpg",
@@ -6468,7 +6552,7 @@
     "image_id": "ref_burj_khalifa_ref_01"
   },
   {
-    "index_id": 539,
+    "index_id": 546,
     "monument_key": "burj_khalifa",
     "monument_name": "Burj Khalifa",
     "source": "burj_khalifa/ref_02.jpg",
@@ -6480,7 +6564,7 @@
     "image_id": "ref_burj_khalifa_ref_02"
   },
   {
-    "index_id": 540,
+    "index_id": 547,
     "monument_key": "burj_khalifa",
     "monument_name": "Burj Khalifa",
     "source": "burj_khalifa/ref_03.jpg",
@@ -6492,7 +6576,7 @@
     "image_id": "ref_burj_khalifa_ref_03"
   },
   {
-    "index_id": 541,
+    "index_id": 548,
     "monument_key": "burj_khalifa",
     "monument_name": "Burj Khalifa",
     "source": "burj_khalifa/centroid",
@@ -6504,7 +6588,7 @@
     "image_id": "ref_burj_khalifa_centroid"
   },
   {
-    "index_id": 542,
+    "index_id": 549,
     "monument_key": "sheikh_zayed_grand_mosque",
     "monument_name": "Sheikh Zayed Grand Mosque",
     "source": "sheikh_zayed_grand_mosque/ref_01.jpg",
@@ -6516,7 +6600,7 @@
     "image_id": "ref_sheikh_zayed_grand_mosque_ref_01"
   },
   {
-    "index_id": 543,
+    "index_id": 550,
     "monument_key": "sheikh_zayed_grand_mosque",
     "monument_name": "Sheikh Zayed Grand Mosque",
     "source": "sheikh_zayed_grand_mosque/ref_02.jpg",
@@ -6528,7 +6612,7 @@
     "image_id": "ref_sheikh_zayed_grand_mosque_ref_02"
   },
   {
-    "index_id": 544,
+    "index_id": 551,
     "monument_key": "sheikh_zayed_grand_mosque",
     "monument_name": "Sheikh Zayed Grand Mosque",
     "source": "sheikh_zayed_grand_mosque/ref_03.jpg",
@@ -6540,7 +6624,7 @@
     "image_id": "ref_sheikh_zayed_grand_mosque_ref_03"
   },
   {
-    "index_id": 545,
+    "index_id": 552,
     "monument_key": "sheikh_zayed_grand_mosque",
     "monument_name": "Sheikh Zayed Grand Mosque",
     "source": "sheikh_zayed_grand_mosque/centroid",
@@ -6552,7 +6636,7 @@
     "image_id": "ref_sheikh_zayed_grand_mosque_centroid"
   },
   {
-    "index_id": 546,
+    "index_id": 553,
     "monument_key": "carnac_stones",
     "monument_name": "Carnac Megaliths",
     "source": "carnac_stones/ref_01.jpg",
@@ -6564,7 +6648,7 @@
     "image_id": "ref_carnac_stones_ref_01"
   },
   {
-    "index_id": 547,
+    "index_id": 554,
     "monument_key": "carnac_stones",
     "monument_name": "Carnac Megaliths",
     "source": "carnac_stones/ref_02.jpg",
@@ -6576,7 +6660,7 @@
     "image_id": "ref_carnac_stones_ref_02"
   },
   {
-    "index_id": 548,
+    "index_id": 555,
     "monument_key": "carnac_stones",
     "monument_name": "Carnac Megaliths",
     "source": "carnac_stones/ref_03.jpg",
@@ -6588,7 +6672,7 @@
     "image_id": "ref_carnac_stones_ref_03"
   },
   {
-    "index_id": 549,
+    "index_id": 556,
     "monument_key": "carnac_stones",
     "monument_name": "Carnac Megaliths",
     "source": "carnac_stones/centroid",
@@ -6600,7 +6684,7 @@
     "image_id": "ref_carnac_stones_centroid"
   },
   {
-    "index_id": 550,
+    "index_id": 557,
     "monument_key": "pompeii",
     "monument_name": "Archaeological Area of Pompeii",
     "source": "pompeii/ref_01.jpg",
@@ -6612,7 +6696,7 @@
     "image_id": "ref_pompeii_ref_01"
   },
   {
-    "index_id": 551,
+    "index_id": 558,
     "monument_key": "pompeii",
     "monument_name": "Archaeological Area of Pompeii",
     "source": "pompeii/ref_02.jpg",
@@ -6624,7 +6708,7 @@
     "image_id": "ref_pompeii_ref_02"
   },
   {
-    "index_id": 552,
+    "index_id": 559,
     "monument_key": "pompeii",
     "monument_name": "Archaeological Area of Pompeii",
     "source": "pompeii/ref_03.jpg",
@@ -6636,7 +6720,7 @@
     "image_id": "ref_pompeii_ref_03"
   },
   {
-    "index_id": 553,
+    "index_id": 560,
     "monument_key": "pompeii",
     "monument_name": "Archaeological Area of Pompeii",
     "source": "pompeii/centroid",
@@ -6648,7 +6732,7 @@
     "image_id": "ref_pompeii_centroid"
   },
   {
-    "index_id": 554,
+    "index_id": 561,
     "monument_key": "teotihuacan",
     "monument_name": "Teotihuacan",
     "source": "teotihuacan/ref_01.jpg",
@@ -6660,7 +6744,7 @@
     "image_id": "ref_teotihuacan_ref_01"
   },
   {
-    "index_id": 555,
+    "index_id": 562,
     "monument_key": "teotihuacan",
     "monument_name": "Teotihuacan",
     "source": "teotihuacan/ref_02.jpg",
@@ -6672,7 +6756,7 @@
     "image_id": "ref_teotihuacan_ref_02"
   },
   {
-    "index_id": 556,
+    "index_id": 563,
     "monument_key": "teotihuacan",
     "monument_name": "Teotihuacan",
     "source": "teotihuacan/ref_03.jpg",
@@ -6684,7 +6768,7 @@
     "image_id": "ref_teotihuacan_ref_03"
   },
   {
-    "index_id": 557,
+    "index_id": 564,
     "monument_key": "teotihuacan",
     "monument_name": "Teotihuacan",
     "source": "teotihuacan/centroid",
@@ -6696,7 +6780,7 @@
     "image_id": "ref_teotihuacan_centroid"
   },
   {
-    "index_id": 558,
+    "index_id": 565,
     "monument_key": "tikal",
     "monument_name": "Tikal National Park",
     "source": "tikal/ref_01.jpg",
@@ -6708,7 +6792,7 @@
     "image_id": "ref_tikal_ref_01"
   },
   {
-    "index_id": 559,
+    "index_id": 566,
     "monument_key": "tikal",
     "monument_name": "Tikal National Park",
     "source": "tikal/ref_02.jpg",
@@ -6720,7 +6804,7 @@
     "image_id": "ref_tikal_ref_02"
   },
   {
-    "index_id": 560,
+    "index_id": 567,
     "monument_key": "tikal",
     "monument_name": "Tikal National Park",
     "source": "tikal/ref_03.jpg",
@@ -6732,7 +6816,7 @@
     "image_id": "ref_tikal_ref_03"
   },
   {
-    "index_id": 561,
+    "index_id": 568,
     "monument_key": "tikal",
     "monument_name": "Tikal National Park",
     "source": "tikal/centroid",
@@ -6744,7 +6828,7 @@
     "image_id": "ref_tikal_centroid"
   },
   {
-    "index_id": 562,
+    "index_id": 569,
     "monument_key": "mesa_verde",
     "monument_name": "Mesa Verde Cliff Palace",
     "source": "mesa_verde/ref_01.jpg",
@@ -6756,7 +6840,7 @@
     "image_id": "ref_mesa_verde_ref_01"
   },
   {
-    "index_id": 563,
+    "index_id": 570,
     "monument_key": "mesa_verde",
     "monument_name": "Mesa Verde Cliff Palace",
     "source": "mesa_verde/ref_02.jpg",
@@ -6768,7 +6852,7 @@
     "image_id": "ref_mesa_verde_ref_02"
   },
   {
-    "index_id": 564,
+    "index_id": 571,
     "monument_key": "mesa_verde",
     "monument_name": "Mesa Verde Cliff Palace",
     "source": "mesa_verde/ref_03.jpg",
@@ -6780,7 +6864,7 @@
     "image_id": "ref_mesa_verde_ref_03"
   },
   {
-    "index_id": 565,
+    "index_id": 572,
     "monument_key": "mesa_verde",
     "monument_name": "Mesa Verde Cliff Palace",
     "source": "mesa_verde/centroid",
@@ -6792,7 +6876,7 @@
     "image_id": "ref_mesa_verde_centroid"
   },
   {
-    "index_id": 566,
+    "index_id": 573,
     "monument_key": "golden_gate_bridge",
     "monument_name": "Golden Gate Bridge",
     "source": "golden_gate_bridge/ref_01.jpg",
@@ -6804,7 +6888,7 @@
     "image_id": "ref_golden_gate_bridge_ref_01"
   },
   {
-    "index_id": 567,
+    "index_id": 574,
     "monument_key": "golden_gate_bridge",
     "monument_name": "Golden Gate Bridge",
     "source": "golden_gate_bridge/ref_02.jpg",
@@ -6816,7 +6900,7 @@
     "image_id": "ref_golden_gate_bridge_ref_02"
   },
   {
-    "index_id": 568,
+    "index_id": 575,
     "monument_key": "golden_gate_bridge",
     "monument_name": "Golden Gate Bridge",
     "source": "golden_gate_bridge/ref_03.jpg",
@@ -6828,7 +6912,7 @@
     "image_id": "ref_golden_gate_bridge_ref_03"
   },
   {
-    "index_id": 569,
+    "index_id": 576,
     "monument_key": "golden_gate_bridge",
     "monument_name": "Golden Gate Bridge",
     "source": "golden_gate_bridge/centroid",

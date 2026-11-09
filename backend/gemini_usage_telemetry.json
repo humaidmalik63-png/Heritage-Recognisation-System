@@ -1,30 +1,30 @@
 {
   "service_name": "Gemini 2.5 Flash Tier-2 Telemetry",
   "version": "1.0.0",
-  "total_requests": 291,
-  "successful_requests": 94,
-  "failed_requests": 197,
-  "total_retries": 96,
-  "cumulative_latency_ms": 762423.1365008745,
-  "average_latency_ms": 2620.01,
-  "total_input_tokens": 92359,
-  "total_output_tokens": 17948,
-  "tokens_reported_count": 78,
+  "total_requests": 351,
+  "successful_requests": 153,
+  "failed_requests": 198,
+  "total_retries": 99,
+  "cumulative_latency_ms": 1323192.2995006898,
+  "average_latency_ms": 3769.78,
+  "total_input_tokens": 186077,
+  "total_output_tokens": 36410,
+  "tokens_reported_count": 137,
   "error_categories": {
     "RATE_LIMIT_429": 17,
     "AUTH_INVALID_KEY": 17,
     "TIMEOUT": 16,
-    "SERVER_ERROR_5XX": 0,
+    "SERVER_ERROR_5XX": 1,
     "EMPTY_RESPONSE": 0,
     "CLIENT_ERROR": 147
   },
   "features_invoked": {
     "unknown_heritage_analysis": {
-      "success": 82,
-      "fail": 147
+      "success": 138,
+      "fail": 148
     },
     "grounded_historical_qa": {
-      "success": 12,
+      "success": 15,
       "fail": 50
     },
     "architectural_explanation": {
@@ -32,6 +32,6 @@
       "fail": 0
     }
   },
-  "last_request_utc": "2026-11-07T18:37:02.942671+00:00",
-  "last_error": "Deadline exceeded / Gateway timeout"
+  "last_request_utc": "2026-11-09T07:52:36.628155+00:00",
+  "last_error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
 }

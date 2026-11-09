@@ -13,7 +13,6 @@ import {
   HelpCircle,
   Camera,
   Layers,
-  Sparkles,
   Info
 } from 'lucide-react';
 
@@ -54,31 +53,31 @@ export default function PipelineInspector({
         return {
           label: 'VERIFIED MATCH',
           color: 'bg-emerald-50 text-emerald-900 border-emerald-300',
-          icon: <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />,
+          icon: <ShieldCheck className="w-3.5 h-3.5 text-emerald-700" />,
         };
       case 'UNCERTAIN_MATCH':
         return {
           label: 'UNCERTAIN MATCH // CLOSE CANDIDATE COMPETITION',
-          color: 'bg-amber-100 text-amber-900 border-amber-300',
-          icon: <AlertTriangle className="w-3.5 h-3.5 text-amber-600" />,
+          color: 'bg-amber-50 text-amber-900 border-amber-300',
+          icon: <AlertTriangle className="w-3.5 h-3.5 text-amber-700" />,
         };
       case 'UNKNOWN_HERITAGE_SPECIMEN':
         return {
           label: 'UNKNOWN HERITAGE SPECIMEN',
-          color: 'bg-amber-50 text-amber-900 border-amber-300',
-          icon: <HelpCircle className="w-3.5 h-3.5 text-amber-600" />,
+          color: 'bg-archive-parchment text-archive-charcoal border-archive-hairline',
+          icon: <HelpCircle className="w-3.5 h-3.5 text-archive-stone" />,
         };
       case 'REVIEW_REQUIRED':
         return {
           label: 'REVIEW REQUIRED // CURATOR AUDIT FLAGGED',
           color: 'bg-rose-50 text-rose-900 border-rose-300',
-          icon: <ShieldAlert className="w-3.5 h-3.5 text-rose-600" />,
+          icon: <ShieldAlert className="w-3.5 h-3.5 text-rose-700" />,
         };
       default:
         return {
           label: 'NON-MONUMENT REJECTED',
-          color: 'bg-rose-100 text-rose-900 border-rose-300',
-          icon: <AlertTriangle className="w-3.5 h-3.5 text-rose-600" />,
+          color: 'bg-archive-alabaster text-archive-stone border-archive-hairline',
+          icon: <AlertTriangle className="w-3.5 h-3.5 text-archive-muted" />,
         };
     }
   };
@@ -98,20 +97,20 @@ export default function PipelineInspector({
             </h4>
           </div>
           <p className="text-[11px] text-archive-stone font-sans">
-            SIH 2025 Multi-Evidence Synthesis: Aggregated FAISS cosine margin, zero-shot gatekeeper, EXIF geodetics, and image quality.
+            Multi-evidence calibration: Aggregated FAISS cosine margin, zero-shot gatekeeper, geodetic EXIF data, and focus/exposure quality.
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
           <span
-            className={`font-mono text-[10px] uppercase px-2.5 py-1 rounded border font-bold flex items-center gap-1.5 shadow-sm ${badge.color}`}
+            className={`font-mono text-[10px] uppercase px-2.5 py-1 rounded border font-bold flex items-center gap-1.5 shadow-xs ${badge.color}`}
           >
             {badge.icon}
             <span>{badge.label}</span>
           </span>
 
           {requiresReview && (
-            <span className="font-mono text-[9px] uppercase px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-300 font-semibold animate-pulse">
+            <span className="font-mono text-[9px] uppercase px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-300 font-semibold">
               HUMAN REVIEW FLAGGED
             </span>
           )}

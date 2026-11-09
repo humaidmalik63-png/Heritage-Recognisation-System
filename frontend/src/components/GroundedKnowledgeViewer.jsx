@@ -8,7 +8,6 @@ import {
   ShieldCheck,
   ExternalLink,
   MessageSquare,
-  Sparkles,
   Send,
   Loader2,
   FileText,
@@ -24,7 +23,7 @@ import {
   Tag
 } from 'lucide-react';
 
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || 'http://localhost:8001';
 
 export default function GroundedKnowledgeViewer({ monumentKey, monumentName }) {
   const [knowledge, setKnowledge] = useState(null);
@@ -258,7 +257,7 @@ export default function GroundedKnowledgeViewer({ monumentKey, monumentName }) {
             {interesting_facts.length > 0 && (
               <div className="mt-6 pt-6 border-t border-archive-hairline space-y-3">
                 <div className="font-mono text-xs uppercase tracking-wider text-archive-stone font-bold flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-archive-terracotta" />
+                  <Scroll className="w-3.5 h-3.5 text-archive-terracotta" />
                   <span>VERIFIED CURATORIAL FACTS & ANOMALIES</span>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
@@ -454,7 +453,7 @@ export default function GroundedKnowledgeViewer({ monumentKey, monumentName }) {
             {cultural_significance.intangible_heritage && (
               <div className="bg-white border border-archive-hairline p-5 rounded space-y-2">
                 <span className="font-mono text-xs uppercase tracking-wider text-archive-charcoal font-bold block flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-archive-terracotta" />
+                  <Landmark className="w-3.5 h-3.5 text-archive-terracotta" />
                   <span>INTANGIBLE CULTURAL HERITAGE & LIVING TRADITIONS</span>
                 </span>
                 <p className="font-sans text-xs text-archive-stone leading-relaxed">

@@ -18,7 +18,6 @@ import {
   Scroll,
   Building2,
   HelpCircle,
-  Sparkles,
   Compass,
   Info,
   Navigation
@@ -83,11 +82,11 @@ export default function MonographResult({ result, imagePreview, onReset }) {
         transition={{ type: 'spring', stiffness: 200, damping: 20 }}
         className="space-y-6"
       >
-        <div className="bg-archive-ivory border-2 border-amber-300 rounded shadow-plate p-6 sm:p-10">
+        <div className="bg-archive-ivory border border-amber-300 rounded shadow-plate p-6 sm:p-10">
           {/* Header Bar */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b border-amber-200 gap-3">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="font-mono text-xs uppercase px-2.5 py-1 rounded bg-amber-100 text-amber-900 border border-amber-300 font-bold flex items-center gap-1.5">
+              <span className="font-mono text-xs uppercase px-2.5 py-1 rounded bg-amber-50 text-amber-900 border border-amber-300 font-bold flex items-center gap-1.5">
                 <AlertTriangle className="w-3.5 h-3.5 text-amber-700" />
                 UNCERTAIN MATCH // CLOSE CANDIDATE COMPETITION
               </span>
@@ -138,7 +137,7 @@ export default function MonographResult({ result, imagePreview, onReset }) {
 
                 {/* Side-by-Side Candidates Comparison */}
                 <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs">
-                  <div className="bg-white border-2 border-archive-terracotta/40 p-3.5 rounded shadow-sm">
+                  <div className="bg-white border border-archive-terracotta/60 p-3.5 rounded shadow-sm">
                     <span className="text-[10px] text-archive-terracotta uppercase font-bold block">Top Candidate #1</span>
                     <span className="font-serif font-bold text-base text-archive-charcoal block mt-0.5 truncate">
                       {top1Cand?.monument_name || 'Candidate 1'}
@@ -259,21 +258,21 @@ export default function MonographResult({ result, imagePreview, onReset }) {
         transition={{ type: 'spring', stiffness: 200, damping: 20 }}
         className="space-y-6"
       >
-        <div className={`bg-archive-ivory border-2 ${
-          isMetadataOnly ? 'border-amber-400' : (isOutOfCatalog ? 'border-sky-400' : 'border-slate-300')
+        <div className={`bg-archive-ivory border ${
+          isMetadataOnly ? 'border-amber-300' : (isOutOfCatalog ? 'border-slate-300' : 'border-slate-300')
         } rounded shadow-plate p-6 sm:p-10`}>
           <div className={`flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b ${
-            isMetadataOnly ? 'border-amber-200' : (isOutOfCatalog ? 'border-sky-200' : 'border-slate-200')
+            isMetadataOnly ? 'border-amber-200' : (isOutOfCatalog ? 'border-slate-200' : 'border-slate-200')
           } gap-3`}>
             <div className="flex flex-wrap items-center gap-2">
               {isMetadataOnly ? (
-                <span className="font-mono text-xs uppercase px-2.5 py-1 rounded bg-amber-100 text-amber-900 border border-amber-300 font-bold flex items-center gap-1.5 shadow-xs">
+                <span className="font-mono text-xs uppercase px-2.5 py-1 rounded bg-amber-50 text-amber-900 border border-amber-300 font-bold flex items-center gap-1.5 shadow-xs">
                   <BookOpen className="w-3.5 h-3.5 text-amber-700" />
                   CATALOGUED — METADATA ONLY
                 </span>
               ) : isOutOfCatalog ? (
-                <span className="font-mono text-xs uppercase px-2.5 py-1 rounded bg-sky-100 text-sky-900 border border-sky-300 font-bold flex items-center gap-1.5 shadow-xs">
-                  <Compass className="w-3.5 h-3.5 text-sky-700" />
+                <span className="font-mono text-xs uppercase px-2.5 py-1 rounded bg-slate-100 text-slate-800 border border-slate-300 font-bold flex items-center gap-1.5 shadow-xs">
+                  <Compass className="w-3.5 h-3.5 text-slate-700" />
                   OUT-OF-CATALOG HERITAGE IDENTIFIED
                 </span>
               ) : (
@@ -282,9 +281,9 @@ export default function MonographResult({ result, imagePreview, onReset }) {
                   EXPLICIT UNCERTAINTY // UNINDEXED HERITAGE SPECIMEN
                 </span>
               )}
-              <span className={`font-mono text-[10px] uppercase px-2 py-0.5 rounded ${isOffline ? 'bg-amber-100 text-amber-800 border-amber-300' : 'bg-emerald-50 text-emerald-800 border-emerald-300'} border flex items-center gap-1`}>
-                <span className={`w-1.5 h-1.5 rounded-full ${isOffline ? 'bg-amber-600' : 'bg-emerald-600 animate-pulse'}`}></span>
-                {isOffline ? 'OFFLINE FALLBACK' : `LIVE ADJUDICATION // ${modelUsed.toUpperCase()}`}
+              <span className={`font-mono text-[10px] uppercase px-2 py-0.5 rounded ${isOffline ? 'bg-amber-50 text-amber-800 border-amber-200' : 'bg-emerald-50 text-emerald-800 border-emerald-200'} border flex items-center gap-1.5`}>
+                <span className={`w-1.5 h-1.5 rounded-full ${isOffline ? 'bg-amber-600' : 'bg-emerald-600'}`}></span>
+                {isOffline ? 'OFFLINE FALLBACK' : `ADJUDICATION // ${modelUsed.toUpperCase()}`}
               </span>
             </div>
 
@@ -505,10 +504,10 @@ export default function MonographResult({ result, imagePreview, onReset }) {
         transition={{ type: 'spring', stiffness: 200, damping: 20 }}
         className="space-y-6"
       >
-        <div className="bg-archive-ivory border-2 border-rose-300 rounded shadow-plate p-6 sm:p-10">
+        <div className="bg-archive-ivory border border-rose-300 rounded shadow-plate p-6 sm:p-10">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b border-rose-200 gap-3">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="font-mono text-xs uppercase px-2.5 py-1 rounded bg-rose-100 text-rose-900 border border-rose-300 font-bold flex items-center gap-1.5">
+              <span className="font-mono text-xs uppercase px-2.5 py-1 rounded bg-rose-50 text-rose-900 border border-rose-200 font-bold flex items-center gap-1.5">
                 <ShieldAlert className="w-3.5 h-3.5 text-rose-700" />
                 CURATORIAL AUDIT REQUIRED // EVIDENCE CONFLICT OR QUALITY DEGRADATION
               </span>
@@ -631,8 +630,8 @@ export default function MonographResult({ result, imagePreview, onReset }) {
         transition={{ type: 'spring', stiffness: 200, damping: 20 }}
         className="space-y-6"
       >
-        <div className="bg-archive-ivory border-2 border-rose-200/90 rounded shadow-plate p-6 sm:p-10">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b border-rose-200/80 gap-3">
+        <div className="bg-archive-ivory border border-archive-hairline rounded shadow-plate p-6 sm:p-10">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b border-archive-hairline gap-3">
             <span className="archival-stamp-rejected">
               SPECIMEN REJECTED // NON-HERITAGE
             </span>
@@ -728,37 +727,36 @@ export default function MonographResult({ result, imagePreview, onReset }) {
       {/* Top Banner & Control Ribbon */}
       <div className="bg-archive-ivory border border-archive-hairline rounded shadow-plate p-6 sm:p-8">
         
-        {/* Archival Inked Stamps */}
-        <div className="flex flex-wrap items-center justify-between pb-6 double-border-bottom gap-4">
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="font-mono text-xs uppercase px-2.5 py-1 rounded bg-emerald-100 text-emerald-900 border border-emerald-300 font-bold flex items-center gap-1.5 shadow-xs">
+        {/* Archival Inked Accession Ribbon */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between pb-5 double-border-bottom gap-4">
+          <div className="flex flex-wrap items-center gap-2.5">
+            <span className="font-mono text-xs uppercase px-2.5 py-1 rounded bg-emerald-50 text-emerald-900 border border-emerald-300 font-bold flex items-center gap-1.5 shadow-xs">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700" />
-              CATALOGUED — RECOGNITION READY
+              <span>CATALOGUED MONUMENT</span>
+            </span>
+            <span className="font-mono text-xs uppercase px-2.5 py-1 rounded bg-white text-archive-charcoal border border-archive-hairline font-bold">
+              {catalog_id || 'ASI-ARCH-REG'}
             </span>
             <span className={isTier1 ? "archival-stamp" : "archival-stamp-tier2"}>
               <ShieldCheck className="w-3 h-3" />
-              {verification_tier}
+              <span>{isTier1 ? 'TIER 1 • VECTOR RETRIEVAL' : 'TIER 2 • VLM ADJUDICATED'}</span>
             </span>
-            <span className="archival-stamp">
-              COSINE ALIGNMENT: {((top1Cand?.max_similarity ?? (confidence_score / 100)) || 0).toFixed(4)}
-            </span>
-            <span className="archival-stamp text-archive-charcoal border-archive-charcoal bg-white">
-              {catalog_id || 'ASI-ARCH-REG'}
+            <span className="font-mono text-[11px] text-archive-stone px-2 py-0.5 rounded bg-archive-parchment border border-archive-hairline">
+              ALIGNMENT: {((top1Cand?.max_similarity ?? (confidence_score / 100)) || 0).toFixed(4)}
             </span>
             {preservation_status && (
-              <span className="font-mono text-[10px] bg-emerald-50 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded font-semibold flex items-center gap-1">
-                <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+              <span className="font-mono text-[10px] bg-archive-alabaster text-archive-stone border border-archive-hairline px-2 py-0.5 rounded font-medium flex items-center gap-1">
                 PROTECTED MONUMENT
               </span>
             )}
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5 self-start md:self-auto flex-shrink-0">
             <motion.button
               whileHover={{ y: -1 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => setShowInspector(!showInspector)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-archive-alabaster text-archive-charcoal border border-archive-hairline rounded font-mono text-xs uppercase tracking-wider transition-colors shadow-sm"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-archive-alabaster text-archive-charcoal border border-archive-hairline rounded font-mono text-xs uppercase tracking-wider transition-colors shadow-xs"
             >
               <Sliders className="w-3.5 h-3.5 text-archive-terracotta" />
               <span>{showInspector ? 'Hide Telemetry' : 'Inspect Telemetry'}</span>
@@ -769,7 +767,7 @@ export default function MonographResult({ result, imagePreview, onReset }) {
               whileHover={{ y: -1 }}
               whileTap={{ scale: 0.98 }}
               onClick={onReset}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-archive-charcoal hover:bg-black text-white rounded font-mono text-xs uppercase tracking-wider transition-colors shadow-sm"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-archive-charcoal hover:bg-black text-white rounded font-mono text-xs uppercase tracking-wider transition-colors shadow-xs"
             >
               <RotateCcw className="w-3.5 h-3.5 text-archive-parchment" />
               <span>New Search</span>

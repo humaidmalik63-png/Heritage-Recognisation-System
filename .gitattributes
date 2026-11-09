@@ -1,0 +1,9 @@
+/backend/datasets/independent_eval/brihadeeswarar_temple_indep_01.jpg filter=lfs diff=lfs merge=lfs -text
+/backend/datasets/independent_eval/charminar_indep_01.jpg filter=lfs diff=lfs merge=lfs -text
+/backend/datasets/independent_eval/konark_sun_temple_indep_01.jpg filter=lfs diff=lfs merge=lfs -text
+/backend/datasets/independent_eval/sanchi_stupa_indep_02.jpg filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.jpeg filter=lfs diff=lfs merge=lfs -text
+*.png filter=lfs diff=lfs merge=lfs -text
+*.faiss filter=lfs diff=lfs merge=lfs -text
+*.exe filter=lfs diff=lfs merge=lfs -text

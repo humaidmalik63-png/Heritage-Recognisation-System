@@ -26,18 +26,26 @@ wheels/
 
 # Environment variables & secrets
 .env
+*.env
 *.local.env
+!frontend/.env.development
+!.env.example
 
-# Backups & Temporary Test Dumps
+# Backups, Caches & Temporary Dumps
 *.bak*
 /*_test.html
 /dom_dump*.html
 /page_test.html
+.pytest_cache/
+.agents/
+*.tmp
 
 # Node / Frontend
 node_modules/
 frontend/node_modules/
 frontend/dist/
+frontend/screenshots-transformation/
+frontend/atrium-reference/screenshots/
 .npm
 .eslintcache
 
@@ -47,6 +55,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 backend/exceptions_log.json
+backend/telemetry/
 
 # IDE & OS
 .vscode/

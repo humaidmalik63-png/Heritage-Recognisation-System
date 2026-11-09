@@ -1,19 +1,43 @@
 import React, { useState } from 'react';
+import HeritageHero from '../components/HeritageHero';
+import FeaturedHeritage from '../components/FeaturedHeritage';
 import UploadSection from '../components/UploadSection';
 import ProcessingOverlay from '../components/ProcessingOverlay';
 import MonographResult from '../components/MonographResult';
+import ExploreArchive from '../components/ExploreArchive';
+import HowItWorks from '../components/HowItWorks';
+import AboutPlatform from '../components/AboutPlatform';
 import { verifyMonumentImage } from '../api';
 import { useAuth } from '../context/AuthContext';
-import { AlertCircle, Layers } from 'lucide-react';
+import { AlertCircle, ScanLine, ArrowDown, Sparkles } from 'lucide-react';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || 'http://localhost:8001';
 
-export default function Dashboard({ onExceptionCreated }) {
+export default function Dashboard({
+  onExceptionCreated,
+  monuments = {},
+  health = null,
+  onOpenCatalog = () => {},
+}) {
   const { addScanToHistory } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
   const [verificationResult, setVerificationResult] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+
+  const scrollToRecognition = () => {
+    const el = document.getElementById('recognition');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const scrollToDiscover = () => {
+    const el = document.getElementById('discover');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const handleFileSubmission = async (file) => {
     setErrorMessage(null);
@@ -46,6 +70,9 @@ export default function Dashboard({ onExceptionCreated }) {
   const handleSampleSelect = async (sampleKey) => {
     setErrorMessage(null);
     setIsLoading(true);
+
+    // Scroll to recognition scanner smoothly
+    scrollToRecognition();
 
     try {
       if (sampleKey === 'non_monument') {
@@ -117,73 +144,90 @@ export default function Dashboard({ onExceptionCreated }) {
     setVerificationResult(null);
     setImagePreview(null);
     setErrorMessage(null);
+    scrollToRecognition();
   };
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-200">
-      {/* Processing Scanner Overlay */}
-      {isLoading && <ProcessingOverlay previewUrl={imagePreview} />}
+    <div className="w-full">
+      {/* 1. Kinetic Architectural Editorial Hero */}
+      <HeritageHero
+        onRecognizeClick={scrollToRecognition}
+        onExploreClick={scrollToDiscover}
+      />
 
-      {/* Error Alert Banner */}
-      {errorMessage && (
-        <div className="bg-rose-50 border border-rose-200 text-rose-800 p-4 rounded flex items-center justify-between text-sm">
-          <div className="flex items-center gap-2">
-            <AlertCircle className="w-5 h-5 text-rose-600 flex-shrink-0" />
-            <span>{errorMessage}</span>
-          </div>
-          <button
-            onClick={() => setErrorMessage(null)}
-            className="text-xs font-mono uppercase underline hover:no-underline"
-          >
-            Dismiss
-          </button>
-        </div>
-      )}
+      {/* 2. Curated Highlights (#discover) */}
+      <FeaturedHeritage onTestSample={handleSampleSelect} />
 
-      {/* View Switcher: Upload Section or Monograph Dossier */}
-      {!verificationResult ? (
-        <div className="space-y-8">
-          <UploadSection
-            onFileSelected={handleFileSubmission}
-            isLoading={isLoading}
-            onSampleSelect={handleSampleSelect}
-          />
-
-          {/* Curatorial Architecture Explainer Card */}
-          <div className="bg-archive-ivory border border-archive-hairline rounded shadow-plate p-6 sm:p-8">
-            <div className="flex items-center gap-2 font-mono text-xs uppercase text-archive-terracotta tracking-stamp font-bold pb-2 border-b border-archive-hairline">
-              <Layers className="w-4 h-4 text-archive-terracotta" />
-              <span>ARCHIVAL RECOGNITION SPECIFICATION // TWO-TIER HYBRID ARCHITECTURE</span>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5 text-sm text-archive-stone font-sans">
-              <div className="space-y-2">
-                <h4 className="font-serif font-bold text-lg text-archive-charcoal">
-                  Tier 1: Local CLIP + FAISS Vector Search
-                </h4>
-                <p className="leading-relaxed">
-                  Visual embeddings (512-D) are extracted with Hugging Face <code className="font-mono text-xs bg-archive-parchment px-1.5 py-0.5 rounded">openai/clip-vit-base-patch32</code> and queried against an L2-normalized 50-anchor <code className="font-mono text-xs bg-archive-parchment px-1.5 py-0.5 rounded">faiss.IndexFlatIP</code> index for near-instant cosine similarity matching.
-                </p>
+      {/* 3. Core Recognition Portal (#recognition) */}
+      <section id="recognition" className="py-20 lg:py-28 border-t border-[#E3DFD5] bg-[#F5F3ED]/30">
+        <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Section Header */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            <div>
+              <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider text-[#A9472D] font-bold mb-3">
+                <ScanLine className="w-3.5 h-3.5 text-[#A9472D]" />
+                <span>ACCESSION PORTAL // REAL-TIME VECTOR SCANNER</span>
               </div>
-
-              <div className="space-y-2">
-                <h4 className="font-serif font-bold text-lg text-archive-charcoal">
-                  Tier 2: Gemini 3.1 Flash-Lite VLM Adjudication
-                </h4>
-                <p className="leading-relaxed">
-                  Photographs depicting unindexed monuments, extreme angles, or close candidate competition are automatically routed to multimodal <code className="font-mono text-xs bg-archive-parchment px-1.5 py-0.5 rounded">gemini-3.1-flash-lite</code> with strict structured JSON schema for out-of-catalog adjudication and comprehensive curatorial analysis.
-                </p>
-              </div>
+              <h2 className="font-display font-semibold text-3xl sm:text-4xl lg:text-5xl text-[#171816] tracking-tight leading-[1.08]">
+                Identify An Architectural Specimen.
+              </h2>
             </div>
+            <p className="max-w-md text-sm sm:text-base text-[#6E7069] leading-relaxed font-sans">
+              Deposit a photograph of any monument, temple, fort, or architectural fragment. Our hybrid pipeline matches 512-D visual vectors against 100 indexed cultural landmarks.
+            </p>
           </div>
+
+          {/* Processing Scanner Overlay */}
+          {isLoading && <ProcessingOverlay previewUrl={imagePreview} />}
+
+          {/* Error Alert Banner */}
+          {errorMessage && (
+            <div className="mb-6 bg-rose-50 border border-rose-200 text-rose-800 p-4 rounded-2xl flex items-center justify-between text-sm shadow-sm">
+              <div className="flex items-center gap-2">
+                <AlertCircle className="w-5 h-5 text-rose-600 flex-shrink-0" />
+                <span>{errorMessage}</span>
+              </div>
+              <button
+                onClick={() => setErrorMessage(null)}
+                className="text-xs font-mono uppercase underline hover:no-underline cursor-pointer"
+              >
+                Dismiss
+              </button>
+            </div>
+          )}
+
+          {/* View Switcher: Upload Section or Monograph Dossier */}
+          {!verificationResult ? (
+            <UploadSection
+              onFileSelected={handleFileSubmission}
+              isLoading={isLoading}
+              onSampleSelect={handleSampleSelect}
+            />
+          ) : (
+            <MonographResult
+              result={verificationResult}
+              imagePreview={imagePreview}
+              onReset={handleReset}
+            />
+          )}
         </div>
-      ) : (
-        <MonographResult
-          result={verificationResult}
-          imagePreview={imagePreview}
-          onReset={handleReset}
-        />
-      )}
+      </section>
+
+      {/* 4. Complete Indexed Corpus Explorer (#archive) */}
+      <ExploreArchive
+        monuments={monuments}
+        onTestSample={handleSampleSelect}
+        onOpenCatalogDrawer={onOpenCatalog}
+      />
+
+      {/* 5. 4-Stage Methodology & Architecture (#how-it-works) */}
+      <HowItWorks />
+
+      {/* 6. Institutional Charter & Live Telemetry (#about) */}
+      <AboutPlatform
+        health={health}
+        monumentsCount={Object.keys(monuments).length || 100}
+      />
     </div>
   );
 }

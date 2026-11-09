@@ -1,3 +1,16 @@
+---
+title: Heritage
+emoji: 🏛️
+colorFrom: purple
+colorTo: gray
+sdk: gradio
+sdk_version: 6.31.0
+python_version: '3.12'
+app_file: app.py
+pinned: false
+license: apache-2.0
+---
+
 # Visual Heritage Recognition & Grounded Cultural Discovery Platform
 ### Two-Tier Hybrid Architecture: Local CLIP + FAISS Vector Engine, Grounded Knowledge Base & Gemini 2.5 Flash VLM
 **Project No. 30 (SIH 2025 – SIH25052)**

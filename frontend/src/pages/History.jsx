@@ -164,7 +164,7 @@ export default function History() {
                     alt={item.monument_name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 filter contrast-105"
                     onError={(e) => {
-                      e.target.src = `http://localhost:8000/dataset/${item.monument_key}/img_1.jpg`;
+                      e.target.src = `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8001'}/dataset/${item.monument_key}/img_1.jpg`;
                     }}
                   />
                   <div className="absolute top-2.5 left-2.5">
@@ -217,7 +217,7 @@ export default function History() {
       {/* Selected Scan Full Modal Dossier */}
       <AnimatePresence>
         {selectedScan && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-archive-charcoal/70 backdrop-blur-sm overflow-y-auto">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-archive-charcoal/70 backdrop-blur-sm overflow-y-auto">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}

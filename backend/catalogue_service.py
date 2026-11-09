@@ -39,7 +39,9 @@ GENERIC_WORDS: Set[str] = {
     "monument", "monuments", "complex", "complexes", "tomb", "tombs", "mosque",
     "mosques", "church", "cathedral", "gate", "bridge", "tower", "group", "of",
     "and", "the", "in", "at", "sanctuary", "sanctuaries", "memorial", "stupa",
-    "arch", "city", "center", "centre", "ancient", "historic", "historical"
+    "arch", "city", "center", "centre", "ancient", "historic", "historical",
+    "museum", "museums", "heritage", "gallery", "galleries", "exhibition",
+    "building", "buildings", "hall", "house", "park", "national", "state"
 }
 
 
@@ -191,7 +193,7 @@ def check_catalogue_membership(query: Optional[str]) -> CatalogueMembershipResul
                 break
 
     # Step 4: Proper-noun Subset Matching (All distinctive proper nouns of the catalog entry present in query)
-    # Strictly guards against generic overlap ("temple", "palace") by requiring at least one distinctive proper noun.
+    # Strictly guards against generic overlap ("temple", "palace") by requiring at least two distinctive proper nouns.
     if not matched_mid and (q_proper or q_unparen_proper):
         best_candidate = None
         best_score = 0
@@ -200,7 +202,7 @@ def check_catalogue_membership(query: Optional[str]) -> CatalogueMembershipResul
             for var in all_name_variants:
                 v_tokens = _clean_tokens(var)
                 v_proper = set(_proper_tokens(v_tokens))
-                if not v_proper:
+                if not v_proper or len(v_proper) < 2:
                     continue
                 # If all proper tokens of the catalogue entry are present in the query
                 if v_proper.issubset(q_proper) or v_proper.issubset(q_unparen_proper):
@@ -209,7 +211,7 @@ def check_catalogue_membership(query: Optional[str]) -> CatalogueMembershipResul
                         best_score = score
                         best_candidate = (mid, item, "proper_token_subset", var)
 
-        if best_candidate and best_score >= 1:
+        if best_candidate and best_score >= 2:
             matched_mid, matched_entry, match_method, matched_alias = best_candidate
 
     # If no match in the 100-site catalogue manifest, it is OUT_OF_CATALOG

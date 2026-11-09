@@ -33,8 +33,9 @@ import exifread
 import faiss
 import numpy as np
 import torch
+torch.set_num_threads(2)
 from dotenv import load_dotenv
-from fastapi import FastAPI, File, HTTPException, UploadFile, status
+from fastapi import FastAPI, File, Header, HTTPException, UploadFile, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from PIL import Image
@@ -586,12 +587,16 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# Standard robust CORS configuration
+# Production-grade CORS configuration with environment-variable allowlist
+raw_origins = os.environ.get("CORS_ORIGINS", "*").strip()
+allowed_origins = [orig.strip() for orig in raw_origins.split(",") if orig.strip()]
+is_wildcard = "*" in allowed_origins
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
+    allow_origins=["*"] if is_wildcard else allowed_origins,
+    allow_credentials=not is_wildcard,
+    allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
 
@@ -890,9 +895,22 @@ def get_exceptions_list():
     }
 
 
+CURATOR_API_KEY = os.environ.get("CURATOR_API_KEY", "").strip()
+
+
 @app.post("/api/exceptions/{exception_id}/resolve")
-def resolve_exception(exception_id: str, payload: ResolveExceptionRequest):
-    """Allows a curator to inspect and resolve a flagged exception item while preserving audit history."""
+def resolve_exception(
+    exception_id: str,
+    payload: ResolveExceptionRequest,
+    x_curator_key: Optional[str] = Header(None, alias="X-Curator-Key"),
+):
+    """Allows an authorized curator to inspect and resolve a flagged exception item while preserving audit history."""
+    if CURATOR_API_KEY and x_curator_key != CURATOR_API_KEY:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Unauthorized: Valid X-Curator-Key header required to resolve curator exceptions."
+        )
+
     current_log = load_exceptions_log()
     target = next((item for item in current_log if item["id"] == exception_id), None)
     if not target:
@@ -928,8 +946,16 @@ def resolve_exception(exception_id: str, payload: ResolveExceptionRequest):
 async def process_verification_pipeline(image_bytes: bytes, filename: str = "upload.jpg") -> VerificationResponse:
     """
     Core Phase 6.2 Advanced Recognition & Calibrated Uncertainty Pipeline.
-    Can be invoked directly by FastAPI endpoints, Streamlit applications, or scripts.
+    Can be invoked directly by FastAPI endpoints, web applications, or scripts.
     """
+    # 0. Enforce upload size limit & prevent memory DOS
+    MAX_UPLOAD_SIZE = 15 * 1024 * 1024  # 15 MB
+    if len(image_bytes) > MAX_UPLOAD_SIZE:
+        raise HTTPException(
+            status_code=getattr(status, "HTTP_413_CONTENT_TOO_LARGE", 413),
+            detail="Payload too large: Image exceeds 15 MB limit."
+        )
+
     # 1. Validate image bytes
     try:
         if not image_bytes:
@@ -939,6 +965,10 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             raw_img.verify()
 
         with Image.open(io.BytesIO(image_bytes)) as valid_img:
+            image_rgb = valid_img.convert("RGB")
+            # Dynamic image dimension clamping to mitigate inference allocation spikes
+            if image_rgb.width > 1024 or image_rgb.height > 1024:
+                image_rgb.thumbnail((1024, 1024), Image.Resampling.LANCZOS)
             image_rgb = valid_img.convert("RGB")
     except Exception as exc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Invalid or corrupted image: {exc}")
@@ -1151,22 +1181,33 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             and adjudicated_membership.status == CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY
             and not gemini_adjudication.is_offline_fallback
         ):
-            logger.info(
-                f"Gemini adjudication confirmed RECOGNITION-READY catalog monument: "
-                f"'{gemini_adjudication.proposed_identity}' -> ID '{adjudicated_membership.monument_id}'"
-            )
-            final_decision = DecisionState.VERIFIED_MATCH
-            best_key = adjudicated_membership.monument_id
-            best_name = adjudicated_membership.monument_name or gemini_adjudication.proposed_identity
             cand_match = next((c for c in top_candidates_agg if getattr(c, "monument_key", None) == best_key), None)
-            if cand_match:
-                best_cand = cand_match
-                best_score = max(best_score, getattr(cand_match, "max_similarity", 0.85))
+            cand_sim = getattr(cand_match, "max_similarity", 0.0) if cand_match else 0.0
+            has_visual_support = (cand_match is not None and cand_sim >= 0.55) or (local_features_data.get("geometric_verification", {}).get("status") == "VERIFIED")
+            
+            if has_visual_support:
+                logger.info(
+                    f"Gemini adjudication confirmed RECOGNITION-READY catalog monument with visual support: "
+                    f"'{gemini_adjudication.proposed_identity}' -> ID '{best_key}' (visual_sim={cand_sim:.4f})"
+                )
+                final_decision = DecisionState.VERIFIED_MATCH
+                if cand_match:
+                    best_cand = cand_match
+                    best_score = max(best_score, getattr(cand_match, "max_similarity", 0.85))
+                else:
+                    best_score = max(best_score, 0.85)
+                is_out_of_catalog_identified = False
+                is_catalog_metadata_only = False
+                final_catalogue_status = CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY.value
             else:
-                best_score = max(best_score, 0.88)
-            is_out_of_catalog_identified = False
-            is_catalog_metadata_only = False
-            final_catalogue_status = CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY.value
+                logger.warning(
+                    f"Adjudicated catalog monument '{best_key}' lacks visual support (cand_sim={cand_sim:.4f} < 0.55). "
+                    f"Preventing forced VERIFIED_MATCH; classifying as UNKNOWN_HERITAGE_SPECIMEN."
+                )
+                final_decision = DecisionState.UNKNOWN_HERITAGE_SPECIMEN
+                is_out_of_catalog_identified = True
+                is_catalog_metadata_only = False
+                final_catalogue_status = CatalogueStatus.OUT_OF_CATALOG.value
 
         # C. Uncertain identity / generic masonry: retain original uncertainty decision
         else:
@@ -1186,7 +1227,7 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             else uncertainty_res.explanation
         )
         exception_id = record_exception_entry(
-            filename=file.filename or "uploaded_specimen.jpg",
+            filename=filename or "uploaded_specimen.jpg",
             gatekeeper_score=arch_prob,
             top_candidate=best_cand,
             reason=exc_reason,
