@@ -1,15 +1,15 @@
 {
   "service_name": "Gemini 2.5 Flash Tier-2 Telemetry",
   "version": "1.0.0",
-  "total_requests": 351,
-  "successful_requests": 153,
+  "total_requests": 354,
+  "successful_requests": 156,
   "failed_requests": 198,
   "total_retries": 99,
-  "cumulative_latency_ms": 1323192.2995006898,
-  "average_latency_ms": 3769.78,
-  "total_input_tokens": 186077,
-  "total_output_tokens": 36410,
-  "tokens_reported_count": 137,
+  "cumulative_latency_ms": 1364503.6275007296,
+  "average_latency_ms": 3854.53,
+  "total_input_tokens": 191048,
+  "total_output_tokens": 37470,
+  "tokens_reported_count": 140,
   "error_categories": {
     "RATE_LIMIT_429": 17,
     "AUTH_INVALID_KEY": 17,
@@ -20,7 +20,7 @@
   },
   "features_invoked": {
     "unknown_heritage_analysis": {
-      "success": 138,
+      "success": 141,
       "fail": 148
     },
     "grounded_historical_qa": {
@@ -32,6 +32,6 @@
       "fail": 0
     }
   },
-  "last_request_utc": "2026-11-09T07:52:36.628155+00:00",
+  "last_request_utc": "2026-11-09T11:34:47.224114+00:00",
   "last_error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
 }

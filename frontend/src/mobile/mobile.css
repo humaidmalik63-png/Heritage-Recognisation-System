@@ -1,0 +1,43 @@
+/* ==============================================================================
+   Mobile Frontend Dedicated Stylesheet
+   Phase 10.3 — Mobile-First Cultural Discovery Experience
+   ============================================================================== */
+
+/* Safe area support for iOS and Android notch/gesture bars */
+.mobile-safe-bottom {
+  padding-bottom: max(env(safe-area-inset-bottom, 0px), 16px);
+}
+
+.mobile-safe-top {
+  padding-top: max(env(safe-area-inset-top, 0px), 12px);
+}
+
+/* Horizontal touch swipe carousels without scrollbars */
+.mobile-scroll-x {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.mobile-scroll-x::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+.mobile-snap-item {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+/* Prevent double-tap zoom on fast tap elements */
+.mobile-touch-action {
+  touch-action: manipulation;
+}
+
+/* Restrained tap highlight */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+

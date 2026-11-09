@@ -49,3 +49,4 @@ When reviewing on your mobile phone:
 3. **Bottom Navigation Bar:** Fixed at the bottom with safe-area padding. Features Discover, Archive, highlighted terracotta Recognise button, Log (with scan count badge), and About.
 4. **Archive Corpus:** Horizontal category swipe filter chips and a clean, compact 2-column card grid.
 5. **Recognition Camera & Upload:** Direct field camera and gallery photo upload with real-time recognition.
+

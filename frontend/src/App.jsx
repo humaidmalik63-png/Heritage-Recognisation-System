@@ -11,9 +11,12 @@ import Dashboard from './pages/Dashboard';
 import History from './pages/History';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import MobileApp from './mobile/MobileApp';
+import useIsMobile from './hooks/useIsMobile';
 import { checkHealth, fetchMonumentsCatalog, fetchExceptions } from './api';
 
 function AppLayout() {
+  const isMobile = useIsMobile(768);
   const [health, setHealth] = useState(null);
   const [monuments, setMonuments] = useState({});
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);
@@ -57,6 +60,38 @@ function AppLayout() {
     }
     init();
   }, []);
+
+  // Separate Mobile Frontend Experience (Active on < 768px viewports)
+  if (isMobile && !isAuthPage) {
+    return (
+      <ProtectedRoute>
+        <MobileApp
+          health={health}
+          monuments={monuments}
+          onOpenCatalog={() => setIsCatalogOpen(true)}
+          onOpenExceptions={() => setIsExceptionsOpen(true)}
+          pendingExceptionsCount={pendingExceptionsCount}
+        />
+
+        {/* Global Catalog Drawer */}
+        <CatalogDrawer
+          isOpen={isCatalogOpen}
+          onClose={() => setIsCatalogOpen(false)}
+          monuments={monuments}
+        />
+
+        {/* Human Review Exceptions Drawer */}
+        <ExceptionsDrawer
+          isOpen={isExceptionsOpen}
+          onClose={() => {
+            setIsExceptionsOpen(false);
+            refreshPendingCount();
+          }}
+          onCountChange={(cnt) => setPendingExceptionsCount(cnt)}
+        />
+      </ProtectedRoute>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-archive-alabaster flex flex-col justify-between selection:bg-archive-terracotta selection:text-white">
