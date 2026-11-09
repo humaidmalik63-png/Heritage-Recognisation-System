@@ -76,8 +76,8 @@ export default function Header({
               ASI & UNESCO REGISTER
             </span>
             <span className="hidden sm:inline text-[#E3DFD5]">|</span>
-            <span className="hidden sm:inline text-[#6E7069] uppercase">
-              Multimodal Epigraphy Series 2026
+            <span className="hidden sm:inline text-[#6E7069] uppercase tracking-wider">
+              A Living Archive of Culture and Place
             </span>
           </div>
 
@@ -104,17 +104,17 @@ export default function Header({
         </div>
 
         {/* Main Navigation Bar */}
-        <div className="px-5 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-4">
+        <div className="px-5 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-3 lg:gap-4">
           {/* Brand Logo */}
           <Link
             to="/"
             onClick={() => scrollToSection('top')}
-            className="group flex items-baseline gap-2.5 flex-shrink-0"
+            className="group flex items-baseline gap-2 flex-shrink-0"
           >
             <span className="font-serif text-2xl sm:text-[26px] font-bold tracking-tight text-[#171816] group-hover:text-[#A9472D] transition-colors leading-none">
               HERITAGE<span className="text-[#A9472D]">.</span>
             </span>
-            <span className="hidden md:inline-block font-mono text-[9px] uppercase tracking-widest text-[#6E7069] pl-2.5 border-l border-[#E3DFD5]">
+            <span className="hidden 2xl:inline-block font-mono text-[9px] uppercase tracking-widest text-[#6E7069] pl-2 border-l border-[#E3DFD5]">
               Curatorial Archive
             </span>
           </Link>

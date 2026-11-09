@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Upload, Camera, Image as ImageIcon, BookOpen } from 'lucide-react';
+import { Upload, Camera, Image as ImageIcon, BookOpen, Sparkles } from 'lucide-react';
 
 export default function UploadSection({ onFileSelected, isLoading, onSampleSelect }) {
   const [isDragActive, setIsDragActive] = useState(false);
@@ -44,20 +44,20 @@ export default function UploadSection({ onFileSelected, isLoading, onSampleSelec
   ];
 
   return (
-    <div className="bg-archive-ivory border border-archive-hairline rounded shadow-plate p-6 sm:p-8">
+    <div className="bg-[#FFFEFA] border border-[#E3DFD5] rounded-2xl sm:rounded-3xl shadow-sm p-4 sm:p-8">
       {/* Header bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-archive-hairline gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[#E3DFD5] gap-3">
         <div>
-          <span className="font-mono text-[10px] uppercase text-archive-terracotta tracking-stamp font-bold block">
+          <span className="font-mono text-[10px] uppercase text-[#A9472D] tracking-wider font-bold block">
             ACCESSION INGESTION // SPECIMEN PLATE
           </span>
-          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-archive-charcoal mt-0.5">
+          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#171816] mt-0.5">
             Deposit Architectural Specimen for Analysis
           </h2>
         </div>
         <div className="flex items-center gap-2">
-          <span className="font-mono text-[10px] bg-archive-parchment px-2.5 py-1 border border-archive-hairline rounded text-archive-stone uppercase tracking-wider">
-            JPEG / PNG / WEBP • UP TO 20MB
+          <span className="font-mono text-[10px] bg-[#F5F3ED] px-2.5 py-1 border border-[#E3DFD5] rounded-full text-[#6E7069] uppercase tracking-wider font-semibold">
+            JPEG / PNG / WEBP • UP TO 15MB
           </span>
         </div>
       </div>
@@ -69,18 +69,12 @@ export default function UploadSection({ onFileSelected, isLoading, onSampleSelec
         onDragOver={handleDrag}
         onDrop={handleDrop}
         onClick={() => fileInputRef.current?.click()}
-        className={`mt-6 relative border border-dashed rounded p-8 sm:p-12 text-center transition-all cursor-pointer flex flex-col items-center justify-center group ${
+        className={`mt-6 relative border-2 border-dashed rounded-2xl p-6 sm:p-12 text-center transition-all cursor-pointer flex flex-col items-center justify-center group ${
           isDragActive
-            ? 'border-archive-terracotta bg-archive-terracottaLight/50'
-            : 'border-archive-hairline hover:border-archive-borderDark bg-archive-alabaster/30 hover:bg-archive-alabaster/60'
+            ? 'border-[#A9472D] bg-[#A9472D]/5'
+            : 'border-[#E3DFD5] hover:border-[#171816]/40 bg-[#F5F3ED]/40 hover:bg-[#F5F3ED]/70'
         }`}
       >
-        {/* Subtle Architectural Corner Ticks */}
-        <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-archive-hairline"></div>
-        <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-archive-hairline"></div>
-        <div className="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-archive-hairline"></div>
-        <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-archive-hairline"></div>
-
         <input
           ref={fileInputRef}
           type="file"
@@ -100,46 +94,46 @@ export default function UploadSection({ onFileSelected, isLoading, onSampleSelec
           disabled={isLoading}
         />
 
-        <div className="w-12 h-12 rounded border border-archive-hairline bg-white flex items-center justify-center text-archive-terracotta mb-3 shadow-xs">
-          <Upload className="w-5 h-5" />
+        <div className="w-14 h-14 rounded-2xl border border-[#E3DFD5] bg-white flex items-center justify-center text-[#A9472D] mb-3.5 shadow-sm group-hover:scale-105 transition-transform">
+          <Upload className="w-6 h-6 text-[#A9472D]" />
         </div>
 
-        <h3 className="font-serif text-xl sm:text-2xl font-bold text-archive-charcoal">
+        <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#171816]">
           Deposit specimen photograph or survey scan
         </h3>
-        <p className="text-xs text-archive-stone mt-1.5 max-w-lg font-sans leading-relaxed">
-          Supports field camera captures, archival reproductions, and uncompressed scans. EXIF GPS coordinates will be parsed automatically for geodetic verification.
+        <p className="text-xs text-[#6E7069] mt-1.5 max-w-lg font-sans leading-relaxed">
+          Supports field camera captures, archival reproductions, and uncompressed photos. EXIF GPS coordinates will be parsed automatically for geodetic verification.
         </p>
 
-        {/* Action Buttons */}
-        <div className="flex flex-wrap items-center justify-center gap-2.5 mt-5" onClick={(e) => e.stopPropagation()}>
+        {/* Action Buttons for Mobile & Desktop */}
+        <div className="flex flex-wrap items-center justify-center gap-3 mt-6 w-full sm:w-auto" onClick={(e) => e.stopPropagation()}>
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
             disabled={isLoading}
-            className="px-3.5 py-1.5 bg-archive-charcoal hover:bg-black text-white text-xs font-mono uppercase tracking-wider rounded transition-colors flex items-center gap-2 shadow-xs"
+            className="flex-1 sm:flex-none px-4 py-2.5 bg-[#171816] hover:bg-[#A9472D] text-white text-xs font-mono uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm active:scale-95 cursor-pointer font-semibold"
           >
-            <ImageIcon className="w-3.5 h-3.5 text-archive-parchment" />
-            <span>Select Local Image</span>
+            <ImageIcon className="w-4 h-4 text-[#B99A5B]" />
+            <span>Select Photo</span>
           </button>
 
           <button
             type="button"
             onClick={() => cameraInputRef.current?.click()}
             disabled={isLoading}
-            className="px-3.5 py-1.5 bg-white hover:bg-archive-alabaster text-archive-charcoal border border-archive-hairline text-xs font-mono uppercase tracking-wider rounded transition-colors flex items-center gap-2 shadow-xs"
+            className="flex-1 sm:flex-none px-4 py-2.5 bg-white hover:bg-[#F5F3ED] text-[#171816] border border-[#E3DFD5] text-xs font-mono uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2 shadow-xs active:scale-95 cursor-pointer font-semibold"
           >
-            <Camera className="w-3.5 h-3.5 text-archive-terracotta" />
+            <Camera className="w-4 h-4 text-[#A9472D]" />
             <span>Field Camera</span>
           </button>
         </div>
       </div>
 
       {/* Preset Evaluation Samples */}
-      <div className="mt-6 pt-5 border-t border-archive-hairline flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-        <div className="flex items-center gap-2 font-mono text-archive-stone flex-shrink-0">
-          <BookOpen className="w-3.5 h-3.5 text-archive-terracotta" />
-          <span className="font-semibold uppercase tracking-wider text-[11px]">Curated Reference Specimens:</span>
+      <div className="mt-6 pt-5 border-t border-[#E3DFD5] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+        <div className="flex items-center gap-2 font-mono text-[#6E7069] flex-shrink-0">
+          <BookOpen className="w-3.5 h-3.5 text-[#A9472D]" />
+          <span className="font-semibold uppercase tracking-wider text-[11px]">Curated Test Specimens:</span>
         </div>
 
         <div className="flex flex-wrap gap-1.5">
@@ -149,10 +143,10 @@ export default function UploadSection({ onFileSelected, isLoading, onSampleSelec
               type="button"
               onClick={() => onSampleSelect(btn.key)}
               disabled={isLoading}
-              className={`px-2.5 py-1 rounded font-mono text-[11px] transition-all ${
+              className={`px-3 py-1.5 rounded-lg font-mono text-[11px] transition-all cursor-pointer active:scale-95 ${
                 btn.isReject
                   ? 'bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200'
-                  : 'bg-white hover:bg-archive-parchment text-archive-charcoal border border-archive-hairline hover:border-archive-borderDark'
+                  : 'bg-[#F5F3ED] hover:bg-[#E3DFD5] text-[#171816] border border-[#E3DFD5]'
               }`}
             >
               {btn.label}

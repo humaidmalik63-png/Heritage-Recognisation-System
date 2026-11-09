@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Header from './components/Header';
 import HeritageFooter from './components/HeritageFooter';
+import MobileBottomNav from './components/MobileBottomNav';
 import CatalogDrawer from './components/CatalogDrawer';
 import ExceptionsDrawer from './components/ExceptionsDrawer';
 import Dashboard from './pages/Dashboard';
@@ -70,8 +71,8 @@ function AppLayout() {
         />
       )}
 
-      {/* Main Content Viewport */}
-      <main className={!isAuthPage ? (location.pathname === '/' ? "flex-1 w-full" : "flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8") : "flex-1"}>
+      {/* Main Content Viewport with mobile bottom nav safe-clearance */}
+      <main className={!isAuthPage ? (location.pathname === '/' ? "flex-1 w-full pb-20 lg:pb-0" : "flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8 pb-24 lg:pb-8") : "flex-1"}>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
@@ -105,6 +106,17 @@ function AppLayout() {
         <HeritageFooter
           onOpenCatalog={() => setIsCatalogOpen(true)}
           onOpenExceptions={() => setIsExceptionsOpen(true)}
+        />
+      )}
+
+      {/* Mobile Fixed Bottom Navigation Bar (Hidden on desktop) */}
+      {!isAuthPage && (
+        <MobileBottomNav
+          onRecognizeClick={() => {
+            const el = document.getElementById('recognition');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }}
+          onOpenCatalog={() => setIsCatalogOpen(true)}
         />
       )}
 
