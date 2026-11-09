@@ -1132,7 +1132,7 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             final_decision = DecisionState.NON_MONUMENT_REJECTED
             final_catalogue_status = CatalogueStatus.OUT_OF_CATALOG.value
 
-        # B1. Identifiable Catalogued Metadata-Only Monument (e.g. Ajanta Caves, Golden Temple, Mysore Palace):
+        # B1. Identifiable Catalogued Metadata-Only Monument (e.g. Golden Temple, Mysore Palace):
         elif (
             gemini_adjudication.is_heritage_structure
             and gemini_adjudication.proposed_identity
@@ -1150,6 +1150,9 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             is_catalog_metadata_only = True
             is_out_of_catalog_identified = False
             final_catalogue_status = CatalogueStatus.CATALOGUED_METADATA_ONLY.value
+            if adjudicated_membership.monument_id:
+                best_key = adjudicated_membership.monument_id
+                best_name = adjudicated_membership.monument_name or gemini_adjudication.proposed_identity
 
         # B2. Identifiable Truly Out-of-Catalog Monument (e.g. Eiffel Tower):
         elif (
@@ -1169,6 +1172,8 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             is_out_of_catalog_identified = True
             is_catalog_metadata_only = False
             final_catalogue_status = CatalogueStatus.OUT_OF_CATALOG.value
+            best_key = ""
+            best_name = gemini_adjudication.proposed_identity
 
         # B3. Flagship / Recognition-Ready Monument (e.g. Taj Mahal, Qutub Minar, Ajanta Caves confirmed under uncertainty):
         elif (
@@ -1180,30 +1185,46 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             and adjudicated_membership.status == CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY
             and not gemini_adjudication.is_offline_fallback
         ):
-            cand_match = next((c for c in top_candidates_agg if getattr(c, "monument_key", None) == best_key), None)
+            adj_key = adjudicated_membership.monument_id
+            adj_name = adjudicated_membership.monument_name or state["metadata"].get(adj_key, {}).get("monument_name", adj_key)
+
+            cand_match = next((c for c in top_candidates_agg if getattr(c, "monument_key", None) == adj_key), None)
             cand_sim = getattr(cand_match, "max_similarity", 0.0) if cand_match else 0.0
-            has_visual_support = (cand_match is not None and cand_sim >= 0.55) or (local_features_data.get("geometric_verification", {}).get("status") == "VERIFIED")
-            
+
+            # Also check if it was found anywhere in raw FAISS search
+            if cand_sim == 0.0 and state.get("faiss_index") and state.get("labels"):
+                for idx_raw, dist_raw in zip(raw_indices[0], raw_distances[0]):
+                    if 0 <= idx_raw < len(state["labels"]):
+                        lbl_item = state["labels"][int(idx_raw)]
+                        if lbl_item.get("monument_key") == adj_key:
+                            cand_sim = max(cand_sim, float(dist_raw))
+
+            has_visual_support = (cand_sim >= 0.55) or (local_features_data.get("geometric_verification", {}).get("status") == "VERIFIED")
+
             if has_visual_support:
                 logger.info(
                     f"Gemini adjudication confirmed RECOGNITION-READY catalog monument with visual support: "
-                    f"'{gemini_adjudication.proposed_identity}' -> ID '{best_key}' (visual_sim={cand_sim:.4f})"
+                    f"'{gemini_adjudication.proposed_identity}' -> ID '{adj_key}' (visual_sim={cand_sim:.4f})"
                 )
                 final_decision = DecisionState.VERIFIED_MATCH
+                best_key = adj_key
+                best_name = adj_name
+                best_score = max(cand_sim, 0.85)
                 if cand_match:
                     best_cand = cand_match
-                    best_score = max(best_score, getattr(cand_match, "max_similarity", 0.85))
                 else:
-                    best_score = max(best_score, 0.85)
+                    best_cand = CandidateMatch(monument_key=adj_key, monument_name=adj_name, cosine_similarity=best_score)
                 is_out_of_catalog_identified = False
                 is_catalog_metadata_only = False
                 final_catalogue_status = CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY.value
             else:
                 logger.warning(
-                    f"Adjudicated catalog monument '{best_key}' lacks visual support (cand_sim={cand_sim:.4f} < 0.55). "
+                    f"Adjudicated catalog monument '{adj_key}' lacks visual support (cand_sim={cand_sim:.4f} < 0.55). "
                     f"Preventing forced VERIFIED_MATCH; classifying as UNKNOWN_HERITAGE_SPECIMEN."
                 )
                 final_decision = DecisionState.UNKNOWN_HERITAGE_SPECIMEN
+                best_key = adj_key
+                best_name = adj_name
                 is_out_of_catalog_identified = True
                 is_catalog_metadata_only = False
                 final_catalogue_status = CatalogueStatus.OUT_OF_CATALOG.value
