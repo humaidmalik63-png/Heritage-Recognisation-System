@@ -28,7 +28,10 @@ WORKDIR /app
 # Copy dependency requirements first for Docker layer caching
 COPY requirements.txt .
 
-# Install Python production dependencies
+# Install lightweight CPU-only PyTorch first (speeds up build 5x, saves ~2GB)
+RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
+
+# Install remaining Python production dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application backend source code and essential assets
