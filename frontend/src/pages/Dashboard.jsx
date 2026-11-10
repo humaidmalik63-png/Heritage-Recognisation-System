@@ -15,6 +15,9 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_A
 
 const LOCAL_HERITAGE_IMAGES = {
   taj_mahal: '/assets/heritage/taj-mahal.jpg',
+  charminar: '/assets/heritage/charminar.jpg',
+  hampi_stone_chariot: '/assets/heritage/hampi.jpg',
+  brihadeeswarar_temple: '/assets/heritage/brihadeeswarar.jpg',
   petra: '/assets/heritage/petra.jpg',
   colosseum: '/assets/heritage/colosseum.jpg',
   angkor_wat: '/assets/heritage/angkor-wat.jpg',
@@ -173,6 +176,11 @@ export default function Dashboard({
         }
 
         const blob = await res.blob();
+        if (blob.size < 200) {
+          throw new Error(
+            `Sample photograph for "${sampleKey.replace(/_/g, ' ')}" is unavailable in remote storage. Please upload an image directly to test recognition.`
+          );
+        }
         const file = new File([blob], `${sampleKey}_ref.jpg`, { type: 'image/jpeg' });
         const previewUrl = URL.createObjectURL(file);
         setImagePreview(previewUrl);

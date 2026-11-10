@@ -83,6 +83,30 @@ from catalogue_service import (
 )
 from local_feature_engine import local_feature_engine
 from shadow_engine import shadow_engine
+try:
+    from security import (
+        RateLimitMiddleware,
+        SecurityHeadersMiddleware,
+        get_allowed_cors_origins,
+        sanitize_identifier,
+        sanitize_inquiry_text,
+        validate_image_payload,
+        verify_curator_key,
+        create_central_exception_handler,
+        MAX_IMAGE_BYTES,
+    )
+except ImportError:
+    from backend.security import (
+        RateLimitMiddleware,
+        SecurityHeadersMiddleware,
+        get_allowed_cors_origins,
+        sanitize_identifier,
+        sanitize_inquiry_text,
+        validate_image_payload,
+        verify_curator_key,
+        create_central_exception_handler,
+        MAX_IMAGE_BYTES,
+    )
 
 # Load environment variables
 load_dotenv()
@@ -587,11 +611,13 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# Production-grade CORS configuration with environment-variable allowlist
-raw_origins = os.environ.get("CORS_ORIGINS", "*").strip()
-allowed_origins = [orig.strip() for orig in raw_origins.split(",") if orig.strip()]
+# Production-grade CORS configuration with hardened allowlist
+allowed_origins = get_allowed_cors_origins()
 is_wildcard = "*" in allowed_origins
 
+# Middleware Chain: Security Headers -> Rate Limiter -> CORS
+app.add_middleware(SecurityHeadersMiddleware)
+app.add_middleware(RateLimitMiddleware, heavy_limit=30, general_limit=150)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"] if is_wildcard else allowed_origins,
@@ -599,6 +625,9 @@ app.add_middleware(
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
+
+# Central Unhandled Exception Handler (prevents internal stack trace leakage)
+app.add_exception_handler(Exception, create_central_exception_handler(logger))
 
 # Serve static dataset images for client preview & verification
 if DATASET_DIR.exists():
@@ -710,15 +739,16 @@ def get_monument_knowledge(monument_id: str):
     Phase 6.3: Retrieves authoritative, source-backed historical, architectural,
     and preservation knowledge for a recognized monument.
     """
+    clean_id = sanitize_identifier(monument_id, "monument_id")
     engine: GroundedKnowledgeEngine = state.get("knowledge_engine")
     if not engine:
         raise HTTPException(status_code=500, detail="Knowledge Engine is not initialized.")
 
-    record = engine.get_knowledge(monument_id)
+    record = engine.get_knowledge(clean_id)
     if not record:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Grounded knowledge record for monument '{monument_id}' was not found in the curatorial register."
+            detail=f"Grounded knowledge record for monument '{clean_id}' was not found in the curatorial register."
         )
     return record
 
@@ -728,16 +758,17 @@ def get_monument_timeline(monument_id: str):
     """
     Phase 6.3: Retrieves verified chronological historical timeline events for a monument.
     """
+    clean_id = sanitize_identifier(monument_id, "monument_id")
     engine: GroundedKnowledgeEngine = state.get("knowledge_engine")
     if not engine:
         raise HTTPException(status_code=500, detail="Knowledge Engine is not initialized.")
 
-    if monument_id not in engine.records:
+    if clean_id not in engine.records:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Monument '{monument_id}' was not found in the historical register."
+            detail=f"Monument '{clean_id}' was not found in the historical register."
         )
-    return engine.get_timeline(monument_id)
+    return engine.get_timeline(clean_id)
 
 
 @app.get("/api/monuments/{monument_id}/sources", response_model=List[SourceCitation])
@@ -746,16 +777,17 @@ def get_monument_sources(monument_id: str):
     Phase 6.3: Retrieves primary source citations (ASI, UNESCO, Ministry of Culture, Gazetteers)
     validating the historical monograph for a monument.
     """
+    clean_id = sanitize_identifier(monument_id, "monument_id")
     engine: GroundedKnowledgeEngine = state.get("knowledge_engine")
     if not engine:
         raise HTTPException(status_code=500, detail="Knowledge Engine is not initialized.")
 
-    if monument_id not in engine.records:
+    if clean_id not in engine.records:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Monument '{monument_id}' was not found in the source register."
+            detail=f"Monument '{clean_id}' was not found in the source register."
         )
-    return engine.get_sources(monument_id)
+    return engine.get_sources(clean_id)
 
 
 @app.post("/api/monuments/{monument_id}/ask", response_model=AskKnowledgeResponse)
@@ -766,26 +798,22 @@ def ask_monument_archive(monument_id: str, payload: AskKnowledgeRequest):
     Explicitly refuses to guess or hallucinate when evidence is insufficient.
     Operates offline or with Gemini 2.5 Flash when configured.
     """
+    clean_id = sanitize_identifier(monument_id, "monument_id")
+    clean_question = sanitize_inquiry_text(payload.question)
+
     engine: GroundedKnowledgeEngine = state.get("knowledge_engine")
     if not engine:
         raise HTTPException(status_code=500, detail="Knowledge Engine is not initialized.")
 
-    if monument_id not in engine.records:
+    if clean_id not in engine.records:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Monument '{monument_id}' was not found in the knowledge register."
-        )
-
-    clean_question = payload.question.strip()
-    if not clean_question:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Inquiry question cannot be empty or solely whitespace."
+            detail=f"Monument '{clean_id}' was not found in the knowledge register."
         )
 
     gemini_handler = state.get("gemini_service") if gemini_service.is_available() else state.get("gemini_client")
     return engine.ask_archive(
-        monument_id=monument_id,
+        monument_id=clean_id,
         question=clean_question,
         gemini_client=gemini_handler,
     )
@@ -809,15 +837,19 @@ async def explain_monument_architecture(
     Generates a structured architectural explanation rigorously separating
     directly visible observations from stylistic interpretations and verified facts.
     """
+    clean_id = sanitize_identifier(monument_id, "monument_id")
     try:
         content = await file.read()
+        validate_image_payload(content)
         with Image.open(io.BytesIO(content)) as pil_img:
             image_rgb = pil_img.convert("RGB")
+    except HTTPException:
+        raise
     except Exception as exc:
         raise HTTPException(status_code=400, detail=f"Invalid image file: {exc}")
 
-    m_data = state["metadata"].get(monument_id, {})
-    m_name = m_data.get("monument_name", monument_id.replace("_", " ").title())
+    m_data = state["metadata"].get(clean_id, {})
+    m_name = m_data.get("monument_name", clean_id.replace("_", " ").title())
     verified_facts = m_data.get("structural_features_detected", [])
 
     explanation = gemini_service.explain_architecture(
@@ -842,10 +874,11 @@ async def analyze_local_features_endpoint(file: UploadFile = File(...)):
     """
     try:
         content = await file.read()
-        if not content:
-            raise HTTPException(status_code=400, detail="Uploaded file is empty.")
+        validate_image_payload(content)
         with Image.open(io.BytesIO(content)) as raw_img:
             image_rgb = raw_img.convert("RGB")
+    except HTTPException:
+        raise
     except Exception as exc:
         raise HTTPException(status_code=400, detail=f"Invalid image file: {exc}")
 
@@ -886,16 +919,32 @@ async def analyze_local_features_endpoint(file: UploadFile = File(...)):
 
 
 @app.get("/api/exceptions")
-def get_exceptions_list():
-    """Curator Exception Log: Returns flagged or ambiguous scans awaiting human oversight."""
+def get_exceptions_list(
+    limit: int = 50,
+    offset: int = 0,
+    status_filter: Optional[str] = None,
+):
+    """
+    Curator Exception Log: Returns flagged or ambiguous scans awaiting human oversight.
+    Supports pagination parameters limit and offset.
+    """
+    clean_limit = min(max(1, limit), 100)
+    clean_offset = max(0, offset)
     exceptions = load_exceptions_log()
+
+    if status_filter:
+        s_norm = status_filter.strip().upper()
+        exceptions = [e for e in exceptions if e.get("status") == s_norm]
+
+    total_count = len(exceptions)
+    paginated = exceptions[clean_offset:clean_offset + clean_limit]
+
     return {
-        "total": len(exceptions),
-        "exceptions": exceptions,
+        "total": total_count,
+        "limit": clean_limit,
+        "offset": clean_offset,
+        "exceptions": paginated,
     }
-
-
-CURATOR_API_KEY = os.environ.get("CURATOR_API_KEY", "").strip()
 
 
 @app.post("/api/exceptions/{exception_id}/resolve")
@@ -905,16 +954,18 @@ def resolve_exception(
     x_curator_key: Optional[str] = Header(None, alias="X-Curator-Key"),
 ):
     """Allows an authorized curator to inspect and resolve a flagged exception item while preserving audit history."""
-    if CURATOR_API_KEY and x_curator_key != CURATOR_API_KEY:
+    clean_id = sanitize_identifier(exception_id, "exception_id")
+
+    if not verify_curator_key(x_curator_key):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Unauthorized: Valid X-Curator-Key header required to resolve curator exceptions."
         )
 
     current_log = load_exceptions_log()
-    target = next((item for item in current_log if item["id"] == exception_id), None)
+    target = next((item for item in current_log if item["id"] == clean_id), None)
     if not target:
-        raise HTTPException(status_code=404, detail="Exception record not found.")
+        raise HTTPException(status_code=404, detail=f"Exception record '{clean_id}' not found.")
 
     prev_status = target.get("status", "PENDING_REVIEW")
     now_iso = datetime.utcnow().isoformat() + "Z"
@@ -948,19 +999,11 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
     Core Phase 6.2 Advanced Recognition & Calibrated Uncertainty Pipeline.
     Can be invoked directly by FastAPI endpoints, web applications, or scripts.
     """
-    # 0. Enforce upload size limit & prevent memory DOS
-    MAX_UPLOAD_SIZE = 15 * 1024 * 1024  # 15 MB
-    if len(image_bytes) > MAX_UPLOAD_SIZE:
-        raise HTTPException(
-            status_code=getattr(status, "HTTP_413_CONTENT_TOO_LARGE", 413),
-            detail="Payload too large: Image exceeds 15 MB limit."
-        )
+    # 0. Enforce magic image signatures, reject SVGs/malware, enforce 15 MB limit
+    validate_image_payload(image_bytes)
 
-    # 1. Validate image bytes
+    # 1. Validate image structure & clamp dimensions
     try:
-        if not image_bytes:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Uploaded file is empty.")
-
         with Image.open(io.BytesIO(image_bytes)) as raw_img:
             raw_img.verify()
 
@@ -969,6 +1012,8 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             # Dynamic image dimension clamping to mitigate inference allocation spikes
             if image_rgb.width > 768 or image_rgb.height > 768:
                 image_rgb.thumbnail((768, 768), Image.Resampling.LANCZOS)
+    except HTTPException:
+        raise
     except Exception as exc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Invalid or corrupted image: {exc}")
 
@@ -1534,9 +1579,27 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
 @app.post("/api/verify-monument", response_model=VerificationResponse)
 async def verify_monument(file: UploadFile = File(...)):
     """
-    FastAPI endpoint for monument verification.
+    FastAPI endpoint for monument verification with memory-safe chunked reading.
     """
-    image_bytes = await file.read()
+    chunk_size = 64 * 1024
+    total_read = 0
+    chunks = []
+    while True:
+        chunk = await file.read(chunk_size)
+        if not chunk:
+            break
+        total_read += len(chunk)
+        if total_read > MAX_IMAGE_BYTES:
+            raise HTTPException(
+                status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+                detail="Payload too large: Image exceeds 15 MB limit."
+            )
+        chunks.append(chunk)
+
+    if not chunks:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Uploaded file is empty.")
+
+    image_bytes = b"".join(chunks)
     return await process_verification_pipeline(image_bytes, filename=file.filename or "upload.jpg")
 
 
