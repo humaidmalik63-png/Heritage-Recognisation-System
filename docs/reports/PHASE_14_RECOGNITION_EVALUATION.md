@@ -172,11 +172,21 @@ All 9 test suites were independently executed locally and achieved 100% passing 
 | `frontend/verify_hook_stability.cjs` | React Hook Lifecycle (14 Scenarios)| **14 / 14 PASSED** | 0 hook violations across all drawer and monograph states |
 | `frontend/test_monograph_states.cjs` | Monograph Render States (7 States) | **7 / 7 PASSED** | Displays `REVIEW_REQUIRED` & `NON_MONUMENT_REJECTED` cleanly |
 | `backend/test_uncertainty_boundaries.py`| Boundary & Invariant Suite | **18 / 18 PASSED** | Exact threshold transitions, NaN/Inf score safety |
-| Frontend Production Build (`npm run build`)| Vite Production Bundle | **CLEAN (10.06s)**| Zero syntax, bundling, or asset resolution errors |
+| `test_phase_14_geological_safeguards.py`| Geological & Rock-Cut Heritage Suite | **12 / 12 PASSED** | Zero natural rock attributions, rock-cut preserved |
+| Frontend Production Build (`npm run build`)| Vite Production Bundle | **CLEAN (15.85s)**| Zero syntax, bundling, or asset resolution errors |
 
 ---
 
-## 7. Recommendation
+## 7. Geological Classification & Safeguards Summary
+
+Detailed findings from the 12-specimen geological vs. architectural evaluation are published in `docs/reports/GEOLOGICAL_CLASSIFICATION_EVALUATION_REPORT.md`.
+- **False Attribution Elimination**: 0 / 6 natural geological formations (sandstone cliffs, red rocks, honeycomb tafoni, cave mouths, columnar fractures) were attributed to Petra or any monument.
+- **Rock-Cut Heritage Preserved**: Carved facades (Ajanta, Ellora, Petra Al-Khazneh) and architectural close-ups are protected from false hard-rejection.
+- **Public Platform Operation**: The public recognition and discovery portal functions seamlessly without requiring login credentials.
+
+---
+
+## 8. Recommendation
 
 - **Policy Status**: Calibrated candidate policy successfully eliminates the false-negative regression, recovers 100% of macro details to review, maintains 0 false positives, and preserves all backend and frontend invariants.
 - **Safety Boundary**: The repository remains strictly in local read-only mode pending user release authorization.

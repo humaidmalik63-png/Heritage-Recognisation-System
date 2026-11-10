@@ -64,7 +64,11 @@ export default function History() {
               Archival Survey Log
             </h2>
             <p className="mt-2 text-xs font-sans text-archive-stone">
-              Archived survey specimens verified by officer <span className="font-semibold text-archive-charcoal">{user?.name}</span> ({user?.badgeNumber || 'ASI-CURATOR'}).
+              {user ? (
+                <>Archived survey specimens verified by officer <span className="font-semibold text-archive-charcoal">{user.name}</span> ({user.badgeNumber || 'ASI-CURATOR'}).</>
+              ) : (
+                <>Curatorial survey specimens and verified archaeological observations recorded on this device.</>
+              )}
             </p>
           </div>
 

@@ -51,7 +51,7 @@ export function AuthProvider({ children }) {
   const [history, setHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Initialize session from localStorage on mount (no auto-login, no default credentials)
+  // Initialize session / public history from localStorage on mount
   useEffect(() => {
     try {
       const storedUser = localStorage.getItem('heritage_current_user');
@@ -66,13 +66,19 @@ export function AuthProvider({ children }) {
           setHistory(INITIAL_DEMO_SCANS);
         }
       } else {
-        // Guest mode: unauthenticated by default
+        // Public visitor mode: unauthenticated by default, persistent device history enabled
         setUser(null);
-        setHistory([]);
+        const publicHistory = localStorage.getItem('heritage_history_public');
+        if (publicHistory) {
+          setHistory(JSON.parse(publicHistory));
+        } else {
+          setHistory(INITIAL_DEMO_SCANS);
+        }
       }
     } catch (e) {
-      console.error('Failed to parse auth state:', e);
+      console.error('Failed to parse auth/history state:', e);
       setUser(null);
+      setHistory(INITIAL_DEMO_SCANS);
     } finally {
       setIsLoading(false);
     }
@@ -151,8 +157,6 @@ export function AuthProvider({ children }) {
   };
 
   const addScanToHistory = (scanResult, thumbnailSrc) => {
-    if (!user) return;
-
     const newScanEntry = {
       id: `scan_${Date.now()}`,
       timestamp: new Date().toISOString(),
@@ -176,9 +180,9 @@ export function AuthProvider({ children }) {
 
     setHistory((prev) => {
       const updated = [newScanEntry, ...prev.filter((item) => item.id !== newScanEntry.id)];
-      const userHistoryKey = `heritage_history_${user.email}`;
+      const historyKey = user ? `heritage_history_${user.email}` : 'heritage_history_public';
       try {
-        localStorage.setItem(userHistoryKey, JSON.stringify(updated.slice(0, 50)));
+        localStorage.setItem(historyKey, JSON.stringify(updated.slice(0, 50)));
       } catch (err) {
         console.warn('Storage quota alert, saving without heavy thumbnails:', err);
       }
@@ -187,9 +191,9 @@ export function AuthProvider({ children }) {
   };
 
   const clearHistory = () => {
-    if (!user) return;
     setHistory([]);
-    localStorage.removeItem(`heritage_history_${user.email}`);
+    const historyKey = user ? `heritage_history_${user.email}` : 'heritage_history_public';
+    localStorage.removeItem(historyKey);
   };
 
   return (

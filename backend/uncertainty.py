@@ -50,9 +50,24 @@ class ReasonCode(str, enum.Enum):
     LOW_IMAGE_QUALITY = "LOW_IMAGE_QUALITY"
     UNCALIBRATED_MODEL = "UNCALIBRATED_MODEL"
     CALIBRATED_CONFIDENCE = "CALIBRATED_CONFIDENCE"
+    NATURAL_GEOLOGICAL_FEATURE = "NATURAL_GEOLOGICAL_FEATURE"
+    GEOLOGICAL_ARCHITECTURAL_AMBIGUITY = "GEOLOGICAL_ARCHITECTURAL_AMBIGUITY"
+    HUMAN_MODIFIED_ROCK_EVIDENCE = "HUMAN_MODIFIED_ROCK_EVIDENCE"
+    INSUFFICIENT_ARCHITECTURAL_EVIDENCE = "INSUFFICIENT_ARCHITECTURAL_EVIDENCE"
 
 
 # --- Pydantic Data Models ---
+
+class GeologicalEvidence(BaseModel):
+    is_natural_geology: bool = False
+    has_human_modification: bool = False
+    geological_score: float = 0.0
+    architectural_evidence_score: float = 0.0
+    difference: float = 0.0
+    geological_indicators: List[str] = Field(default_factory=list)
+    architectural_indicators: List[str] = Field(default_factory=list)
+    assessment_code: Optional[str] = None
+    assessment_summary: str = ""
 
 class ImageQualityMetrics(BaseModel):
     width: int
@@ -97,6 +112,7 @@ class UncertaintyResult(BaseModel):
     gatekeeper_score: float
     gps_evidence: GPSEvidence
     image_quality: ImageQualityMetrics
+    geological_evidence: Optional[GeologicalEvidence] = None
     reason_codes: List[str]
     requires_human_review: bool
     explanation: str
@@ -191,6 +207,11 @@ def inspect_image_quality(
     )
 
 
+ROCK_CUT_MONUMENT_KEYS = {
+    "petra", "ajanta_caves", "ellora_caves", "elephanta_caves", "badami_cave_temples", "mesa_verde"
+}
+
+
 # --- Uncertainty Engine Class ---
 
 class UncertaintyEngine:
@@ -265,6 +286,7 @@ class UncertaintyEngine:
         metadata: Dict[str, Any],
         exif_gps: Optional[Dict[str, Any]] = None,
         local_feature_corroboration: Optional[Dict[str, Any]] = None,
+        geological_evidence: Optional[GeologicalEvidence] = None,
     ) -> UncertaintyResult:
         """
         Executes comprehensive evidence synthesis across:
@@ -349,6 +371,7 @@ class UncertaintyEngine:
             reason_codes=reason_codes,
             top1_key=top1.monument_key if top1 else None,
             local_corroboration=local_feature_corroboration,
+            geological_evidence=geological_evidence,
         )
 
         requires_review = decision in [
@@ -369,6 +392,8 @@ class UncertaintyEngine:
             quality=quality,
             calibrated_prob=calibrated_prob,
             calib_status=calib_status,
+            geological_evidence=geological_evidence,
+            reason_codes=reason_codes,
         )
 
         return UncertaintyResult(
@@ -382,6 +407,7 @@ class UncertaintyEngine:
             gatekeeper_score=round(gatekeeper_score, 4),
             gps_evidence=gps_evidence,
             image_quality=quality,
+            geological_evidence=geological_evidence,
             reason_codes=reason_codes,
             requires_human_review=requires_review,
             explanation=explanation,
@@ -477,9 +503,11 @@ class UncertaintyEngine:
         reason_codes: List[str] = None,
         top1_key: Optional[str] = None,
         local_corroboration: Optional[Dict[str, Any]] = None,
+        geological_evidence: Optional[GeologicalEvidence] = None,
     ) -> DecisionState:
         """
         Deterministic, transparent arbitration across the 5 decision states.
+        Enforces geological-vs-architectural safeguards and anti-hallucination policies.
         """
         if reason_codes is None:
             reason_codes = []
@@ -493,6 +521,29 @@ class UncertaintyEngine:
         ):
             reason_codes.append(ReasonCode.GATEKEEPER_AMBIGUOUS.value)
             return DecisionState.REVIEW_REQUIRED
+
+        # RULE 0: Explicit Geological-versus-Architectural Assessment
+        is_rock_cut = top1_key in ROCK_CUT_MONUMENT_KEYS
+        if geological_evidence:
+            if geological_evidence.assessment_code == ReasonCode.NATURAL_GEOLOGICAL_FEATURE.value:
+                reason_codes.append(ReasonCode.NATURAL_GEOLOGICAL_FEATURE.value)
+                # Ordinary sandstone cliff or natural rock without human modification:
+                # Reject when evidence is sufficiently clear
+                if gatekeeper_score <= 0.40 or (not geological_evidence.has_human_modification and top1_sim < 0.85):
+                    return DecisionState.NON_MONUMENT_REJECTED
+                else:
+                    return DecisionState.REVIEW_REQUIRED
+
+            elif geological_evidence.assessment_code == ReasonCode.GEOLOGICAL_ARCHITECTURAL_AMBIGUITY.value:
+                reason_codes.append(ReasonCode.GEOLOGICAL_ARCHITECTURAL_AMBIGUITY.value)
+                return DecisionState.REVIEW_REQUIRED
+
+            elif geological_evidence.assessment_code == ReasonCode.INSUFFICIENT_ARCHITECTURAL_EVIDENCE.value:
+                reason_codes.append(ReasonCode.INSUFFICIENT_ARCHITECTURAL_EVIDENCE.value)
+                return DecisionState.REVIEW_REQUIRED
+
+            elif geological_evidence.assessment_code == ReasonCode.HUMAN_MODIFIED_ROCK_EVIDENCE.value:
+                reason_codes.append(ReasonCode.HUMAN_MODIFIED_ROCK_EVIDENCE.value)
 
         # RULE 1: Severe Non-Monument Rejection & Ambiguous Boundary Quarantine
         # Hard-reject only when top1_sim < 0.70 AND gatekeeper <= 0.35
@@ -524,6 +575,15 @@ class UncertaintyEngine:
         # RULE 3: Verified Match
         # High gatekeeper, high similarity (or geo-boosted), and decisive margin
         effective_sim_threshold = sim_threshold - 0.08 if gps.geo_boost_applied else sim_threshold
+
+        # Special handling for Rock-Cut Heritage (Petra, Ajanta, Ellora, etc.):
+        # A rock-cut monument visually resembles a natural cliff, but requires evidence of deliberate
+        # human modification (carved facade, portal, columns, capitals, reliefs, or inscriptions).
+        # If the image only shows natural-looking stone without convincing human modification,
+        # do not attribute it to a particular rock-cut heritage site.
+        if is_rock_cut and geological_evidence and geological_evidence.is_natural_geology and not geological_evidence.has_human_modification:
+            reason_codes.append(ReasonCode.INSUFFICIENT_ARCHITECTURAL_EVIDENCE.value)
+            return DecisionState.REVIEW_REQUIRED
 
         # High-confidence corroboration for narrowly missed margin (e.g. Qutub Minar vs Charminar):
         # When Top-1 candidate has exceptionally high visual similarity (>= 0.90),
@@ -592,10 +652,13 @@ class UncertaintyEngine:
         quality: ImageQualityMetrics,
         calibrated_prob: Optional[float],
         calib_status: str,
+        geological_evidence: Optional[GeologicalEvidence] = None,
+        reason_codes: Optional[List[str]] = None,
     ) -> str:
         """Constructs an editorial curatorial explanation."""
         top1_name = top1.monument_name if top1 else "None"
         top2_name = top2.monument_name if top2 else "None"
+        r_codes = reason_codes or []
 
         if decision == DecisionState.VERIFIED_MATCH:
             geo_note = " with geodetic GPS verification" if gps.geo_boost_applied else ""
@@ -629,6 +692,12 @@ class UncertaintyEngine:
             )
 
         if decision == DecisionState.NON_MONUMENT_REJECTED:
+            if ReasonCode.NATURAL_GEOLOGICAL_FEATURE.value in r_codes:
+                geo_ind = f" ({', '.join(geological_evidence.geological_indicators)})" if (geological_evidence and geological_evidence.geological_indicators) else ""
+                return (
+                    f"Specimen rejected as natural geological feature: Surface analysis reveals natural stone formations{geo_ind} "
+                    f"without visible evidence of deliberate human architectural carving, facades, or monument construction."
+                )
             return (
                 f"Specimen rejected as non-heritage: Architectural Gatekeeper probability ({gatekeeper_score * 100:.1f}%) "
                 f"and vector similarity ({top1_sim:.4f}) indicate an everyday object, document, person, or non-monument scene."
@@ -636,6 +705,10 @@ class UncertaintyEngine:
 
         # REVIEW_REQUIRED
         reasons = []
+        if ReasonCode.NATURAL_GEOLOGICAL_FEATURE.value in r_codes or ReasonCode.GEOLOGICAL_ARCHITECTURAL_AMBIGUITY.value in r_codes:
+            reasons.append("Geological-architectural ambiguity (natural rock texture requires verification of human carving)")
+        elif ReasonCode.INSUFFICIENT_ARCHITECTURAL_EVIDENCE.value in r_codes:
+            reasons.append("Insufficient architectural evidence to confirm deliberate rock-cut monument modification")
         if gps.gps_conflict:
             reasons.append(f"GPS location conflict ({gps.distance_km:.1f} km from site)")
         if not quality.passed_quality_check:

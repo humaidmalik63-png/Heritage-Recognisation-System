@@ -21,7 +21,7 @@ export async function fetchMonumentsCatalog() {
   return response.json();
 }
 
-export async function verifyMonumentImage(file, timeoutMs = 25000) {
+export async function verifyMonumentImage(file, timeoutMs = 25000, externalSignal = null) {
   const formData = new FormData();
   formData.append('file', file);
 
@@ -29,6 +29,14 @@ export async function verifyMonumentImage(file, timeoutMs = 25000) {
   const timeoutId = setTimeout(() => {
     controller.abort();
   }, timeoutMs);
+
+  if (externalSignal) {
+    if (externalSignal.aborted) {
+      controller.abort();
+    } else {
+      externalSignal.addEventListener('abort', () => controller.abort(), { once: true });
+    }
+  }
 
   try {
     const response = await fetch(`${API_BASE_URL}/api/verify-monument`, {

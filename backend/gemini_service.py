@@ -109,6 +109,23 @@ class GeminiAdjudicationResult(BaseModel):
         default=None,
         description="Matched unique monument catalogue identifier if resolved in 100-site catalogue."
     )
+    # Geological vs Architectural Assessment fields:
+    geological_assessment: Optional[str] = Field(
+        default="NOT_APPLICABLE",
+        description="One of: NATURAL_GEOLOGICAL_FEATURE, GEOLOGICAL_ARCHITECTURAL_AMBIGUITY, HUMAN_MODIFIED_ROCK_EVIDENCE, INSUFFICIENT_ARCHITECTURAL_EVIDENCE, or NOT_APPLICABLE."
+    )
+    human_modification_detected: bool = Field(
+        default=True,
+        description="True ONLY if deliberate carved doorways, columns, facades, inscriptions, or masonry are visible; False if only natural stone, strata, or weathering."
+    )
+    geological_indicators: List[str] = Field(
+        default_factory=list,
+        description="Observed natural geological features (e.g. sedimentary bedding, tafoni weathering, fractures, unworked rock)."
+    )
+    architectural_indicators: List[str] = Field(
+        default_factory=list,
+        description="Observed human-made architectural features (e.g. carved columns, pediments, arches, tool marks, symmetry)."
+    )
     # Backward compatibility fields:
     visible_observations: List[str] = Field(
         default_factory=list,
@@ -592,6 +609,10 @@ class GeminiTier2Service:
                 else None
             ),
             catalog_id=membership.monument_id.upper() if membership.monument_id else None,
+            geological_assessment="NOT_APPLICABLE",
+            human_modification_detected=True,
+            geological_indicators=[],
+            architectural_indicators=[],
             visible_observations=["Unindexed heritage specimen detected by Tier-1 visual vector scanner."],
             candidate_styles=["Style unindexed in primary gallery"],
             candidate_descriptions=["Local candidate alignment evaluated without external cloud VLM."],
@@ -613,10 +634,11 @@ class GeminiTier2Service:
         out-of-catalog specimens.
         
         Evaluates whether an image depicts:
-        1. A known catalogue monument (one of the 10 indexed).
-        2. An identifiable monument outside the catalogue (e.g. Golden Temple, Red Fort, Mysore Palace, India Gate, Eiffel Tower).
-        3. An ambiguous or unidentifiable heritage structure.
-        4. A non-monument image (receipt, math paper, everyday object).
+        1. A known catalogue monument (one of the 100 indexed).
+        2. An identifiable monument outside the catalogue (e.g. Eiffel Tower).
+        3. A genuine rock-cut monument with visible human carving (e.g. Petra, Ajanta, Ellora).
+        4. A natural geological formation, sandstone cliff, or tafoni weathering WITHOUT human modification.
+        5. A non-monument image (receipt, math paper, everyday object).
         """
         if not self.is_available():
             return self._create_deterministic_fallback(
@@ -628,31 +650,49 @@ class GeminiTier2Service:
             "You are a Senior Architectural Historian, Principal Archaeologist, and Visual Verification Scientist.\n"
             "Our platform maintains an authoritative Heritage Catalogue containing 100 registered monuments and world heritage sites.\n\n"
             "Carefully analyze the uploaded photograph. Distinguish strictly between:\n"
-            "1. An identifiable historical monument, temple, cave sanctuary, fort, palace, or archaeological site (e.g. Ajanta Caves, Golden Temple, Mysore Palace, Taj Mahal, Qutub Minar, Colosseum, etc.).\n"
-            "2. A possible heritage structure that cannot be conclusively identified from the image.\n"
-            "3. A non-monument image (e.g. academic paper, invoice, receipt, everyday object, vehicle, ordinary modern interior/exterior).\n\n"
-            "CRITICAL RULES:\n"
-            "- If the image depicts an identifiable historical heritage monument or archaeological site:\n"
-            "  * Set proposed_identity to its specific official monument name.\n"
-            "  * Set proposed_location to its city, state/region, and country.\n"
-            "  * Set is_heritage_structure to true.\n"
-            "  * Detail concrete visible architectural evidence and specific distinguishing features.\n"
-            "  * Set qualitative_confidence to HIGH or MEDIUM.\n"
+            "1. An identifiable historical monument, temple, fort, palace, or constructed architectural site.\n"
+            "2. Genuine rock-cut architecture with clear evidence of human modification (e.g. carved portals, symmetrical facades, columns, capitals, pediments, sculpted reliefs, or chaitya windows at Petra, Ajanta, or Ellora).\n"
+            "3. Natural geological formations, sandstone cliffs, rock strata, erosion patterns, tafoni / honeycomb weathering, or unmodified boulders WITHOUT visible human intervention.\n"
+            "4. Ambiguous geological / architectural features where human modification cannot be definitively proven.\n"
+            "5. Non-monument everyday images (e.g. academic paper, invoice, receipt, everyday object, vehicle, ordinary modern interior/exterior).\n\n"
+            "CRITICAL GEOLOGICAL-VERSUS-ARCHITECTURAL SAFEGUARDS:\n"
+            "- Geological texture, rock color, or sandstone composition is NOT sufficient proof of a monument.\n"
+            "- Natural sedimentary bedding, erosion, tafoni/honeycomb weathering, rock strata, fractures, or unmodified cliffs MUST NOT be treated as a monument, even if the rock resembles the sandstone of Petra or Jordan.\n"
+            "- For rock-cut architecture (e.g. Petra, Ajanta, Ellora):\n"
+            "  * You MUST verify deliberate human modification (carved entrances/doorways, symmetrical facades, columns, capitals, reliefs, tool marks, or inscriptions).\n"
+            "  * If the image depicts natural sandstone or uncarved cliff faces WITHOUT human modification:\n"
+            "    - Set is_heritage_structure to false.\n"
+            "    - Set proposed_identity to null.\n"
+            "    - Set geological_assessment to 'NATURAL_GEOLOGICAL_FEATURE'.\n"
+            "    - Set human_modification_detected to false.\n"
+            "    - List observed natural rock features in geological_indicators (e.g. ['sandstone bedding', 'tafoni weathering', 'erosion strata']).\n"
+            "    - Explain in visible_architectural_evidence that the image shows natural geological rock without human architectural carving.\n"
+            "  * If the image depicts genuine rock-cut architecture with clear human carving:\n"
+            "    - Set is_heritage_structure to true.\n"
+            "    - Set geological_assessment to 'HUMAN_MODIFIED_ROCK_EVIDENCE'.\n"
+            "    - Set human_modification_detected to true.\n"
+            "    - List carved architectural elements in architectural_indicators (e.g. ['carved columns', 'symmetrical pediment', 'relief carvings']).\n"
+            "  * If the rock formation has ambiguous markings or erosion that cannot be confirmed as human-made:\n"
+            "    - Set proposed_identity to null.\n"
+            "    - Set qualitative_confidence to 'UNCERTAIN'.\n"
+            "    - Set geological_assessment to 'GEOLOGICAL_ARCHITECTURAL_AMBIGUITY'.\n"
             "- If the image is a non-monument (document, paper, receipt, everyday object, modern interior):\n"
             "  * Set is_heritage_structure to false.\n"
             "  * Set proposed_identity to null.\n"
             "  * Set proposed_location to null.\n"
+            "  * Set geological_assessment to 'NOT_APPLICABLE'.\n"
             "  * Explain in uncertainty_reason that the image is not a heritage structure.\n"
-            "- If the image is ambiguous or generic historic masonry that cannot be reliably identified:\n"
-            "  * Set proposed_identity to null.\n"
-            "  * Set qualitative_confidence to LOW or UNCERTAIN.\n"
-            "  * Set uncertainty_reason explaining the visual ambiguity.\n\n"
+            "- A CLIP similarity score alone must never establish that an image depicts a specific monument. Do not use Gemini-generated descriptions as independent proof of their own claims.\n\n"
             "Respond strictly in valid JSON matching this schema:\n"
             "{\n"
-            '  "proposed_identity": "Specific Monument Name (or null if ambiguous/non-monument)",\n'
+            '  "proposed_identity": "Specific Monument Name (or null if ambiguous/natural/non-monument)",\n'
             '  "proposed_location": "City, State/Region, Country (or null)",\n'
             '  "is_heritage_structure": true,\n'
-            '  "visible_architectural_evidence": "Detailed explanation of visible architectural characteristics, materials, and forms...",\n'
+            '  "geological_assessment": "NATURAL_GEOLOGICAL_FEATURE | GEOLOGICAL_ARCHITECTURAL_AMBIGUITY | HUMAN_MODIFIED_ROCK_EVIDENCE | INSUFFICIENT_ARCHITECTURAL_EVIDENCE | NOT_APPLICABLE",\n'
+            '  "human_modification_detected": false,\n'
+            '  "geological_indicators": ["tafoni weathering", "natural strata"],\n'
+            '  "architectural_indicators": ["carved capital", "symmetrical portal"],\n'
+            '  "visible_architectural_evidence": "Detailed explanation of visible characteristics, materials, and forms...",\n'
             '  "distinguishing_features": ["Feature 1", "Feature 2"],\n'
             '  "qualitative_confidence": "HIGH | MEDIUM | LOW | UNCERTAIN",\n'
             '  "uncertainty_reason": "Explanation of any ambiguity, or \'None\' if unambiguous",\n'
@@ -708,6 +748,11 @@ class GeminiTier2Service:
             )
             prop_loc = parsed.get("proposed_location") or membership.location
 
+            geo_assess = parsed.get("geological_assessment") or "NOT_APPLICABLE"
+            human_mod = bool(parsed.get("human_modification_detected", True))
+            geo_ind = parsed.get("geological_indicators") or []
+            arch_ind = parsed.get("architectural_indicators") or []
+
             return GeminiAdjudicationResult(
                 proposed_identity=prop_id,
                 proposed_location=prop_loc,
@@ -721,6 +766,10 @@ class GeminiTier2Service:
                 verified_coordinates=coords,
                 geodetic_source=geodetic_src,
                 catalog_id=matched_cat_id,
+                geological_assessment=geo_assess,
+                human_modification_detected=human_mod,
+                geological_indicators=geo_ind,
+                architectural_indicators=arch_ind,
                 visible_observations=parsed.get("visible_observations", []),
                 candidate_styles=parsed.get("candidate_styles", []),
                 candidate_descriptions=parsed.get("candidate_descriptions", []),

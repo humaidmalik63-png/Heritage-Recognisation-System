@@ -221,10 +221,36 @@ All 9 backend and frontend regression suites were executed sequentially:
 
 ---
 
-## 7. Release Recommendation
+## 8. Addendum: Critical Production Investigation & Public Platform Transition
+
+### 8.1 Issue 1 — Gemini Tier-2 Recognition Modal Stuck
+- **Root Cause**: In `frontend/src/pages/Dashboard.jsx`, `handleSampleSelect()` lacked a `finally { setIsLoading(false); }` block. On successful sample scans, `setIsLoading(false)` was never executed, leaving `ProcessingOverlay` mounted forever at *"Synthesizing Curatorial Dossier & Linked Stamps..."*.
+- **Fix**: Wrapped sample selection in `finally { setIsLoading(false); }`, added `AbortController` cancellation for in-flight requests, and wired signal support through `frontend/src/api.js`.
+
+### 8.2 Issue 2 — Geological False Attribution of Natural Rock
+- **Root Cause**: Zero-shot Gatekeeper only checked person/animal/document distractors, assigning ~51% architectural probability to sandstone cliffs. CLIP matched reddish sandstone against Petra reference photos (77.4% similarity). Gemini lacked explicit instructions to differentiate geological weathering from deliberate carving, and "Petra Archaeological Park" was absent from catalogue aliases, triggering out-of-catalog promotion.
+- **Fix**:
+  - Precomputed architectural vs geological text vectors in `backend/main.py` (`natural_geology_vec` vs `rock_arch_vec`).
+  - Implemented `evaluate_geological_features()` to check feature differentials and quarantine ambiguous rock textures with reason code `GEOLOGICAL_ARCHITECTURAL_AMBIGUITY`.
+  - Added rock-cut heritage protection for genuine carved monuments (`petra`, `ajanta_caves`, `ellora_caves`).
+  - Added canonical aliases to `backend/datasets/heritage_catalogue_100.json`.
+  - Updated Gemini system prompt with strict geological discernment guidelines.
+
+### 8.3 Issue 3 — Public Platform Transition (Login Removal)
+- **Root Cause**: Platform was gated behind mandatory authentication redirects in `ProtectedRoute`, forcing public visitors to a login screen.
+- **Fix**:
+  - Removed login gates and redirects from `frontend/src/App.jsx`.
+  - Decommissioned `Login.jsx` and `Signup.jsx` into seamless redirects to root `/`.
+  - Removed user session and sign-in/out buttons from `Header.jsx`, `MobileHeader.jsx`, and `MobileApp.jsx`.
+  - Enabled persistent device-level scan history for public visitors in `AuthContext.jsx` (`heritage_history_public`).
+  - Strictly preserved backend authentication for curator/admin operations (`/api/admin/me`, `/api/admin/telemetry/gemini`, `/api/exceptions/{id}/resolve`).
+
+---
+
+## 9. Final Release Recommendation
 
 ### **FINAL AUDIT VERDICT: GO FOR PHASE 14 PRODUCTION RELEASE**
 
-All verification criteria, regression gates, fixture integrity audits, and boundary safety checks have been satisfied without compromise. The platform is fully prepared for authorized deployment to Railway and Vercel.
+All verification criteria, regression gates, fixture integrity audits, geological safeguards, and public access transitions have been satisfied without compromise. The platform is fully prepared for authorized deployment to Railway and Vercel.
 
 *Awaiting explicit user authorization to proceed with Phase 14 deployment.*

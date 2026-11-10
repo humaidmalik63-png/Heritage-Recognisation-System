@@ -50,7 +50,7 @@ export default function MobileApp({
   onOpenExceptions,
   pendingExceptionsCount = 0,
 }) {
-  const { user, history, addScanToHistory } = useAuth();
+  const { history, addScanToHistory } = useAuth();
   const [activeTab, setActiveTab] = useState('discover');
 
   // Recognition state
@@ -380,13 +380,13 @@ export default function MobileApp({
 
             <div className="p-4 rounded-2xl bg-[#ECE8DD] border border-[#E3DFD5] space-y-2 text-xs">
               <span className="font-mono text-[9px] uppercase tracking-wider text-[#A9472D] font-bold">
-                CURATORIAL CREDENTIALS
+                INSTITUTIONAL REGISTRY
               </span>
               <p className="font-medium text-[#171816]">
-                Authenticated User: {user?.name || 'Dr. Eleanor Vance'}
+                Archaeological Survey & UNESCO World Heritage Register
               </p>
               <p className="text-[11px] text-[#6E7069]">
-                Role: {user?.role || 'Senior Archaeologist & Curator'} • {user?.badgeNumber || 'ASI-FELLOW-2026-88'}
+                Access: Open Public Heritage Discovery • SIH 2025 Edition
               </p>
             </div>
           </motion.div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import HeritageHero from '../components/HeritageHero';
 import FeaturedHeritage from '../components/FeaturedHeritage';
 import UploadSection from '../components/UploadSection';
@@ -56,6 +56,7 @@ export default function Dashboard({
   const [verificationResult, setVerificationResult] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [lastSubmittedFile, setLastSubmittedFile] = useState(null);
+  const abortControllerRef = useRef(null);
 
   // Auto-dismiss transient error alerts after 6 seconds
   useEffect(() => {
@@ -87,6 +88,12 @@ export default function Dashboard({
   };
 
   const handleFileSubmission = async (file) => {
+    // Abort any in-flight verification
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    abortControllerRef.current = new AbortController();
+
     setErrorMessage(null);
     setIsLoading(true);
     setLastSubmittedFile(file);
@@ -95,10 +102,10 @@ export default function Dashboard({
     setImagePreview(previewUrl);
 
     try {
-      const result = await verifyMonumentImage(file);
+      const result = await verifyMonumentImage(file, 25000, abortControllerRef.current.signal);
       setVerificationResult(result);
 
-      // Automatically append verified monument scans to authenticated user's history
+      // Automatically append verified monument scans to user's history
       if (result && result.is_monument && !result.is_uncertain) {
         addScanToHistory(result, previewUrl);
       }
@@ -108,14 +115,22 @@ export default function Dashboard({
         onExceptionCreated();
       }
     } catch (err) {
-      console.error('Verification failed:', err);
-      setErrorMessage(err.message || 'Failed to verify monument. Please check backend connection.');
+      if (err.name !== 'AbortError') {
+        console.error('Verification failed:', err);
+        setErrorMessage(err.message || 'Failed to verify monument. Please check backend connection.');
+      }
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleSampleSelect = async (sampleKey) => {
+    // Abort any in-flight verification
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    abortControllerRef.current = new AbortController();
+
     setErrorMessage(null);
     setIsLoading(true);
 
@@ -153,7 +168,7 @@ export default function Dashboard({
         setImagePreview(previewUrl);
         setLastSubmittedFile(file);
 
-        const result = await verifyMonumentImage(file);
+        const result = await verifyMonumentImage(file, 25000, abortControllerRef.current.signal);
         setVerificationResult(result);
         if (result?.human_review_flagged && onExceptionCreated) {
           onExceptionCreated();
@@ -211,7 +226,7 @@ export default function Dashboard({
         setImagePreview(previewUrl);
         setLastSubmittedFile(file);
 
-        const result = await verifyMonumentImage(file);
+        const result = await verifyMonumentImage(file, 25000, abortControllerRef.current.signal);
         setVerificationResult(result);
 
         // Sync to user history
@@ -224,8 +239,11 @@ export default function Dashboard({
         }
       }
     } catch (err) {
-      console.error('Sample processing failed:', err);
-      setErrorMessage(err.message || 'Sample test failed.');
+      if (err.name !== 'AbortError') {
+        console.error('Sample processing failed:', err);
+        setErrorMessage(err.message || 'Sample test failed.');
+      }
+    } finally {
       setIsLoading(false);
     }
   };
@@ -271,7 +289,12 @@ export default function Dashboard({
           {isLoading && (
             <ProcessingOverlay
               previewUrl={imagePreview}
-              onCancel={() => setIsLoading(false)}
+              onCancel={() => {
+                if (abortControllerRef.current) {
+                  abortControllerRef.current.abort();
+                }
+                setIsLoading(false);
+              }}
             />
           )}
 

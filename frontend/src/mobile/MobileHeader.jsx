@@ -1,6 +1,5 @@
 import React from 'react';
-import { Landmark, AlertTriangle, User } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { Landmark, AlertTriangle } from 'lucide-react';
 
 export default function MobileHeader({
   health,
@@ -9,7 +8,6 @@ export default function MobileHeader({
   onOpenExceptions,
   pendingExceptionsCount = 0,
 }) {
-  const { user } = useAuth();
   const isHealthy = health?.status === 'healthy';
 
   return (
@@ -68,12 +66,12 @@ export default function MobileHeader({
             </button>
           )}
 
-          {/* User Curator Badge */}
+          {/* Institutional Access Badge */}
           <div
-            className="w-7 h-7 rounded-full bg-[#171816] text-[#F5F3ED] flex items-center justify-center text-[10px] font-mono font-bold border border-[#E3DFD5]"
-            title={user?.name || 'Curator'}
+            className="w-7 h-7 rounded-full bg-[#171816] text-[#B99A5B] flex items-center justify-center text-[10px] font-mono font-bold border border-[#E3DFD5]"
+            title="ASI Curatorial Public Archive"
           >
-            {user?.name ? user.name.charAt(0).toUpperCase() : <User className="w-3.5 h-3.5" />}
+            ASI
           </div>
         </div>
       </div>

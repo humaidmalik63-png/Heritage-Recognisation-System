@@ -1,27 +1,27 @@
 {
   "service_name": "Gemini 2.5 Flash Tier-2 Telemetry",
   "version": "1.0.0",
-  "total_requests": 828,
-  "successful_requests": 243,
-  "failed_requests": 585,
-  "total_retries": 145,
-  "cumulative_latency_ms": 2287068.1906000245,
-  "average_latency_ms": 2762.16,
-  "total_input_tokens": 232081,
-  "total_output_tokens": 42897,
-  "tokens_reported_count": 206,
+  "total_requests": 901,
+  "successful_requests": 252,
+  "failed_requests": 649,
+  "total_retries": 152,
+  "cumulative_latency_ms": 2365082.126198802,
+  "average_latency_ms": 2624.95,
+  "total_input_tokens": 242716,
+  "total_output_tokens": 44139,
+  "tokens_reported_count": 211,
   "error_categories": {
-    "RATE_LIMIT_429": 25,
-    "AUTH_INVALID_KEY": 25,
-    "TIMEOUT": 153,
-    "SERVER_ERROR_5XX": 34,
+    "RATE_LIMIT_429": 27,
+    "AUTH_INVALID_KEY": 27,
+    "TIMEOUT": 176,
+    "SERVER_ERROR_5XX": 38,
     "EMPTY_RESPONSE": 0,
     "CLIENT_ERROR": 147
   },
   "features_invoked": {
     "unknown_heritage_analysis": {
-      "success": 169,
-      "fail": 495
+      "success": 178,
+      "fail": 559
     },
     "grounded_historical_qa": {
       "success": 74,
@@ -32,6 +32,6 @@
       "fail": 0
     }
   },
-  "last_request_utc": "2026-11-10T18:02:18.541504+00:00",
-  "last_error": "503 Service Unavailable"
+  "last_request_utc": "2026-11-10T21:29:49.855714+00:00",
+  "last_error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
 }

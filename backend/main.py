@@ -56,6 +56,7 @@ from uncertainty import (
     AggregatedCandidate,
     DecisionState,
     GPSEvidence,
+    GeologicalEvidence,
     ImageQualityMetrics,
     ReasonCode,
     UncertaintyEngine,
@@ -171,6 +172,20 @@ NEGATIVE_PROMPTS = [
     "non-architectural scene",
 ]
 
+NATURAL_GEOLOGY_PROMPTS = [
+    "natural sedimentary rock strata, uncarved sandstone cliff face, or geological rock formation without human intervention",
+    "natural rock weathering, erosion patterns, tafoni, honeycomb weathering, and irregular fractures",
+    "natural desert canyon wall, bare geological stone, boulders, and unmodified cliff outcrop",
+    "natural unworked rock without architectural carvings",
+]
+
+ROCK_CUT_ARCHITECTURE_PROMPTS = [
+    "rock-cut heritage architecture, carved facade, portal, colonnade, or rock-cut tomb entrance",
+    "ancient architectural carvings in stone cliffs with symmetrical doorway, columns, capitals, or reliefs",
+    "rock-cut cave temple with carved facade, chaitya window, pillared verandah, or sculpted statues",
+    "deliberately carved monument facade with architectural ornamentation and human masonry",
+]
+
 # Global application state holder
 state: Dict[str, Any] = {
     "device": "cpu",
@@ -182,6 +197,8 @@ state: Dict[str, Any] = {
     "catalogue_100": {},
     "gatekeeper_pos_vec": None,
     "gatekeeper_neg_vec": None,
+    "natural_geology_vec": None,
+    "rock_arch_vec": None,
     "gemini_client": None,
     "gemini_configured": False,
     "calibration_engine": None,
@@ -247,6 +264,7 @@ class VerificationResponse(BaseModel):
     local_features: Optional[Dict[str, Any]] = None
     out_of_catalog_identified: bool = False
     catalogue_status: Optional[str] = "OUT_OF_CATALOG"
+    geological_assessment: Optional[str] = None
     explainability: Optional[Dict[str, Any]] = None
 
 
@@ -452,6 +470,77 @@ def evaluate_architectural_gatekeeper(img_vec: np.ndarray) -> float:
     return float(round(prob, 4))
 
 
+def evaluate_geological_features(
+    img_vec: np.ndarray,
+    top_cand_key: Optional[str] = None,
+) -> GeologicalEvidence:
+    """
+    Explicit geological-versus-architectural assessment.
+    Assesses whether the image depicts natural uncarved geological formations
+    (cliffs, strata, erosion, tafoni) or deliberate human architectural modification
+    (rock-cut facades, portals, columns, relief carvings, inscriptions).
+    """
+    g_vec = state.get("natural_geology_vec")
+    a_vec = state.get("rock_arch_vec")
+    if g_vec is None or a_vec is None:
+        return GeologicalEvidence()
+
+    geo_sim = float(np.dot(img_vec, g_vec))
+    arch_sim = float(np.dot(img_vec, a_vec))
+    diff = round(arch_sim - geo_sim, 4)
+
+    is_rock_cut = top_cand_key in {
+        "petra", "ajanta_caves", "ellora_caves", "elephanta_caves", "badami_cave_temples", "mesa_verde"
+    }
+
+    geo_indicators = []
+    arch_indicators = []
+
+    if geo_sim >= 0.22:
+        geo_indicators.extend(["natural sedimentary bedding", "rock strata / cliff face", "weathering and erosion"])
+    if arch_sim >= 0.28:
+        arch_indicators.extend(["carved architectural portal/facade", "symmetrical columns/pilasters", "deliberate stone carving"])
+
+    # Decision logic:
+    # If natural rock features significantly exceed architectural evidence:
+    if diff <= -0.035:
+        code = ReasonCode.NATURAL_GEOLOGICAL_FEATURE.value
+        is_nat = True
+        has_mod = False
+        summary = (
+            f"Natural geological feature: Surface exhibits sedimentary bedding, cliff weathering, or tafoni patterns "
+            f"(geo_sim={geo_sim:.4f}, arch_sim={arch_sim:.4f}, diff={diff:.4f}) without evidence of human architectural carving."
+        )
+    elif -0.035 < diff < 0.025:
+        code = ReasonCode.GEOLOGICAL_ARCHITECTURAL_AMBIGUITY.value
+        is_nat = True
+        has_mod = False
+        summary = (
+            f"Geological-architectural ambiguity: Natural stone textures present (geo_sim={geo_sim:.4f}, arch_sim={arch_sim:.4f}, diff={diff:.4f}). "
+            f"Human modification cannot be verified from visual evidence alone; curatorial review required."
+        )
+    else:
+        code = ReasonCode.HUMAN_MODIFIED_ROCK_EVIDENCE.value
+        is_nat = False
+        has_mod = True
+        summary = (
+            f"Human-modified rock architecture confirmed: Carved facade/portal elements detected "
+            f"(arch_sim={arch_sim:.4f} > geo_sim={geo_sim:.4f}, diff={diff:+.4f})."
+        )
+
+    return GeologicalEvidence(
+        is_natural_geology=is_nat,
+        has_human_modification=has_mod,
+        geological_score=round(geo_sim, 4),
+        architectural_evidence_score=round(arch_sim, 4),
+        difference=diff,
+        geological_indicators=geo_indicators,
+        architectural_indicators=arch_indicators,
+        assessment_code=code,
+        assessment_summary=summary,
+    )
+
+
 def execute_gemini_fallback(image: Image.Image) -> Optional[Dict[str, Any]]:
     client = state.get("gemini_client")
     if not client:
@@ -533,6 +622,8 @@ def initialize_backend_resources(gemini_api_key: Optional[str] = None) -> Dict[s
 
     state["gatekeeper_pos_vec"] = _get_avg_text_vector(POSITIVE_PROMPTS)
     state["gatekeeper_neg_vec"] = _get_avg_text_vector(NEGATIVE_PROMPTS)
+    state["natural_geology_vec"] = _get_avg_text_vector(NATURAL_GEOLOGY_PROMPTS)
+    state["rock_arch_vec"] = _get_avg_text_vector(ROCK_CUT_ARCHITECTURE_PROMPTS)
 
     # 4. Load FAISS Index, Labels & Monuments Metadata
     if not INDEX_FILE.exists():
@@ -1211,6 +1302,14 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
     query_matrix = np.expand_dims(img_vec, axis=0).astype(np.float32)
     raw_distances, raw_indices = state["faiss_index"].search(query_matrix, 15)
 
+    # Preliminary top candidate key from raw FAISS search
+    prelim_top_key = None
+    if len(raw_indices[0]) > 0 and 0 <= int(raw_indices[0][0]) < len(state["labels"]):
+        prelim_top_key = state["labels"][int(raw_indices[0][0])].get("monument_key")
+
+    # Explicit geological-versus-architectural assessment
+    geological_evidence = evaluate_geological_features(img_vec, top_cand_key=prelim_top_key)
+
     # 4. Evaluate Multimodal Evidence via Dedicated Uncertainty Engine
     uncertainty_engine: UncertaintyEngine = state["uncertainty_engine"]
     uncertainty_res: UncertaintyResult = uncertainty_engine.evaluate(
@@ -1221,6 +1320,7 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
         labels=state["labels"],
         metadata=state["metadata"],
         exif_gps=exif_gps,
+        geological_evidence=geological_evidence,
     )
     faiss_duration_ms = (time.perf_counter() - t_faiss_start) * 1000.0
 
@@ -1294,6 +1394,7 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
                         "top_local_candidate": local_eval.get("top_candidate"),
                         "geometric_verification": local_eval.get("geometric_verification"),
                     },
+                    geological_evidence=geological_evidence,
                 )
                 if corroborated_res.decision == DecisionState.VERIFIED_MATCH:
                     uncertainty_res = corroborated_res
@@ -1367,16 +1468,47 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
         adjudicated_membership = check_catalogue_membership(gemini_adjudication.proposed_identity)
         final_catalogue_status = adjudicated_membership.status.value
 
+        ARCHITECTURAL_KEYWORDS = {
+            "carved", "carving", "carvings", "column", "columns", "colonnade", "portal", "facade", "facades",
+            "capital", "capitals", "pediment", "pediments", "arch", "arches", "relief", "reliefs", "statue",
+            "statues", "sculpture", "sculptures", "inscription", "inscriptions", "doorway", "window", "windows",
+            "chaitya", "vihara", "stupa", "dome", "pillar", "pillars", "masonry", "wall", "walls", "temple",
+            "tomb", "sanctuary", "chamber", "chambers", "lintel", "frieze", "cornice", "entablature"
+        }
+
+        # Explicit geological-versus-architectural evaluation
+        gemini_text = (gemini_adjudication.visible_architectural_evidence or "").lower()
+        has_arch_words = any(k in gemini_text for k in ARCHITECTURAL_KEYWORDS)
+
+        is_natural_rock = (
+            gemini_adjudication.geological_assessment == "NATURAL_GEOLOGICAL_FEATURE"
+            or not gemini_adjudication.human_modification_detected
+            or (geological_evidence and geological_evidence.is_natural_geology and not geological_evidence.has_human_modification)
+            or (not has_arch_words and "sandstone" in gemini_text and ("tafoni" in gemini_text or "erosion" in gemini_text or "weathering" in gemini_text))
+        )
+
         # Conservative Adjudication Policy:
-        # D. Non-monument rejection: If Gemini explicitly identifies image as non-heritage structure
-        if not gemini_adjudication.is_heritage_structure:
-            logger.info("Gemini adjudication determined specimen is NOT a heritage structure.")
-            final_decision = DecisionState.NON_MONUMENT_REJECTED
+        # D1. Geological non-monument / Natural rock safeguard
+        if is_natural_rock or not gemini_adjudication.is_heritage_structure:
+            if is_natural_rock and arch_prob > 0.40 and (geological_evidence and geological_evidence.difference > -0.035):
+                logger.info("Geological safeguard: Specimen has natural rock texture with ambiguous features. Quarantining to REVIEW_REQUIRED.")
+                final_decision = DecisionState.REVIEW_REQUIRED
+                if ReasonCode.GEOLOGICAL_ARCHITECTURAL_AMBIGUITY.value not in uncertainty_res.reason_codes:
+                    uncertainty_res.reason_codes.append(ReasonCode.GEOLOGICAL_ARCHITECTURAL_AMBIGUITY.value)
+            else:
+                logger.info("Geological safeguard / Gemini adjudication determined specimen is NOT a constructed heritage structure.")
+                final_decision = DecisionState.NON_MONUMENT_REJECTED
+                if ReasonCode.NATURAL_GEOLOGICAL_FEATURE.value not in uncertainty_res.reason_codes:
+                    uncertainty_res.reason_codes.append(ReasonCode.NATURAL_GEOLOGICAL_FEATURE.value)
             final_catalogue_status = CatalogueStatus.OUT_OF_CATALOG.value
+            is_out_of_catalog_identified = False
+            is_catalog_metadata_only = False
 
         # B1. Identifiable Catalogued Metadata-Only Monument (e.g. Golden Temple, Mysore Palace):
         elif (
             gemini_adjudication.is_heritage_structure
+            and not is_natural_rock
+            and has_arch_words
             and gemini_adjudication.proposed_identity
             and len(gemini_adjudication.proposed_identity.strip()) > 3
             and len(gemini_adjudication.visible_architectural_evidence.strip()) >= 20
@@ -1399,10 +1531,14 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
         # B2. Identifiable Truly Out-of-Catalog Monument (e.g. Eiffel Tower):
         elif (
             gemini_adjudication.is_heritage_structure
+            and not is_natural_rock
+            and has_arch_words
             and gemini_adjudication.proposed_identity
             and len(gemini_adjudication.proposed_identity.strip()) > 3
             and len(gemini_adjudication.visible_architectural_evidence.strip()) >= 20
             and gemini_adjudication.qualitative_confidence.upper() in ["HIGH", "MEDIUM"]
+            and len(gemini_adjudication.distinguishing_features) >= 2
+            and arch_prob >= 0.50
             and adjudicated_membership.status == CatalogueStatus.OUT_OF_CATALOG
             and not gemini_adjudication.is_offline_fallback
         ):
@@ -1420,6 +1556,8 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
         # B3. Flagship / Recognition-Ready Monument (e.g. Taj Mahal, Qutub Minar, Ajanta Caves confirmed under uncertainty):
         elif (
             gemini_adjudication.is_heritage_structure
+            and not is_natural_rock
+            and has_arch_words
             and gemini_adjudication.proposed_identity
             and len(gemini_adjudication.proposed_identity.strip()) > 3
             and len(gemini_adjudication.visible_architectural_evidence.strip()) >= 20
@@ -1554,6 +1692,9 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             for c in top_candidates_agg[:3]
         ],
         "decision_narrative": uncertainty_res.explanation,
+        "geological_assessment": geological_evidence.assessment_code if geological_evidence else None,
+        "is_natural_rock": geological_evidence.is_natural_geology if geological_evidence else False,
+        "human_modification_detected": geological_evidence.has_human_modification if geological_evidence else False,
     }
 
     def _build_telemetry(reason_text: str) -> PipelineTelemetry:
@@ -1619,6 +1760,7 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             local_features=local_features_data,
             out_of_catalog_identified=False,
             catalogue_status=CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY.value,
+            geological_assessment=geological_evidence.assessment_code if geological_evidence else None,
             explainability=explainability_payload,
         )
 
@@ -1653,6 +1795,7 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             local_features=local_features_data,
             out_of_catalog_identified=False,
             catalogue_status=CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY.value if best_key in state["metadata"] else CatalogueStatus.OUT_OF_CATALOG.value,
+            geological_assessment=geological_evidence.assessment_code if geological_evidence else None,
             explainability=explainability_payload,
         )
 
@@ -1778,6 +1921,7 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             uncertainty=uncertainty_res,
             tier2_analysis=tier2_analysis_dict,
             local_features=local_features_data,
+            geological_assessment=geological_evidence.assessment_code if geological_evidence else None,
             explainability=explainability_payload,
         )
 
@@ -1799,6 +1943,7 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             local_features=local_features_data,
             out_of_catalog_identified=False,
             catalogue_status=CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY.value if best_key in state["metadata"] else CatalogueStatus.OUT_OF_CATALOG.value,
+            geological_assessment=geological_evidence.assessment_code if geological_evidence else None,
             explainability=explainability_payload,
         )
 
@@ -1819,6 +1964,7 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             local_features=local_features_data,
             out_of_catalog_identified=False,
             catalogue_status=CatalogueStatus.OUT_OF_CATALOG.value,
+            geological_assessment=geological_evidence.assessment_code if geological_evidence else None,
             explainability=explainability_payload,
         )
 
