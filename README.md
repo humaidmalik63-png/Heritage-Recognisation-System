@@ -1,34 +1,74 @@
 # 🏛️ Visual Heritage Recognition & Grounded Cultural Discovery Platform
+
 > **AI-Powered Heritage Monument Identification, Architectural Explainability, and Statutory Grounded Historical Retrieval**  
-> *Project No. 30 (Smart India Hackathon – SIH25052)*
+> *Project No. 30 — Smart India Hackathon (SIH25052)*
 
-[![Live Web Application](https://img.shields.io/badge/Frontend-Vercel%20Production-black?style=flat&logo=vercel)](https://heritage-monuments.vercel.app)
-[![Live Backend API](https://img.shields.io/badge/Backend-Railway%20Cloud-blueviolet?style=flat&logo=railway)](https://backend-production-b023b.up.railway.app/api/health)
-[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Test Suite Status](https://img.shields.io/badge/Tests-10%2F10%20Passing-brightgreen.svg)]()
+<div align="center">
 
----
+[![Live Web Application](https://img.shields.io/badge/Frontend-Vercel%20Production-black?style=for-the-badge&logo=vercel)](https://heritage-monuments.vercel.app)
+[![Live Backend API](https://img.shields.io/badge/Backend-Railway%20Cloud-blueviolet?style=for-the-badge&logo=railway)](https://backend-production-b023b.up.railway.app/api/health)
+[![Python](https://img.shields.io/badge/Python-3.12-blue?style=for-the-badge&logo=python)](https://python.org)
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react)](https://react.dev)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.15%20(CPU)-EE4C2C?style=for-the-badge&logo=pytorch)](https://pytorch.org)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=for-the-badge)](https://opensource.org/licenses/Apache-2.0)
 
-## 🌟 Live Demo & Deployment Links
-
-- **Interactive Web Application**: [https://heritage-monuments.vercel.app](https://heritage-monuments.vercel.app)
-- **Live API Endpoint**: [https://backend-production-b023b.up.railway.app](https://backend-production-b023b.up.railway.app)
-- **Health Check & Telemetry**: [https://backend-production-b023b.up.railway.app/api/health](https://backend-production-b023b.up.railway.app/api/health)
+</div>
 
 ---
 
-## 📖 What is This Project?
+## 🌟 Live Production Links
 
-The **Visual Heritage Recognition Platform** is an AI-driven cultural preservation and authentication system designed to identify and catalog monuments from user-submitted field photographs, archival scans, and mobile cameras.
-
-Unlike generic image classifiers or hallucination-prone chatbots, this system is designed with **zero-hallucination guarantees**:
-1. **Never guesses or invents historical claims**: Every date, dynasty, and architectural description is bound to official UNESCO World Heritage or Archaeological Survey of India (ASI) documentation.
-2. **Explicit Uncertainty Handling**: When an image is blurry, occluded, or ambiguous, the AI flags it for curatorial review rather than making a confident misidentification.
-3. **Calibrated Non-Monument Rejection**: Blatant non-heritage scenes (documents, everyday objects, pets) are cleanly rejected, while complex architectural close-ups are protected for human curation.
+| Resource | URL | Status |
+|---|---|---|
+| **🎨 Interactive Web App** | [https://heritage-monuments.vercel.app](https://heritage-monuments.vercel.app) | `Online` (Global CDN) |
+| **⚡ Backend API Gateway** | [https://backend-production-b023b.up.railway.app](https://backend-production-b023b.up.railway.app) | `Online` (Railway Cloud) |
+| **📋 Interactive API Docs** | [https://backend-production-b023b.up.railway.app/docs](https://backend-production-b023b.up.railway.app/docs) | `Swagger UI` |
+| **🩺 Health & Telemetry** | [https://backend-production-b023b.up.railway.app/api/health](https://backend-production-b023b.up.railway.app/api/health) | `JSON Telemetry` |
 
 ---
 
-## ⚙️ How It Works (3-Tier Hybrid Pipeline)
+## 📸 Interface Preview
+
+<div align="center">
+
+### Desktop Experience
+*Museum-grade curation dashboard with real-time vector attribution, geodetic verification, and architectural breakdown.*
+<img src="docs/assets/desktop_preview.png" alt="Desktop Interface Preview" width="900" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" />
+
+<br/><br/>
+
+### Mobile & Dossier Modal Experience
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <b>Mobile Responsive Experience</b><br/>
+      <img src="docs/assets/mobile_preview.png" alt="Mobile Preview" width="400" style="border-radius: 8px;" />
+    </td>
+    <td align="center" width="50%">
+      <b>Statutory Citations & Monograph Dossier</b><br/>
+      <img src="docs/assets/citations_preview.png" alt="Citations Preview" width="400" style="border-radius: 8px;" />
+    </td>
+  </tr>
+</table>
+
+</div>
+
+---
+
+## 📖 Overview
+
+The **Visual Heritage Recognition Platform** is an institutional-grade cultural preservation and authentication system designed to identify and catalog monuments from user-submitted field photographs, archival scans, and mobile cameras.
+
+Unlike generic image classifiers or hallucination-prone chatbots, this system is built with **strict zero-hallucination guarantees**:
+
+1. **Grounded Statutory Citations**: Every date, dynasty, and architectural description is directly bound to official UNESCO World Heritage or Archaeological Survey of India (ASI) primary records.
+2. **Explicit Uncertainty Arbitration**: Blurry photos, occluded viewpoints, or tight architectural details are quarantined into curatorial queues rather than forced into confident misidentifications.
+3. **Calibrated Non-Monument Rejection**: Blatant non-heritage scenes (documents, everyday objects, pets) are rejected outright ($gatekeeper \le 0.35$), while ambiguous crops are preserved for expert review ($0.35 < gatekeeper < 0.45$).
+4. **Deterministic Fallback Pipeline**: If Tier-2 cloud models encounter network timeouts or throttling, the system seamlessly transitions to local, verified metadata within 4.0 seconds.
+
+---
+
+## ⚙️ Recognition & Uncertainty Pipeline
 
 ```mermaid
 flowchart TD
@@ -47,114 +87,97 @@ flowchart TD
     CalibratedEngine -- Close Candidate Competition --> Uncertain["Uncertain Match (Dispute Ticket)"]
     CalibratedEngine -- Out-of-Catalog Architecture --> GeminiTier2["5. Gemini 3.1 Flash-Lite Open-World VLM"]
     
-    GeminiTier2 -- Service Offline / Timeout --> DeterministicFallback["Deterministic Local Fallback"]
+    GeminiTier2 -- Service Offline / Timeout (4.0s) --> DeterministicFallback["Deterministic Local Fallback"]
     GeminiTier2 -- Heritage Identified --> OutOfCatalog["Identified Heritage Specimen"]
 ```
 
-### Key Stages:
-1. **Tier-1 Vision Embedding & Vector Index**:
-   - **CLIP ViT-B/32**: Extracts 512-dimensional semantic vision embeddings.
-   - **577-Anchor FAISS Index**: Real-time inner-product search across 100 world heritage monuments (50 Indian + 50 International) in $< 10\text{ ms}$.
-   - **EXIF Geodetic Corroboration**: Haversine distance validation awards proximity boosts or detects geographical conflicts ($> 150\text{ km}$).
-2. **Calibrated Uncertainty & Anti-Hallucination Policy**:
-   - Five mathematically proven decision states:
-     - `VERIFIED_MATCH`: Confident, decisive attribution with confirmed citations.
-     - `UNCERTAIN_MATCH`: Close candidate competition (margin $< 0.08$).
-     - `UNKNOWN_HERITAGE_SPECIMEN`: Recognizable architecture not present in the indexed catalogue.
-     - `NON_MONUMENT_REJECTED`: Clean rejection of non-monument scenes.
-     - `REVIEW_REQUIRED`: Safe curatorial quarantine for ambiguous close-ups, occlusions, or image quality issues.
-3. **Tier-2 Open-World Vision Language Model (VLM)**:
-   - Uses **Gemini 3.1 Flash-Lite** with strict bounded concurrency (max 4 workers) and a hard 4.0s timeout to identify uncatalogued monuments without stalling the user interface.
-   - **Deterministic Fallback**: If Gemini times out or is offline, the system safely falls back to local grounded metadata.
-4. **Grounded Historical Knowledge Engine**:
-   - Comprehensive grounded monographs, interactive timelines, and citation registries across all 100 catalogue monuments.
-   - **Ask the Archive Q&A**: Answers user questions using authoritative excerpts with direct source links.
+### Calibrated Decision States
+
+| Decision State | Trigger Condition | System Action | User Outcome |
+|---|---|---|---|
+| **`VERIFIED_MATCH`** | $top1 \ge 0.70$ and margin $\ge 0.08$ | Full monograph rendering | Instant identification with statutory citations and interactive map. |
+| **`UNCERTAIN_MATCH`** | $top1 \ge 0.70$ and margin $< 0.08$ | Candidate competition arbitration | Displays top competing monuments for user confirmation. |
+| **`REVIEW_REQUIRED`** | Low quality, ambiguous gatekeeper, or EXIF conflict | Queued into curatorial log | Explains exact reason (e.g. `GATEKEEPER_AMBIGUOUS`, `BLUR_DETECTED`). |
+| **`NON_MONUMENT_REJECTED`** | $top1 < 0.70$ and $gatekeeper \le 0.35$ | Clean rejection | Informs user that the image contains no recognizable monument. |
+| **`UNKNOWN_HERITAGE_SPECIMEN`** | $gatekeeper \ge 0.45$ but $top1 < 0.70$ | Invokes Tier-2 VLM | Open-world architectural analysis via Gemini 3.1 Flash-Lite. |
 
 ---
 
-## 💻 Tech Stack
+## 📂 Project Directory Structure
 
-- **Backend**: Python 3.12, FastAPI, Uvicorn, PyTorch (CPU-optimized), HuggingFace Transformers, FAISS (Facebook AI Similarity Search), NumPy, Pillow, ExifRead.
-- **AI Models**: `openai/clip-vit-base-patch32` (vision & zero-shot text gating), Google Gemini 3.1 Flash-Lite (Tier-2 open-world analysis).
-- **Frontend**: React 18, Vite, Tailwind CSS, Framer Motion, Leaflet & React-Leaflet, Lucide Icons.
-- **Infrastructure**: Railway (Backend Docker Container), Vercel (Frontend Global CDN).
+```text
+Heritage-Recognisation-System/
+├── backend/                        # FastAPI Backend & Inference Engine
+│   ├── main.py                     # API router, CORS & endpoint declarations
+│   ├── calibration.py              # Calibrated uncertainty & gatekeeper logic
+│   ├── uncertainty.py              # 5-state decision policy & arbitration
+│   ├── knowledge_engine.py         # 100-monument grounded ASI/UNESCO database
+│   ├── gemini_client.py            # Tier-2 VLM with non-blocking timeouts
+│   ├── rate_limiter.py             # Sliding-window IP rate limiter
+│   ├── test_*.py                   # Backend automated test suites
+│   └── monuments_metadata.json     # Curated monument monographs & geocoordinates
+├── frontend/                       # React 18 + Vite Web Application
+│   ├── src/
+│   │   ├── components/             # Atrium UI, Dossier, Timeline, Scanner
+│   │   ├── services/api.js         # Backend API client
+│   │   └── index.css               # Tailwind CSS theme & typography
+│   ├── package.json                # Frontend dependencies
+│   └── vite.config.js              # Vite build configuration
+├── docs/                           # Architecture & Engineering Documentation
+│   ├── assets/                     # Visual assets & UI screenshots
+│   ├── reports/                    # 22 Historical Phase Audits & Benchmarks
+│   └── README.md                   # Complete Documentation Index
+├── requirements.txt                # Python backend dependencies
+├── Dockerfile                      # Container build definition for Railway
+└── README.md                       # Project Landing Page
+```
 
 ---
 
 ## 🚀 Quickstart Guide (Running Locally)
 
 ### 1. Prerequisites
-- **Python**: Version 3.10 to 3.12 installed.
+- **Python**: Version 3.10 – 3.12 installed.
 - **Node.js**: Version 18+ and `npm` installed.
 - **Git**
 
----
-
 ### 2. Backend Setup
-1. Clone the repository and navigate to the root directory:
-   ```bash
-   git clone https://github.com/humaidmalik63-png/Heritage-Recognisation-System.git
-   cd Heritage-Recognisation-System
-   ```
-2. Create and activate a Python virtual environment:
-   ```bash
-   # Windows PowerShell
-   python -m venv .venv
-   .\.venv\Scripts\Activate.ps1
+```bash
+# 1. Clone repository
+git clone https://github.com/humaidmalik63-png/Heritage-Recognisation-System.git
+cd Heritage-Recognisation-System
 
-   # Linux / macOS
-   python3 -m venv .venv
-   source .venv/bin/activate
-   ```
-3. Install backend dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. Start the backend development server:
-   ```bash
-   uvicorn backend.main:app --host 127.0.0.1 --port 8000 --reload
-   ```
-   *The backend will be ready at `http://127.0.0.1:8000`.*  
-   *API documentation (Swagger UI) is available at `http://127.0.0.1:8000/docs`.*
+# 2. Create and activate virtual environment
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1       # On Windows PowerShell
+# source .venv/bin/activate        # On Linux / macOS
 
----
+# 3. Install dependencies
+pip install -r requirements.txt
+
+# 4. Start the backend server
+uvicorn backend.main:app --host 127.0.0.1 --port 8000 --reload
+```
+*API will be available at `http://127.0.0.1:8000` (Swagger docs at `http://127.0.0.1:8000/docs`).*
 
 ### 3. Frontend Setup
-1. Open a new terminal and navigate to the `frontend/` directory:
-   ```bash
-   cd frontend
-   ```
-2. Install frontend dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the Vite development server:
-   ```bash
-   npm run dev
-   ```
-   *Open your browser and navigate to `http://localhost:5173`.*
+```bash
+# 1. Navigate to frontend directory
+cd frontend
+
+# 2. Install dependencies
+npm install
+
+# 3. Start development server
+npm run dev
+```
+*Open your browser at `http://localhost:5173`.*
 
 ---
 
-## 📡 Essential API Endpoints
+## 🧪 Comprehensive Verification Suite
 
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/api/health` | Service health status, loaded vector count, active device, and AI models. |
-| `POST` | `/api/verify-monument` | Upload an image file (`multipart/form-data`) to run full recognition and receive the decision state and explainability payload. |
-| `GET` | `/api/monuments` | Returns the list of all 100 indexed heritage monuments. |
-| `GET` | `/api/monuments/{id}/knowledge` | Returns authoritative, source-backed historical monograph and citations. |
-| `GET` | `/api/monuments/{id}/timeline` | Chronological timeline events anchored to primary citation IDs. |
-| `GET` | `/api/monuments/{id}/sources` | Official citation records (UNESCO, Archaeological Survey of India). |
-| `POST` | `/api/monuments/{id}/ask` | Retrieval-grounded historical Q&A answering user queries without hallucination. |
-| `GET` | `/api/exceptions` | Curatorial exception log for flagged and disputed scans (requires curator key). |
-| `POST` | `/api/exceptions/{id}/resolve` | Curatorial review resolution (Approve / Reject / Reclassify). |
-
----
-
-## 🧪 Testing & Verification
-
-The platform includes automated test suites covering uncertainty arbitration, security hardening, fallback timeouts, concurrency bounds, and UI rendering:
+The repository includes automated test suites covering uncertainty boundaries, security hardening, fallback timeouts, concurrency bounds, and UI rendering:
 
 ```bash
 # 1. Uncertainty Boundary & Invariant Audit (18/18 Tests)
@@ -187,7 +210,19 @@ npm --prefix frontend run build
 
 ---
 
-## 📄 License & Attribution
+## 📚 Historical Engineering & Phase Reports
 
-This project is open-source under the [Apache 2.0 License](LICENSE).  
-Heritage data, historical summaries, and citations are curated from public-domain and statutory records maintained by the **Archaeological Survey of India (ASI)** and the **UNESCO World Heritage Centre**.
+All 22 historical audit reports, benchmark evaluations, memory optimization studies, and deployment gates are preserved in **[`docs/reports/`](docs/reports/)**.
+
+See the **[Complete Documentation Index](docs/README.md)** for detailed phase-by-phase records:
+- **Phase 14**: Calibrated Uncertainty & Paired Benchmark Evaluation
+- **Phase 13**: Security Hardening, Rate Limiting & Concurrency Lifecycle
+- **Phase 10**: Atrium Museum UI/UX & Mobile Viewport Adaptation
+- **Foundational**: PyTorch CPU Optimization, Vector Benchmarking, and Cloud Hosting Audits
+
+---
+
+## 📄 License & Statutory Attribution
+
+- **Source Code**: Released under the [Apache 2.0 License](LICENSE).
+- **Heritage Data & Imagery**: Curated from public-domain and statutory inventories maintained by the **Archaeological Survey of India (ASI)**, the **Ministry of Culture, Government of India**, and the **UNESCO World Heritage Centre**.
