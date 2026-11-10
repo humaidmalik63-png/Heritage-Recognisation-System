@@ -26,7 +26,7 @@ import MonumentMap from './MonumentMap';
 import PipelineInspector from './PipelineInspector';
 import GroundedKnowledgeViewer from './GroundedKnowledgeViewer';
 
-export default function MonographResult({ result, imagePreview, onReset }) {
+export default function MonographResult({ result, imagePreview, onReset, onRetry = null }) {
   const [showInspector, setShowInspector] = useState(true);
   const [showCitations, setShowCitations] = useState(true);
 
@@ -95,15 +95,28 @@ export default function MonographResult({ result, imagePreview, onReset }) {
               </span>
             </div>
 
-            <motion.button
-              whileHover={{ y: -1 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={onReset}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-archive-alabaster text-archive-charcoal border border-archive-hairline rounded font-mono text-xs uppercase tracking-wider transition-colors shadow-sm"
-            >
-              <RotateCcw className="w-3.5 h-3.5 text-archive-terracotta" />
-              <span>Verify Another Specimen</span>
-            </motion.button>
+            <div className="flex items-center gap-2">
+              {isOffline && onRetry && (
+                <motion.button
+                  whileHover={{ y: -1 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={onRetry}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 rounded font-mono text-xs uppercase tracking-wider transition-colors shadow-sm"
+                >
+                  <RotateCcw className="w-3.5 h-3.5 text-amber-700" />
+                  <span>Retry Adjudication</span>
+                </motion.button>
+              )}
+              <motion.button
+                whileHover={{ y: -1 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={onReset}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-archive-alabaster text-archive-charcoal border border-archive-hairline rounded font-mono text-xs uppercase tracking-wider transition-colors shadow-sm"
+              >
+                <RotateCcw className="w-3.5 h-3.5 text-archive-terracotta" />
+                <span>Verify Another Specimen</span>
+              </motion.button>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mt-6">
@@ -287,15 +300,28 @@ export default function MonographResult({ result, imagePreview, onReset }) {
               </span>
             </div>
 
-            <motion.button
-              whileHover={{ y: -1 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={onReset}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-archive-alabaster text-archive-charcoal border border-archive-hairline rounded font-mono text-xs uppercase tracking-wider transition-colors shadow-sm"
-            >
-              <RotateCcw className="w-3.5 h-3.5 text-archive-terracotta" />
-              <span>Verify Another Specimen</span>
-            </motion.button>
+            <div className="flex items-center gap-2">
+              {isOffline && onRetry && (
+                <motion.button
+                  whileHover={{ y: -1 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={onRetry}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 rounded font-mono text-xs uppercase tracking-wider transition-colors shadow-sm"
+                >
+                  <RotateCcw className="w-3.5 h-3.5 text-amber-700" />
+                  <span>Retry Adjudication</span>
+                </motion.button>
+              )}
+              <motion.button
+                whileHover={{ y: -1 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={onReset}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-archive-alabaster text-archive-charcoal border border-archive-hairline rounded font-mono text-xs uppercase tracking-wider transition-colors shadow-sm"
+              >
+                <RotateCcw className="w-3.5 h-3.5 text-archive-terracotta" />
+                <span>Verify Another Specimen</span>
+              </motion.button>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mt-6">
@@ -513,15 +539,28 @@ export default function MonographResult({ result, imagePreview, onReset }) {
               </span>
             </div>
 
-            <motion.button
-              whileHover={{ y: -1 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={onReset}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-archive-alabaster text-archive-charcoal border border-archive-hairline rounded font-mono text-xs uppercase tracking-wider transition-colors shadow-sm"
-            >
-              <RotateCcw className="w-3.5 h-3.5 text-archive-terracotta" />
-              <span>Verify Another Specimen</span>
-            </motion.button>
+            <div className="flex items-center gap-2">
+              {isOffline && onRetry && (
+                <motion.button
+                  whileHover={{ y: -1 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={onRetry}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 rounded font-mono text-xs uppercase tracking-wider transition-colors shadow-sm"
+                >
+                  <RotateCcw className="w-3.5 h-3.5 text-amber-700" />
+                  <span>Retry Adjudication</span>
+                </motion.button>
+              )}
+              <motion.button
+                whileHover={{ y: -1 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={onReset}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-archive-alabaster text-archive-charcoal border border-archive-hairline rounded font-mono text-xs uppercase tracking-wider transition-colors shadow-sm"
+              >
+                <RotateCcw className="w-3.5 h-3.5 text-archive-terracotta" />
+                <span>Verify Another Specimen</span>
+              </motion.button>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mt-6">
@@ -635,15 +674,28 @@ export default function MonographResult({ result, imagePreview, onReset }) {
             <span className="archival-stamp-rejected">
               SPECIMEN REJECTED // NON-HERITAGE
             </span>
-            <motion.button
-              whileHover={{ y: -1 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={onReset}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-archive-alabaster text-archive-charcoal border border-archive-hairline rounded font-mono text-xs uppercase tracking-wider transition-colors shadow-sm"
-            >
-              <RotateCcw className="w-3.5 h-3.5 text-archive-terracotta" />
-              <span>Verify Another Specimen</span>
-            </motion.button>
+            <div className="flex items-center gap-2">
+              {isOffline && onRetry && (
+                <motion.button
+                  whileHover={{ y: -1 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={onRetry}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 rounded font-mono text-xs uppercase tracking-wider transition-colors shadow-sm"
+                >
+                  <RotateCcw className="w-3.5 h-3.5 text-amber-700" />
+                  <span>Retry Adjudication</span>
+                </motion.button>
+              )}
+              <motion.button
+                whileHover={{ y: -1 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={onReset}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-archive-alabaster text-archive-charcoal border border-archive-hairline rounded font-mono text-xs uppercase tracking-wider transition-colors shadow-sm"
+              >
+                <RotateCcw className="w-3.5 h-3.5 text-archive-terracotta" />
+                <span>Verify Another Specimen</span>
+              </motion.button>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mt-6">

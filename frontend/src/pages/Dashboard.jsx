@@ -55,6 +55,7 @@ export default function Dashboard({
   const [imagePreview, setImagePreview] = useState(null);
   const [verificationResult, setVerificationResult] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [lastSubmittedFile, setLastSubmittedFile] = useState(null);
 
   // Auto-dismiss transient error alerts after 6 seconds
   useEffect(() => {
@@ -79,9 +80,16 @@ export default function Dashboard({
     }
   };
 
+  const handleRetry = async () => {
+    if (lastSubmittedFile) {
+      await handleFileSubmission(lastSubmittedFile);
+    }
+  };
+
   const handleFileSubmission = async (file) => {
     setErrorMessage(null);
     setIsLoading(true);
+    setLastSubmittedFile(file);
 
     const previewUrl = URL.createObjectURL(file);
     setImagePreview(previewUrl);
@@ -137,18 +145,19 @@ export default function Dashboard({
         ctx.font = '16px monospace';
         ctx.fillText('NON-ARCHITECTURAL RECEIPT', 50, 72);
 
-        canvas.toBlob(async (blob) => {
-          if (!blob) throw new Error('Canvas conversion failed');
-          const file = new File([blob], 'synthetic_sample.jpg', { type: 'image/jpeg' });
-          const previewUrl = URL.createObjectURL(file);
-          setImagePreview(previewUrl);
-          const result = await verifyMonumentImage(file);
-          setVerificationResult(result);
-          if (result?.human_review_flagged && onExceptionCreated) {
-            onExceptionCreated();
-          }
-          setIsLoading(false);
-        }, 'image/jpeg');
+        const blob = await new Promise((resolve, reject) => {
+          canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('Canvas conversion failed'))), 'image/jpeg');
+        });
+        const file = new File([blob], 'synthetic_sample.jpg', { type: 'image/jpeg' });
+        const previewUrl = URL.createObjectURL(file);
+        setImagePreview(previewUrl);
+        setLastSubmittedFile(file);
+
+        const result = await verifyMonumentImage(file);
+        setVerificationResult(result);
+        if (result?.human_review_flagged && onExceptionCreated) {
+          onExceptionCreated();
+        }
       } else {
         // 1. Check local heritage assets first (instantaneous, guaranteed on Vercel CDN)
         let sampleUrl = LOCAL_HERITAGE_IMAGES[sampleKey];
@@ -200,6 +209,7 @@ export default function Dashboard({
         const file = new File([blob], `${sampleKey}_ref.jpg`, { type: 'image/jpeg' });
         const previewUrl = URL.createObjectURL(file);
         setImagePreview(previewUrl);
+        setLastSubmittedFile(file);
 
         const result = await verifyMonumentImage(file);
         setVerificationResult(result);
@@ -212,8 +222,6 @@ export default function Dashboard({
         if (result?.human_review_flagged && onExceptionCreated) {
           onExceptionCreated();
         }
-
-        setIsLoading(false);
       }
     } catch (err) {
       console.error('Sample processing failed:', err);
@@ -260,21 +268,36 @@ export default function Dashboard({
           </div>
 
           {/* Processing Scanner Overlay */}
-          {isLoading && <ProcessingOverlay previewUrl={imagePreview} />}
+          {isLoading && (
+            <ProcessingOverlay
+              previewUrl={imagePreview}
+              onCancel={() => setIsLoading(false)}
+            />
+          )}
 
           {/* Error Alert Banner */}
           {errorMessage && (
-            <div className="mb-6 bg-rose-50 border border-rose-200 text-rose-800 p-4 rounded-2xl flex items-center justify-between text-sm shadow-sm">
+            <div className="mb-6 bg-rose-50 border border-rose-200 text-rose-800 p-4 rounded-2xl flex items-center justify-between text-sm shadow-sm gap-4">
               <div className="flex items-center gap-2">
                 <AlertCircle className="w-5 h-5 text-rose-600 flex-shrink-0" />
                 <span>{errorMessage}</span>
               </div>
-              <button
-                onClick={() => setErrorMessage(null)}
-                className="text-xs font-mono uppercase underline hover:no-underline cursor-pointer"
-              >
-                Dismiss
-              </button>
+              <div className="flex items-center gap-3">
+                {lastSubmittedFile && (
+                  <button
+                    onClick={handleRetry}
+                    className="text-xs font-mono uppercase font-bold text-rose-900 bg-rose-100 hover:bg-rose-200 px-2.5 py-1 rounded transition-colors cursor-pointer"
+                  >
+                    Retry
+                  </button>
+                )}
+                <button
+                  onClick={() => setErrorMessage(null)}
+                  className="text-xs font-mono uppercase underline hover:no-underline cursor-pointer"
+                >
+                  Dismiss
+                </button>
+              </div>
             </div>
           )}
 
@@ -290,6 +313,7 @@ export default function Dashboard({
               result={verificationResult}
               imagePreview={imagePreview}
               onReset={handleReset}
+              onRetry={lastSubmittedFile ? handleRetry : null}
             />
           )}
         </div>

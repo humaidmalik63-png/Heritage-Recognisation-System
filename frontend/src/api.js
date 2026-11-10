@@ -21,21 +21,36 @@ export async function fetchMonumentsCatalog() {
   return response.json();
 }
 
-export async function verifyMonumentImage(file) {
+export async function verifyMonumentImage(file, timeoutMs = 25000) {
   const formData = new FormData();
   formData.append('file', file);
 
-  const response = await fetch(`${API_BASE_URL}/api/verify-monument`, {
-    method: 'POST',
-    body: formData,
-  });
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => {
+    controller.abort();
+  }, timeoutMs);
 
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.detail || `Server error (${response.status})`);
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/verify-monument`, {
+      method: 'POST',
+      body: formData,
+      signal: controller.signal,
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.detail || `Server error (${response.status})`);
+    }
+
+    return await response.json();
+  } catch (err) {
+    if (err.name === 'AbortError') {
+      throw new Error(`Verification request timed out after ${Math.round(timeoutMs / 1000)} seconds. Please retry.`);
+    }
+    throw err;
+  } finally {
+    clearTimeout(timeoutId);
   }
-
-  return response.json();
 }
 
 export async function fetchExceptionsSummary() {

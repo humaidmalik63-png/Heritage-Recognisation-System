@@ -24,6 +24,7 @@ import logging
 import math
 import os
 import sys
+import time
 import uuid
 from contextlib import asynccontextmanager
 from datetime import datetime
@@ -204,6 +205,9 @@ class PipelineTelemetry(BaseModel):
     decision_reason: str
     geo_boost_applied: bool = False
     margin_threshold: float = 0.08
+    request_id: Optional[str] = None
+    stage_latencies_ms: Optional[Dict[str, float]] = None
+    is_offline_fallback: bool = False
 
 
 class GroundedCitations(BaseModel):
@@ -1171,6 +1175,9 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
     # 0. Enforce magic image signatures, reject SVGs/malware, enforce 15 MB limit
     validate_image_payload(image_bytes)
 
+    req_id = f"req-{uuid.uuid4().hex[:8]}"
+    t_pipe_start = time.perf_counter()
+
     # 1. Validate image structure & clamp dimensions
     try:
         with Image.open(io.BytesIO(image_bytes)) as raw_img:
@@ -1190,11 +1197,14 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
     specimen_hash = hashlib.sha256(image_bytes).hexdigest()[:16]
 
     # 2. Extract EXIF GPS, CLIP Embedding & Gatekeeper Score
+    t_clip_start = time.perf_counter()
     exif_gps = extract_exif_gps(image_bytes)
     img_vec = compute_clip_image_embedding(image_rgb)
     arch_prob = evaluate_architectural_gatekeeper(img_vec)
+    clip_duration_ms = (time.perf_counter() - t_clip_start) * 1000.0
 
     # 3. Query FAISS index for top 15 nearest anchors
+    t_faiss_start = time.perf_counter()
     query_matrix = np.expand_dims(img_vec, axis=0).astype(np.float32)
     raw_distances, raw_indices = state["faiss_index"].search(query_matrix, 15)
 
@@ -1209,6 +1219,7 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
         metadata=state["metadata"],
         exif_gps=exif_gps,
     )
+    faiss_duration_ms = (time.perf_counter() - t_faiss_start) * 1000.0
 
     top_candidates_agg = uncertainty_res.top_candidates
     best_cand = top_candidates_agg[0] if len(top_candidates_agg) > 0 else None
@@ -1327,12 +1338,26 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
         and arch_prob >= 0.40
     )
 
+    tier2_duration_ms = 0.0
+    candidate_ctx = {
+        "key": best_key,
+        "name": best_name,
+        "similarity": best_score,
+        "gatekeeper_score": arch_prob,
+    }
+
     if should_adjudicate:
+        t_t2_start = time.perf_counter()
         logger.info(
-            f"Invoking Gemini 3.1 Flash-Lite Open-World Adjudication (decision={uncertainty_res.decision.value}, "
-            f"arch_prob={arch_prob:.4f}, best_score={best_score:.4f}, top_cand={best_cand})..."
+            f"[{req_id}] Invoking Gemini 3.1 Flash-Lite Tier-2 Adjudication "
+            f"(decision={uncertainty_res.decision.value}, arch_prob={arch_prob:.4f}, "
+            f"best_score={best_score:.4f}, top_cand={best_cand})..."
         )
-        gemini_adjudication = gemini_service.adjudicate_monument(image_rgb)
+        gemini_adjudication = gemini_service.adjudicate_monument(
+            image_rgb,
+            candidate_context=candidate_ctx,
+        )
+        tier2_duration_ms = (time.perf_counter() - t_t2_start) * 1000.0
         tier2_analysis_dict = gemini_adjudication.model_dump()
 
         # Shared Canonical Membership Lookup (Phase 8.6B Hotfix)
@@ -1449,6 +1474,19 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
                 f"Gemini adjudication retained original uncertainty decision ({uncertainty_res.decision.value})."
             )
 
+    elif uncertainty_res.decision in [
+        DecisionState.UNCERTAIN_MATCH,
+        DecisionState.UNKNOWN_HERITAGE_SPECIMEN,
+        DecisionState.REVIEW_REQUIRED,
+    ]:
+        gemini_adjudication = gemini_service._create_deterministic_fallback(
+            candidate_context=candidate_ctx,
+            reason="Tier-2 Gemini service running in offline fallback mode." if not gemini_service.is_available() else "Tier-2 adjudication bypassed due to gatekeeper threshold.",
+        )
+        tier2_analysis_dict = gemini_adjudication.model_dump()
+        adjudicated_membership = check_catalogue_membership(gemini_adjudication.proposed_identity or best_name)
+        final_catalogue_status = adjudicated_membership.status.value
+
     # 6. Handle Human Review Exception Logging
     exception_id = None
     if final_decision != DecisionState.VERIFIED_MATCH and (
@@ -1474,6 +1512,25 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
 
     # 7. Map Final Adjudicated State to Backward-Compatible VerificationResponse
     decision = final_decision
+    is_offline_fb = bool(gemini_adjudication and gemini_adjudication.is_offline_fallback)
+
+    def _build_telemetry(reason_text: str) -> PipelineTelemetry:
+        return PipelineTelemetry(
+            exif_gps=exif_gps,
+            architectural_gatekeeper_score=arch_prob,
+            top_3_candidates=top_3_telemetry,
+            decision_reason=reason_text,
+            geo_boost_applied=geo_boost,
+            margin_threshold=round(uncertainty_engine.calibration.uncertainty_margin_threshold, 4),
+            request_id=req_id,
+            stage_latencies_ms={
+                "clip_ms": round(clip_duration_ms, 2),
+                "faiss_ms": round(faiss_duration_ms, 2),
+                "tier2_ms": round(tier2_duration_ms, 2),
+                "total_ms": round((time.perf_counter() - t_pipe_start) * 1000.0, 2),
+            },
+            is_offline_fallback=is_offline_fb,
+        )
 
     # --- CASE A: VERIFIED MATCH ---
     if decision == DecisionState.VERIFIED_MATCH and (best_key in state["metadata"] or best_key in state.get("catalogue_100", {})):
@@ -1510,14 +1567,7 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             structural_features_detected=m_data.get("structural_features_detected", []),
             preservation_status=m_data.get("preservation_status"),
             grounded_citations=citations,
-            pipeline_telemetry=PipelineTelemetry(
-                exif_gps=exif_gps,
-                architectural_gatekeeper_score=arch_prob,
-                top_3_candidates=top_3_telemetry,
-                decision_reason=decision_expl,
-                geo_boost_applied=geo_boost,
-                margin_threshold=round(uncertainty_engine.calibration.uncertainty_margin_threshold, 4),
-            ),
+            pipeline_telemetry=_build_telemetry(decision_expl),
             human_review_flagged=False,
             exception_id=None,
             uncertainty=uncertainty_res,
@@ -1550,14 +1600,7 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             preservation_status=m_data.get("preservation_status"),
             grounded_citations=GroundedCitations(**m_data.get("grounded_citations", {})) if m_data.get("grounded_citations") else None,
             rejection_message=uncertainty_res.explanation,
-            pipeline_telemetry=PipelineTelemetry(
-                exif_gps=exif_gps,
-                architectural_gatekeeper_score=arch_prob,
-                top_3_candidates=top_3_telemetry,
-                decision_reason="Ambiguous visual distinction between top unique candidates. Human review requested.",
-                geo_boost_applied=geo_boost,
-                margin_threshold=round(uncertainty_engine.calibration.uncertainty_margin_threshold, 4),
-            ),
+            pipeline_telemetry=_build_telemetry("Ambiguous visual distinction between top unique candidates. Human review requested."),
             human_review_flagged=True,
             exception_id=exception_id,
             uncertainty=uncertainty_res,
@@ -1614,20 +1657,56 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             is_ooc = True
 
         else:
-            mon_name = "Unindexed / Ambiguous Heritage Site"
-            loc_name = None
-            v_tier = "UNKNOWN SPECIMEN // UNINDEXED OR AMBIGUOUS HERITAGE SITE"
-            features_list = []
-            rej_msg = uncertainty_res.explanation
-            cat_id = None
-            coords = None
-            arch_style = None
-            built_era = None
-            hist_sum = None
-            pres_stat = None
-            status_val = CatalogueStatus.OUT_OF_CATALOG.value
-            is_mon = False
-            is_ooc = False
+            if is_offline_fb and best_score >= 0.45 and best_name:
+                mon_name = f"Candidate: {best_name} (Offline Verification)"
+                loc_name = state["metadata"].get(best_key, {}).get("location") or "Regional Heritage Registry"
+                v_tier = "OFFLINE CURATORIAL // TIER 1 VECTOR SCANNER"
+                features_list = (gemini_adjudication.distinguishing_features if gemini_adjudication else []) or [
+                    f"Tier-1 vector alignment with {best_name} ({best_score:.2%})"
+                ]
+                rej_msg = (
+                    f"Multimodal cloud adjudication is currently in offline fallback mode. "
+                    f"Deterministic Tier-1 visual matching identified nearest reference specimen '{best_name}' "
+                    f"(vector similarity: {best_score:.4f}, gatekeeper: {arch_prob*100:.1f}%)."
+                )
+                cat_id = CATALOG_ID_MAP.get(best_key, f"ASI-ARCH-{best_key[:3].upper()}-00") if best_key in state["metadata"] else None
+                coords = state["metadata"].get(best_key, {}).get("coordinates")
+                arch_style = state["metadata"].get(best_key, {}).get("architectural_style")
+                built_era = state["metadata"].get(best_key, {}).get("built_by_or_era")
+                hist_sum = state["metadata"].get(best_key, {}).get("historical_summary")
+                pres_stat = state["metadata"].get(best_key, {}).get("preservation_status")
+                status_val = CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY.value if best_key in state["metadata"] else CatalogueStatus.OUT_OF_CATALOG.value
+                is_mon = True
+                is_ooc = False
+            else:
+                mon_name = "Unindexed / Ambiguous Heritage Site"
+                loc_name = None
+                v_tier = "UNKNOWN SPECIMEN // UNINDEXED OR AMBIGUOUS HERITAGE SITE"
+                features_list = []
+                rej_msg = uncertainty_res.explanation
+                cat_id = None
+                coords = None
+                arch_style = None
+                built_era = None
+                hist_sum = None
+                pres_stat = None
+                status_val = CatalogueStatus.OUT_OF_CATALOG.value
+                is_mon = False
+                is_ooc = False
+
+        c_reason = (
+            f"Catalogue metadata-only monument identified by {gemini_service.model_name}: {mon_name}"
+            if is_catalog_metadata_only
+            else (
+                f"Out-of-catalog heritage monument adjudicated by {gemini_service.model_name}: {mon_name}"
+                if is_out_of_catalog_identified
+                else (
+                    f"Deterministic offline fallback for {best_name}"
+                    if is_offline_fb and best_name
+                    else "Explicit Uncertainty State Triggered (SIH 2025 Compliance). Flagged for human review."
+                )
+            )
+        )
 
         response_obj = VerificationResponse(
             is_monument=is_mon,
@@ -1647,22 +1726,7 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             rejection_message=rej_msg,
             out_of_catalog_identified=is_ooc,
             catalogue_status=status_val,
-            pipeline_telemetry=PipelineTelemetry(
-                exif_gps=exif_gps,
-                architectural_gatekeeper_score=arch_prob,
-                top_3_candidates=top_3_telemetry,
-                decision_reason=(
-                    f"Catalogue metadata-only monument identified by {gemini_service.model_name}: {mon_name}"
-                    if is_catalog_metadata_only
-                    else (
-                        f"Out-of-catalog heritage monument adjudicated by {gemini_service.model_name}: {mon_name}"
-                        if is_out_of_catalog_identified
-                        else "Explicit Uncertainty State Triggered (SIH 2025 Compliance). Flagged for human review."
-                    )
-                ),
-                geo_boost_applied=geo_boost,
-                margin_threshold=round(uncertainty_engine.calibration.uncertainty_margin_threshold, 4),
-            ),
+            pipeline_telemetry=_build_telemetry(c_reason),
             human_review_flagged=True,
             exception_id=exception_id,
             uncertainty=uncertainty_res,
@@ -1680,14 +1744,7 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             confidence_score=round(best_score * 100.0, 1),
             monument_name=f"Potential {best_name} (Audit Required)",
             rejection_message=uncertainty_res.explanation,
-            pipeline_telemetry=PipelineTelemetry(
-                exif_gps=exif_gps,
-                architectural_gatekeeper_score=arch_prob,
-                top_3_candidates=top_3_telemetry,
-                decision_reason=uncertainty_res.explanation,
-                geo_boost_applied=geo_boost,
-                margin_threshold=round(uncertainty_engine.calibration.uncertainty_margin_threshold, 4),
-            ),
+            pipeline_telemetry=_build_telemetry(uncertainty_res.explanation),
             human_review_flagged=True,
             exception_id=exception_id,
             uncertainty=uncertainty_res,
@@ -1706,14 +1763,7 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             verification_tier="REJECTED // NON-MONUMENT SPECIMEN",
             confidence_score=round(max(best_score * 100.0, (1.0 - arch_prob) * 100.0), 1),
             rejection_message=uncertainty_res.explanation,
-            pipeline_telemetry=PipelineTelemetry(
-                exif_gps=exif_gps,
-                architectural_gatekeeper_score=arch_prob,
-                top_3_candidates=top_3_telemetry,
-                decision_reason="Specimen failed architectural gatekeeper and retrieval similarity thresholds.",
-                geo_boost_applied=geo_boost,
-                margin_threshold=round(uncertainty_engine.calibration.uncertainty_margin_threshold, 4),
-            ),
+            pipeline_telemetry=_build_telemetry("Specimen failed architectural gatekeeper and retrieval similarity thresholds."),
             human_review_flagged=False,
             exception_id=None,
             uncertainty=uncertainty_res,
@@ -1726,9 +1776,9 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
     # 8. Asynchronous / Non-blocking Shadow Evaluation of Candidate Policy D
     if shadow_engine.is_enabled():
         try:
-            req_id = f"req_{specimen_hash}_{uuid.uuid4().hex[:8]}"
+            shadow_req_id = f"shadow_{specimen_hash}_{uuid.uuid4().hex[:8]}"
             shadow_engine.submit_shadow_evaluation(
-                request_id=req_id,
+                request_id=shadow_req_id,
                 image=image_rgb,
                 top1_key=best_key,
                 top1_sim=best_score,
@@ -1742,6 +1792,13 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             )
         except Exception as shadow_exc:
             logger.warning(f"Shadow staging submission failed silently without affecting response: {shadow_exc}")
+
+    total_pipe_ms = (time.perf_counter() - t_pipe_start) * 1000.0
+    logger.info(
+        f"[{req_id}] PIPELINE COMPLETE: status={decision.value} "
+        f"total={total_pipe_ms:.1f}ms (clip={clip_duration_ms:.1f}ms, faiss={faiss_duration_ms:.1f}ms, tier2={tier2_duration_ms:.1f}ms) "
+        f"offline_fallback={is_offline_fb}"
+    )
 
     # Memory cleanup: Release transient image decodes and call garbage collection
     try:

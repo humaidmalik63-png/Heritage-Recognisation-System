@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Search, Compass, Cpu, Layers, Database } from 'lucide-react';
+import { Search, Compass, Cpu, Layers, Database, X } from 'lucide-react';
 
 const STAGES = [
   { label: "Validating Image Byte Stream & Color Space...", icon: Search },
@@ -11,14 +11,22 @@ const STAGES = [
   { label: "Synthesizing Curatorial Dossier & Inked Stamps...", icon: Search },
 ];
 
-export default function ProcessingOverlay({ previewUrl }) {
+export default function ProcessingOverlay({ previewUrl, onCancel }) {
   const [stageIndex, setStageIndex] = useState(0);
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const stageInterval = setInterval(() => {
       setStageIndex((prev) => (prev < STAGES.length - 1 ? prev + 1 : prev));
     }, 450);
-    return () => clearInterval(interval);
+    const secInterval = setInterval(() => {
+      setElapsedSeconds((prev) => prev + 1);
+    }, 1000);
+
+    return () => {
+      clearInterval(stageInterval);
+      clearInterval(secInterval);
+    };
   }, []);
 
   return (
@@ -29,6 +37,16 @@ export default function ProcessingOverlay({ previewUrl }) {
         transition={{ type: 'spring', stiffness: 280, damping: 24 }}
         className="relative w-full max-w-lg bg-archive-ivory border border-archive-hairline rounded shadow-2xl p-6 sm:p-8 text-center overflow-hidden"
       >
+        {onCancel && (
+          <button
+            onClick={onCancel}
+            title="Cancel scan"
+            className="absolute top-3.5 right-3.5 p-1 rounded hover:bg-black/5 text-archive-stone hover:text-archive-charcoal transition-colors"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        )}
+
         {/* Reticle / Specimen Container */}
         {previewUrl && (
           <div className="relative w-44 h-44 mx-auto mb-5 rounded border border-archive-hairline overflow-hidden bg-black/10 shadow-inner">
@@ -80,6 +98,12 @@ export default function ProcessingOverlay({ previewUrl }) {
             );
           })}
         </div>
+
+        {elapsedSeconds >= 7 && (
+          <p className="mt-3 text-[11px] font-mono text-amber-800 bg-amber-50 border border-amber-200 rounded px-2 py-1">
+            Tier-2 Cloud Adjudication in progress (bounded deadline 9.5s). Auto-fallback active.
+          </p>
+        )}
 
         <p className="mt-4 text-[10px] font-mono text-archive-stone">
           Executing Two-Tier Hybrid Pipeline: Local CLIP (ViT-B/32) + FAISS & Multimodal VLM

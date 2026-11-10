@@ -14,6 +14,7 @@ Provides:
   - Deterministic offline fallback when API key is missing or service is unreachable
 """
 
+import concurrent.futures
 import json
 import logging
 import os
@@ -25,6 +26,7 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
+import httpx
 from PIL import Image
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
@@ -51,8 +53,9 @@ logger = logging.getLogger("gemini_service")
 
 TELEMETRY_FILE = BASE_DIR / "gemini_usage_telemetry.json"
 DEFAULT_MODEL_NAME = os.environ.get("GEMINI_MODEL", "gemini-3.1-flash-lite").strip()
-DEFAULT_TIMEOUT_SECONDS = 15.0
-MAX_RETRIES = 3
+DEFAULT_TIMEOUT_SECONDS = 8.0
+OVERALL_DEADLINE_SECONDS = 9.5
+MAX_RETRIES = 1
 
 
 # --- Pydantic Response Schemas ---
@@ -280,11 +283,22 @@ class GeminiTelemetryManager:
 
 
 telemetry_manager = GeminiTelemetryManager()
+TIER2_MAX_WORKERS = 4
+_tier2_executor = concurrent.futures.ThreadPoolExecutor(max_workers=TIER2_MAX_WORKERS, thread_name_prefix="tier2_vlm")
+_tier2_admission_semaphore = threading.BoundedSemaphore(value=TIER2_MAX_WORKERS)
+
+
+class ExecutionResult(tuple):
+    """Backward-compatible tuple subclass providing (ok, resp, latency_ms, retries) and error_category."""
+    def __new__(cls, ok: bool, resp: Any, latency_ms: float, retries: int, error_category: Optional[str] = None):
+        instance = super().__new__(cls, (ok, resp, latency_ms, retries))
+        instance.error_category = error_category
+        return instance
 
 
 class GeminiTier2Service:
     """
-    Production-grade Gemini 2.5 Flash Tier-2 integration with bounded retries,
+    Production-grade Gemini 3.1 Flash-Lite Tier-2 integration with bounded retries,
     anti-hallucination guardrails, and deterministic offline fallbacks.
     """
 
@@ -314,10 +328,15 @@ class GeminiTier2Service:
         ):
             try:
                 from google import genai
-                self.client = genai.Client(api_key=resolved_key)
+                from google.genai import types
+                http_opts = types.HttpOptions(
+                    timeout=max(int(self.timeout * 1000), 10000),
+                    client_args={"timeout": httpx.Timeout(self.timeout, connect=3.0, read=self.timeout)},
+                )
+                self.client = genai.Client(api_key=resolved_key, http_options=http_opts)
                 self.configured = True
                 masked_key = resolved_key[:6] + "..." + resolved_key[-4:] if len(resolved_key) > 10 else "***"
-                logger.info(f"Gemini Tier-2 Service successfully configured ({model_name}, key: {masked_key}).")
+                logger.info(f"Gemini Tier-2 Service successfully configured ({model_name}, key: {masked_key}, timeout: {self.timeout}s).")
             except Exception as e:
                 logger.warning(f"Could not initialize Gemini Client: {e}")
                 self.configured = False
@@ -336,15 +355,51 @@ class GeminiTier2Service:
         **kwargs,
     ) -> Tuple[bool, Any, float, int]:
         """
-        Executes a Gemini API call with bounded exponential backoff.
-        Retries on 429 and transient 5xx; fails fast on auth errors (401/403).
+        Executes a Gemini API call with bounded execution deadline and max 1 retry.
+        Fails fast on 401, 403, 404, or quota-exhausted 429 without useless retries.
         """
         retries = 0
         t0 = time.perf_counter()
 
         for attempt in range(MAX_RETRIES + 1):
+            elapsed = time.perf_counter() - t0
+            remaining_budget = max(0.1, OVERALL_DEADLINE_SECONDS - elapsed)
+            if remaining_budget <= 0.2:
+                logger.warning(f"Gemini execution deadline reached ({elapsed:.2f}s >= {OVERALL_DEADLINE_SECONDS}s). Aborting.")
+                telemetry_manager.record_request(
+                    feature=feature_name,
+                    success=False,
+                    latency_ms=elapsed * 1000.0,
+                    retries=retries,
+                    error_category="TIMEOUT",
+                    error_message=f"Overall Tier-2 deadline exceeded ({OVERALL_DEADLINE_SECONDS}s)",
+                )
+                return ExecutionResult(False, None, elapsed * 1000.0, retries, "TIMEOUT")
+
+            # Thread-safe atomic admission control to prevent thread starvation under concurrent load
+            admitted = _tier2_admission_semaphore.acquire(blocking=False)
+            if not admitted:
+                elapsed = time.perf_counter() - t0
+                logger.warning(f"Tier-2 worker pool saturated (all {TIER2_MAX_WORKERS} slots active). Fast-failing to deterministic fallback.")
+                telemetry_manager.record_request(
+                    feature=feature_name,
+                    success=False,
+                    latency_ms=elapsed * 1000.0,
+                    retries=retries,
+                    error_category="POOL_SATURATED",
+                    error_message=f"Tier-2 worker pool saturated ({TIER2_MAX_WORKERS} active slots); fast-failing to local fallback",
+                )
+                return ExecutionResult(False, None, elapsed * 1000.0, retries, "POOL_SATURATED")
+
+            call_timeout = min(self.timeout, remaining_budget)
+
+            submitted = False
             try:
-                result = fn(*args, **kwargs)
+                # Run with bounded thread execution
+                fut = _tier2_executor.submit(fn, *args, **kwargs)
+                submitted = True
+                fut.add_done_callback(lambda f: _tier2_admission_semaphore.release())
+                result = fut.result(timeout=call_timeout)
                 latency_ms = (time.perf_counter() - t0) * 1000.0
 
                 # Extract token usage if available in response
@@ -366,11 +421,31 @@ class GeminiTier2Service:
                     input_tokens=in_tok,
                     output_tokens=out_tok,
                 )
-                return True, result, latency_ms, retries
+                return ExecutionResult(True, result, latency_ms, retries, None)
+
+            except (concurrent.futures.TimeoutError, TimeoutError):
+                try:
+                    fut.cancel()
+                except Exception:
+                    pass
+                latency_ms = (time.perf_counter() - t0) * 1000.0
+                logger.warning(f"Gemini call timed out after {call_timeout:.2f}s (elapsed: {latency_ms/1000.0:.2f}s).")
+                telemetry_manager.record_request(
+                    feature=feature_name,
+                    success=False,
+                    latency_ms=latency_ms,
+                    retries=retries,
+                    error_category="TIMEOUT",
+                    error_message="Call exceeded execution timeout budget",
+                )
+                return ExecutionResult(False, None, latency_ms, retries, "TIMEOUT")
 
             except Exception as exc:
                 exc_str = str(exc)
-                err_lower = exc_str.lower()
+                # Redact API keys from exc_str immediately
+                sanitized_exc = re.sub(r"key=[A-Za-z0-9_\-]+", "key=[REDACTED]", exc_str)
+                sanitized_exc = re.sub(r"AIza[0-9A-Za-z-_]{35}", "[REDACTED_API_KEY]", sanitized_exc)
+                err_lower = sanitized_exc.lower()
                 latency_ms = (time.perf_counter() - t0) * 1000.0
 
                 # Check for fatal Authentication / Permission errors (Do not retry)
@@ -383,56 +458,59 @@ class GeminiTier2Service:
                         latency_ms=latency_ms,
                         retries=retries,
                         error_category="AUTH_INVALID_KEY",
-                        error_message=exc_str,
+                        error_message=sanitized_exc,
                     )
-                    return False, None, latency_ms, retries
+                    return ExecutionResult(False, None, latency_ms, retries, "AUTH_INVALID_KEY")
 
                 # Check for Model Not Found (404) - Do not retry
                 if ("404" in err_lower) or ("not_found" in err_lower) or ("no longer available" in err_lower):
-                    logger.error(f"Gemini model not found (404): {exc_str[:120]}")
+                    logger.error(f"Gemini model not found (404): {sanitized_exc[:120]}")
                     telemetry_manager.record_request(
                         feature=feature_name,
                         success=False,
                         latency_ms=latency_ms,
                         retries=retries,
                         error_category="MODEL_NOT_FOUND_404",
-                        error_message=exc_str,
+                        error_message=sanitized_exc,
                     )
-                    return False, None, latency_ms, retries
+                    return ExecutionResult(False, None, latency_ms, retries, "MODEL_NOT_FOUND_404")
 
                 # Check for Quota Exhaustion (429 / resource_exhausted with quota/billing/plan) - Do not repeatedly retry
                 is_quota_exhausted = (("429" in err_lower) or ("resource_exhausted" in err_lower)) and any(
                     w in err_lower for w in ["quota", "billing", "plan", "free_tier_requests"]
                 )
                 if is_quota_exhausted:
-                    logger.warning(f"Gemini quota exhausted (429): {exc_str[:120]}. Failing fast without repeated retries.")
+                    logger.warning(f"Gemini quota exhausted (429): {sanitized_exc[:120]}. Failing fast without repeated retries.")
                     telemetry_manager.record_request(
                         feature=feature_name,
                         success=False,
                         latency_ms=latency_ms,
                         retries=retries,
                         error_category="RATE_LIMIT_429",
-                        error_message=exc_str,
+                        error_message=sanitized_exc,
                     )
-                    return False, None, latency_ms, retries
+                    return ExecutionResult(False, None, latency_ms, retries, "RATE_LIMIT_429")
 
                 is_rate_limit = ("429" in err_lower) or ("resource_exhausted" in err_lower)
                 is_timeout = ("timeout" in err_lower) or ("deadline_exceeded" in err_lower)
                 is_server = any(x in err_lower for x in ["500", "502", "503", "504", "unavailable"])
 
-                if attempt < MAX_RETRIES and (is_rate_limit or is_timeout or is_server):
-                    # Bounded exponential backoff with randomized jitter (e.g. 1.2s, 2.3s, 4.2s)
-                    jitter = random.uniform(0.1, 0.4)
-                    backoff = min(10.0, ((2 ** attempt) * 1.0) + jitter)
-                    # Inspect for explicit Retry-After in exception message or attrs if available
+                remaining = OVERALL_DEADLINE_SECONDS - (time.perf_counter() - t0)
+                if attempt < MAX_RETRIES and (is_rate_limit or is_server) and remaining > 2.0:
+                    jitter = random.uniform(0.1, 0.3)
+                    backoff = min(1.5, min(remaining - 1.0, 1.0 + jitter))
                     retry_match = re.search(r"retry_after[:\s=]+(\d+)", err_lower)
                     if retry_match:
                         try:
-                            backoff = min(10.0, max(float(retry_match.group(1)), backoff))
+                            explicit_wait = float(retry_match.group(1))
+                            if explicit_wait > remaining - 1.0:
+                                logger.warning(f"Retry-After ({explicit_wait}s) exceeds remaining deadline ({remaining:.1f}s). Failing fast.")
+                                break
+                            backoff = min(2.0, explicit_wait)
                         except Exception:
                             pass
                     logger.warning(
-                        f"Transient Gemini error ({exc_str[:80]}). Retrying in {backoff:.2f}s (Attempt {attempt + 1}/{MAX_RETRIES})..."
+                        f"Transient Gemini error ({sanitized_exc[:80]}). Retrying in {backoff:.2f}s (Attempt {attempt + 1}/{MAX_RETRIES})..."
                     )
                     time.sleep(backoff)
                     retries += 1
@@ -440,22 +518,95 @@ class GeminiTier2Service:
 
                 # Final failure
                 err_cat = "RATE_LIMIT_429" if is_rate_limit else ("TIMEOUT" if is_timeout else ("SERVER_ERROR_5XX" if is_server else "CLIENT_ERROR"))
-                logger.error(f"Gemini Tier-2 request failed after {retries} retries: {exc_str[:120]}")
+                logger.error(f"Gemini Tier-2 request failed after {retries} retries: {sanitized_exc[:120]}")
                 telemetry_manager.record_request(
                     feature=feature_name,
                     success=False,
                     latency_ms=latency_ms,
                     retries=retries,
                     error_category=err_cat,
-                    error_message=exc_str,
+                    error_message=sanitized_exc,
                 )
-                return False, None, latency_ms, retries
+                return ExecutionResult(False, None, latency_ms, retries, err_cat)
+            finally:
+                if not submitted:
+                    # Release permit if submission failed before worker future created
+                    _tier2_admission_semaphore.release()
 
-        return False, None, (time.perf_counter() - t0) * 1000.0, retries
+        return ExecutionResult(False, None, (time.perf_counter() - t0) * 1000.0, retries, "UNKNOWN_ERROR")
+
+    def _create_deterministic_fallback(
+        self,
+        candidate_context: Optional[Dict[str, Any]] = None,
+        reason: str = "Tier-2 Gemini service running in offline fallback mode.",
+    ) -> GeminiAdjudicationResult:
+        """
+        Constructs an authentic, non-hallucinated local monograph based on Tier-1
+        CLIP vector similarity, FAISS nearest neighbor, and Gatekeeper confirmation.
+        """
+        cand_key = candidate_context.get("key") or candidate_context.get("candidate_key") if candidate_context else None
+        cand_name = candidate_context.get("name") or candidate_context.get("candidate_name") if candidate_context else None
+        cand_score = float(candidate_context.get("similarity") or candidate_context.get("top_similarity") or 0.0) if candidate_context else 0.0
+        gatekeeper_score = float(candidate_context.get("gatekeeper_score", 0.0)) if candidate_context else 0.0
+
+        membership = check_catalogue_membership(cand_name or cand_key)
+        has_cat = (membership.status != CatalogueStatus.OUT_OF_CATALOG)
+
+        if cand_name and cand_score >= 0.45:
+            vis_evidence = (
+                f"Offline Local Curatorial Mode: Multimodal Tier-2 cloud adjudication is temporarily offline or timed out. "
+                f"Visual assessment synthesized via deterministic Tier-1 CLIP ViT-B/32 neural representations and 577-anchor FAISS vector index. "
+                f"Architectural gatekeeper confirms heritage structure signature ({gatekeeper_score * 100:.1f}%). "
+                f"Primary reference alignment: '{cand_name}' (vector similarity: {cand_score:.4f})."
+            )
+            features = [
+                f"Architectural gatekeeper confidence: {gatekeeper_score * 100:.1f}%",
+                f"Nearest reference specimen: {cand_name}",
+                f"Vector alignment similarity: {cand_score:.4f}",
+            ]
+            prop_id = cand_name if has_cat else None
+            prop_loc = membership.location if has_cat else None
+        else:
+            vis_evidence = (
+                "Offline Local Curatorial Mode: Tier-1 visual vector scanner active. "
+                "Multimodal cloud adjudication running in offline fallback mode."
+            )
+            features = ["Offline vector nearest-neighbor inspection"]
+            prop_id = None
+            prop_loc = None
+
+        return GeminiAdjudicationResult(
+            proposed_identity=prop_id,
+            proposed_location=prop_loc,
+            is_heritage_structure=True,
+            is_catalog_monument=has_cat,
+            catalogue_status=membership.status.value,
+            visible_architectural_evidence=vis_evidence,
+            distinguishing_features=features,
+            qualitative_confidence="UNCERTAIN",
+            uncertainty_reason=reason,
+            verified_coordinates=membership.coordinates if has_cat else None,
+            geodetic_source=(
+                f"Authoritative Heritage Registry ({membership.country or 'Global'} / UNESCO / National Archive)"
+                if membership.coordinates
+                else None
+            ),
+            catalog_id=membership.monument_id.upper() if membership.monument_id else None,
+            visible_observations=["Unindexed heritage specimen detected by Tier-1 visual vector scanner."],
+            candidate_styles=["Style unindexed in primary gallery"],
+            candidate_descriptions=["Local candidate alignment evaluated without external cloud VLM."],
+            curatorial_caveat="Visual analysis is exploratory and does not establish verified historical identity without epigraphical or archival records.",
+            is_offline_fallback=True,
+            model_name=self.model_name,
+        )
 
     # --- Capability A: Gemini-Assisted Open-World Adjudication ---
 
-    def adjudicate_monument(self, image: Image.Image) -> GeminiAdjudicationResult:
+    def adjudicate_monument(
+        self,
+        image: Image.Image,
+        candidate_context: Optional[Dict[str, Any]] = None,
+    ) -> GeminiAdjudicationResult:
         """
         Phase 8.5F Capability A: Gemini-Assisted Open-World Monument Adjudication
         Invoked when Tier-1 CLIP produces ambiguous catalog competition or potential
@@ -468,21 +619,9 @@ class GeminiTier2Service:
         4. A non-monument image (receipt, math paper, everyday object).
         """
         if not self.is_available():
-            return GeminiAdjudicationResult(
-                proposed_identity=None,
-                proposed_location=None,
-                is_heritage_structure=True,
-                is_catalog_monument=False,
-                visible_architectural_evidence="Offline Curatorial Mode: Tier-1 visual vector scanner active. Multimodal adjudication running without live API connectivity.",
-                distinguishing_features=["Offline vector nearest-neighbor inspection"],
-                qualitative_confidence="UNCERTAIN",
-                uncertainty_reason="Tier-2 Gemini service running in offline fallback mode.",
-                visible_observations=["Unindexed heritage specimen detected by Tier-1 visual vector scanner."],
-                candidate_styles=["Style unindexed in primary gallery"],
-                candidate_descriptions=["Unclassified regional heritage structure requiring field survey."],
-                curatorial_caveat="Visual analysis is exploratory and does not establish verified historical identity without epigraphical or archival records.",
-                is_offline_fallback=True,
-                model_name=self.model_name,
+            return self._create_deterministic_fallback(
+                candidate_context=candidate_context,
+                reason="Tier-2 Gemini service running in offline fallback mode.",
             )
 
         prompt = (
@@ -531,27 +670,23 @@ class GeminiTier2Service:
                 config=types.GenerateContentConfig(
                     response_mime_type="application/json",
                     temperature=0.1,
+                    http_options=types.HttpOptions(timeout=max(int(self.timeout * 1000), 10000)),
                 ),
             )
 
-        ok, resp, _, _ = self._execute_with_retry(_call, "unknown_heritage_analysis")
+        exec_res = self._execute_with_retry(_call, "unknown_heritage_analysis")
+        ok, resp, _, _ = exec_res
         if not ok or not resp or not resp.text:
-            return GeminiAdjudicationResult(
-                proposed_identity=None,
-                proposed_location=None,
-                is_heritage_structure=True,
-                is_catalog_monument=False,
-                catalogue_status=CatalogueStatus.OUT_OF_CATALOG.value,
-                visible_architectural_evidence="Automated Tier-2 service temporarily unavailable; flagged for expert curatorial inspection.",
-                distinguishing_features=[],
-                qualitative_confidence="UNCERTAIN",
-                uncertainty_reason="Tier-2 multimodal VLM request could not be completed.",
-                visible_observations=["Distinctive heritage architectural geometry detected."],
-                candidate_styles=["Unclassified historic tradition"],
-                candidate_descriptions=["Pending field epigraphy review"],
-                curatorial_caveat="Visual analysis is exploratory and does not establish verified historical identity without epigraphical or archival records.",
-                is_offline_fallback=True,
-                model_name=self.model_name,
+            err_cat = getattr(exec_res, "error_category", None)
+            if err_cat == "POOL_SATURATED":
+                reason = "Tier-2 worker pool saturated; fast-failing to deterministic local fallback."
+            elif err_cat == "TIMEOUT":
+                reason = "Tier-2 multimodal VLM request timed out."
+            else:
+                reason = "Tier-2 multimodal VLM request timed out or ran in offline fallback mode."
+            return self._create_deterministic_fallback(
+                candidate_context=candidate_context,
+                reason=reason,
             )
 
         try:
@@ -595,41 +730,17 @@ class GeminiTier2Service:
             )
         except Exception as e:
             logger.warning(f"Failed to parse Gemini adjudication response: {e}")
-            return GeminiAdjudicationResult(
-                proposed_identity=None,
-                proposed_location=None,
-                is_heritage_structure=True,
-                is_catalog_monument=False,
-                catalogue_status=CatalogueStatus.OUT_OF_CATALOG.value,
-                visible_architectural_evidence=resp.text[:300] if resp and resp.text else "",
-                distinguishing_features=[],
-                qualitative_confidence="UNCERTAIN",
-                uncertainty_reason=f"Failed to parse model JSON: {e}",
-                visible_observations=["Structural elements observed in photograph."],
-                candidate_styles=["Regional architectural tradition"],
-                is_offline_fallback=True,
-                model_name=self.model_name,
+            return self._create_deterministic_fallback(
+                candidate_context=candidate_context,
+                reason=f"Failed to parse model JSON: {e}",
             )
-        except Exception as e:
-            logger.warning(f"Failed to parse Gemini adjudication response: {e}")
-            return GeminiAdjudicationResult(
-                proposed_identity=None,
-                proposed_location=None,
-                is_heritage_structure=True,
-                is_catalog_monument=False,
-                visible_architectural_evidence=resp.text[:300] if resp and resp.text else "",
-                distinguishing_features=[],
-                qualitative_confidence="UNCERTAIN",
-                uncertainty_reason=f"Failed to parse model JSON: {e}",
-                visible_observations=["Structural elements observed in photograph."],
-                candidate_styles=["Regional architectural tradition"],
-                is_offline_fallback=True,
-                model_name=self.model_name,
-            )
-
-    def analyze_unknown_heritage(self, image: Image.Image) -> UnknownHeritageAnalysis:
+    def analyze_unknown_heritage(
+        self,
+        image: Image.Image,
+        candidate_context: Optional[Dict[str, Any]] = None,
+    ) -> UnknownHeritageAnalysis:
         """Backward-compatible wrapper delegating to adjudicate_monument."""
-        return self.adjudicate_monument(image)
+        return self.adjudicate_monument(image, candidate_context=candidate_context)
 
     # --- Capability B: Grounded Historical Question Answering ---
 
@@ -685,7 +796,8 @@ class GeminiTier2Service:
             f"STRICT RULES:\n"
             f"1. Rely exclusively on the provided excerpts. Do NOT bring in unverified external knowledge.\n"
             f"2. Cite every factual assertion using the citation tags provided (e.g. [ASI-TD-2024-01]).\n"
-            f"3. If the excerpts do not address the question, reply verbatim: "
+            f"3. Preserve key architectural, functional, and historical terminology directly from the source excerpts.\n"
+            f"4. If the excerpts do not address the question, reply verbatim: "
             f"'Archival records for this monument do not contain verified evidence to answer this question.'\n\n"
             f"EVIDENCE EXCERPTS:\n{context_block}\n\n"
             f"USER QUESTION: {question}\n\n"
@@ -693,9 +805,13 @@ class GeminiTier2Service:
         )
 
         def _call():
+            from google.genai import types
             return self.client.models.generate_content(
                 model=self.model_name,
                 contents=prompt,
+                config=types.GenerateContentConfig(
+                    http_options=types.HttpOptions(timeout=max(int(self.timeout * 1000), 10000)),
+                ),
             )
 
         ok, resp, _, _ = self._execute_with_retry(_call, "grounded_historical_qa")
@@ -776,6 +892,7 @@ class GeminiTier2Service:
                 config=types.GenerateContentConfig(
                     response_mime_type="application/json",
                     temperature=0.1,
+                    http_options=types.HttpOptions(timeout=max(int(self.timeout * 1000), 10000)),
                 ),
             )
 
