@@ -7,7 +7,7 @@ const STAGES = [
   { label: "Extracting EXIF GPS Metadata & Geodetic Coordinates...", icon: Compass },
   { label: "Computing 512-D Vision Features via CLIP ViT-B/32...", icon: Cpu },
   { label: "Evaluating Zero-Shot Architectural Gatekeeper...", icon: Layers },
-  { label: "Searching 50-Anchor FAISS Inner-Product Vector Index...", icon: Database },
+  { label: "Searching 577-Anchor FAISS Inner-Product Vector Index...", icon: Database },
   { label: "Synthesizing Curatorial Dossier & Inked Stamps...", icon: Search },
 ];
 

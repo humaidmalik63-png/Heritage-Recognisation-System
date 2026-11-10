@@ -22,6 +22,7 @@ import { fetchExceptions, resolveException } from '../api';
 export default function ExceptionsDrawer({ isOpen, onClose, onCountChange }) {
   const [exceptions, setExceptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [authError, setAuthError] = useState(false);
   const [filter, setFilter] = useState('ALL'); // ALL, PENDING_REVIEW, APPROVED, REJECTED, CATALOGED
   const [selectedResolutions, setSelectedResolutions] = useState({}); // { [id]: { status: 'APPROVED', notes: '' } }
   const [expandedHistories, setExpandedHistories] = useState({});
@@ -30,6 +31,7 @@ export default function ExceptionsDrawer({ isOpen, onClose, onCountChange }) {
 
   const loadData = async () => {
     setIsLoading(true);
+    setAuthError(false);
     try {
       const data = await fetchExceptions();
       const list = Array.isArray(data?.exceptions) ? data.exceptions : Array.isArray(data) ? data : [];
@@ -38,6 +40,9 @@ export default function ExceptionsDrawer({ isOpen, onClose, onCountChange }) {
       if (onCountChange) onCountChange(pendingCount);
     } catch (err) {
       console.warn('Could not load exceptions:', err.message);
+      if (err.message?.includes('401') || err.message?.toLowerCase().includes('unauthorized')) {
+        setAuthError(true);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -184,7 +189,17 @@ export default function ExceptionsDrawer({ isOpen, onClose, onCountChange }) {
               Curator Review satisfies the human-oversight protocol of SIH Project No. 30. Scans flagged for close candidate competition, unindexed architectural motifs, degraded image focus, or geodetic location conflicts are held here for manual verification.
             </p>
 
-            {filteredItems.length === 0 ? (
+            {authError ? (
+              <div className="text-center py-12 border-2 border-dashed border-amber-300 rounded bg-amber-50/50 p-6 space-y-3">
+                <ShieldAlert className="w-8 h-8 text-amber-700 mx-auto" />
+                <h4 className="font-serif text-lg font-bold text-archive-charcoal">
+                  Curatorial Authorization Required
+                </h4>
+                <p className="text-xs text-archive-stone max-w-sm mx-auto font-sans leading-relaxed">
+                  Access to sensitive human-review specimens requires an authenticated institutional curator session. Anonymous or unauthorized public access is restricted.
+                </p>
+              </div>
+            ) : filteredItems.length === 0 ? (
               <div className="text-center py-12 border-2 border-dashed border-archive-hairline rounded bg-white p-6 space-y-2">
                 <ShieldAlert className="w-8 h-8 text-archive-muted mx-auto" />
                 <h4 className="font-serif text-lg font-bold text-archive-charcoal">

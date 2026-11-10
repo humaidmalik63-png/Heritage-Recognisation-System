@@ -17,6 +17,7 @@ Provides:
 import json
 import logging
 import os
+import random
 import re
 import sys
 import threading
@@ -420,9 +421,18 @@ class GeminiTier2Service:
                 is_server = any(x in err_lower for x in ["500", "502", "503", "504", "unavailable"])
 
                 if attempt < MAX_RETRIES and (is_rate_limit or is_timeout or is_server):
-                    backoff = (2 ** attempt) * 1.0  # 1s, 2s, 4s
+                    # Bounded exponential backoff with randomized jitter (e.g. 1.2s, 2.3s, 4.2s)
+                    jitter = random.uniform(0.1, 0.4)
+                    backoff = min(10.0, ((2 ** attempt) * 1.0) + jitter)
+                    # Inspect for explicit Retry-After in exception message or attrs if available
+                    retry_match = re.search(r"retry_after[:\s=]+(\d+)", err_lower)
+                    if retry_match:
+                        try:
+                            backoff = min(10.0, max(float(retry_match.group(1)), backoff))
+                        except Exception:
+                            pass
                     logger.warning(
-                        f"Transient Gemini error ({exc_str[:80]}). Retrying in {backoff:.1f}s (Attempt {attempt + 1}/{MAX_RETRIES})..."
+                        f"Transient Gemini error ({exc_str[:80]}). Retrying in {backoff:.2f}s (Attempt {attempt + 1}/{MAX_RETRIES})..."
                     )
                     time.sleep(backoff)
                     retries += 1

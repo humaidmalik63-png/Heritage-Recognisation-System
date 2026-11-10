@@ -36,19 +36,6 @@ export default function Login() {
     }
   };
 
-  const handleQuickDemoLogin = async () => {
-    setError(null);
-    setIsSubmitting(true);
-    try {
-      await login('curator@heritage.org', 'curator123');
-      navigate(from, { replace: true });
-    } catch (err) {
-      setError('Could not initiate demo session.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
     <div className="relative min-h-screen w-full overflow-hidden flex flex-col justify-between selection:bg-[#A9472D] selection:text-white">
       {/* 1. Cinematic Background Video & Layered Atmosphere */}
@@ -147,7 +134,7 @@ export default function Login() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="curator@heritage.org"
+                  placeholder="officer@heritage.gov.in"
                   className="w-full pl-9 pr-3 py-2.5 bg-white border border-[#E3DFD5] rounded-xl text-xs font-sans text-[#171816] placeholder:text-[#6E7069]/60 focus:outline-none focus:border-[#A9472D] focus:ring-1 focus:ring-[#A9472D] transition-all shadow-sm"
                   required
                 />
@@ -160,7 +147,6 @@ export default function Login() {
                 <label className="block text-xs font-mono uppercase tracking-wider text-[#171816] font-semibold">
                   Security Password
                 </label>
-                <span className="text-[10px] font-mono text-[#6E7069]">Demo: curator123</span>
               </div>
               <div className="relative">
                 <input
@@ -186,21 +172,6 @@ export default function Login() {
               <ArrowRight className="w-3.5 h-3.5 text-[#B99A5B]" />
             </motion.button>
           </form>
-
-          {/* Quick Demo Login Option */}
-          <div className="mt-5 pt-4 border-t border-[#E3DFD5] text-center">
-            <motion.button
-              whileHover={{ y: -1, scale: 1.01 }}
-              whileTap={{ scale: 0.98 }}
-              type="button"
-              onClick={handleQuickDemoLogin}
-              disabled={isSubmitting}
-              className="w-full py-2.5 bg-white hover:bg-[#F5F3ED] text-[#171816] border border-[#E3DFD5] rounded-xl text-xs font-mono tracking-wider transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer font-medium"
-            >
-              <KeyRound className="w-3.5 h-3.5 text-[#A9472D]" />
-              <span>One-Click Curator Demo Login</span>
-            </motion.button>
-          </div>
 
           {/* Switch to Signup */}
           <div className="mt-6 text-center text-xs font-sans text-[#6E7069]">

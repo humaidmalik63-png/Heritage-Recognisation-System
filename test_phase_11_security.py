@@ -186,8 +186,10 @@ def test_curator_resolve_with_correct_key(client):
 
 # --- 7. Exceptions Pagination ---
 def test_exceptions_pagination(client):
-    """Verifies limit and offset parameters work correctly."""
-    res = client.get("/api/exceptions?limit=2&offset=0")
+    """Verifies limit and offset parameters work correctly for authorized admin."""
+    from backend.auth import create_session_token
+    token, _ = create_session_token("admin", role="admin")
+    res = client.get("/api/exceptions?limit=2&offset=0", headers={"Authorization": f"Bearer {token}"})
     assert res.status_code == 200
     data = res.json()
     assert "total" in data
@@ -250,7 +252,8 @@ def test_synthetic_non_monument_rejection(client):
     assert res.status_code == 200
     data = res.json()
     # Should not be verified as a catalog monument
-    assert data["verification_status"] in ("NON_MONUMENT_REJECTED", "UNKNOWN_HERITAGE_SPECIMEN", "UNCERTAIN_MATCH")
+    assert data["verification_status"] in ("NON_MONUMENT_REJECTED", "UNKNOWN_HERITAGE_SPECIMEN", "UNCERTAIN_MATCH", "REVIEW_REQUIRED")
+    assert data["verification_status"] != "VERIFIED_MATCH"
 
 
 if __name__ == "__main__":

@@ -8,5 +8,17 @@ export default defineConfig({
     strictPort: true,
     host: true,
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-motion': ['framer-motion'],
+          'vendor-icons': ['lucide-react'],
+          'vendor-map': ['leaflet', 'react-leaflet'],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 600,
+  },
 });
-

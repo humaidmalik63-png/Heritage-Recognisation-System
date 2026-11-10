@@ -154,21 +154,28 @@ class RateLimiter:
 
 class RateLimitMiddleware(BaseHTTPMiddleware):
     """
-    Enforces distinct rate limits based on endpoint compute intensity:
-      - Heavy compute (Image inference, VLM Q&A): 30 requests / minute
-      - General metadata / health queries: 150 requests / minute
+    Enforces multi-tiered rate limits based on endpoint sensitivity and compute intensity:
+      - Admin Authentication (Brute-force protection): 5 requests / minute
+      - Gemini VLM & Historical Q&A: 15 requests / minute
+      - Heavy Visual Inference (CLIP + FAISS Vector Scan): 30 requests / minute
+      - General Metadata & Read Queries: 150 requests / minute
     """
 
     def __init__(
         self,
         app,
+        admin_limit: int = 5,
+        gemini_limit: int = 15,
         heavy_limit: int = 30,
         general_limit: int = 150,
         window_seconds: int = 60,
     ):
         super().__init__(app)
+        self.admin_limit = admin_limit
+        self.gemini_limit = gemini_limit
         self.heavy_limit = heavy_limit
         self.general_limit = general_limit
+        self.window_seconds = window_seconds
         self.limiter = RateLimiter(window_seconds=window_seconds)
 
         self.heavy_paths = {
@@ -202,30 +209,42 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
         if path == "/api/health" and client_ip in ("127.0.0.1", "localhost", "::1"):
             return await call_next(request)
 
-        # Determine limit for path
-        is_heavy = path in self.heavy_paths or (path.startswith("/api/monuments/") and ("/ask" in path or "/explain" in path))
-        max_req = self.heavy_limit if is_heavy else self.general_limit
+        # Determine rate limit tier for path
+        if path.startswith("/api/admin/login"):
+            tier_name = "admin_auth"
+            max_req = self.admin_limit
+        elif path.startswith("/api/monuments/") and ("/ask" in path or "/explain" in path):
+            tier_name = "gemini_vlm"
+            max_req = self.gemini_limit
+        elif path in self.heavy_paths:
+            tier_name = "heavy_compute"
+            max_req = self.heavy_limit
+        else:
+            tier_name = "standard"
+            max_req = self.general_limit
 
-        allowed, remaining, retry_after = self.limiter.is_allowed(client_ip, max_req)
+        allowed, remaining, retry_after = self.limiter.is_allowed(f"{client_ip}:{tier_name}", max_req)
         if not allowed:
-            logger.warning(f"Rate limit exceeded for IP {client_ip} on path '{path}' (retry_after={retry_after}s)")
+            logger.warning(f"Rate limit exceeded for IP {client_ip} on path '{path}' [{tier_name}] (retry_after={retry_after}s)")
             return JSONResponse(
                 status_code=status.HTTP_429_TOO_MANY_REQUESTS,
                 content={
                     "detail": "Rate limit exceeded. Too many requests submitted. Please slow down.",
                     "retry_after_seconds": retry_after,
-                    "endpoint_tier": "heavy_compute" if is_heavy else "standard",
+                    "endpoint_tier": tier_name,
                 },
                 headers={
                     "Retry-After": str(retry_after),
                     "X-RateLimit-Limit": str(max_req),
                     "X-RateLimit-Remaining": "0",
+                    "X-RateLimit-Reset": str(self.window_seconds),
                 },
             )
 
         response = await call_next(request)
         response.headers["X-RateLimit-Limit"] = str(max_req)
         response.headers["X-RateLimit-Remaining"] = str(remaining)
+        response.headers["X-RateLimit-Reset"] = str(self.window_seconds)
         return response
 
 

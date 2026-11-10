@@ -38,20 +38,40 @@ export async function verifyMonumentImage(file) {
   return response.json();
 }
 
-export async function fetchExceptions() {
-  const response = await fetch(`${API_BASE_URL}/api/exceptions`);
+export async function fetchExceptionsSummary() {
+  const response = await fetch(`${API_BASE_URL}/api/exceptions/summary`);
   if (!response.ok) {
-    throw new Error(`Failed to load exceptions: ${response.status}`);
+    throw new Error(`Failed to load exceptions summary: ${response.status}`);
   }
   return response.json();
 }
 
-export async function resolveException(id, status, curatorNotes) {
+export async function fetchExceptions(token = null) {
+  const headers = {};
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+
+  const response = await fetch(`${API_BASE_URL}/api/exceptions`, {
+    headers,
+    credentials: 'include',
+  });
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.detail || `Failed to load exceptions (${response.status})`);
+  }
+  return response.json();
+}
+
+export async function resolveException(id, status, curatorNotes, token = null, csrfToken = null) {
+  const headers = {
+    'Content-Type': 'application/json',
+  };
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+  if (csrfToken) headers['X-CSRF-Token'] = csrfToken;
+
   const response = await fetch(`${API_BASE_URL}/api/exceptions/${id}/resolve`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
+    credentials: 'include',
     body: JSON.stringify({
       status,
       curator_notes: curatorNotes,
@@ -66,11 +86,64 @@ export async function resolveException(id, status, curatorNotes) {
   return response.json();
 }
 
-export async function fetchGeminiTelemetry() {
-  const response = await fetch(`${API_BASE_URL}/api/telemetry/gemini`);
+export async function loginAdmin(username, password) {
+  const response = await fetch(`${API_BASE_URL}/api/admin/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({
+      username,
+      password,
+    }),
+  });
+
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.detail || 'Authentication failed. Please check credentials.');
+  }
+
+  return response.json();
+}
+
+export async function logoutAdmin() {
+  const response = await fetch(`${API_BASE_URL}/api/admin/logout`, {
+    method: 'POST',
+    credentials: 'include',
+  });
+  return response.ok;
+}
+
+export async function fetchAdminMe(token = null) {
+  const headers = {};
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+
+  const response = await fetch(`${API_BASE_URL}/api/admin/me`, {
+    headers,
+    credentials: 'include',
+  });
+  if (!response.ok) return null;
+  return response.json();
+}
+
+export async function fetchGeminiTelemetry(token = null) {
+  const headers = {};
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+
+  const response = await fetch(`${API_BASE_URL}/api/telemetry/gemini`, {
+    headers,
+    credentials: 'include',
+  });
   if (!response.ok) {
     throw new Error(`Failed to load Gemini telemetry: ${response.status}`);
   }
+  return response.json();
+}
+
+export async function fetchGeminiPublicStatus() {
+  const response = await fetch(`${API_BASE_URL}/api/telemetry/status`);
+  if (!response.ok) return { status: 'unknown' };
   return response.json();
 }
 

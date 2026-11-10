@@ -19,7 +19,10 @@ Tests:
 import io
 import json
 import logging
+import os
 import sys
+
+os.environ["TESTING"] = "1"
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -352,8 +355,16 @@ def run_all_tests():
         m_data = m_resp.json()
         assert m_data["total"] in (10, 100)
 
-        # Exceptions list
-        e_resp = client.get("/api/exceptions")
+        # Exceptions summary (public) & detailed exceptions (authenticated)
+        s_resp = client.get("/api/exceptions/summary")
+        assert s_resp.status_code == 200
+
+        e_unauth = client.get("/api/exceptions")
+        assert e_unauth.status_code == 401
+
+        from auth import create_session_token
+        test_token, _ = create_session_token("admin", role="admin")
+        e_resp = client.get("/api/exceptions", headers={"Authorization": f"Bearer {test_token}"})
         assert e_resp.status_code == 200
 
         logger.info("[PASSED] Test 10: All legacy endpoints and response schemas maintain 100% backward compatibility.")

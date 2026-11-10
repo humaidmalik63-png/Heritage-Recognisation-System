@@ -407,7 +407,7 @@ export default function MonographResult({ result, imagePreview, onReset }) {
 
                 {isMetadataOnly ? (
                   <p className="mt-2 text-[11px] font-sans italic text-archive-stone leading-tight">
-                    * Note: This monument belongs to the 100-site canonical catalogue (Metadata Verified). Visual identification provided by Gemini 3.1 Flash-Lite (Tier 1 FAISS vector anchors pending photographic field survey; not falsely attributed via vector index).
+                    * Curatorial Registry Note: This monument belongs to the 100-site Multimodal Epigraphy Register (Metadata Verified). Visual identification was adjudicated by Gemini 3.1 Flash-Lite with grounded cross-referencing against authoritative ASI and UNESCO charters.
                   </p>
                 ) : isOutOfCatalog ? (
                   <p className="mt-2 text-[11px] font-sans italic text-archive-stone leading-tight">

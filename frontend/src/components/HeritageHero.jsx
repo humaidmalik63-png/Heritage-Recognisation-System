@@ -12,26 +12,26 @@ import {
 // Authenticated genuine heritage photographs for the desktop continuous mosaic
 const COLUMN_1 = [
   { type: 'photo', src: '/assets/heritage/taj-mahal.jpg', label: 'Taj Mahal', location: 'Agra, Uttar Pradesh, India', aspect: 'tall' },
-  { type: 'color', bg: '#A9472D', label: 'Mughal Brick & Terracotta' },
+  { type: 'photo', src: '/assets/heritage/brihadeeswarar.jpg', label: 'Brihadeeswarar Temple', location: 'Thanjavur, Tamil Nadu, India', aspect: 'standard' },
   { type: 'photo', src: '/assets/heritage/colosseum.jpg', label: 'The Colosseum', location: 'Rome, Lazio, Italy', aspect: 'standard' },
-  { type: 'color', bg: '#AAB9A4', label: 'Living Earth Pigment' },
+  { type: 'photo', src: '/assets/heritage/konark-sun-temple.jpg', label: 'Sun Temple, Konark', location: 'Odisha, India', aspect: 'tall' },
   { type: 'photo', src: '/assets/heritage/red-fort.jpg', label: 'Red Fort', location: 'Delhi, India', aspect: 'standard' },
   { type: 'photo', src: '/assets/heritage/ellora-caves.jpg', label: 'Kailasa Temple, Ellora', location: 'Maharashtra, India', aspect: 'tall' },
 ];
 
 const COLUMN_2 = [
-  { type: 'color', bg: '#B99A5B', label: 'Gilded Epigraphical Script' },
+  { type: 'photo', src: '/assets/heritage/charminar.jpg', label: 'Charminar', location: 'Hyderabad, Telangana, India', aspect: 'tall' },
   { type: 'photo', src: '/assets/heritage/petra.jpg', label: 'Al-Khazneh, Petra', location: "Ma'an Governorate, Jordan", aspect: 'tall' },
-  { type: 'color', bg: '#171816', label: 'Basalt & Obsidian Shading' },
+  { type: 'photo', src: '/assets/heritage/hampi.jpg', label: 'Stone Chariot, Hampi', location: 'Karnataka, India', aspect: 'standard' },
   { type: 'photo', src: '/assets/heritage/qutub-minar.jpg', label: 'Qutub Minar', location: 'New Delhi, India', aspect: 'standard' },
   { type: 'photo', src: '/assets/heritage/golden-temple.jpg', label: 'Sri Harmandir Sahib', location: 'Amritsar, Punjab, India', aspect: 'standard' },
-  { type: 'color', bg: '#A9C8D4', label: 'Celestial Mineral Tint' },
+  { type: 'photo', src: '/assets/heritage/machu-picchu.jpg', label: 'Machu Picchu', location: 'Cusco Region, Peru', aspect: 'tall' },
 ];
 
 const COLUMN_3 = [
-  { type: 'color', bg: '#A9C8D4', label: 'Sky-well Reflectance' },
+  { type: 'photo', src: '/assets/heritage/humayuns-tomb.jpg', label: "Humayun's Tomb", location: 'New Delhi, India', aspect: 'standard' },
   { type: 'photo', src: '/assets/heritage/great-wall.jpg', label: 'Great Wall of China', location: 'Beijing, China', aspect: 'tall' },
-  { type: 'color', bg: '#FFFEFA', border: true, label: 'Alabaster Plinth' },
+  { type: 'photo', src: '/assets/heritage/mysore-palace.jpg', label: 'Mysore Palace', location: 'Karnataka, India', aspect: 'standard' },
   { type: 'photo', src: '/assets/heritage/angkor-wat.jpg', label: 'Angkor Wat', location: 'Siem Reap, Cambodia', aspect: 'standard' },
   { type: 'photo', src: '/assets/heritage/hawa-mahal.jpg', label: 'Hawa Mahal', location: 'Jaipur, Rajasthan, India', aspect: 'standard' },
   { type: 'photo', src: '/assets/heritage/ajanta-caves.jpg', label: 'Ajanta Cave Temples', location: 'Maharashtra, India', aspect: 'tall' },
@@ -41,18 +41,18 @@ export default function HeritageHero({ onRecognizeClick, onExploreClick }) {
   const shouldReduceMotion = useReducedMotion();
 
   const renderColumn = (items, direction = 'down', speed = 28) => {
-    // Duplicate items to ensure seamless loop
+    // Duplicate items to ensure seamless continuous loop
     const duplicated = [...items, ...items];
 
     return (
-      <div className="relative w-full overflow-hidden h-[580px] lg:h-[640px] rounded-[24px]">
+      <div className="relative w-full overflow-hidden h-[500px] lg:h-[560px] rounded-[24px]">
         <motion.div
           className="flex flex-col gap-3.5"
           animate={
             shouldReduceMotion
               ? {}
               : {
-                  y: direction === 'down' ? [0, -1080] : [-1080, 0],
+                  y: direction === 'down' ? ['0%', '-50%'] : ['-50%', '0%'],
                 }
           }
           transition={
@@ -70,45 +70,29 @@ export default function HeritageHero({ onRecognizeClick, onExploreClick }) {
             <div
               key={idx}
               className={`relative overflow-hidden rounded-[20px] flex-shrink-0 transition-transform duration-300 hover:scale-[1.02] shadow-sm ${
-                tile.aspect === 'tall' ? 'h-[240px]' : 'h-[180px]'
+                tile.aspect === 'tall' ? 'h-[210px]' : 'h-[160px]'
               }`}
               style={{
-                backgroundColor: tile.type === 'color' ? tile.bg : '#EAE6DC',
-                border: tile.border ? '1px solid #E3DFD5' : '1px solid rgba(23, 24, 22, 0.06)',
+                backgroundColor: '#EAE6DC',
+                border: '1px solid rgba(23, 24, 22, 0.08)',
               }}
             >
-              {tile.type === 'photo' ? (
-                <>
-                  <img
-                    src={tile.src}
-                    alt={tile.label}
-                    className="w-full h-full object-cover object-center"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
-                  <div className="absolute bottom-3 left-3.5 right-3.5 text-white">
-                    <p className="font-serif text-sm font-semibold leading-tight drop-shadow-sm">
-                      {tile.label}
-                    </p>
-                    <p className="font-sans text-[10px] text-white/80 tracking-wide font-medium mt-0.5 truncate">
-                      {tile.location}
-                    </p>
-                  </div>
-                </>
-              ) : (
-                <div className="w-full h-full p-4 flex flex-col justify-between relative overflow-hidden">
-                  <span className="w-2 h-2 rounded-full bg-black/20 self-end" />
-                  <p
-                    className="text-[10px] font-mono tracking-wider uppercase font-semibold relative z-10"
-                    style={{
-                      color: tile.bg === '#171816' ? '#A9C8D4' : '#171816',
-                      opacity: 0.85,
-                    }}
-                  >
-                    {tile.label}
-                  </p>
-                </div>
-              )}
+              <img
+                src={tile.src}
+                alt={tile.label}
+                className="w-full h-full object-cover object-center"
+                loading="lazy"
+                decoding="async"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+              <div className="absolute bottom-3 left-3.5 right-3.5 text-white">
+                <p className="font-serif text-sm font-semibold leading-tight drop-shadow-sm">
+                  {tile.label}
+                </p>
+                <p className="font-sans text-[10px] text-white/85 tracking-wide font-medium mt-0.5 truncate">
+                  {tile.location}
+                </p>
+              </div>
             </div>
           ))}
         </motion.div>
@@ -117,7 +101,7 @@ export default function HeritageHero({ onRecognizeClick, onExploreClick }) {
   };
 
   return (
-    <section className="relative w-full pt-3 pb-12 sm:pt-6 sm:pb-16 lg:pt-8 lg:pb-20 overflow-hidden bg-[#F5F3ED]/40">
+    <section className="relative w-full pt-3 pb-8 sm:pt-4 sm:pb-12 lg:pt-5 lg:pb-14 overflow-hidden bg-[#F5F3ED]/40">
       <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* ============================================================== */}

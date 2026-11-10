@@ -1,19 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Header from './components/Header';
 import HeritageFooter from './components/HeritageFooter';
 import MobileBottomNav from './components/MobileBottomNav';
-import CatalogDrawer from './components/CatalogDrawer';
-import ExceptionsDrawer from './components/ExceptionsDrawer';
-import Dashboard from './pages/Dashboard';
-import History from './pages/History';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import MobileApp from './mobile/MobileApp';
 import useIsMobile from './hooks/useIsMobile';
 import { checkHealth, fetchMonumentsCatalog, fetchExceptions } from './api';
+
+// Code-split dynamic routes and non-critical drawer overlays
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const History = lazy(() => import('./pages/History'));
+const Login = lazy(() => import('./pages/Login'));
+const Signup = lazy(() => import('./pages/Signup'));
+const MobileApp = lazy(() => import('./mobile/MobileApp'));
+const CatalogDrawer = lazy(() => import('./components/CatalogDrawer'));
+const ExceptionsDrawer = lazy(() => import('./components/ExceptionsDrawer'));
+
+function ArchivalLoadingFallback() {
+  return (
+    <div className="min-h-[50vh] bg-transparent flex items-center justify-center p-8 text-[#171816]">
+      <div className="flex flex-col items-center gap-3">
+        <div className="w-7 h-7 rounded-full border-2 border-[#E3DFD5] border-t-[#A9472D] animate-spin" />
+        <span className="font-mono text-[10px] uppercase tracking-wider text-[#6E7069]">
+          Accessing Archival Registry...
+        </span>
+      </div>
+    </div>
+  );
+}
 
 function AppLayout() {
   const isMobile = useIsMobile(768);
@@ -65,30 +80,36 @@ function AppLayout() {
   if (isMobile && !isAuthPage) {
     return (
       <ProtectedRoute>
-        <MobileApp
-          health={health}
-          monuments={monuments}
-          onOpenCatalog={() => setIsCatalogOpen(true)}
-          onOpenExceptions={() => setIsExceptionsOpen(true)}
-          pendingExceptionsCount={pendingExceptionsCount}
-        />
+        <Suspense fallback={<ArchivalLoadingFallback />}>
+          <MobileApp
+            health={health}
+            monuments={monuments}
+            onOpenCatalog={() => setIsCatalogOpen(true)}
+            onOpenExceptions={() => setIsExceptionsOpen(true)}
+            pendingExceptionsCount={pendingExceptionsCount}
+          />
 
-        {/* Global Catalog Drawer */}
-        <CatalogDrawer
-          isOpen={isCatalogOpen}
-          onClose={() => setIsCatalogOpen(false)}
-          monuments={monuments}
-        />
+          {/* Global Catalog Drawer */}
+          {isCatalogOpen && (
+            <CatalogDrawer
+              isOpen={isCatalogOpen}
+              onClose={() => setIsCatalogOpen(false)}
+              monuments={monuments}
+            />
+          )}
 
-        {/* Human Review Exceptions Drawer */}
-        <ExceptionsDrawer
-          isOpen={isExceptionsOpen}
-          onClose={() => {
-            setIsExceptionsOpen(false);
-            refreshPendingCount();
-          }}
-          onCountChange={(cnt) => setPendingExceptionsCount(cnt)}
-        />
+          {/* Human Review Exceptions Drawer */}
+          {isExceptionsOpen && (
+            <ExceptionsDrawer
+              isOpen={isExceptionsOpen}
+              onClose={() => {
+                setIsExceptionsOpen(false);
+                refreshPendingCount();
+              }}
+              onCountChange={(cnt) => setPendingExceptionsCount(cnt)}
+            />
+          )}
+        </Suspense>
       </ProtectedRoute>
     );
   }
@@ -108,32 +129,34 @@ function AppLayout() {
 
       {/* Main Content Viewport with mobile bottom nav safe-clearance */}
       <main className={!isAuthPage ? (location.pathname === '/' ? "flex-1 w-full pb-20 lg:pb-0" : "flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8 pb-24 lg:pb-8") : "flex-1"}>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <Dashboard
-                  onExceptionCreated={refreshPendingCount}
-                  monuments={monuments}
-                  health={health}
-                  onOpenCatalog={() => setIsCatalogOpen(true)}
-                />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/history"
-            element={
-              <ProtectedRoute>
-                <History />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+        <Suspense fallback={<ArchivalLoadingFallback />}>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <Dashboard
+                    onExceptionCreated={refreshPendingCount}
+                    monuments={monuments}
+                    health={health}
+                    onOpenCatalog={() => setIsCatalogOpen(true)}
+                  />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/history"
+              element={
+                <ProtectedRoute>
+                  <History />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
       </main>
 
       {/* Institutional Editorial Footer */}
@@ -155,22 +178,30 @@ function AppLayout() {
         />
       )}
 
-      {/* Global Catalog Drawer (Mounted at top-level z-[100]) */}
-      <CatalogDrawer
-        isOpen={isCatalogOpen}
-        onClose={() => setIsCatalogOpen(false)}
-        monuments={monuments}
-      />
+      {/* Global Catalog Drawer (Mounted on demand) */}
+      {isCatalogOpen && (
+        <Suspense fallback={null}>
+          <CatalogDrawer
+            isOpen={isCatalogOpen}
+            onClose={() => setIsCatalogOpen(false)}
+            monuments={monuments}
+          />
+        </Suspense>
+      )}
 
-      {/* Human Review Exceptions Drawer (Mounted at top-level z-[100]) */}
-      <ExceptionsDrawer
-        isOpen={isExceptionsOpen}
-        onClose={() => {
-          setIsExceptionsOpen(false);
-          refreshPendingCount();
-        }}
-        onCountChange={(cnt) => setPendingExceptionsCount(cnt)}
-      />
+      {/* Human Review Exceptions Drawer (Mounted on demand) */}
+      {isExceptionsOpen && (
+        <Suspense fallback={null}>
+          <ExceptionsDrawer
+            isOpen={isExceptionsOpen}
+            onClose={() => {
+              setIsExceptionsOpen(false);
+              refreshPendingCount();
+            }}
+            onCountChange={(cnt) => setPendingExceptionsCount(cnt)}
+          />
+        </Suspense>
+      )}
     </div>
   );
 }

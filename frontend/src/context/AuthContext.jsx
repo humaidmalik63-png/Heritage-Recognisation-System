@@ -2,17 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext(null);
 
-const DEFAULT_DEMO_USER = {
-  id: 'usr_curator_01',
-  name: 'Dr. Eleanor Vance',
-  title: 'Senior Archaeologist & Curator',
-  email: 'curator@heritage.org',
-  role: 'Certified Curatorial Fellow',
-  badgeNumber: 'ASI-FELLOW-2026-88',
-  department: 'Division of Monument Epigraphy & AI Archival Systems',
-};
-
-// Default initial historic scans for demonstration
+// Initial archival demo scans for user history visualization
 const INITIAL_DEMO_SCANS = [
   {
     id: 'scan_init_01',
@@ -44,12 +34,24 @@ const INITIAL_DEMO_SCANS = [
   },
 ];
 
+/**
+ * Hash password client-side using Web Crypto API SHA-256
+ * (prevents plaintext storage in localStorage)
+ */
+async function hashPassword(plainText) {
+  const enc = new TextEncoder().encode(plainText);
+  const buf = await window.crypto.subtle.digest('SHA-256', enc);
+  return Array.from(new Uint8Array(buf))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
+}
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [history, setHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Initialize session from localStorage on mount
+  // Initialize session from localStorage on mount (no auto-login, no default credentials)
   useEffect(() => {
     try {
       const storedUser = localStorage.getItem('heritage_current_user');
@@ -61,33 +63,16 @@ export function AuthProvider({ children }) {
         if (storedHistory) {
           setHistory(JSON.parse(storedHistory));
         } else {
-          // Initialize demo scans for new sessions
           setHistory(INITIAL_DEMO_SCANS);
-          localStorage.setItem(userHistoryKey, JSON.stringify(INITIAL_DEMO_SCANS));
         }
       } else {
-        // Automatically log in default demo user for seamless access
-        const demoUser = {
-          ...DEFAULT_DEMO_USER,
-        };
-        setUser(demoUser);
-        localStorage.setItem('heritage_current_user', JSON.stringify(demoUser));
-        const userHistoryKey = `heritage_history_${demoUser.email}`;
-        setHistory(INITIAL_DEMO_SCANS);
-        localStorage.setItem(userHistoryKey, JSON.stringify(INITIAL_DEMO_SCANS));
-
-        // Seed demo user in registered users list
-        const existingUsers = JSON.parse(localStorage.getItem('heritage_users') || '[]');
-        if (!existingUsers.some((u) => u.email === DEFAULT_DEMO_USER.email)) {
-          existingUsers.push({
-            ...DEFAULT_DEMO_USER,
-            password: 'curator123',
-          });
-          localStorage.setItem('heritage_users', JSON.stringify(existingUsers));
-        }
+        // Guest mode: unauthenticated by default
+        setUser(null);
+        setHistory([]);
       }
     } catch (e) {
       console.error('Failed to parse auth state:', e);
+      setUser(null);
     } finally {
       setIsLoading(false);
     }
@@ -96,21 +81,18 @@ export function AuthProvider({ children }) {
   const login = async (email, password) => {
     const trimmedEmail = email.trim().toLowerCase();
     const storedUsers = JSON.parse(localStorage.getItem('heritage_users') || '[]');
+    const passwordHash = await hashPassword(password);
 
-    // Check against registered users or default demo
-    let found = storedUsers.find(
-      (u) => u.email.toLowerCase() === trimmedEmail && u.password === password
+    // Verify against registered local users with secure hash comparison
+    const found = storedUsers.find(
+      (u) => u.email.toLowerCase() === trimmedEmail && u.passwordHash === passwordHash
     );
-
-    if (!found && trimmedEmail === DEFAULT_DEMO_USER.email && password === 'curator123') {
-      found = { ...DEFAULT_DEMO_USER, password: 'curator123' };
-    }
 
     if (!found) {
       throw new Error('Invalid curatorial credentials. Please check your email and password.');
     }
 
-    const { password: _, ...userProfile } = found;
+    const { passwordHash: _, ...userProfile } = found;
     setUser(userProfile);
     localStorage.setItem('heritage_current_user', JSON.stringify(userProfile));
 
@@ -135,21 +117,23 @@ export function AuthProvider({ children }) {
       throw new Error('An archival account with this official email address already exists.');
     }
 
+    const passwordHash = await hashPassword(password);
+
     const newUser = {
       id: `usr_${Date.now()}`,
       name: name.trim(),
       email: trimmedEmail,
-      title: 'Junior Field Archaeologist',
+      title: 'Field Research Associate',
       role: 'Curatorial Registry Associate',
       badgeNumber: `ASI-REG-${Math.floor(1000 + Math.random() * 9000)}`,
       department: 'Field Survey & Heritage Digital Register',
-      password,
+      passwordHash,
     };
 
     storedUsers.push(newUser);
     localStorage.setItem('heritage_users', JSON.stringify(storedUsers));
 
-    const { password: _, ...userProfile } = newUser;
+    const { passwordHash: _, ...userProfile } = newUser;
     setUser(userProfile);
     localStorage.setItem('heritage_current_user', JSON.stringify(userProfile));
 
