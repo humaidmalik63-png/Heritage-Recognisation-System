@@ -313,6 +313,7 @@ class UncertaintyEngine:
         margin_threshold = self.calibration.uncertainty_margin_threshold
         gatekeeper_verified = self.calibration.gatekeeper_threshold_verified
         gatekeeper_ambiguous = self.calibration.gatekeeper_threshold_ambiguous
+        gatekeeper_rejection = self.calibration.gatekeeper_threshold_rejection
 
         # 6. Synthesize Reason Codes & Decision State
         reason_codes: List[str] = []
@@ -344,6 +345,7 @@ class UncertaintyEngine:
             margin_threshold=margin_threshold,
             gatekeeper_verified=gatekeeper_verified,
             gatekeeper_ambiguous=gatekeeper_ambiguous,
+            gatekeeper_rejection=gatekeeper_rejection,
             reason_codes=reason_codes,
             top1_key=top1.monument_key if top1 else None,
             local_corroboration=local_feature_corroboration,
@@ -471,18 +473,38 @@ class UncertaintyEngine:
         margin_threshold: float,
         gatekeeper_verified: float,
         gatekeeper_ambiguous: float,
-        reason_codes: List[str],
+        gatekeeper_rejection: float = 0.35,
+        reason_codes: List[str] = None,
         top1_key: Optional[str] = None,
         local_corroboration: Optional[Dict[str, Any]] = None,
     ) -> DecisionState:
         """
         Deterministic, transparent arbitration across the 5 decision states.
         """
-        # RULE 1: Severe Non-Monument Rejection
-        # Low architectural gatekeeper and low vector similarity
-        if gatekeeper_score < gatekeeper_ambiguous and top1_sim < 0.70:
+        if reason_codes is None:
+            reason_codes = []
+
+        # Safeguard: NaN or Inf scores must safely quarantine to REVIEW_REQUIRED
+        if (
+            math.isnan(gatekeeper_score)
+            or math.isnan(top1_sim)
+            or math.isinf(gatekeeper_score)
+            or math.isinf(top1_sim)
+        ):
+            reason_codes.append(ReasonCode.GATEKEEPER_AMBIGUOUS.value)
+            return DecisionState.REVIEW_REQUIRED
+
+        # RULE 1: Severe Non-Monument Rejection & Ambiguous Boundary Quarantine
+        # Hard-reject only when top1_sim < 0.70 AND gatekeeper <= 0.35
+        if top1_sim < 0.70 and gatekeeper_score <= gatekeeper_rejection:
             reason_codes.append(ReasonCode.LOW_GATEKEEPER_CONFIDENCE.value)
             return DecisionState.NON_MONUMENT_REJECTED
+
+        # Ambiguous boundary: top1_sim < 0.70 AND 0.35 < gatekeeper < gatekeeper_ambiguous (0.45)
+        # Quarantines architectural close-ups, occlusions, and low-angle crops safely for review
+        if top1_sim < 0.70 and gatekeeper_rejection < gatekeeper_score < gatekeeper_ambiguous:
+            reason_codes.append(ReasonCode.GATEKEEPER_AMBIGUOUS.value)
+            return DecisionState.REVIEW_REQUIRED
 
         # RULE 2: Review Required on Geodetic Conflict or Severe Image Quality Degradation
         # High visual similarity but location contradicts by > 150 km

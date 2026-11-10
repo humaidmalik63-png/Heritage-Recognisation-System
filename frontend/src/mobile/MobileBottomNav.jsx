@@ -49,7 +49,7 @@ export default function MobileBottomNav({ activeTab, onSelectTab }) {
             <button
               key={item.id}
               onClick={() => onSelectTab(item.id)}
-              className="relative flex flex-col items-center justify-center py-1 px-3 text-[#6E7069] transition-colors focus:outline-none active:scale-95"
+              className="relative flex flex-col items-center justify-center min-h-[44px] min-w-[48px] py-1 px-3 text-[#6E7069] transition-colors focus:outline-none active:scale-95"
             >
               {isActive && (
                 <motion.div

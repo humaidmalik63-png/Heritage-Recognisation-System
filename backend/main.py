@@ -208,6 +208,8 @@ class PipelineTelemetry(BaseModel):
     request_id: Optional[str] = None
     stage_latencies_ms: Optional[Dict[str, float]] = None
     is_offline_fallback: bool = False
+    engine_attribution: Optional[str] = "Tier-1 CLIP ViT-B/32 + FAISS Index"
+    explainability: Optional[Dict[str, Any]] = None
 
 
 class GroundedCitations(BaseModel):
@@ -245,6 +247,7 @@ class VerificationResponse(BaseModel):
     local_features: Optional[Dict[str, Any]] = None
     out_of_catalog_identified: bool = False
     catalogue_status: Optional[str] = "OUT_OF_CATALOG"
+    explainability: Optional[Dict[str, Any]] = None
 
 
 class ExceptionItem(BaseModel):
@@ -849,7 +852,7 @@ def get_monument_timeline(monument_id: str):
     if not engine:
         raise HTTPException(status_code=500, detail="Knowledge Engine is not initialized.")
 
-    if clean_id not in engine.records:
+    if not engine.get_knowledge(clean_id):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Monument '{clean_id}' was not found in the historical register."
@@ -868,7 +871,7 @@ def get_monument_sources(monument_id: str):
     if not engine:
         raise HTTPException(status_code=500, detail="Knowledge Engine is not initialized.")
 
-    if clean_id not in engine.records:
+    if not engine.get_knowledge(clean_id):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Monument '{clean_id}' was not found in the source register."
@@ -891,7 +894,7 @@ def ask_monument_archive(monument_id: str, payload: AskKnowledgeRequest):
     if not engine:
         raise HTTPException(status_code=500, detail="Knowledge Engine is not initialized.")
 
-    if clean_id not in engine.records:
+    if not engine.get_knowledge(clean_id):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Monument '{clean_id}' was not found in the knowledge register."
@@ -1514,6 +1517,45 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
     decision = final_decision
     is_offline_fb = bool(gemini_adjudication and gemini_adjudication.is_offline_fallback)
 
+    if is_offline_fb:
+        engine_attrib = "Tier-1 Deterministic Grounded Fallback"
+    elif gemini_adjudication and not gemini_adjudication.is_offline_fallback:
+        engine_attrib = f"Gemini 3.1 Flash-Lite Tier-2 ({gemini_service.model_name})"
+    else:
+        engine_attrib = "Tier-1 CLIP ViT-B/32 + FAISS Index"
+
+    explainability_payload = {
+        "visual_similarity_score": round(best_score, 4),
+        "visual_similarity_pct": round(best_score * 100.0, 1),
+        "gatekeeper_score": round(arch_prob, 4),
+        "gatekeeper_pct": round(arch_prob * 100.0, 1),
+        "similarity_margin": round(uncertainty_res.similarity_margin, 4),
+        "margin_threshold": round(uncertainty_engine.calibration.uncertainty_margin_threshold, 4),
+        "gps_status": "GEO_VERIFIED" if geo_boost else ("GPS_CONFLICT" if uncertainty_res.gps_evidence.gps_conflict else "NO_GPS_METADATA"),
+        "gps_distance_km": uncertainty_res.gps_evidence.distance_km,
+        "image_quality_status": "PASSED" if uncertainty_res.image_quality.passed_quality_check else "DEGRADED",
+        "quality_metrics": {
+            "blur_score": round(uncertainty_res.image_quality.blur_score, 2),
+            "is_blurry": uncertainty_res.image_quality.is_blurry,
+            "mean_luminance": round(uncertainty_res.image_quality.mean_brightness, 2),
+            "is_underexposed": uncertainty_res.image_quality.is_underexposed,
+            "is_overexposed": uncertainty_res.image_quality.is_overexposed,
+        },
+        "engine_attribution": engine_attrib,
+        "is_offline_fallback": is_offline_fb,
+        "candidate_competition": [
+            {
+                "monument_key": c.monument_key,
+                "monument_name": c.monument_name,
+                "similarity_score": round(c.max_similarity, 4),
+                "similarity_pct": round(c.max_similarity * 100.0, 1),
+                "margin_from_top": round((best_score - c.max_similarity) * 100.0, 1),
+            }
+            for c in top_candidates_agg[:3]
+        ],
+        "decision_narrative": uncertainty_res.explanation,
+    }
+
     def _build_telemetry(reason_text: str) -> PipelineTelemetry:
         return PipelineTelemetry(
             exif_gps=exif_gps,
@@ -1530,6 +1572,8 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
                 "total_ms": round((time.perf_counter() - t_pipe_start) * 1000.0, 2),
             },
             is_offline_fallback=is_offline_fb,
+            engine_attribution=engine_attrib,
+            explainability=explainability_payload,
         )
 
     # --- CASE A: VERIFIED MATCH ---
@@ -1575,6 +1619,7 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             local_features=local_features_data,
             out_of_catalog_identified=False,
             catalogue_status=CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY.value,
+            explainability=explainability_payload,
         )
 
     # --- CASE B: UNCERTAIN MATCH (CANDIDATE COMPETITION) ---
@@ -1608,6 +1653,7 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             local_features=local_features_data,
             out_of_catalog_identified=False,
             catalogue_status=CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY.value if best_key in state["metadata"] else CatalogueStatus.OUT_OF_CATALOG.value,
+            explainability=explainability_payload,
         )
 
     # --- CASE C: UNKNOWN HERITAGE SPECIMEN ---
@@ -1732,6 +1778,7 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             uncertainty=uncertainty_res,
             tier2_analysis=tier2_analysis_dict,
             local_features=local_features_data,
+            explainability=explainability_payload,
         )
 
     # --- CASE D: REVIEW REQUIRED (GEODETIC CONFLICT OR DEGRADED QUALITY) ---
@@ -1752,6 +1799,7 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             local_features=local_features_data,
             out_of_catalog_identified=False,
             catalogue_status=CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY.value if best_key in state["metadata"] else CatalogueStatus.OUT_OF_CATALOG.value,
+            explainability=explainability_payload,
         )
 
     # --- CASE E: NON-MONUMENT REJECTED ---
@@ -1771,6 +1819,7 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             local_features=local_features_data,
             out_of_catalog_identified=False,
             catalogue_status=CatalogueStatus.OUT_OF_CATALOG.value,
+            explainability=explainability_payload,
         )
 
     # 8. Asynchronous / Non-blocking Shadow Evaluation of Candidate Policy D

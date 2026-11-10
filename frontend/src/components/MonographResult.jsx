@@ -57,10 +57,16 @@ export default function MonographResult({ result, imagePreview, onReset, onRetry
     local_features,
     tier2_analysis = null,
     out_of_catalog_identified = false,
+    explainability = null,
   } = result;
 
   const isTier1 = verification_tier?.includes('TIER 1');
   const isTier2 = verification_tier?.includes('TIER 2');
+  const isOffline = Boolean(
+    tier2_analysis?.is_offline_fallback ||
+    pipeline_telemetry?.is_offline_fallback ||
+    explainability?.is_offline_fallback
+  );
 
   const top1Cand = uncertainty?.top_candidates?.[0] || pipeline_telemetry?.top_3_candidates?.[0];
   const top2Cand = uncertainty?.top_candidates?.[1] || pipeline_telemetry?.top_3_candidates?.[1];
@@ -262,7 +268,6 @@ export default function MonographResult({ result, imagePreview, onReset, onRetry
     const modelUsed =
       tier2_analysis?.model_name ||
       (pipeline_telemetry?.gemini_tier2_model || 'gemini-3.1-flash-lite');
-    const isOffline = tier2_analysis?.is_offline_fallback ?? false;
 
     return (
       <motion.div

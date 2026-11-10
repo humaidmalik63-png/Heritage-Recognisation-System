@@ -1,37 +1,37 @@
 {
   "service_name": "Gemini 2.5 Flash Tier-2 Telemetry",
   "version": "1.0.0",
-  "total_requests": 396,
-  "successful_requests": 196,
-  "failed_requests": 200,
-  "total_retries": 110,
-  "cumulative_latency_ms": 1725365.7746999525,
-  "average_latency_ms": 4356.98,
-  "total_input_tokens": 216703,
-  "total_output_tokens": 40734,
-  "tokens_reported_count": 180,
+  "total_requests": 828,
+  "successful_requests": 243,
+  "failed_requests": 585,
+  "total_retries": 145,
+  "cumulative_latency_ms": 2287068.1906000245,
+  "average_latency_ms": 2762.16,
+  "total_input_tokens": 232081,
+  "total_output_tokens": 42897,
+  "tokens_reported_count": 206,
   "error_categories": {
-    "RATE_LIMIT_429": 17,
-    "AUTH_INVALID_KEY": 17,
-    "TIMEOUT": 16,
-    "SERVER_ERROR_5XX": 3,
+    "RATE_LIMIT_429": 25,
+    "AUTH_INVALID_KEY": 25,
+    "TIMEOUT": 153,
+    "SERVER_ERROR_5XX": 34,
     "EMPTY_RESPONSE": 0,
     "CLIENT_ERROR": 147
   },
   "features_invoked": {
     "unknown_heritage_analysis": {
-      "success": 146,
-      "fail": 149
+      "success": 169,
+      "fail": 495
     },
     "grounded_historical_qa": {
-      "success": 50,
-      "fail": 51
+      "success": 74,
+      "fail": 90
     },
     "architectural_explanation": {
       "success": 0,
       "fail": 0
     }
   },
-  "last_request_utc": "2026-11-10T13:34:12.456394+00:00",
-  "last_error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+  "last_request_utc": "2026-11-10T18:02:18.541504+00:00",
+  "last_error": "503 Service Unavailable"
 }

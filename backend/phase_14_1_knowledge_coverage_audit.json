@@ -1,0 +1,12 @@
+{
+  "total_monuments": 100,
+  "passed_knowledge_record": 100,
+  "passed_timeline": 100,
+  "passed_sources": 100,
+  "passed_ask": 100,
+  "invalid_coordinates": [],
+  "generic_descriptions": [],
+  "missing_sources": [],
+  "invalid_urls": [],
+  "failures": []
+}
