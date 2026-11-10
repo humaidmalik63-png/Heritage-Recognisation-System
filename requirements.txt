@@ -13,4 +13,5 @@ requests
 python-dotenv
 opencv-python-headless
 psutil
+httpx
 
