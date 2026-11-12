@@ -24,7 +24,7 @@
   "confidence_threshold": 0.75,
   "uncertainty_margin_threshold": 0.08,
   "gatekeeper_threshold_verified": 0.5,
-  "gatekeeper_threshold_ambiguous": 0.45,
+  "gatekeeper_threshold_ambiguous": 0.40,
   "gatekeeper_scale": 18.0,
   "geo_boost_distance_km": 5.0,
   "geo_conflict_distance_km": 150.0,

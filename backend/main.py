@@ -138,8 +138,12 @@ logger = logging.getLogger("heritage_backend")
 
 BASE_DIR = Path(__file__).resolve().parent
 DATASET_DIR = BASE_DIR / "dataset"
+# Default (v1) index — baseline with 21 anchors per monument
 INDEX_FILE = BASE_DIR / "monument_index.faiss"
 LABELS_FILE = BASE_DIR / "monument_labels.json"
+# Phase 15 augmented index — 9× geometric transforms per source image (~1890 anchors total)
+AUGMENTED_INDEX_FILE = BASE_DIR / "monument_index_v2.faiss"
+AUGMENTED_LABELS_FILE = BASE_DIR / "monument_labels_v2.json"
 METADATA_FILE = BASE_DIR / "monuments_metadata.json"
 EXCEPTIONS_FILE = BASE_DIR / "exceptions_log.json"
 CALIBRATION_CONFIG_FILE = BASE_DIR / "calibration_config.json"
@@ -626,18 +630,31 @@ def initialize_backend_resources(gemini_api_key: Optional[str] = None) -> Dict[s
     state["rock_arch_vec"] = _get_avg_text_vector(ROCK_CUT_ARCHITECTURE_PROMPTS)
 
     # 4. Load FAISS Index, Labels & Monuments Metadata
-    if not INDEX_FILE.exists():
-        raise FileNotFoundError(f"FAISS index missing at {INDEX_FILE}. Run index_builder.py first.")
-    if not LABELS_FILE.exists():
-        raise FileNotFoundError(f"Labels mapping missing at {LABELS_FILE}.")
+    # Phase 15: switch to augmented index via PHASE15_V2_INDEX=1 env var
+    use_v2 = os.environ.get("PHASE15_V2_INDEX", "0").lower() in ("1", "true", "yes")
+    if use_v2:
+        active_index = AUGMENTED_INDEX_FILE
+        active_labels = AUGMENTED_LABELS_FILE
+    else:
+        active_index = INDEX_FILE
+        active_labels = LABELS_FILE
+
+    if not active_index.exists():
+        raise FileNotFoundError(f"FAISS index missing at {active_index}. Run index_builder.py or phase_15_augment_index.py first.")
+    if not active_labels.exists():
+        raise FileNotFoundError(f"Labels mapping missing at {active_labels}.")
     if not METADATA_FILE.exists():
         raise FileNotFoundError(f"Metadata file missing at {METADATA_FILE}.")
 
-    state["faiss_index"] = faiss.read_index(str(INDEX_FILE))
-    with open(LABELS_FILE, "r", encoding="utf-8") as f:
+    state["faiss_index"] = faiss.read_index(str(active_index))
+    with open(active_labels, "r", encoding="utf-8") as f:
         state["labels"] = json.load(f)
     with open(METADATA_FILE, "r", encoding="utf-8") as f:
         state["metadata"] = json.load(f)
+
+    state["index_version"] = "v2-augmented" if use_v2 else "v1-baseline"
+    logger.info(f"Loaded {'Phase 15 augmented' if use_v2 else 'baseline'} FAISS index: "
+                f"{state['faiss_index'].ntotal} vectors from {active_index.name}")
 
     # 4B. Load 100-Site Extended Heritage Catalogue (Phase 8.6)
     if CATALOGUE_100_FILE.exists():
@@ -837,6 +854,7 @@ def get_health():
     return {
         "status": "healthy",
         "faiss_vectors_loaded": state["faiss_index"].ntotal if state["faiss_index"] else 0,
+        "index_version": state.get("index_version", "v1-baseline"),
         "clip_device": state["device"],
         "gemini_tier2_configured": gemini_service.is_available(),
         "gemini_tier2_model": gemini_service.model_name,
