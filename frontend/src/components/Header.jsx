@@ -7,7 +7,6 @@ import {
   ShieldAlert,
   History,
   ScanLine,
-  LogOut,
   Menu,
   X,
 } from 'lucide-react';
@@ -19,7 +18,7 @@ export default function Header({
   onOpenExceptions,
   pendingExceptionsCount = 0,
 }) {
-  const { user, logout, history } = useAuth();
+  const { history } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -211,32 +210,6 @@ export default function Header({
               <span className="whitespace-nowrap">Recognise a Monument</span>
             </button>
 
-            {/* User Session Profile */}
-            {user ? (
-              <div className="hidden sm:flex items-center gap-1.5 pl-2 border-l border-[#E3DFD5]">
-                <div
-                  className="w-7 h-7 rounded-full bg-[#171816] text-[#F5F3ED] flex items-center justify-center font-mono text-[11px] font-bold shadow-sm"
-                  title={user.name || user.email}
-                >
-                  {user.name?.charAt(0) || 'C'}
-                </div>
-                <button
-                  onClick={logout}
-                  className="p-1.5 text-[#6E7069] hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
-                  title="Sign Out of Session"
-                  aria-label="Logout"
-                >
-                  <LogOut className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            ) : (
-              <Link to="/login" className="hidden sm:inline-block pl-2 border-l border-[#E3DFD5]">
-                <span className="text-xs font-mono uppercase tracking-wider text-[#6E7069] hover:text-[#171816] transition-colors">
-                  Sign In
-                </span>
-              </Link>
-            )}
-
             {/* Mobile Hamburger Menu Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -310,26 +283,6 @@ export default function Header({
                   <History className="w-3.5 h-3.5 text-[#A9472D]" />
                   <span>Archival Log ({history.length})</span>
                 </Link>
-
-                {user ? (
-                  <button
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                      logout();
-                    }}
-                    className="text-rose-700 font-semibold cursor-pointer"
-                  >
-                    Sign Out ({user.name})
-                  </button>
-                ) : (
-                  <Link
-                    to="/login"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="text-[#A9472D] font-semibold"
-                  >
-                    Sign In
-                  </Link>
-                )}
               </div>
             </motion.div>
           )}
