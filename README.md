@@ -1,177 +1,168 @@
----
-title: Heritage
-emoji: 🏛️
-colorFrom: purple
-colorTo: gray
-sdk: gradio
-sdk_version: 6.31.0
-python_version: '3.12'
-app_file: app.py
-pinned: false
-license: apache-2.0
----
-
 # Visual Heritage Recognition & Grounded Cultural Discovery Platform
-### Two-Tier Hybrid Architecture: Local CLIP + FAISS Vector Engine, Grounded Knowledge Base & Gemini 2.5 Flash VLM
-**Project No. 30 (SIH 2025 – SIH25052)**
 
-An AI and full-stack cultural preservation platform designed to authenticate, identify, and catalog historical Indian monuments from field photographs, archival survey captures, and camera uploads without hallucination.
+[![Live App on Vercel](https://img.shields.io/badge/Vercel-Live%20Frontend-black?logo=vercel)](https://heritage-monuments.vercel.app)
+[![API on Railway](https://img.shields.io/badge/Railway-Live%20Backend-0B0D0E?logo=railway)](https://backend-production-b023b.up.railway.app)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688?logo=fastapi)](https://fastapi.tiangolo.com)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.2+-EE4C2C?logo=pytorch)](https://pytorch.org)
+[![FAISS](https://img.shields.io/badge/FAISS-Vector%20Search-blue)](https://github.com/facebookresearch/faiss)
+[![Gemini](https://img.shields.io/badge/Gemini-3.1%20Flash--Lite-4285F4?logo=google)](https://deepmind.google/technologies/gemini/)
+
+> **An enterprise-grade multimodal visual recognition and cultural education platform** that identifies global monuments from photographs in under 15ms using vector search, verifies uncertain cases with multimodal AI (Gemini 3.1 Flash-Lite), and serves authoritative, grounded architectural dossiers backed by ASI and UNESCO archives.
 
 ---
 
-## 1. System Architecture Overview
+## 🏛️ System Architecture
 
-```mermaid
-flowchart TD
-    UserUpload["User Field Photograph (JPEG/PNG)"] --> Gatekeeper["Zero-Shot Architectural Gatekeeper (CLIP ViT-B/32)"]
-    UserUpload --> ExifEngine["EXIF GPS Extractor (exifread)"]
-    UserUpload --> QualityCheck["Optical Quality Inspection (Laplacian Blur & Exposure)"]
-    
-    QualityCheck -- Optical Blur Detected --> ReviewReq["State 4: REVIEW_REQUIRED"]
-    
-    Gatekeeper --> GateCheck{"Gatekeeper Score < 0.45?"}
-    GateCheck -- Yes --> NonMon["State 5: NON_MONUMENT_REJECTED"]
-    
-    GateCheck -- No --> FaissSearch["FAISS Vector Retrieval (210 Anchors, IndexFlatIP)"]
-    ExifEngine -. Within 5km of Catalog GPS .-> GeoBoost["Geo-Verification Boost (+8%)"]
-    GeoBoost -.-> CandidateFilter
-    FaissSearch --> CandidateFilter["Unique-Monument Candidate Aggregation"]
-    
-    CandidateFilter --> UncertaintyEngine["Calibrated Uncertainty Engine (Temperature-Scaled)"]
-    
-    UncertaintyEngine --> DecisiveCheck{"Similarity >= 0.80 & Margin >= 0.05?"}
-    DecisiveCheck -- Yes --> VerifiedMatch["State 1: VERIFIED_MATCH (ASI Monograph & Citations)"]
-    
-    DecisiveCheck -- No (Margin < 0.05) --> UncertainMatch["State 2: UNCERTAIN_MATCH (Close Competition)"]
-    DecisiveCheck -- No (Similarity < 0.75) --> UnknownSpecimen["State 3: UNKNOWN_HERITAGE_SPECIMEN"]
-    
-    UncertainMatch --> ExceptionLogger["Curatorial Exception Logging (Persistent Ticket)"]
-    UnknownSpecimen --> Tier2Check{"GEMINI_API_KEY Configured?"}
-    
-    Tier2Check -- Online --> GeminiVLM["Tier-2 Gemini 2.5 Flash VLM Deep Analysis"]
-    Tier2Check -- Offline/Unreachable --> OfflineFallback["Deterministic Curatorial Offline Fallback"]
-    
-    VerifiedMatch --> Frontend["Curatorial Archive Dossier Presentation"]
-    UncertainMatch --> Frontend
-    UnknownSpecimen --> Frontend
-    NonMon --> Frontend
-    ReviewReq --> Frontend
+```text
+[User Photograph Upload / Camera Input]
+                   │
+                   ▼
+       [FastAPI Verification Gateway]
+                   │
+    ┌──────────────┴──────────────┐
+    ▼                             ▼
+[EXIF & Quality Check]    [OpenAI CLIP ViT-B/32]
+                                  │ (512-D Dense Vector)
+                                  ▼
+                     [FAISS Inner-Product Index]
+                     (577 Vectors / 100 Sites)
+                                  │
+                                  ▼
+                    [Uncertainty & Gatekeeper Engine]
+                                  │
+         ┌────────────────────────┴────────────────────────┐
+         │                                                 │
+[Top Match Confidence >= 0.68]               [Ambiguous / Out-of-Catalog]
+         │                                                 │
+         ▼                                                 ▼
+[Tier-1 Instant Match (<15ms)]             [Tier-2 Gemini 3.1 Flash-Lite]
+         │                                 (Multimodal Visual Adjudication)
+         └────────────────────────┬────────────────────────┘
+                                  │
+                                  ▼
+              [Grounded Knowledge Engine (ASI & UNESCO)]
+                                  │
+                                  ▼
+      [Interactive Curatorial Monograph & Dossier Response]
 ```
 
-### Core Architecture Pillars:
-1. **Authoritative Recognition (Policy A)**:
-   - **Zero-Shot Architectural Gatekeeper**: Open-source `openai/clip-vit-base-patch32` rejects non-monument images (documents, landscapes, vehicles, crowds).
-   - **FAISS Vector Retrieval**: `IndexFlatIP(512)` containing 210 unit-normalized vectors across 10 canonical monuments, executing nearest-neighbor search in $< 5\text{ms}$.
-   - **Calibrated Uncertainty Engine**: Enforces 5 explicit decision states (`VERIFIED_MATCH`, `UNCERTAIN_MATCH`, `UNKNOWN_HERITAGE_SPECIMEN`, `NON_MONUMENT_REJECTED`, `REVIEW_REQUIRED`) to prevent forced misattributions.
-2. **Grounded Historical Knowledge Engine**:
-   - 10 comprehensive monument monographs anchored to verified primary sources (Archaeological Survey of India, UNESCO World Heritage Centre, Gazetteers).
-   - Anti-hallucination *Ask the Archive* Q&A with direct statutory citations.
-3. **Cloud Tier-2 Gemini 2.5 Flash Service**:
-   - Deep architectural analysis for uncataloged specimens with resilient deterministic offline fallback.
-4. **Candidate Policy D Shadow Staging Engine**:
-   - Observational shadow execution with single-thread OpenCV bounding, reference SIFT descriptor caching, and 100.0% Policy A response invariance.
-5. **The Curatorial Archive (Frontend)**:
-   - Museum publication aesthetic with Alabaster paper (`#F7F5F0`), Ivory surface cards (`#FDFBF7`), Terracotta stamps (`#9E3B24`), interactive Leaflet cartography, and a live Pipeline Telemetry Inspector.
+---
+
+## 🌟 Key Features
+
+1. **Dual-Tier Hybrid Recognition**:
+   - **Tier-1 (Deterministic)**: Sub-15ms vector retrieval using OpenAI CLIP (`ViT-B/32`) and a pre-indexed FAISS search engine covering 100 canonical cultural monuments.
+   - **Tier-2 (Multimodal AI)**: Automatic escalation to Google Gemini 3.1 Flash-Lite whenever lighting, viewpoints, or out-of-catalog structures introduce uncertainty.
+2. **Grounded Cultural Knowledge**:
+   - Every identified monument is linked directly to authoritative, factual historical and architectural facts with primary citations from the **Archaeological Survey of India (ASI)** and **UNESCO World Heritage Convention**.
+3. **Responsive Mobile-First Interface**:
+   - ATRIUM-inspired curatorial layout with touch-optimized camera scanning, swipeable archival categories, interactive maps, and persistent personal survey logging.
+4. **Calibrated Uncertainty & Anti-Hallucination**:
+   - Strict gatekeeper logic isolates natural rock formations, modern buildings, and unindexed structures, preventing misattribution.
 
 ---
 
-## 2. Quickstart & Demonstration Guide
+## 📁 Repository Structure
+
+```text
+├── backend/
+│   ├── datasets/                # Authoritative 100-site catalogue & schemas
+│   ├── main.py                  # FastAPI core application & endpoints
+│   ├── gemini_service.py        # Gemini 3.1 Flash-Lite tier-2 integration
+│   ├── uncertainty.py           # Multi-criteria confidence & gatekeeper
+│   ├── calibration.py           # Confidence calibration engine
+│   ├── local_feature_engine.py  # Classical SIFT / homography validation
+│   ├── monument_index.faiss     # 577 pre-compiled 512-D FAISS vectors
+│   ├── monument_labels.json     # Label mappings
+│   ├── monuments_metadata.json  # Comprehensive architectural facts
+│   └── requirements.txt         # Backend Python dependencies
+├── frontend/
+│   ├── src/                     # React 19 source code (Desktop & Mobile)
+│   ├── public/                  # Static assets & cultural photography
+│   ├── package.json             # Frontend Node.js dependencies
+│   └── vite.config.js           # Vite build configuration
+├── docs/
+│   └── reports/                 # Complete phase audits, security & testing reports
+├── PROJECT_LINKS.txt            # Live deployment & repository URLs
+├── requirements.txt             # Production container dependencies
+├── Dockerfile                   # Docker production container manifest
+├── vercel.json                  # Vercel deployment configuration
+└── README.md                    # Project documentation & execution guide
+```
+
+---
+
+## 🚀 Quickstart & Local Installation
 
 ### Prerequisites
-- **Python**: 3.10 to 3.12 (Virtual environment configured in `.venv`)
-- **Node.js**: 18+ (Node v20/v22 with `npm`)
+- **Python**: 3.11 or 3.12 (64-bit)
+- **Node.js**: 18.x or 20.x
+- **Google Gemini API Key** (optional for Tier-2, Tier-1 runs 100% offline)
 
----
+### 1. Backend Setup
+```bash
+# Clone the repository
+git clone https://github.com/humaidmalik63-png/Heritage-Recognisation-System.git
+cd Heritage-Recognisation-System
 
-### Step 1: Start the Backend Service
+# Create and activate Python virtual environment
+python -m venv .venv
+# On Windows:
+.venv\Scripts\activate
+# On Linux/macOS:
+source .venv/bin/activate
 
-Open a terminal in `C:\Users\humai\Heritage PJ`:
-```powershell
-.venv\Scripts\python.exe -m uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload
+# Install dependencies
+pip install -r backend/requirements.txt
+
+# Configure environment variables (optional for Gemini)
+cp backend/.env.example backend/.env
+# Edit backend/.env and insert your GEMINI_API_KEY
+
+# Run FastAPI backend server
+uvicorn main:app --app-dir backend --host 127.0.0.1 --port 8001 --reload
 ```
-*Expected Startup Output*:
-```text
-[INFO] Loaded FAISS index with 210 vectors, 210 labels, and 10 monument metadata records.
-[INFO] Loaded Grounded Knowledge Engine: 10 verified records from knowledge_sources.json
-[INFO] Policy D Shadow Staging Engine: ENABLED=False [workers=2, max_queue=10, timeout=500ms]
-[INFO] Engine startup complete. Service ready.
-```
+The backend API is now live at: `http://127.0.0.1:8001` (Docs at `/docs`).
 
----
+### 2. Frontend Setup
+In a new terminal window:
+```bash
+cd frontend
 
-### Step 2: Start the React Frontend
+# Install Node dependencies
+npm install
 
-Open a second terminal in `C:\Users\humai\Heritage PJ\frontend`:
-```powershell
+# Start development server
 npm run dev
 ```
-*Expected Output*:
-```text
-  VITE v6.4.5  ready in 240 ms
-  ➜  Local:   http://localhost:5173/
+The frontend is now running at: `http://localhost:5173` (or `5175`).
+
+---
+
+## 🧪 Testing & Verification
+
+Run the comprehensive test suites:
+```bash
+# Test API endpoints
+python -m pytest backend/test_api.py
+
+# Test uncertainty & gatekeeper logic
+python -m pytest backend/test_uncertainty.py
+
+# Test viewport responsiveness
+python test_phase_10_3_viewports.py
 ```
 
 ---
 
-### Step 3: Run the Demonstration Walkthrough
+## 🌐 Live Production Deployments
 
-1. Open your browser to `http://localhost:5173`.
-2. The user is pre-authenticated as **Dr. Eleanor Vance (Senior Archaeologist & Curator, ASI Fellow)**.
-3. Click on the 1-click test sample cards:
-   - **Taj Mahal Sample**: Triggers `VERIFIED_MATCH` (99.8% confidence), displaying the architectural monograph, Leaflet GIS coordinates, structural features, and primary ASI/UNESCO citations.
-   - **Charminar Sample**: Triggers `VERIFIED_MATCH` with Hyderabad Qutb Shahi provenance.
-   - **Non-Monument Graphic**: Triggers `NON_MONUMENT_REJECTED` via the Zero-Shot Gatekeeper.
-   - **Ambiguous Specimen**: Triggers `UNCERTAIN_MATCH`, creating an interactive ticket in the **Curator Review Exceptions Drawer** (accessible via the top-right button).
-4. Click **"Ask the Archive"**: Query historical facts (e.g. *"Who commissioned the construction?"*). Answers are strictly grounded in statutory sources with direct citation stamps.
+- **Frontend Client**: [https://heritage-monuments.vercel.app](https://heritage-monuments.vercel.app)
+- **Backend API**: [https://backend-production-b023b.up.railway.app](https://backend-production-b023b.up.railway.app)
+- **API Health Check**: [https://backend-production-b023b.up.railway.app/api/health](https://backend-production-b023b.up.railway.app/api/health)
+- **Project Links File**: [`PROJECT_LINKS.txt`](PROJECT_LINKS.txt)
 
 ---
 
-## 3. Automated Verification & Regression Test Suites
-
-All modules are accompanied by automated verification test suites:
-
-```powershell
-# 1. Shadow Engine & Production Invariants (12/12 Passed)
-.venv\Scripts\python.exe backend/test_shadow_staging.py
-
-# 2. Concurrency, Queue Saturation & Kill-Switch Audit (10/10 Passed)
-.venv\Scripts\python.exe backend/test_shadow_concurrency_audit.py
-
-# 3. Uncertainty Engine & 5-State Decision Logic (13/13 Passed)
-.venv\Scripts\python.exe backend/test_uncertainty.py
-
-# 4. Backend REST API Integration Suite (6/6 Passed)
-.venv\Scripts\python.exe backend/test_api.py
-
-# 5. Gemini 2.5 Flash VLM & Offline Fallback Suite (12/12 Passed)
-.venv\Scripts\python.exe backend/test_gemini_integration.py
-
-# 6. Local Feature SIFT/RANSAC Hybrid Engine Suite (16/16 Passed)
-.venv\Scripts\python.exe backend/test_local_feature_engine.py
-
-# 7. End-to-End User Journey & Functional Verification (12/12 Passed)
-.venv\Scripts\python.exe backend/test_e2e_user_journey.py
-
-# 8. Frontend Production Compilation Check (0 Errors)
-npm --prefix frontend run build
-```
-
-**Total Automated Assertions Passing: 81 / 81 (100.0%)**
-
----
-
-## 4. API Endpoints Reference
-
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| `GET` | `/api/health` | Returns live engine status, vector count (210), compute device, and Gemini status. |
-| `GET` | `/api/monuments` | Returns the comprehensive catalog of 10 indexed heritage monuments. |
-| `POST` | `/api/verify-monument` | Upload an image file (`multipart/form-data`) to execute the two-tier verification pipeline. |
-| `GET` | `/api/monuments/{id}/knowledge`| Retrieves the source-backed monograph for a monument. |
-| `GET` | `/api/monuments/{id}/sources` | Retrieves primary statutory citations (ASI, UNESCO, Gazetteers). |
-| `GET` | `/api/monuments/{id}/timeline`| Retrieves verified chronological historical timeline events. |
-| `POST` | `/api/monuments/{id}/ask` | Retrieval-First 'Ask the Archive' Q&A anchored to verified citations. |
-| `GET` | `/api/exceptions` | Retrieves the persistent curatorial review dispute log. |
-| `POST` | `/api/exceptions/{id}/resolve`| Resolves or updates a flagged curatorial exception ticket. |
-| `GET` | `/api/telemetry/gemini` | Returns audit health and rate-limiting metrics for Tier-2 Gemini. |
-| `GET` | `/dataset/{monument}/{img}` | Static reference images served directly for UI previews. |
+## 📄 License & Attribution
+Developed for SIH 2025 / Academic Capstone Submission. Cultural heritage data and photography referenced from the Archaeological Survey of India (ASI) and UNESCO World Heritage Center under fair-use educational guidelines.

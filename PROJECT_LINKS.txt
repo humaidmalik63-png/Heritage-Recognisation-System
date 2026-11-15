@@ -1,0 +1,45 @@
+# PROJECT LINKS & DEPLOYMENT MANIFEST
+# Visual Heritage Recognition & Grounded Cultural Discovery Platform
+
+================================================================================
+PROJECT INFORMATION
+================================================================================
+Project Title:
+Visual Heritage Recognition & Grounded Cultural Discovery Platform
+
+Problem Statement ID:
+SIH25052 (AI-driven Visual Heritage Recognition and Cultural Education)
+
+Registration Numbers of All Group Members:
+- Member 1: [ENTER_REG_NO_1] (Role: Machine Learning / Dual-Tier Recognition Architecture)
+- Member 2: [ENTER_REG_NO_2] (Role: Frontend Development / Mobile Discovery UI)
+- Member 3: [ENTER_REG_NO_3] (Role: Cloud Deployment / Testing & Quality Assurance)
+- Member 4: [ENTER_REG_NO_4] (Role: Dataset Curation & Knowledge Graph Integration)
+
+================================================================================
+REPOSITORIES & LIVE DEPLOYMENT LINKS
+================================================================================
+GitHub Repository Link:
+https://github.com/humaidmalik63-png/Heritage-Recognisation-System
+
+Live Deployed Project Link (Frontend Client):
+https://heritage-monuments.vercel.app
+
+Live Deployed Backend API Link:
+https://backend-production-b023b.up.railway.app
+
+Backend Health Check Endpoint:
+https://backend-production-b023b.up.railway.app/api/health
+
+Interactive API Documentation:
+https://backend-production-b023b.up.railway.app/docs
+
+================================================================================
+PLATFORM ARCHITECTURE & SPECIFICATIONS
+================================================================================
+- Vision-Language Model: OpenAI CLIP ViT-B/32 (512-D Dense Feature Extraction)
+- Vector Index: FAISS Flat Inner-Product Index (577 normalized embeddings across 100 sites)
+- Tier-2 Adjudication VLM: Google Gemini 3.1 Flash-Lite (Multimodal Verification)
+- Backend Framework: FastAPI on Python 3.12 with Uvicorn ASGI server
+- Frontend Framework: React 19 + Vite + Tailwind CSS + Framer Motion
+- Hosting Infrastructure: Vercel (Frontend Global Edge CDN) + Railway (Backend Container)
