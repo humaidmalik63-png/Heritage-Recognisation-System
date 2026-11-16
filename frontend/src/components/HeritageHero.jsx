@@ -8,6 +8,7 @@ import {
   ctaStaggerVariants,
   buttonTapVariants,
 } from '../utils/animations';
+import { DISPLAY_CATALOGUE_SIZE, DISPLAY_ANCHOR_COUNT } from '../constants/displayMetrics';
 
 // Authenticated genuine heritage photographs for the desktop continuous mosaic (A8: all placeholders replaced with real photos)
 const COLUMN_1 = [
@@ -20,7 +21,7 @@ const COLUMN_1 = [
 ];
 
 const COLUMN_2 = [
-  { type: 'photo', src: '/assets/heritage/hampi-stone-chariot.jpg', label: 'Stone Chariot, Hampi', location: 'Vijayanagara, Karnataka, India', aspect: 'tall' },
+  { type: 'photo', src: '/assets/heritage/hampi-chariot.jpg', label: 'Stone Chariot, Hampi', location: 'Vijayanagara, Karnataka, India', aspect: 'tall' },
   { type: 'photo', src: '/assets/heritage/petra.jpg', label: 'Al-Khazneh, Petra', location: "Ma'an Governorate, Jordan", aspect: 'tall' },
   { type: 'photo', src: '/assets/heritage/machu-picchu.jpg', label: 'Machu Picchu', location: 'Cusco, Peru', aspect: 'tall' },
   { type: 'photo', src: '/assets/heritage/qutub-minar.jpg', label: 'Qutub Minar', location: 'New Delhi, India', aspect: 'standard' },
@@ -37,7 +38,7 @@ const COLUMN_3 = [
   { type: 'photo', src: '/assets/heritage/ajanta-caves.jpg', label: 'Ajanta Cave Temples', location: 'Maharashtra, India', aspect: 'tall' },
 ];
 
-export default function HeritageHero({ onRecognizeClick, onExploreClick, readyCount = 101 }) {
+export default function HeritageHero({ onRecognizeClick, onExploreClick, readyCount = DISPLAY_CATALOGUE_SIZE }) {
   const shouldReduceMotion = useReducedMotion();
 
   const renderColumn = (items, direction = 'down', speed = 28) => {
@@ -131,7 +132,7 @@ export default function HeritageHero({ onRecognizeClick, onExploreClick, readyCo
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#A9472D]" />
             </span>
             <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-[#171816] font-semibold">
-              ASI & UNESCO REGISTER // 100 CANONICAL SITES
+              ASI & UNESCO REGISTER // {DISPLAY_CATALOGUE_SIZE} CANONICAL SITES
             </span>
           </div>
 
@@ -147,7 +148,7 @@ export default function HeritageHero({ onRecognizeClick, onExploreClick, readyCo
 
           {/* 3. Short Supporting Paragraph */}
           <p className="text-sm sm:text-base text-[#6E7069] font-sans leading-relaxed">
-            Discover the world's cultural heritage through visual recognition, grounded historical knowledge and intelligent cultural exploration across 100 canonical monuments.
+            Discover the world's cultural heritage through visual recognition, grounded historical knowledge and intelligent cultural exploration across {DISPLAY_CATALOGUE_SIZE} canonical monuments.
           </p>
 
           {/* 4. One Striking Dominant Heritage Photograph (4:3 or 5:4 ratio, authentic crop, subtle rounded corners) */}
@@ -197,7 +198,7 @@ export default function HeritageHero({ onRecognizeClick, onExploreClick, readyCo
               <Compass className="w-4 h-4 text-[#B99A5B]" />
               <span>Explore the Archive</span>
               <span className="font-mono text-[10px] text-[#A9472D] bg-[#A9472D]/10 px-2 py-0.5 rounded-full font-bold">
-                {readyCount || 101} Sites
+                {DISPLAY_CATALOGUE_SIZE} Sites
               </span>
             </button>
           </div>
@@ -208,7 +209,7 @@ export default function HeritageHero({ onRecognizeClick, onExploreClick, readyCo
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               <span>OpenAI CLIP ViT-B/32 (512-D)</span>
             </span>
-            <span className="font-bold text-[#171816]">577 Anchors</span>
+            <span className="font-bold text-[#171816]">{DISPLAY_ANCHOR_COUNT} Anchors</span>
           </div>
         </div>
 
@@ -232,7 +233,7 @@ export default function HeritageHero({ onRecognizeClick, onExploreClick, readyCo
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-[#A9472D]" />
                 </span>
                 <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#171816] font-semibold">
-                  ASI & UNESCO REGISTER // 100 CANONICAL SITES
+                  ASI & UNESCO REGISTER // {DISPLAY_CATALOGUE_SIZE} CANONICAL SITES
                 </span>
               </div>
             </motion.div>
@@ -255,7 +256,7 @@ export default function HeritageHero({ onRecognizeClick, onExploreClick, readyCo
               variants={heroFadeRiseVariants}
               className="text-base xl:text-lg text-[#6E7069] font-sans leading-relaxed max-w-xl"
             >
-              Discover the world's cultural heritage through visual recognition, grounded historical knowledge and intelligent cultural exploration across 100 canonical world heritage monuments.
+              Discover the world's cultural heritage through visual recognition, grounded historical knowledge and intelligent cultural exploration across {DISPLAY_CATALOGUE_SIZE} canonical world heritage monuments.
             </motion.p>
 
             {/* Interactive Dual Action Suite */}
@@ -287,7 +288,7 @@ export default function HeritageHero({ onRecognizeClick, onExploreClick, readyCo
                 <Compass className="w-5 h-5 text-[#B99A5B] transition-transform group-hover:rotate-45 duration-300" />
                 <span>Explore the Archive</span>
                 <span className="font-mono text-[10px] text-[#A9472D] bg-[#A9472D]/10 px-2 py-0.5 rounded-full font-bold ml-0.5">
-                  {readyCount || 101} Sites
+                  {DISPLAY_CATALOGUE_SIZE} Sites
                 </span>
               </motion.button>
             </motion.div>
@@ -305,7 +306,7 @@ export default function HeritageHero({ onRecognizeClick, onExploreClick, readyCo
 
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#FFFEFA] border border-[#E3DFD5] text-[#171816] shadow-xs">
                 <Database className="w-3 h-3 text-[#B99A5B]" />
-                <span className="font-semibold">577 FAISS Anchors</span>
+                <span className="font-semibold">{DISPLAY_ANCHOR_COUNT} FAISS Anchors</span>
               </div>
 
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#FFFEFA] border border-[#E3DFD5] text-[#171816] shadow-xs">
@@ -320,7 +321,7 @@ export default function HeritageHero({ onRecognizeClick, onExploreClick, readyCo
               className="grid grid-cols-3 gap-3 pt-2 text-[#171816]"
             >
               <div className="p-3 rounded-xl bg-[#FFFEFA]/80 border border-[#E3DFD5]/80">
-                <span className="font-display font-bold text-xl leading-none block">100</span>
+                <span className="font-display font-bold text-xl leading-none block">{DISPLAY_CATALOGUE_SIZE}</span>
                 <span className="font-mono text-[10px] uppercase text-[#6E7069] tracking-wider mt-1 block">
                   Canonical Sites
                 </span>

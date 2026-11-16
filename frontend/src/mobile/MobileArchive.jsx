@@ -1,20 +1,12 @@
 import React, { useState, useMemo } from 'react';
 import { Search, MapPin, ScanLine, Filter, X, ChevronDown } from 'lucide-react';
 import { LOCAL_HERITAGE_IMAGES } from '../constants/heritageImages';
+import { DISPLAY_CATALOGUE_SIZE } from '../constants/displayMetrics';
 
-export default function MobileArchive({ monuments = {}, readyCount = 101, onTestSample, onSelectMonument }) {
+export default function MobileArchive({ monuments = {}, readyCount = DISPLAY_CATALOGUE_SIZE, onTestSample, onSelectMonument }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [visibleCount, setVisibleCount] = useState(16);
-
-  const categories = [
-    { id: 'all', label: `All ${readyCount || 101} Sites` },
-    { id: 'asi', label: 'ASI National' },
-    { id: 'unesco', label: 'UNESCO WHC' },
-    { id: 'temple', label: 'Temples & Caves' },
-    { id: 'fort', label: 'Forts & Palaces' },
-    { id: 'global', label: 'Global Landmarks' },
-  ];
 
   const entries = useMemo(() => {
     return Object.entries(monuments || {}).map(([key, item]) => ({
@@ -22,6 +14,15 @@ export default function MobileArchive({ monuments = {}, readyCount = 101, onTest
       ...item,
     }));
   }, [monuments]);
+
+  const categories = useMemo(() => [
+    { id: 'all', label: `All ${entries.length || 101} Sites` },
+    { id: 'asi', label: 'ASI National' },
+    { id: 'unesco', label: 'UNESCO WHC' },
+    { id: 'temple', label: 'Temples & Caves' },
+    { id: 'fort', label: 'Forts & Palaces' },
+    { id: 'global', label: 'Global Landmarks' },
+  ], [entries.length]);
 
   const filtered = useMemo(() => {
     return entries.filter((item) => {

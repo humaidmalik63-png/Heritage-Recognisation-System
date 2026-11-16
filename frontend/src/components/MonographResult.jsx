@@ -23,6 +23,7 @@ import {
   Navigation
 } from 'lucide-react';
 import MonumentMap from './MonumentMap';
+import { DISPLAY_CATALOGUE_SIZE } from '../constants/displayMetrics';
 import PipelineInspector from './PipelineInspector';
 import GroundedKnowledgeViewer from './GroundedKnowledgeViewer';
 import { LOCAL_HERITAGE_IMAGES } from '../constants/heritageImages';
@@ -498,7 +499,7 @@ export default function MonographResult({ result, imagePreview, onReset }) {
                   Verified geographical coordinates unavailable for this site; curatorial geodetic audit pending.
                 </span>
                 <span className="text-[11px] text-archive-muted">
-                  Spatial boundaries and geodetic reference are pending ingestion into the 100-site heritage register.
+                  Spatial boundaries and geodetic reference are pending ingestion into the {DISPLAY_CATALOGUE_SIZE}-site heritage register.
                 </span>
               </div>
             )}

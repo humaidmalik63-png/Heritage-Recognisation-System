@@ -16,8 +16,9 @@ import {
   Navigation
 } from 'lucide-react';
 import MonumentMap from './MonumentMap';
+import { DISPLAY_CATALOGUE_SIZE } from '../constants/displayMetrics';
 
-export default function CatalogDrawer({ isOpen, onClose, monuments, readyCount = 101 }) {
+export default function CatalogDrawer({ isOpen, onClose, monuments, readyCount = DISPLAY_CATALOGUE_SIZE }) {
   const [selectedKey, setSelectedKey] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [regionFilter, setRegionFilter] = useState('ALL'); // 'ALL', 'INDIA', 'INTERNATIONAL'
@@ -25,6 +26,14 @@ export default function CatalogDrawer({ isOpen, onClose, monuments, readyCount =
   const [categoryFilter, setCategoryFilter] = useState('ALL');
 
   const monumentEntries = useMemo(() => Object.entries(monuments || {}), [monuments]);
+
+  const indiaCount = useMemo(() => {
+    return monumentEntries.filter(([_, item]) => (item.country || '').toLowerCase() === 'india').length;
+  }, [monumentEntries]);
+
+  const globalCount = useMemo(() => {
+    return monumentEntries.filter(([_, item]) => (item.country || '').toLowerCase() !== 'india').length;
+  }, [monumentEntries]);
 
   // Extract unique categories
   const categories = useMemo(() => {
@@ -100,7 +109,7 @@ export default function CatalogDrawer({ isOpen, onClose, monuments, readyCount =
                 <span>ASI & GLOBAL HERITAGE REGISTRY // PHASE 8.6</span>
               </div>
               <h2 className="font-serif text-2xl font-bold text-archive-charcoal mt-0.5">
-                Authoritative {readyCount || 101}-Site Catalogue
+                Authoritative {DISPLAY_CATALOGUE_SIZE}-Site Catalogue
               </h2>
               <div className="text-xs font-mono text-archive-stone mt-0.5">
                 50 Indian Flagship Monuments • 50 International Wonders
@@ -151,7 +160,7 @@ export default function CatalogDrawer({ isOpen, onClose, monuments, readyCount =
                       : 'text-archive-stone hover:text-archive-charcoal'
                   }`}
                 >
-                  All (100)
+                  All ({monumentEntries.length || 101})
                 </button>
                 <button
                   onClick={() => setRegionFilter('INDIA')}
@@ -161,7 +170,7 @@ export default function CatalogDrawer({ isOpen, onClose, monuments, readyCount =
                       : 'text-archive-stone hover:text-archive-charcoal'
                   }`}
                 >
-                  India (50)
+                  India ({indiaCount || 51})
                 </button>
                 <button
                   onClick={() => setRegionFilter('INTERNATIONAL')}
@@ -171,7 +180,7 @@ export default function CatalogDrawer({ isOpen, onClose, monuments, readyCount =
                       : 'text-archive-stone hover:text-archive-charcoal'
                   }`}
                 >
-                  Global (50)
+                  Global ({globalCount || 50})
                 </button>
               </div>
 
@@ -408,7 +417,7 @@ export default function CatalogDrawer({ isOpen, onClose, monuments, readyCount =
           <div className="p-4 bg-archive-parchment/70 border-t border-archive-hairline flex items-center justify-between text-xs font-mono text-archive-muted">
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700" />
-              <span>{readyCount || 101} UNIQUE SITES • 100% AUDITED REPOSITORY</span>
+              <span>{DISPLAY_CATALOGUE_SIZE} UNIQUE SITES • 100% AUDITED REPOSITORY</span>
             </span>
             <button
               onClick={onClose}

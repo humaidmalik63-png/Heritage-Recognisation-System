@@ -1,10 +1,11 @@
 import React from 'react';
 import { Landmark, AlertTriangle } from 'lucide-react';
+import { DISPLAY_CATALOGUE_SIZE, DISPLAY_ANCHOR_COUNT } from '../constants/displayMetrics';
 
 export default function MobileHeader({
   health,
   onOpenCatalog,
-  monumentsCount = 100,
+  monumentsCount = DISPLAY_CATALOGUE_SIZE,
   onOpenExceptions,
   pendingExceptionsCount = 0,
 }) {
@@ -25,7 +26,7 @@ export default function MobileHeader({
             }`}
           />
           <span className="text-[#171816] font-semibold">
-            {health?.faiss_vectors_loaded || 577} VECTORS
+            {DISPLAY_ANCHOR_COUNT} VECTORS
           </span>
         </div>
       </div>
@@ -48,10 +49,10 @@ export default function MobileHeader({
           <button
             onClick={onOpenCatalog}
             className="flex items-center gap-1 px-2 py-1 rounded-lg bg-[#FFFEFA] border border-[#E3DFD5] hover:border-[#171816] text-[#171816] text-[10px] font-mono font-medium transition-colors shadow-2xs active:scale-95"
-            title="Open 100 Canonical Monuments Catalogue"
+            title={`Open ${DISPLAY_CATALOGUE_SIZE} Canonical Monuments Catalogue`}
           >
             <Landmark className="w-3 h-3 text-[#B99A5B]" />
-            <span>{monumentsCount}</span>
+            <span>{DISPLAY_CATALOGUE_SIZE}</span>
           </button>
 
           {/* Exceptions / Human Review Pill */}

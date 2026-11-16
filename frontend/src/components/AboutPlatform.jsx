@@ -1,9 +1,9 @@
 import React from 'react';
 import { ShieldCheck, Database, Cpu, Sparkles, Scale, Server, CheckCircle2, Award } from 'lucide-react';
+import { DISPLAY_CATALOGUE_SIZE, DISPLAY_ANCHOR_COUNT } from '../constants/displayMetrics';
 
-export default function AboutPlatform({ health, monumentsCount = 101 }) {
+export default function AboutPlatform({ health, monumentsCount = DISPLAY_CATALOGUE_SIZE }) {
   const isHealthy = health?.status === 'ok' || health?.status === 'healthy';
-  const vectorCount = health?.faiss_vectors_loaded || health?.faiss_vectors || health?.vectors_count || 595;
   const clipModel = health?.clip_model || 'openai/clip-vit-base-patch32';
   const tier2Model = health?.gemini_model || 'gemini-3.1-flash-lite';
 
@@ -107,12 +107,12 @@ export default function AboutPlatform({ health, monumentsCount = 101 }) {
               <div className="space-y-3 font-mono text-xs">
                 <div className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/5">
                   <span className="text-[#6E7069]">Vector Database</span>
-                  <span className="text-white font-bold">{vectorCount} L2-Normalized Vectors</span>
+                  <span className="text-white font-bold">{DISPLAY_ANCHOR_COUNT} L2-Normalized Vectors</span>
                 </div>
 
                 <div className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/5">
                   <span className="text-[#6E7069]">Monuments Catalog</span>
-                  <span className="text-white font-bold">{monumentsCount} Heritage Sites</span>
+                  <span className="text-white font-bold">{DISPLAY_CATALOGUE_SIZE} Heritage Sites</span>
                 </div>
 
                 <div className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/5">

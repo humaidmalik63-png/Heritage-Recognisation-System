@@ -2,11 +2,11 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Filter, MapPin, ScanLine, ArrowUpRight, Compass, Database, Globe, ChevronDown, Check, RefreshCw } from 'lucide-react';
 import { cardStaggerContainer, cardStaggerItem } from '../utils/animations';
-import { LOCAL_HERITAGE_IMAGES } from '../constants/heritageImages';
+import { DISPLAY_CATALOGUE_SIZE } from '../constants/displayMetrics';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || 'http://localhost:8001';
 
-export default function ExploreArchive({ monuments = {}, readyCount = 101, onTestSample, onOpenCatalogDrawer }) {
+export default function ExploreArchive({ monuments = {}, readyCount = DISPLAY_CATALOGUE_SIZE, onTestSample, onOpenCatalogDrawer }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [regionFilter, setRegionFilter] = useState('ALL'); // 'ALL' | 'INDIA' | 'INTERNATIONAL'
   const [categoryFilter, setCategoryFilter] = useState('ALL');
@@ -85,7 +85,7 @@ export default function ExploreArchive({ monuments = {}, readyCount = 101, onTes
           <div>
             <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider text-[#A9472D] font-bold mb-2 sm:mb-3">
               <Database className="w-3.5 h-3.5 text-[#A9472D]" />
-              <span>THE RECOGNITION ARCHIVE // {readyCount || entries.length || 101} SITES</span>
+              <span>THE RECOGNITION ARCHIVE // {DISPLAY_CATALOGUE_SIZE} SITES</span>
             </div>
             <h2 className="font-display font-semibold text-2xl sm:text-4xl lg:text-5xl text-[#171816] tracking-tight leading-[1.08]">
               Explore the Indexed Corpus.
@@ -223,7 +223,6 @@ export default function ExploreArchive({ monuments = {}, readyCount = 101, onTes
             displayed.map(([key, item]) => {
             const isReady = item.recognition_readiness === 'RECOGNITION_READY';
             const locationStr = item.location || [item.city_region, item.state_province, item.country].filter(Boolean).join(', ') || 'Global Landmark';
-            const thumb = LOCAL_HERITAGE_IMAGES[key] || null;
             const categoryLabel = item.category ? (item.category.charAt(0).toUpperCase() + item.category.slice(1)) : 'HERITAGE';
 
             return (
@@ -232,24 +231,6 @@ export default function ExploreArchive({ monuments = {}, readyCount = 101, onTes
                 className="group bg-[#FFFEFA] border border-[#E3DFD5] rounded-xl sm:rounded-2xl p-3 sm:p-4 flex flex-col justify-between transition-all duration-200 hover:border-[#171816]/30 hover:shadow-md"
               >
                 <div>
-                  {/* Card Thumbnail Header (A8: Desktop cards now have thumbnails) */}
-                  {thumb && (
-                    <div
-                      onClick={() => handleTestInScanner(key)}
-                      className="relative aspect-16/10 w-full overflow-hidden rounded-xl mb-3 bg-neutral-100 border border-[#E3DFD5]/50 cursor-pointer group"
-                    >
-                      <img
-                        src={thumb}
-                        alt={item.monument_name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        loading="lazy"
-                      />
-                      <span className="absolute top-1.5 left-1.5 px-1.5 py-0.2 rounded bg-black/60 backdrop-blur-xs text-[8px] font-mono text-white uppercase font-bold">
-                        {item.is_asi_protected ? 'ASI' : (item.is_unesco_site ? 'UNESCO' : (item.country || 'HERITAGE'))}
-                      </span>
-                    </div>
-                  )}
-
                   {/* Card Header with Category & Readiness */}
                   <div className="flex items-center justify-between text-[9px] sm:text-[10px] font-mono pb-2 border-b border-[#E3DFD5]/70 mb-2">
                     <span className="uppercase text-[#A9472D] font-bold tracking-wider leading-tight">

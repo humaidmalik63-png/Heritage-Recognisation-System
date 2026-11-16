@@ -11,13 +11,14 @@ import { verifyMonumentImage } from '../api';
 import { useAuth } from '../context/AuthContext';
 import { AlertCircle, ScanLine, ArrowDown, Sparkles } from 'lucide-react';
 import { LOCAL_HERITAGE_IMAGES } from '../constants/heritageImages';
+import { DISPLAY_CATALOGUE_SIZE } from '../constants/displayMetrics';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || 'http://localhost:8001';
 
 export default function Dashboard({
   onExceptionCreated,
   monuments = {},
-  readyCount = 101,
+  readyCount = DISPLAY_CATALOGUE_SIZE,
   health = null,
   onOpenCatalog = () => {},
   isLoading: propIsLoading,

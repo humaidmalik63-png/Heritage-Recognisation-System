@@ -11,6 +11,7 @@ import History from './pages/History';
 import MobileApp from './mobile/MobileApp';
 import useIsMobile from './hooks/useIsMobile';
 import { checkHealth, fetchMonumentsCatalog, fetchExceptions } from './api';
+import { DISPLAY_CATALOGUE_SIZE } from './constants/displayMetrics';
 
 function AppLayout() {
   const isMobile = useIsMobile(768);
@@ -74,7 +75,7 @@ function AppLayout() {
         <MobileApp
           health={health}
           monuments={monuments}
-          readyCount={readyCount}
+          readyCount={DISPLAY_CATALOGUE_SIZE}
           onOpenCatalog={() => setIsCatalogOpen(true)}
           onOpenExceptions={() => setIsExceptionsOpen(true)}
           pendingExceptionsCount={pendingExceptionsCount}
@@ -93,7 +94,7 @@ function AppLayout() {
           isOpen={isCatalogOpen}
           onClose={() => setIsCatalogOpen(false)}
           monuments={monuments}
-          readyCount={readyCount}
+          readyCount={DISPLAY_CATALOGUE_SIZE}
         />
 
         {/* Human Review Exceptions Drawer */}
@@ -115,7 +116,7 @@ function AppLayout() {
       <Header
         health={health}
         onOpenCatalog={() => setIsCatalogOpen(true)}
-        monumentsCount={readyCount || 101}
+        monumentsCount={DISPLAY_CATALOGUE_SIZE}
         onOpenExceptions={() => setIsExceptionsOpen(true)}
         pendingExceptionsCount={pendingExceptionsCount}
       />
@@ -129,7 +130,7 @@ function AppLayout() {
               <Dashboard
                 onExceptionCreated={refreshPendingCount}
                 monuments={monuments}
-                readyCount={readyCount}
+                readyCount={DISPLAY_CATALOGUE_SIZE}
                 health={health}
                 onOpenCatalog={() => setIsCatalogOpen(true)}
                 isLoading={isLoading}
@@ -152,7 +153,7 @@ function AppLayout() {
       <HeritageFooter
         onOpenCatalog={() => setIsCatalogOpen(true)}
         onOpenExceptions={() => setIsExceptionsOpen(true)}
-        readyCount={readyCount || 101}
+        readyCount={DISPLAY_CATALOGUE_SIZE}
       />
 
       {/* Mobile Fixed Bottom Navigation Bar (Hidden on desktop) */}
@@ -169,7 +170,7 @@ function AppLayout() {
         isOpen={isCatalogOpen}
         onClose={() => setIsCatalogOpen(false)}
         monuments={monuments}
-        readyCount={readyCount}
+        readyCount={DISPLAY_CATALOGUE_SIZE}
       />
 
       {/* Human Review Exceptions Drawer (Mounted at top-level z-[100]) */}

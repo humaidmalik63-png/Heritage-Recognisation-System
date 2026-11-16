@@ -2,11 +2,12 @@ import React from 'react';
 import MobileHeader from './MobileHeader';
 import MobileBottomNav from './MobileBottomNav';
 import './mobile.css';
+import { DISPLAY_CATALOGUE_SIZE } from '../constants/displayMetrics';
 
 export default function MobileLayout({
   health,
   onOpenCatalog,
-  monumentsCount = 100,
+  monumentsCount = DISPLAY_CATALOGUE_SIZE,
   onOpenExceptions,
   pendingExceptionsCount = 0,
   activeTab,

@@ -2,6 +2,7 @@ import React from 'react';
 import { Camera, Compass, ArrowRight, ShieldCheck, MapPin, Sparkles, ChevronRight, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
+import { DISPLAY_CATALOGUE_SIZE, DISPLAY_ANCHOR_COUNT } from '../constants/displayMetrics';
 
 const FEATURED_MONUMENTS = [
   {
@@ -70,7 +71,7 @@ const FEATURED_MONUMENTS = [
   },
 ];
 
-export default function MobileDiscover({ onSelectTab, onTestSample, onSelectMonument, readyCount = 101 }) {
+export default function MobileDiscover({ onSelectTab, onTestSample, onSelectMonument, readyCount = DISPLAY_CATALOGUE_SIZE }) {
   const { history } = useAuth();
   const recentScans = Array.isArray(history) ? history.slice(0, 5) : [];
 
@@ -89,7 +90,7 @@ export default function MobileDiscover({ onSelectTab, onTestSample, onSelectMonu
           <span className="italic font-normal text-[#A9472D]">holds a story.</span>
         </h1>
         <p className="font-sans text-xs xs:text-sm text-[#6E7069] leading-relaxed max-w-sm">
-          Discover the world&apos;s cultural heritage through visual recognition, grounded historical knowledge and intelligent cultural exploration across 100 canonical monuments.
+          Discover the world&apos;s cultural heritage through visual recognition, grounded historical knowledge and intelligent cultural exploration across {DISPLAY_CATALOGUE_SIZE} canonical monuments.
         </p>
       </div>
 
@@ -138,7 +139,7 @@ export default function MobileDiscover({ onSelectTab, onTestSample, onSelectMonu
           className="flex items-center justify-center gap-2 py-3 px-3 rounded-xl bg-[#FFFEFA] hover:bg-[#F5F3ED] text-[#171816] border border-[#E3DFD5] font-mono text-xs font-semibold tracking-wider uppercase shadow-2xs transition-transform active:scale-97 cursor-pointer"
         >
           <Compass className="w-4 h-4 text-[#B99A5B]" />
-          <span>{readyCount || 101} Sites</span>
+          <span>{DISPLAY_CATALOGUE_SIZE} Sites</span>
         </button>
       </div>
 
@@ -157,7 +158,7 @@ export default function MobileDiscover({ onSelectTab, onTestSample, onSelectMonu
             onClick={() => onSelectTab('archive')}
             className="flex items-center gap-1 text-xs font-mono text-[#A9472D] font-semibold"
           >
-            <span>All 100</span>
+            <span>All {DISPLAY_CATALOGUE_SIZE}</span>
             <ChevronRight className="w-3.5 h-3.5" />
           </button>
         </div>
@@ -306,7 +307,7 @@ export default function MobileDiscover({ onSelectTab, onTestSample, onSelectMonu
             <div className="text-xs">
               <p className="font-medium text-[#171816]">512-D CLIP & FAISS Matching</p>
               <p className="text-[#6E7069] text-[11px] leading-relaxed">
-                Matches visual features against 577 indexed monument centroids in &lt;15ms.
+                Matches visual features against {DISPLAY_ANCHOR_COUNT} indexed monument centroids in &lt;15ms.
               </p>
             </div>
           </div>

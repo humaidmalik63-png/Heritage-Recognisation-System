@@ -10,11 +10,12 @@ import {
   Menu,
   X,
 } from 'lucide-react';
+import { DISPLAY_CATALOGUE_SIZE, DISPLAY_ANCHOR_COUNT } from '../constants/displayMetrics';
 
 export default function Header({
   health,
   onOpenCatalog,
-  monumentsCount = 101,
+  monumentsCount = DISPLAY_CATALOGUE_SIZE,
   onOpenExceptions,
   pendingExceptionsCount = 0,
 }) {
@@ -95,9 +96,9 @@ export default function Header({
             </div>
 
             <span className="hidden md:inline-flex items-center gap-1 text-[#6E7069] text-[10px] font-mono border-l border-[#E3DFD5] pl-2.5">
-              <span>{health?.faiss_vectors_loaded || 595} Vectors</span>
+              <span>{DISPLAY_ANCHOR_COUNT} Vectors</span>
               <span>•</span>
-              <span>{monumentsCount} Sites</span>
+              <span>{DISPLAY_CATALOGUE_SIZE} Sites</span>
             </span>
           </div>
         </div>
@@ -168,7 +169,7 @@ export default function Header({
                 <BookOpen className="w-3 h-3 text-[#A9472D]" />
                 <span className="uppercase">Catalogue</span>
                 <span className="font-bold text-[#A9472D] bg-[#A9472D]/10 px-1.5 py-0.2 rounded-full text-[10px]">
-                  {monumentsCount}
+                  {DISPLAY_CATALOGUE_SIZE}
                 </span>
               </button>
 
@@ -264,7 +265,7 @@ export default function Header({
                   className="p-2.5 text-left bg-[#F5F3ED] rounded-xl border border-[#E3DFD5] hover:bg-[#FFFEFA] flex items-center justify-between"
                 >
                   <span>Catalogue</span>
-                  <span className="text-[#A9472D] font-bold">({monumentsCount})</span>
+                  <span className="text-[#A9472D] font-bold">({DISPLAY_CATALOGUE_SIZE})</span>
                 </button>
                 <button
                   onClick={() => scrollToSection('about')}

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Landmark, ArrowUp, ShieldCheck, Database, Layers } from 'lucide-react';
+import { DISPLAY_CATALOGUE_SIZE, DISPLAY_ANCHOR_COUNT } from '../constants/displayMetrics';
 
-export default function HeritageFooter({ onOpenCatalog, onOpenExceptions, readyCount = 101 }) {
+export default function HeritageFooter({ onOpenCatalog, onOpenExceptions, readyCount = DISPLAY_CATALOGUE_SIZE }) {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -26,7 +27,7 @@ export default function HeritageFooter({ onOpenCatalog, onOpenExceptions, readyC
             </p>
             <div className="pt-2 flex items-center gap-2 font-mono text-[11px] text-[#6E7069]">
               <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-              <span>{readyCount || 101}-Site Multimodal Corpus • 595 FAISS Anchors</span>
+              <span>{DISPLAY_CATALOGUE_SIZE}-Site Multimodal Corpus • {DISPLAY_ANCHOR_COUNT} FAISS Anchors</span>
             </div>
           </div>
 
@@ -43,7 +44,7 @@ export default function HeritageFooter({ onOpenCatalog, onOpenExceptions, readyC
               </li>
               <li>
                 <a href="#archive" className="hover:text-white transition-colors">
-                  Indexed Corpus ({readyCount || 101})
+                  Indexed Corpus ({DISPLAY_CATALOGUE_SIZE})
                 </a>
               </li>
               <li>

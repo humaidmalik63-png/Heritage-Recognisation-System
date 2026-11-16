@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Camera, Image as ImageIcon, RefreshCw, X, AlertCircle, AlertTriangle, RefreshCcw } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { DISPLAY_ANCHOR_COUNT } from '../constants/displayMetrics';
 
 // Must match the backend's MAX_UPLOAD_BYTES (15 MB) in backend/main.py.
 const MAX_UPLOAD_BYTES = 15 * 1024 * 1024;
@@ -156,7 +157,7 @@ export default function MobileRecognition({
                     Analyzing Vector Embeddings ({elapsedSeconds}s)
                   </p>
                   <p className="text-[11px] text-white/70">
-                    Extracting 512-D CLIP features & searching 595 vectors...
+                    Extracting 512-D CLIP features & searching {DISPLAY_ANCHOR_COUNT} vectors...
                   </p>
                 </div>
 

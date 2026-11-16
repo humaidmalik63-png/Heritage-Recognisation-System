@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Cpu, ShieldCheck, BookOpen, AlertTriangle, ArrowRight, Layers, Database } from 'lucide-react';
+import { DISPLAY_ANCHOR_COUNT } from '../constants/displayMetrics';
 
 const STAGES = [
   {
@@ -10,8 +11,8 @@ const STAGES = [
     icon: Cpu,
     color: '#A9472D',
     description:
-      'The uploaded photograph is preprocessed and converted into a 512-dimensional dense visual embedding via openai/clip-vit-base-patch32. The vector is normalized (L2) and queried against a 577-anchor faiss.IndexFlatIP index in under 15 milliseconds.',
-    specs: ['512-D Dense Vector', '577 Anchor Embeddings', '< 15 ms Retrieval'],
+      `The uploaded photograph is preprocessed and converted into a 512-dimensional dense visual embedding via openai/clip-vit-base-patch32. The vector is normalized (L2) and queried against a ${DISPLAY_ANCHOR_COUNT}-anchor faiss.IndexFlatIP index in under 15 milliseconds.`,
+    specs: ['512-D Dense Vector', `${DISPLAY_ANCHOR_COUNT} Anchor Embeddings`, '< 15 ms Retrieval'],
   },
   {
     step: '02',

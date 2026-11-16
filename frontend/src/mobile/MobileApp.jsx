@@ -10,13 +10,14 @@ import { useAuth } from '../context/AuthContext';
 import { verifyMonumentImage } from '../api';
 import { BookOpen, ShieldCheck, Cpu, Database, Info, Trash2, MapPin } from 'lucide-react';
 import { LOCAL_HERITAGE_IMAGES } from '../constants/heritageImages';
+import { DISPLAY_CATALOGUE_SIZE, DISPLAY_ANCHOR_COUNT } from '../constants/displayMetrics';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8001';
 
 export default function MobileApp({
   health,
   monuments = {},
-  readyCount = 101,
+  readyCount = DISPLAY_CATALOGUE_SIZE,
   onOpenCatalog,
   onOpenExceptions,
   pendingExceptionsCount = 0,
@@ -372,7 +373,7 @@ export default function MobileApp({
               <div className="p-3 rounded-xl bg-[#FFFEFA] border border-[#E3DFD5] space-y-1">
                 <Database className="w-4 h-4 text-[#B99A5B]" />
                 <p className="font-bold text-[#171816] text-[11px]">FAISS Vector Index</p>
-                <p className="text-[#6E7069] text-[10px]">595 pre-computed monument centroid vectors</p>
+                <p className="text-[#6E7069] text-[10px]">{DISPLAY_ANCHOR_COUNT} pre-computed monument centroid vectors</p>
               </div>
             </div>
 

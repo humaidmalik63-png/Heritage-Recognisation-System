@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Compass, Cpu, Layers, Database, X, AlertTriangle, RefreshCw } from 'lucide-react';
+import { DISPLAY_ANCHOR_COUNT } from '../constants/displayMetrics';
 
 const STAGES = [
   { label: "Validating Image Byte Stream & Color Space...", icon: Search },
   { label: "Extracting EXIF GPS Metadata & Geodetic Coordinates...", icon: Compass },
   { label: "Computing 512-D Vision Features via CLIP ViT-B/32...", icon: Cpu },
   { label: "Evaluating Zero-Shot Architectural Gatekeeper...", icon: Layers },
-  { label: "Searching 595-Vector FAISS Inner-Product Index...", icon: Database },
+  { label: `Searching ${DISPLAY_ANCHOR_COUNT}-Vector FAISS Inner-Product Index...`, icon: Database },
   { label: "Synthesizing Curatorial Dossier & Inked Stamps...", icon: Search },
 ];
 
