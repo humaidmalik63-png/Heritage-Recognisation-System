@@ -17,8 +17,32 @@ import {
 } from 'lucide-react';
 import MonographResult from '../components/MonographResult';
 
+const LOCAL_HERITAGE_IMAGES = {
+  taj_mahal: '/assets/heritage/taj-mahal.jpg',
+  charminar: '/assets/heritage/charminar.jpg',
+  hampi_stone_chariot: '/assets/heritage/hampi.jpg',
+  brihadeeswarar_temple: '/assets/heritage/brihadeeswarar.jpg',
+  petra: '/assets/heritage/petra.jpg',
+  colosseum: '/assets/heritage/colosseum.jpg',
+  angkor_wat: '/assets/heritage/angkor-wat.jpg',
+  great_wall_of_china: '/assets/heritage/great-wall.jpg',
+  qutub_minar: '/assets/heritage/qutub-minar.jpg',
+  hawa_mahal: '/assets/heritage/hawa-mahal.jpg',
+  machu_picchu: '/assets/heritage/machu-picchu.jpg',
+  ajanta_caves: '/assets/heritage/ajanta-caves.jpg',
+  ellora_caves: '/assets/heritage/ellora-caves.jpg',
+  golden_temple: '/assets/heritage/golden-temple.jpg',
+  humayuns_tomb: '/assets/heritage/humayuns-tomb.jpg',
+  konark_sun_temple: '/assets/heritage/konark-sun-temple.jpg',
+  mysore_palace: '/assets/heritage/mysore-palace.jpg',
+  parthenon: '/assets/heritage/parthenon.jpg',
+  great_pyramid_of_giza: '/assets/heritage/pyramids-giza.jpg',
+  red_fort: '/assets/heritage/red-fort.jpg',
+  eiffel_tower: '/assets/heritage/eiffel-tower.jpg',
+};
+
 export default function History() {
-  const { user, history, clearHistory } = useAuth();
+  const { history, clearHistory } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedScan, setSelectedScan] = useState(null);
 
@@ -64,7 +88,7 @@ export default function History() {
               Archival Survey Log
             </h2>
             <p className="mt-2 text-xs font-sans text-archive-stone">
-              Archived survey specimens verified by officer <span className="font-semibold text-archive-charcoal">{user?.name}</span> ({user?.badgeNumber || 'ASI-CURATOR'}).
+              Scans run in this browser, stored locally on this device. No sign-in; nothing is synced or shared.
             </p>
           </div>
 
@@ -114,7 +138,7 @@ export default function History() {
           <div className="flex items-center gap-3 font-mono text-xs text-archive-stone self-start sm:self-auto">
             <span>REGISTER ENTRIES: <strong className="text-archive-charcoal">{filteredHistory.length}</strong></span>
             <span>•</span>
-            <span>STORAGE: <strong className="text-emerald-700">ENCRYPTED LOCAL</strong></span>
+            <span>STORAGE: <strong className="text-archive-charcoal">LOCAL BROWSER STORAGE</strong></span>
           </div>
         </div>
       </div>
@@ -160,12 +184,21 @@ export default function History() {
                 {/* Thumbnail Plate */}
                 <div className="relative h-48 w-full bg-black/5 overflow-hidden border-b border-archive-hairline">
                   <img
-                    src={item.thumbnail}
+                    src={
+                      item.thumbnail ||
+                      item.preview_data_url ||
+                      (item.monument_key && LOCAL_HERITAGE_IMAGES[item.monument_key]) ||
+                      '/assets/heritage/taj-mahal.jpg'
+                    }
                     alt={item.monument_name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 filter contrast-105"
                     onError={(e) => {
                       e.target.onerror = null;
-                      e.target.src = '/assets/heritage/taj-mahal.jpg';
+                      const fallback =
+                        (item.monument_key && LOCAL_HERITAGE_IMAGES[item.monument_key]) ||
+                        item.preview_data_url ||
+                        '/assets/heritage/taj-mahal.jpg';
+                      e.target.src = fallback;
                     }}
                   />
                   <div className="absolute top-2.5 left-2.5">
@@ -173,10 +206,9 @@ export default function History() {
                       {item.catalog_id}
                     </span>
                   </div>
+                  {/* FIX 6: Consistent confidence label and format everywhere, showing backend confidence */}
                   <div className="absolute bottom-2.5 right-2.5 font-mono text-[10px] bg-archive-charcoal/85 text-white px-2 py-0.5 rounded backdrop-blur-sm">
-                    {item.uncertainty?.calibrated_probability
-                      ? `${(item.uncertainty.calibrated_probability * 100).toFixed(0)}% CALIBRATED PROB`
-                      : `${item.confidence_score}% VECTOR ALIGNMENT`}
+                    {`${Number(item.confidence_score || 0).toFixed(1)}% CONFIDENCE`}
                   </div>
                 </div>
 
@@ -257,7 +289,12 @@ export default function History() {
                   grounded_citations: selectedScan.grounded_citations,
                   preservation_status: selectedScan.preservation_status,
                 }}
-                imagePreview={selectedScan.thumbnail}
+                imagePreview={
+                  selectedScan.thumbnail ||
+                  selectedScan.preview_data_url ||
+                  (selectedScan.monument_key && LOCAL_HERITAGE_IMAGES[selectedScan.monument_key]) ||
+                  '/assets/heritage/taj-mahal.jpg'
+                }
                 onReset={() => setSelectedScan(null)}
               />
             </motion.div>

@@ -76,7 +76,7 @@ export default function ExploreArchive({ monuments = {}, onTestSample, onOpenCat
               className="inline-flex items-center gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl border border-[#171816] bg-[#171816] text-[#F5F3ED] hover:bg-[#A9472D] hover:border-[#A9472D] text-xs font-mono uppercase tracking-wider font-semibold transition-colors duration-200 cursor-pointer shadow-sm active:scale-95"
             >
               <Globe className="w-3.5 h-3.5 text-[#B99A5B]" />
-              <span>Full Registry & Map ({entries.length})</span>
+              <span>Full Registry & Map{entries.length > 0 ? ` (${entries.length})` : ''}</span>
             </button>
           </div>
         </div>
@@ -154,19 +154,34 @@ export default function ExploreArchive({ monuments = {}, onTestSample, onOpenCat
             </div>
           )}
 
-          {/* Telemetry Indicator */}
+          {/* Telemetry Indicator (FIX 7: Show loading state, never flash 0 of 0) */}
           <div className="flex items-center justify-between text-[10px] font-mono text-[#6E7069] pt-1 border-t border-[#E3DFD5]/40">
-            <span>
-              Showing <strong className="text-[#171816]">{displayed.length}</strong> of{' '}
-              <strong className="text-[#171816]">{filtered.length}</strong> indexed monuments
-            </span>
+            {entries.length === 0 ? (
+              <span className="flex items-center gap-1.5 text-[#6E7069]">
+                <span className="w-2 h-2 rounded-full border border-[#A9472D] border-t-transparent animate-spin inline-block" />
+                <span>Loading indexed monument corpus...</span>
+              </span>
+            ) : (
+              <span>
+                Showing <strong className="text-[#171816]">{displayed.length}</strong> of{' '}
+                <strong className="text-[#171816]">{filtered.length}</strong> indexed monuments
+              </span>
+            )}
             <span className="hidden sm:inline">EMBEDDINGS: OPENAI CLIP-VIT-B/32 (512-D)</span>
           </div>
         </div>
 
         {/* 2-Column Mobile & 4-Column Desktop Monument Cards Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
-          {displayed.map(([key, item]) => {
+          {entries.length === 0 ? (
+            <div className="col-span-full py-16 flex flex-col items-center justify-center gap-3 text-center bg-[#F5F3ED]/40 border border-dashed border-[#E3DFD5] rounded-2xl">
+              <div className="w-6 h-6 rounded-full border-2 border-[#E3DFD5] border-t-[#A9472D] animate-spin" />
+              <span className="font-mono text-xs uppercase tracking-wider text-[#6E7069]">
+                Loading Registered Monuments Corpus...
+              </span>
+            </div>
+          ) : (
+            displayed.map(([key, item]) => {
             const isReady = item.recognition_readiness === 'RECOGNITION_READY';
             const locationStr = item.location || `${item.city_region || ''}, ${item.country || ''}`;
 
@@ -228,7 +243,8 @@ export default function ExploreArchive({ monuments = {}, onTestSample, onOpenCat
                 </div>
               </div>
             );
-          })}
+          })
+          )}
         </div>
 
         {/* Load More Button */}

@@ -35,6 +35,25 @@ MODEL_NAME = "openai/clip-vit-base-patch32"
 EMBEDDING_DIM = 512
 
 
+def is_readable_image_file(path: Path) -> bool:
+    """True when the file starts with a real image magic number (JPEG/PNG/
+    WebP). A plain `git clone` of this repo leaves Git LFS pointer text
+    files in place of photos; those must be skipped with a clear warning
+    instead of crashing the build or silently dropping the monument."""
+    try:
+        with open(path, "rb") as f:
+            head = f.read(12)
+    except OSError:
+        return False
+    if head[:2] == b"\xff\xd8":  # JPEG
+        return True
+    if head[:8] == b"\x89PNG\r\n\x1a\n":  # PNG (some gallery files are PNGs with .jpg names)
+        return True
+    if head[:4] == b"RIFF" and head[8:12] == b"WEBP":  # WebP
+        return True
+    return False
+
+
 def extract_clip_embedding(
     image: Image.Image,
     model: CLIPModel,
@@ -93,11 +112,14 @@ def build_index() -> Tuple[int, int]:
     logger.info(f"Processing {len(monument_keys)} monuments in alphabetical order...")
 
     total_images_processed = 0
+    skipped_pointer_files = 0
+    monuments_skipped: List[str] = []
 
     for monument_key in monument_keys:
         monument_dir = DATASET_DIR / monument_key
         if not monument_dir.is_dir():
             logger.warning(f"Directory {monument_dir} not found. Skipping.")
+            monuments_skipped.append(monument_key)
             continue
 
         # Look for img_1.jpg through img_4.jpg (or any valid jpg files)
@@ -106,7 +128,24 @@ def build_index() -> Tuple[int, int]:
         )
         if not image_files:
             logger.warning(f"No image files found in {monument_dir}")
+            monuments_skipped.append(monument_key)
             continue
+
+        readable_files = []
+        for img_path in image_files:
+            if is_readable_image_file(img_path):
+                readable_files.append(img_path)
+            else:
+                skipped_pointer_files += 1
+                logger.warning(
+                    f"Skipping {img_path}: not a readable image file (likely a Git LFS "
+                    f"pointer — run `git lfs pull` in a full clone to fetch the photo)."
+                )
+        if not readable_files:
+            logger.warning(f"No readable images in {monument_dir}. Skipping.")
+            monuments_skipped.append(monument_key)
+            continue
+        image_files = readable_files
 
         monument_vectors: List[np.ndarray] = []
 
@@ -150,7 +189,25 @@ def build_index() -> Tuple[int, int]:
                 "source": f"{monument_key}/centroid",
                 "is_centroid": True,
             })
-            logger.info(f"[{monument_key}] -> Added 4 image vectors + 1 normalized centroid anchor.")
+            logger.info(f"[{monument_key}] -> Added {len(monument_vectors)} image vectors + 1 normalized centroid anchor.")
+
+    if not all_vectors:
+        raise RuntimeError(
+            "No readable reference images were found in the dataset "
+            f"({DATASET_DIR}). If the files are Git LFS pointers, run "
+            "`git lfs pull` in a full clone first, then re-run this script. "
+            "Refusing to write an empty index."
+        )
+    if monuments_skipped:
+        logger.warning(
+            f"Monuments skipped (no readable images): {len(monuments_skipped)} — "
+            + ", ".join(monuments_skipped)
+        )
+    if skipped_pointer_files:
+        logger.warning(
+            f"Skipped {skipped_pointer_files} unreadable/pointer file(s). "
+            "The rebuilt index is PARTIAL unless every dataset photo is a real image."
+        )
 
     vectors_matrix = np.vstack(all_vectors).astype(np.float32)
     num_vectors, dim = vectors_matrix.shape
@@ -171,11 +228,13 @@ def build_index() -> Tuple[int, int]:
         json.dump(labels_records, f, indent=2)
     logger.info(f"Wrote {len(labels_records)} label records to {LABELS_OUTPUT_PATH}")
 
+    centroids_written = sum(1 for rec in labels_records if rec.get("is_centroid"))
     logger.info("=" * 65)
     logger.info("INDEX BUILDING COMPLETE")
-    logger.info(f"  - Total monuments indexed: {len(monument_keys)}")
+    logger.info(f"  - Total monuments indexed: {centroids_written} of {len(monument_keys)} in metadata")
     logger.info(f"  - Total reference images  : {total_images_processed}")
-    logger.info(f"  - Total centroids         : {len(monument_keys)}")
+    logger.info(f"  - Skipped pointer files   : {skipped_pointer_files}")
+    logger.info(f"  - Total centroids         : {centroids_written}")
     logger.info(f"  - Total index vectors     : {index.ntotal}")
     logger.info(f"  - Vector dimension        : {dim}")
     logger.info("=" * 65)

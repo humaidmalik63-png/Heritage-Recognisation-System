@@ -2,6 +2,9 @@ import React, { useRef } from 'react';
 import { Camera, Image as ImageIcon, RefreshCw, X, AlertCircle, Sparkles, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
+// Must match the backend's MAX_UPLOAD_BYTES (15 MB) in backend/main.py.
+const MAX_UPLOAD_BYTES = 15 * 1024 * 1024;
+
 export default function MobileRecognition({
   imagePreview,
   isLoading,
@@ -15,9 +18,17 @@ export default function MobileRecognition({
 
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
-    if (file) {
-      onImageSelected(file);
+    if (!file) return;
+    // Matches the backend's 15 MB server-side limit (413 above this size).
+    if (file.size > MAX_UPLOAD_BYTES) {
+      alert(
+        `This image is ${(file.size / (1024 * 1024)).toFixed(1)} MB, over the 15 MB limit. ` +
+          'Please use a smaller or compressed copy.'
+      );
+      e.target.value = '';
+      return;
     }
+    onImageSelected(file);
   };
 
   return (
@@ -31,7 +42,7 @@ export default function MobileRecognition({
           Recognise a Monument
         </h1>
         <p className="text-xs text-[#6E7069] mt-0.5">
-          Deposit a field photograph or survey scan. Matches 512-D visual vectors against 100 indexed cultural landmarks.
+          Deposit a field photograph or survey scan. Matches 512-D visual vectors against the indexed cultural landmarks.
         </p>
       </div>
 

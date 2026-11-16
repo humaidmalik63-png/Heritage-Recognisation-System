@@ -2092,5 +2092,17 @@
       "curatorial_notes": "Verified record from canonical 100-site heritage register."
     },
     "recognition_readiness": "RECOGNITION_READY"
+  },
+  "jama_masjid": {
+    "monument_name": "Jama Masjid",
+    "location": "Delhi, India",
+    "coordinates": null,
+    "architectural_style": "Mughal Architecture",
+    "built_by_or_era": "Mughal Empire (17th century)",
+    "historical_summary": "One of the largest mosques in India, built by Mughal Emperor Shah Jahan between 1650 and 1656. The mosque's courtyard can accommodate over 25,000 people.",
+    "structural_features_detected": [],
+    "preservation_status": "UNESCO World Heritage Site (part of Red Fort Complex); ASI-protected monument",
+    "grounded_citations": {},
+    "recognition_readiness": "METADATA_ONLY"
   }
 }

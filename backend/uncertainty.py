@@ -76,6 +76,13 @@ class GPSEvidence(BaseModel):
     geo_boost_applied: bool = False
     gps_conflict: bool = False
     note: str
+    # Which monument the EXIF coordinates were compared against. The initial
+    # evaluation compares against the Tier-1 top-1 candidate; after Tier-2
+    # adjudication the pipeline re-evaluates against the FINAL attributed
+    # monument (see reevaluate_gps_for_monument) so a Red Fort photo is never
+    # marked GPS_CONFLICT for being far from Fatehpur Sikri.
+    compared_against_monument_key: Optional[str] = None
+    compared_against_monument_name: Optional[str] = None
 
 
 class AggregatedCandidate(BaseModel):
@@ -415,6 +422,8 @@ class UncertaintyEngine:
                 geo_boost_applied=False,
                 gps_conflict=False,
                 note=f"EXIF GPS located at ({coords['lat']:.4f}, {coords['lng']:.4f}), but candidate coordinates are unindexed.",
+                compared_against_monument_key=top1.monument_key if top1 else None,
+                compared_against_monument_name=top1.monument_name if top1 else None,
             )
 
         cand_coords = metadata[top1.monument_key].get("coordinates")
@@ -427,6 +436,8 @@ class UncertaintyEngine:
                 geo_boost_applied=False,
                 gps_conflict=False,
                 note="Candidate monument coordinates not recorded in metadata registry.",
+                compared_against_monument_key=top1.monument_key,
+                compared_against_monument_name=top1.monument_name,
             )
 
         dist_km = compute_haversine_distance_km(
@@ -457,7 +468,32 @@ class UncertaintyEngine:
             geo_boost_applied=geo_boost,
             gps_conflict=gps_conflict,
             note=note,
+            compared_against_monument_key=top1.monument_key,
+            compared_against_monument_name=top1.monument_name,
         )
+
+    def reevaluate_gps_for_monument(
+        self,
+        exif_gps: Optional[Dict[str, Any]],
+        monument_key: Optional[str],
+        metadata: Dict[str, Any],
+    ) -> GPSEvidence:
+        """Re-evaluates EXIF GPS evidence against a specific monument (the
+        FINAL attribution after Tier-2 adjudication), rather than the Tier-1
+        top-1 candidate used by evaluate(). Returns a no-conflict evidence
+        record when there is no GPS data, no monument, or no recorded
+        coordinates for the monument — never invents a conflict."""
+        if not monument_key:
+            return self._evaluate_gps(exif_gps, None, metadata)
+        monument_name = metadata.get(monument_key, {}).get("monument_name", monument_key)
+        synthetic_top1 = AggregatedCandidate(
+            monument_key=monument_key,
+            monument_name=monument_name,
+            max_similarity=0.0,
+            matched_anchor_source="final_attribution",
+            is_centroid_match=False,
+        )
+        return self._evaluate_gps(exif_gps, synthetic_top1, metadata)
 
     def _arbitrate_decision(
         self,

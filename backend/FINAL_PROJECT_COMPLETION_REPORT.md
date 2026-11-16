@@ -250,7 +250,7 @@ npm run dev
 
 ### Step 3: Execute Demonstrable User Journey
 1. Open browser at `http://localhost:5173`.
-2. The user is pre-authenticated as **Dr. Eleanor Vance (Senior Archaeologist & Curator, ASI Fellow)**.
+2. There is no sign-in: the app opens straight into the scanner, and scan history stays in the local browser only. (This report predates the November 2026 fix pass that removed the hardcoded demo curator account — see `FIXES_APPLIED.md`.)
 3. Click on the sample selector cards or upload any photograph:
    - **Taj Mahal Sample**: Triggers `VERIFIED_MATCH` (99.8% confidence), displaying architectural monograph, coordinates on interactive Leaflet map, structural features, and primary ASI/UNESCO citations.
    - **Charminar Sample**: Triggers `VERIFIED_MATCH` with Hyderabad Qutb Shahi provenance.

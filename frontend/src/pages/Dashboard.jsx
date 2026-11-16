@@ -15,6 +15,9 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_A
 
 const LOCAL_HERITAGE_IMAGES = {
   taj_mahal: '/assets/heritage/taj-mahal.jpg',
+  charminar: '/assets/heritage/charminar.jpg',
+  hampi_stone_chariot: '/assets/heritage/hampi.jpg',
+  brihadeeswarar_temple: '/assets/heritage/brihadeeswarar.jpg',
   petra: '/assets/heritage/petra.jpg',
   colosseum: '/assets/heritage/colosseum.jpg',
   angkor_wat: '/assets/heritage/angkor-wat.jpg',
@@ -82,6 +85,9 @@ export default function Dashboard({
       }
     } catch (err) {
       console.error('Verification failed:', err);
+      // Clear any stale result and preview on failure
+      setVerificationResult(null);
+      setImagePreview(null);
       setErrorMessage(err.message || 'Failed to verify monument. Please check backend connection.');
     } finally {
       setIsLoading(false);
@@ -119,16 +125,24 @@ export default function Dashboard({
         ctx.fillText('NON-ARCHITECTURAL RECEIPT', 50, 72);
 
         canvas.toBlob(async (blob) => {
-          if (!blob) throw new Error('Canvas conversion failed');
-          const file = new File([blob], 'synthetic_sample.jpg', { type: 'image/jpeg' });
-          const previewUrl = URL.createObjectURL(file);
-          setImagePreview(previewUrl);
-          const result = await verifyMonumentImage(file);
-          setVerificationResult(result);
-          if (result?.human_review_flagged && onExceptionCreated) {
-            onExceptionCreated();
+          try {
+            if (!blob) throw new Error('Canvas conversion failed');
+            const file = new File([blob], 'synthetic_sample.jpg', { type: 'image/jpeg' });
+            const previewUrl = URL.createObjectURL(file);
+            setImagePreview(previewUrl);
+            const result = await verifyMonumentImage(file);
+            setVerificationResult(result);
+            if (result?.human_review_flagged && onExceptionCreated) {
+              onExceptionCreated();
+            }
+          } catch (err) {
+            console.error('Sample processing failed:', err);
+            setVerificationResult(null);
+            setImagePreview(null);
+            setErrorMessage(err.message || 'Sample test failed.');
+          } finally {
+            setIsLoading(false);
           }
-          setIsLoading(false);
         }, 'image/jpeg');
       } else {
         // 1. Check local heritage assets first (instantaneous, guaranteed on Vercel CDN)
@@ -193,6 +207,8 @@ export default function Dashboard({
       }
     } catch (err) {
       console.error('Sample processing failed:', err);
+      setVerificationResult(null);
+      setImagePreview(null);
       setErrorMessage(err.message || 'Sample test failed.');
       setIsLoading(false);
     }
@@ -231,7 +247,7 @@ export default function Dashboard({
               </h2>
             </div>
             <p className="max-w-md text-sm sm:text-base text-[#6E7069] leading-relaxed font-sans">
-              Deposit a photograph of any monument, temple, fort, or architectural fragment. Our hybrid pipeline matches 512-D visual vectors against 100 indexed cultural landmarks.
+              Deposit a photograph of any monument, temple, fort, or architectural fragment. Our hybrid pipeline matches 512-D visual vectors against the indexed cultural landmarks.
             </p>
           </div>
 

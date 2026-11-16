@@ -27,6 +27,8 @@ from typing import Any, Dict, List, Optional, Tuple
 from PIL import Image
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
+import certifi
+os.environ.setdefault("SSL_CERT_FILE", certifi.where())
 
 # Ensure backend and root .env are loaded safely
 BASE_DIR = Path(__file__).resolve().parent
@@ -71,7 +73,7 @@ class GeminiAdjudicationResult(BaseModel):
     )
     is_catalog_monument: bool = Field(
         default=False,
-        description="True ONLY if the specimen belongs to the authoritative 10-monument catalogue; False otherwise."
+        description="True ONLY if the specimen resolves to the authoritative heritage catalogue; False otherwise. Computed server-side via catalogue membership, never taken from model prose."
     )
     catalogue_status: Optional[str] = Field(
         default="OUT_OF_CATALOG",
@@ -104,6 +106,10 @@ class GeminiAdjudicationResult(BaseModel):
     catalog_id: Optional[str] = Field(
         default=None,
         description="Matched unique monument catalogue identifier if resolved in 100-site catalogue."
+    )
+    historical_period: Optional[str] = Field(
+        default=None,
+        description="Historical era, century, or dynasty associated with the monument."
     )
     # Backward compatibility fields:
     visible_observations: List[str] = Field(
@@ -305,7 +311,9 @@ class GeminiTier2Service:
             logger.info(f"GeminiTier2Service initialized with client override ({model_name}).")
             return
 
-        resolved_key = (api_key if api_key is not None else os.environ.get("GEMINI_API_KEY", "")).strip()
+        resolved_key = (
+            (api_key if api_key is not None else os.environ.get("GEMINI_API_KEY", "") or os.environ.get("GOOGLE_API_KEY", "")).strip()
+        )
         if (
             resolved_key
             and resolved_key != "your_gemini_api_key_here"
@@ -326,6 +334,35 @@ class GeminiTier2Service:
 
     def is_available(self) -> bool:
         return self.configured and not self.auth_error_detected and self.client is not None
+
+    def initialize(self, api_key: Optional[str] = None) -> bool:
+        """(Re)configures the Gemini client from an explicit key or the
+        environment (GEMINI_API_KEY, falling back to GOOGLE_API_KEY). Lets a
+        key supplied after startup take effect without restarting the
+        process. Returns True when a live client is available afterwards.
+        Never logs the key itself."""
+        if self.client is not None and self.configured and not api_key:
+            return self.is_available()
+        resolved_key = (
+            (api_key if api_key is not None else os.environ.get("GEMINI_API_KEY", "") or os.environ.get("GOOGLE_API_KEY", "")).strip()
+        )
+        if (
+            resolved_key
+            and resolved_key != "your_gemini_api_key_here"
+            and resolved_key != "your_google_ai_studio_api_key_here"
+        ):
+            try:
+                from google import genai
+                self.client = genai.Client(api_key=resolved_key)
+                self.configured = True
+                self.auth_error_detected = False
+                logger.info(f"Gemini Tier-2 Service (re)configured ({self.model_name}).")
+                return True
+            except Exception as e:
+                logger.warning(f"Could not initialize Gemini Client: {e}")
+                self.configured = False
+                return False
+        return False
 
     def _execute_with_retry(
         self,
@@ -445,17 +482,29 @@ class GeminiTier2Service:
 
     # --- Capability A: Gemini-Assisted Open-World Adjudication ---
 
-    def adjudicate_monument(self, image: Image.Image) -> GeminiAdjudicationResult:
+    def adjudicate_monument(
+        self,
+        image: Image.Image,
+        tier1_candidates: Optional[List[Dict[str, Any]]] = None,
+    ) -> GeminiAdjudicationResult:
         """
         Phase 8.5F Capability A: Gemini-Assisted Open-World Monument Adjudication
         Invoked when Tier-1 CLIP produces ambiguous catalog competition or potential
         out-of-catalog specimens.
-        
+
         Evaluates whether an image depicts:
-        1. A known catalogue monument (one of the 10 indexed).
+        1. A known catalogue monument (one of the indexed sites).
         2. An identifiable monument outside the catalogue (e.g. Golden Temple, Red Fort, Mysore Palace, India Gate, Eiffel Tower).
         3. An ambiguous or unidentifiable heritage structure.
         4. A non-monument image (receipt, math paper, everyday object).
+
+        When tier1_candidates (the Tier-1 top-3, with monument_name and
+        similarity) are supplied, Tier 2 must choose AMONG them or abstain:
+        it must not invent a free-form identity that overrides a correct
+        Tier-1 top-1 (e.g. naming a subsidiary shrine when the listed
+        candidate already covers the site). A genuinely different,
+        clearly identifiable monument may still be named; anything else
+        must abstain with proposed_identity null.
         """
         if not self.is_available():
             return GeminiAdjudicationResult(
@@ -477,11 +526,39 @@ class GeminiTier2Service:
 
         prompt = (
             "You are a Senior Architectural Historian, Principal Archaeologist, and Visual Verification Scientist.\n"
-            "Our platform maintains an authoritative Heritage Catalogue containing 100 registered monuments and world heritage sites.\n\n"
+            "Our platform maintains an authoritative Heritage Catalogue containing 101 registered monuments and world heritage sites.\n\n"
             "Carefully analyze the uploaded photograph. Distinguish strictly between:\n"
             "1. An identifiable historical monument, temple, cave sanctuary, fort, palace, or archaeological site (e.g. Ajanta Caves, Golden Temple, Mysore Palace, Taj Mahal, Qutub Minar, Colosseum, etc.).\n"
             "2. A possible heritage structure that cannot be conclusively identified from the image.\n"
             "3. A non-monument image (e.g. academic paper, invoice, receipt, everyday object, vehicle, ordinary modern interior/exterior).\n\n"
+        )
+
+        # Tier-1 candidate constraint (Prompt 1c): when the caller supplies the
+        # Tier-1 top-3, Tier 2 chooses among them or abstains instead of
+        # inventing a free-form identity that overrides a correct top-1.
+        if tier1_candidates:
+            candidate_lines = []
+            for rank, cand in enumerate(tier1_candidates[:3], start=1):
+                if isinstance(cand, dict):
+                    cname = cand.get("monument_name") or cand.get("monument_key") or "Unknown"
+                    csim = cand.get("cosine_similarity", cand.get("max_similarity"))
+                else:
+                    cname = getattr(cand, "monument_name", None) or getattr(cand, "monument_key", "Unknown")
+                    csim = getattr(cand, "max_similarity", getattr(cand, "cosine_similarity", None))
+                sim_txt = f" (vector similarity {float(csim):.3f})" if isinstance(csim, (int, float)) else ""
+                candidate_lines.append(f"  {rank}. {cname}{sim_txt}")
+            prompt += (
+                "TIER-1 VECTOR RETRIEVAL ALREADY RANKED THESE CATALOGUE CANDIDATES:\n"
+                + "\n".join(candidate_lines)
+                + "\n\n"
+                "CANDIDATE-CHOICE RULES:\n"
+                "- If the photograph matches one of the listed candidates, set proposed_identity to THAT candidate's exact official name above.\n"
+                "- Do NOT substitute the name of a nearby, subsidiary, or neighbouring structure for a listed candidate (for example, do not name an individual shrine or temple inside a complex when a listed candidate already covers the site).\n"
+                "- Name a DIFFERENT monument when the photograph clearly depicts a different, specifically identifiable site that is none of the listed candidates. A clearly identifiable out-of-catalogue site MUST be named — do not abstain on it; abstention is only for genuinely ambiguous images.\n"
+                "- If you cannot decide between the candidates or cannot identify the site, set proposed_identity to null and qualitative_confidence to LOW or UNCERTAIN. Abstaining is correct; guessing is not.\n\n"
+            )
+
+        prompt += (
             "CRITICAL RULES:\n"
             "- If the image depicts an identifiable historical heritage monument or archaeological site:\n"
             "  * Set proposed_identity to its specific official monument name.\n"
@@ -489,6 +566,7 @@ class GeminiTier2Service:
             "  * Set is_heritage_structure to true.\n"
             "  * Detail concrete visible architectural evidence and specific distinguishing features.\n"
             "  * Set qualitative_confidence to HIGH or MEDIUM.\n"
+            "- If your visible_architectural_evidence names a specific identifiable site, proposed_identity MUST be that site's name. Never describe a named, identifiable site while returning proposed_identity as null.\n"
             "- If the image is a non-monument (document, paper, receipt, everyday object, modern interior):\n"
             "  * Set is_heritage_structure to false.\n"
             "  * Set proposed_identity to null.\n"
@@ -502,6 +580,7 @@ class GeminiTier2Service:
             "{\n"
             '  "proposed_identity": "Specific Monument Name (or null if ambiguous/non-monument)",\n'
             '  "proposed_location": "City, State/Region, Country (or null)",\n'
+            '  "historical_period": "Historical Era / Construction Period / Dynasty if known (or null)",\n'
             '  "is_heritage_structure": true,\n'
             '  "visible_architectural_evidence": "Detailed explanation of visible architectural characteristics, materials, and forms...",\n'
             '  "distinguishing_features": ["Feature 1", "Feature 2"],\n'
@@ -600,26 +679,14 @@ class GeminiTier2Service:
                 is_offline_fallback=True,
                 model_name=self.model_name,
             )
-        except Exception as e:
-            logger.warning(f"Failed to parse Gemini adjudication response: {e}")
-            return GeminiAdjudicationResult(
-                proposed_identity=None,
-                proposed_location=None,
-                is_heritage_structure=True,
-                is_catalog_monument=False,
-                visible_architectural_evidence=resp.text[:300] if resp and resp.text else "",
-                distinguishing_features=[],
-                qualitative_confidence="UNCERTAIN",
-                uncertainty_reason=f"Failed to parse model JSON: {e}",
-                visible_observations=["Structural elements observed in photograph."],
-                candidate_styles=["Regional architectural tradition"],
-                is_offline_fallback=True,
-                model_name=self.model_name,
-            )
 
-    def analyze_unknown_heritage(self, image: Image.Image) -> UnknownHeritageAnalysis:
+    def analyze_unknown_heritage(
+        self,
+        image: Image.Image,
+        tier1_candidates: Optional[List[Dict[str, Any]]] = None,
+    ) -> UnknownHeritageAnalysis:
         """Backward-compatible wrapper delegating to adjudicate_monument."""
-        return self.adjudicate_monument(image)
+        return self.adjudicate_monument(image, tier1_candidates=tier1_candidates)
 
     # --- Capability B: Grounded Historical Question Answering ---
 

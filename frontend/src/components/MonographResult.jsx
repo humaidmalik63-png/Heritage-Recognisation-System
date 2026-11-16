@@ -26,11 +26,46 @@ import MonumentMap from './MonumentMap';
 import PipelineInspector from './PipelineInspector';
 import GroundedKnowledgeViewer from './GroundedKnowledgeViewer';
 
+const LOCAL_HERITAGE_IMAGES = {
+  taj_mahal: '/assets/heritage/taj-mahal.jpg',
+  charminar: '/assets/heritage/charminar.jpg',
+  hampi_stone_chariot: '/assets/heritage/hampi.jpg',
+  brihadeeswarar_temple: '/assets/heritage/brihadeeswarar.jpg',
+  petra: '/assets/heritage/petra.jpg',
+  colosseum: '/assets/heritage/colosseum.jpg',
+  angkor_wat: '/assets/heritage/angkor-wat.jpg',
+  great_wall_of_china: '/assets/heritage/great-wall.jpg',
+  qutub_minar: '/assets/heritage/qutub-minar.jpg',
+  hawa_mahal: '/assets/heritage/hawa-mahal.jpg',
+  machu_picchu: '/assets/heritage/machu-picchu.jpg',
+  ajanta_caves: '/assets/heritage/ajanta-caves.jpg',
+  ellora_caves: '/assets/heritage/ellora-caves.jpg',
+  golden_temple: '/assets/heritage/golden-temple.jpg',
+  humayuns_tomb: '/assets/heritage/humayuns-tomb.jpg',
+  konark_sun_temple: '/assets/heritage/konark-sun-temple.jpg',
+  mysore_palace: '/assets/heritage/mysore-palace.jpg',
+  parthenon: '/assets/heritage/parthenon.jpg',
+  great_pyramid_of_giza: '/assets/heritage/pyramids-giza.jpg',
+  red_fort: '/assets/heritage/red-fort.jpg',
+  eiffel_tower: '/assets/heritage/eiffel-tower.jpg',
+};
+
 export default function MonographResult({ result, imagePreview, onReset }) {
   const [showInspector, setShowInspector] = useState(true);
   const [showCitations, setShowCitations] = useState(true);
 
   if (!result) return null;
+
+  const effectiveImage = result?.preview_data_url || imagePreview;
+
+  const handleImageError = (e) => {
+    const key = result?.monument_key;
+    if (key && LOCAL_HERITAGE_IMAGES[key]) {
+      e.currentTarget.src = LOCAL_HERITAGE_IMAGES[key];
+    } else {
+      e.currentTarget.style.opacity = '0.7';
+    }
+  };
 
   const {
     is_monument = false,
@@ -111,7 +146,8 @@ export default function MonographResult({ result, imagePreview, onReset }) {
             <div className="md:col-span-5">
               <div className="bg-archive-alabaster border border-archive-hairline p-3 rounded shadow-inner">
                 <img
-                  src={imagePreview}
+                  src={effectiveImage}
+                  onError={handleImageError}
                   alt="Uncertain specimen"
                   className="w-full h-72 object-cover rounded filter contrast-105"
                 />
@@ -250,6 +286,19 @@ export default function MonographResult({ result, imagePreview, onReset }) {
       tier2_analysis?.model_name ||
       (pipeline_telemetry?.gemini_tier2_model || 'gemini-3.1-flash-lite');
     const isOffline = tier2_analysis?.is_offline_fallback ?? false;
+    // Honest adjudication badge: when Tier 2 never ran (tier2_analysis is
+    // null — e.g. no Gemini key configured), never claim an adjudication
+    // happened. The old code fell back to the model name and showed the
+    // ADJUDICATION badge for a Tier-1-only verdict.
+    const tier2Ran = !!tier2_analysis;
+    const adjudicationLabel = !tier2Ran
+      ? 'TIER 1 ONLY // NO TIER-2 ADJUDICATION'
+      : (isOffline ? 'OFFLINE FALLBACK' : `ADJUDICATION // ${modelUsed.toUpperCase()}`);
+    const adjudicationTone = !tier2Ran
+      ? { chip: 'bg-slate-100 text-slate-700 border-slate-300', dot: 'bg-slate-500' }
+      : (isOffline
+        ? { chip: 'bg-amber-50 text-amber-800 border-amber-200', dot: 'bg-amber-600' }
+        : { chip: 'bg-emerald-50 text-emerald-800 border-emerald-200', dot: 'bg-emerald-600' });
 
     return (
       <motion.div
@@ -281,9 +330,9 @@ export default function MonographResult({ result, imagePreview, onReset }) {
                   EXPLICIT UNCERTAINTY // UNINDEXED HERITAGE SPECIMEN
                 </span>
               )}
-              <span className={`font-mono text-[10px] uppercase px-2 py-0.5 rounded ${isOffline ? 'bg-amber-50 text-amber-800 border-amber-200' : 'bg-emerald-50 text-emerald-800 border-emerald-200'} border flex items-center gap-1.5`}>
-                <span className={`w-1.5 h-1.5 rounded-full ${isOffline ? 'bg-amber-600' : 'bg-emerald-600'}`}></span>
-                {isOffline ? 'OFFLINE FALLBACK' : `ADJUDICATION // ${modelUsed.toUpperCase()}`}
+              <span className={`font-mono text-[10px] uppercase px-2 py-0.5 rounded ${adjudicationTone.chip} border flex items-center gap-1.5`}>
+                <span className={`w-1.5 h-1.5 rounded-full ${adjudicationTone.dot}`}></span>
+                {adjudicationLabel}
               </span>
             </div>
 
@@ -302,7 +351,8 @@ export default function MonographResult({ result, imagePreview, onReset }) {
             <div className="md:col-span-5">
               <div className="bg-archive-alabaster border border-archive-hairline p-3 rounded shadow-inner">
                 <img
-                  src={imagePreview}
+                  src={effectiveImage}
+                  onError={handleImageError}
                   alt="Heritage specimen"
                   className="w-full h-72 object-cover rounded filter contrast-105"
                 />
@@ -327,7 +377,13 @@ export default function MonographResult({ result, imagePreview, onReset }) {
                   ) : (
                     <ShieldAlert className="w-6 h-6 text-slate-600 flex-shrink-0" />
                   )}
-                  <span>{(isMetadataOnly || isOutOfCatalog) ? proposedIdentity : 'Unindexed Heritage Site Detected'}</span>
+                  <span>
+                    {isMetadataOnly
+                      ? `Proposed catalogued match: ${proposedIdentity}`
+                      : isOutOfCatalog
+                      ? `Proposed identity (unverified): ${proposedIdentity}`
+                      : 'Unknown heritage specimen — needs curator review'}
+                  </span>
                 </div>
 
                 {(isMetadataOnly || isOutOfCatalog) && proposedLocation && (
@@ -407,11 +463,11 @@ export default function MonographResult({ result, imagePreview, onReset }) {
 
                 {isMetadataOnly ? (
                   <p className="mt-2 text-[11px] font-sans italic text-archive-stone leading-tight">
-                    * Note: This monument belongs to the 100-site canonical catalogue (Metadata Verified). Visual identification provided by Gemini 3.1 Flash-Lite (Tier 1 FAISS vector anchors pending photographic field survey; not falsely attributed via vector index).
+                    * Note: This monument is in the canonical catalogue, but it has no reference photos in the vector index yet, so the visual match was NOT verified against the index. This identification comes from Tier-2 visual analysis only (Gemini 3.1 Flash-Lite) and is shown as a proposal, not a verification.
                   </p>
                 ) : isOutOfCatalog ? (
                   <p className="mt-2 text-[11px] font-sans italic text-archive-stone leading-tight">
-                    * Note: This structure lies outside the canonical 100-site catalogue. Attribution has been adjudicated by Gemini 3.1 Flash-Lite based on authentic architectural features.
+                    * Note: This structure lies outside the canonical catalogue. The proposed identity comes from Tier-2 visual analysis (Gemini 3.1 Flash-Lite) and is unverified — it is a proposal for curator review, not a confirmed attribution.
                   </p>
                 ) : null}
               </div>
@@ -528,7 +584,8 @@ export default function MonographResult({ result, imagePreview, onReset }) {
             <div className="md:col-span-5">
               <div className="bg-archive-alabaster border border-archive-hairline p-3 rounded shadow-inner">
                 <img
-                  src={imagePreview}
+                  src={effectiveImage}
+                  onError={handleImageError}
                   alt="Review required specimen"
                   className="w-full h-72 object-cover rounded filter contrast-105"
                 />
@@ -622,7 +679,7 @@ export default function MonographResult({ result, imagePreview, onReset }) {
   // =========================================================================
   // VIEW 4: NON-MONUMENT REJECTION
   // =========================================================================
-  if (!is_monument || verification_status === 'NON_MONUMENT_REJECTED') {
+  if (verification_status === 'NON_MONUMENT_REJECTED' || (!is_monument && verification_status !== 'UNKNOWN_HERITAGE_SPECIMEN' && verification_status !== 'VERIFIED_MATCH')) {
     return (
       <motion.div
         initial={{ opacity: 0, y: 15 }}
@@ -650,7 +707,8 @@ export default function MonographResult({ result, imagePreview, onReset }) {
             <div className="md:col-span-5">
               <div className="bg-archive-alabaster border border-archive-hairline p-3 rounded shadow-inner">
                 <img
-                  src={imagePreview}
+                  src={effectiveImage}
+                  onError={handleImageError}
                   alt="Rejected specimen"
                   className="w-full h-64 object-cover rounded filter contrast-105"
                 />
@@ -732,14 +790,14 @@ export default function MonographResult({ result, imagePreview, onReset }) {
           <div className="flex flex-wrap items-center gap-2.5">
             <span className="font-mono text-xs uppercase px-2.5 py-1 rounded bg-emerald-50 text-emerald-900 border border-emerald-300 font-bold flex items-center gap-1.5 shadow-xs">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700" />
-              <span>CATALOGUED MONUMENT</span>
+              <span>{out_of_catalog_identified ? 'WORLD HERITAGE MONUMENT' : 'CATALOGUED MONUMENT'}</span>
             </span>
             <span className="font-mono text-xs uppercase px-2.5 py-1 rounded bg-white text-archive-charcoal border border-archive-hairline font-bold">
-              {catalog_id || 'ASI-ARCH-REG'}
+              {catalog_id || (out_of_catalog_identified ? 'WORLD-HERITAGE' : 'ASI-ARCH-REG')}
             </span>
             <span className={isTier1 ? "archival-stamp" : "archival-stamp-tier2"}>
               <ShieldCheck className="w-3 h-3" />
-              <span>{isTier1 ? 'TIER 1 • VECTOR RETRIEVAL' : 'TIER 2 • VLM ADJUDICATED'}</span>
+              <span>{isTier1 ? 'TIER 1 • VECTOR RETRIEVAL' : 'TIER 2 • GEMINI VLM VERIFIED'}</span>
             </span>
             <span className="font-mono text-[11px] text-archive-stone px-2 py-0.5 rounded bg-archive-parchment border border-archive-hairline">
               ALIGNMENT: {((top1Cand?.max_similarity ?? (confidence_score / 100)) || 0).toFixed(4)}
@@ -783,18 +841,23 @@ export default function MonographResult({ result, imagePreview, onReset }) {
             <div className="bg-archive-alabaster border border-archive-hairline p-3 rounded shadow-inner">
               <div className="relative overflow-hidden rounded border border-archive-hairline/80 bg-black/5">
                 <img
-                  src={imagePreview}
+                  src={effectiveImage}
+                  onError={handleImageError}
                   alt={monument_name}
                   className="w-full h-80 object-cover filter contrast-105"
                 />
                 <div className="absolute bottom-2 right-2 bg-archive-charcoal/80 text-white font-mono text-[10px] px-2 py-0.5 rounded backdrop-blur-sm">
-                  {catalog_id}
+                  {catalog_id || (out_of_catalog_identified ? 'WORLD-HERITAGE' : 'REGISTERED MONUMENT')}
                 </div>
               </div>
               <div className="mt-2.5 px-1 flex items-center justify-between text-[11px] font-mono text-archive-stone">
                 <span>FIG 01. UPLOADED SPECIMEN</span>
                 <span className="font-semibold text-archive-terracotta">
-                  {uncertainty?.gps_evidence?.geo_boost_applied ? 'EXIF GPS VERIFIED' : 'CLIP VECTOR VERIFIED'}
+                  {uncertainty?.gps_evidence?.geo_boost_applied
+                    ? 'EXIF GPS VERIFIED'
+                    : isTier1
+                    ? 'CLIP VECTOR VERIFIED'
+                    : 'GEMINI VLM VERIFIED'}
                 </span>
               </div>
             </div>
@@ -984,8 +1047,16 @@ export default function MonographResult({ result, imagePreview, onReset }) {
         )}
       </div>
 
-      {/* Phase 8.0B Local Architectural Evidence & Geometric Verification */}
-      {local_features && (
+      {/* Phase 8.0B Local Architectural Evidence & Geometric Verification — Shown only when real local evidence exists */}
+      {Boolean(
+        local_features &&
+        local_features.execution_mode !== 'BYPASS_OPTIMIZED' &&
+        (
+          (local_features.regions_evaluated && local_features.regions_evaluated > 0) ||
+          (local_features.geometric_verification && (local_features.geometric_verification.inliers_count > 0 || local_features.geometric_verification.good_matches_count > 0)) ||
+          (local_features.top_local_candidate && local_features.top_local_candidate.monument_name && local_features.top_local_candidate.monument_name !== 'N/A')
+        )
+      ) && (
         <div className="bg-archive-ivory border border-archive-hairline rounded shadow-plate p-5 sm:p-6 space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-archive-hairline">
             <div className="flex items-center gap-2">

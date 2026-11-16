@@ -26,8 +26,8 @@ Following the fix for `ReferenceError: tier2_analysis is not defined` in `Monogr
 
 ### File 1: `frontend/src/context/AuthContext.jsx`
 - **Location**: Lines 68–85.
-- **Fix**: Updated the initialization logic so that if no `heritage_current_user` exists in `localStorage`, the default demo user (`Dr. Eleanor Vance`, `curator@heritage.org`) is automatically populated into state and `localStorage`.
-- **Impact**: Eliminates login redirection obstacles while preserving full multi-user sign-in/sign-up capabilities.
+- **Fix (historical — superseded November 2026)**: Updated the initialization logic so that if no stored user existed in `localStorage`, a hardcoded demo curator account was automatically populated into state and `localStorage`. **This demo auto-sign-in was removed in the November 2026 fix pass** (see `FIXES_APPLIED.md`): the app now has no sign-in and no stored accounts, and the admin-only backend endpoints are protected server-side with `ADMIN_TOKEN` instead.
+- **Impact (at the time)**: Eliminated login redirection obstacles. Superseded: sign-in/sign-up no longer exist in the app.
 
 ### File 2: Clean Vite Dev Server Restart
 - **Action**: Terminated stale background task `task-6842` and initiated a clean Vite dev server session (`task-8590`) on `http://127.0.0.1:5173`.

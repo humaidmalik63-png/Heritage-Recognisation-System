@@ -19,15 +19,65 @@ export default function MobileResults({ result, onNewScan }) {
 
   if (!result) return null;
 
-  const isVerified = result.verification_status === 'VERIFIED_MATCH' && !result.is_uncertain;
+  const status = result.verification_status;
+  const isVerified = status === 'VERIFIED_MATCH' && !result.is_uncertain;
+  const isNonMonument = result.is_monument === false || status === 'NON_MONUMENT_REJECTED';
+  const isUncertain = status === 'UNCERTAIN_MATCH' || (result.is_uncertain && !isNonMonument && status !== 'UNKNOWN_HERITAGE_SPECIMEN' && status !== 'REVIEW_REQUIRED');
+  const isUnknown = status === 'UNKNOWN_HERITAGE_SPECIMEN';
+  const isReview = status === 'REVIEW_REQUIRED';
   const isTier2 = (result.verification_tier || '').includes('TIER 2');
-  const isUncertain = result.is_uncertain || result.verification_status === 'UNKNOWN_HERITAGE_SPECIMEN';
+
+  // Unknown-specimen sub-cases (mirrors the desktop VIEW 2 logic): a
+  // metadata-only proposal names a catalogue entry, an out-of-catalog
+  // proposal names something outside the catalogue, and anything else is
+  // an unindexed specimen with no proposed identity to show.
+  const catalogueStatus =
+    result?.catalogue_status ||
+    (result?.out_of_catalog_identified
+      ? 'OUT_OF_CATALOG'
+      : (result?.tier2_analysis?.catalogue_status ||
+        ((result?.verification_tier || '').includes('METADATA ONLY') ? 'CATALOGUED_METADATA_ONLY' : 'OUT_OF_CATALOG')));
+  const isMetadataOnly = isUnknown && catalogueStatus === 'CATALOGUED_METADATA_ONLY';
+  const isOutOfCatalog =
+    isUnknown &&
+    (catalogueStatus === 'OUT_OF_CATALOG' || result?.out_of_catalog_identified) &&
+    (result?.out_of_catalog_identified || !!result?.tier2_analysis?.proposed_identity);
+
+  const proposedIdentity =
+    result.monument_name || result?.tier2_analysis?.proposed_identity || '';
+
+  // Headlines must never present an unverified name as a match. Only a
+  // verified result gets the bare monument name as its headline.
+  let headline;
+  let headlineSubline = null;
+  if (isNonMonument) {
+    headline = 'Not a heritage monument';
+  } else if (isVerified) {
+    headline = result.monument_name || 'Architectural Specimen';
+  } else if (isUncertain) {
+    headline = 'Possible match (uncertain)';
+    headlineSubline = proposedIdentity || null;
+  } else if (isMetadataOnly) {
+    headline = `Proposed catalogued match: ${proposedIdentity || 'Unnamed catalogue entry'}`;
+  } else if (isOutOfCatalog) {
+    headline = `Proposed identity (unverified): ${proposedIdentity || 'Unknown structure'}`;
+  } else {
+    // REVIEW_REQUIRED, plain UNKNOWN, and anything else unrecognised.
+    headline = 'Unknown heritage specimen — needs curator review';
+  }
+
+  // Catalogue facts (style, era, monograph, coordinates, citations) are
+  // shown only when they describe a verified match, an uncertain match, or
+  // a metadata-only catalogue proposal. For other statuses they would be
+  // defaults or guesses presented as facts.
+  const showCatalogueDetails = isVerified || isUncertain || isMetadataOnly;
+  const showTier2Evidence = showCatalogueDetails || isOutOfCatalog;
 
   const confidenceScore = result.confidence_score
     ? typeof result.confidence_score === 'number'
       ? result.confidence_score.toFixed(1)
       : result.confidence_score
-    : '85.0';
+    : '—';
 
   const coords = result.coordinates;
   const citations = result.grounded_citations || {};
@@ -40,9 +90,7 @@ export default function MobileResults({ result, onNewScan }) {
         className={`p-3 rounded-xl border flex items-center justify-between gap-2 shadow-2xs ${
           isVerified
             ? 'bg-emerald-50 border-emerald-200 text-emerald-950'
-            : isUncertain
-            ? 'bg-amber-50 border-amber-200 text-amber-950'
-            : 'bg-[#FFFEFA] border-[#E3DFD5] text-[#171816]'
+            : 'bg-amber-50 border-amber-200 text-amber-950'
         }`}
       >
         <div className="flex items-center gap-2">
@@ -58,7 +106,13 @@ export default function MobileResults({ result, onNewScan }) {
             <p className="font-semibold text-xs leading-tight">
               {isVerified
                 ? 'Catalogued Monument Match'
-                : 'Ambiguous Specimen — Review Needed'}
+                : isNonMonument
+                ? 'Not a Heritage Monument'
+                : isUncertain
+                ? 'Uncertain Match — Review Needed'
+                : isReview
+                ? 'Review Required — Curator Review Needed'
+                : 'Unknown Specimen — Curator Review Needed'}
             </p>
           </div>
         </div>
@@ -81,22 +135,40 @@ export default function MobileResults({ result, onNewScan }) {
             {result.catalog_id || 'ASI-ARCH-REG'}
           </span>
           <span className="text-[10px] font-mono text-[#6E7069]">
-            {result.monument_key || 'verified_match'}
+            {result.monument_key || (isVerified ? 'verified_match' : 'unverified_specimen')}
           </span>
         </div>
 
         {/* Monument Title & Location */}
         <div>
           <h2 className="font-serif text-2xl font-bold text-[#171816] leading-tight">
-            {result.monument_name || 'Architectural Specimen'}
+            {headline}
           </h2>
-          <div className="flex items-center gap-1.5 text-xs text-[#6E7069] font-sans mt-1">
-            <MapPin className="w-3.5 h-3.5 text-[#A9472D] flex-shrink-0" />
-            <span>{result.location || 'Location Recorded'}</span>
-          </div>
+          {headlineSubline && (
+            <p className="font-serif text-lg text-[#6E7069] leading-tight mt-0.5">
+              {headlineSubline}
+            </p>
+          )}
+          {showCatalogueDetails && (
+            <div className="flex items-center gap-1.5 text-xs text-[#6E7069] font-sans mt-1">
+              <MapPin className="w-3.5 h-3.5 text-[#A9472D] flex-shrink-0" />
+              <span>{result.location || 'Location Recorded'}</span>
+            </div>
+          )}
+          {!isVerified && result.rejection_message && (
+            <p className="mt-2 text-xs text-amber-950 bg-amber-50 border border-amber-200 rounded-lg p-2.5 leading-relaxed">
+              {result.rejection_message}
+            </p>
+          )}
+          {isReview && candidates.length > 0 && candidates[0]?.monument_name && (
+            <p className="mt-2 text-[11px] font-mono text-[#6E7069]">
+              Closest catalogue match: {candidates[0].monument_name} — hint only, not verified.
+            </p>
+          )}
         </div>
 
-        {/* Style & Era Grid */}
+        {/* Style & Era Grid — catalogue facts only */}
+        {showCatalogueDetails && (
         <div className="grid grid-cols-2 gap-2 text-xs">
           <div className="p-2.5 rounded-xl bg-[#F5F3ED] border border-[#E3DFD5]">
             <span className="text-[9px] font-mono text-[#6E7069] uppercase block font-semibold">
@@ -116,9 +188,10 @@ export default function MobileResults({ result, onNewScan }) {
             </p>
           </div>
         </div>
+        )}
 
         {/* Curatorial Monograph */}
-        {result.historical_summary && (
+        {showTier2Evidence && result.historical_summary && (
           <div className="space-y-1 pt-1">
             <span className="text-[10px] font-mono text-[#6E7069] uppercase font-bold tracking-wider">
               CURATORIAL MONOGRAPH
@@ -130,7 +203,7 @@ export default function MobileResults({ result, onNewScan }) {
         )}
 
         {/* Detected Structural Features */}
-        {Array.isArray(result.structural_features_detected) && result.structural_features_detected.length > 0 && (
+        {showTier2Evidence && Array.isArray(result.structural_features_detected) && result.structural_features_detected.length > 0 && (
           <div className="space-y-1.5 pt-1">
             <span className="text-[10px] font-mono text-[#6E7069] uppercase font-bold tracking-wider">
               DETECTED ARCHITECTURAL FEATURES
@@ -148,8 +221,8 @@ export default function MobileResults({ result, onNewScan }) {
           </div>
         )}
 
-        {/* Geodetic Coordinates */}
-        {coords && (
+        {/* Geodetic Coordinates — catalogue position only */}
+        {showCatalogueDetails && coords && (
           <div className="p-3 rounded-xl bg-[#F5F3ED] border border-[#E3DFD5] flex items-center justify-between text-xs">
             <div>
               <span className="text-[9px] font-mono text-[#6E7069] uppercase block">
@@ -175,7 +248,7 @@ export default function MobileResults({ result, onNewScan }) {
       </div>
 
       {/* Grounded Epigraphical Citations (Collapsible) */}
-      {citations && Object.keys(citations).length > 0 && (
+      {showCatalogueDetails && citations && Object.keys(citations).length > 0 && (
         <div className="rounded-2xl bg-[#FFFEFA] border border-[#E3DFD5] overflow-hidden">
           <button
             onClick={() => setShowCitations(!showCitations)}

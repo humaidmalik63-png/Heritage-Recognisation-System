@@ -18,8 +18,8 @@ if (-not (Test-Path $pythonExe)) {
     exit 1
 }
 
-Write-Host "[1/2] Launching FastAPI Backend on http://127.0.0.1:8000 ..." -ForegroundColor Cyan
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "Set-Location '$baseDir'; & '$pythonExe' -m uvicorn main:app --app-dir backend --host 127.0.0.1 --port 8000 --reload"
+Write-Host "[1/2] Launching FastAPI Backend on http://127.0.0.1:8001 ..." -ForegroundColor Cyan
+Start-Process powershell -ArgumentList "-NoExit", "-Command", "Set-Location '$baseDir'; & '$pythonExe' -m uvicorn main:app --app-dir backend --host 127.0.0.1 --port 8001 --reload"
 
 Start-Sleep -Seconds 3
 
@@ -31,9 +31,9 @@ Write-Host ""
 Write-Host "==============================================================================" -ForegroundColor Green
 Write-Host "  PLATFORM SERVICES ACTIVE:" -ForegroundColor White
 Write-Host "  - Web Application:       http://localhost:5173" -ForegroundColor Yellow
-Write-Host "  - Backend REST API:      http://localhost:8000" -ForegroundColor Yellow
-Write-Host "  - Interactive API Docs:  http://localhost:8000/docs" -ForegroundColor Yellow
-Write-Host "  - Exceptions Endpoint:   http://localhost:8000/api/exceptions" -ForegroundColor Yellow
+Write-Host "  - Backend REST API:      http://localhost:8001" -ForegroundColor Yellow
+Write-Host "  - Interactive API Docs:  http://localhost:8001/docs" -ForegroundColor Yellow
+Write-Host "  - Exceptions Endpoint:   http://localhost:8001/api/exceptions" -ForegroundColor Yellow
 Write-Host "==============================================================================" -ForegroundColor Green
 Write-Host ""
 

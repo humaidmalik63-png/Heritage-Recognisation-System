@@ -7,6 +7,8 @@ import {
   ShieldAlert,
   History,
   ScanLine,
+  LogOut,
+  User,
   Menu,
   X,
 } from 'lucide-react';
@@ -18,7 +20,7 @@ export default function Header({
   onOpenExceptions,
   pendingExceptionsCount = 0,
 }) {
-  const { history } = useAuth();
+  const { user, logout, history } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -210,6 +212,35 @@ export default function Header({
               <span className="whitespace-nowrap">Recognise a Monument</span>
             </button>
 
+            {/* FIX 4: User Session Profile & Sign Out / Sign In */}
+            {user ? (
+              <div className="hidden sm:flex items-center gap-2 pl-2.5 border-l border-[#E3DFD5]">
+                <div
+                  className="w-7 h-7 rounded-full bg-[#171816] text-[#B99A5B] flex items-center justify-center font-mono text-xs font-bold uppercase shadow-xs"
+                  title={user.name || user.email}
+                >
+                  {user.name?.charAt(0) || 'C'}
+                </div>
+                <button
+                  onClick={() => {
+                    logout();
+                    navigate('/login');
+                  }}
+                  className="p-1.5 text-[#6E7069] hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
+                  title="Sign Out of Session"
+                  aria-label="Logout"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            ) : (
+              <Link to="/login" className="hidden sm:inline-block pl-2.5 border-l border-[#E3DFD5]">
+                <span className="text-xs font-mono uppercase tracking-wider text-[#6E7069] hover:text-[#A9472D] transition-colors font-medium">
+                  Sign In
+                </span>
+              </Link>
+            )}
+
             {/* Mobile Hamburger Menu Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -283,6 +314,27 @@ export default function Header({
                   <History className="w-3.5 h-3.5 text-[#A9472D]" />
                   <span>Archival Log ({history.length})</span>
                 </Link>
+
+                {user ? (
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      logout();
+                      navigate('/login');
+                    }}
+                    className="text-rose-700 font-semibold cursor-pointer text-xs uppercase"
+                  >
+                    Sign Out ({user.name?.split(' ')[0] || 'Curator'})
+                  </button>
+                ) : (
+                  <Link
+                    to="/login"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-[#A9472D] font-semibold text-xs uppercase"
+                  >
+                    Sign In
+                  </Link>
+                )}
               </div>
             </motion.div>
           )}
