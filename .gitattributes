@@ -1,12 +1,7 @@
+frontend/public/** -filter -diff -merge
+backend/dataset/** -filter -diff -merge
 /backend/datasets/independent_eval/brihadeeswarar_temple_indep_01.jpg filter=lfs diff=lfs merge=lfs -text
 /backend/datasets/independent_eval/charminar_indep_01.jpg filter=lfs diff=lfs merge=lfs -text
 /backend/datasets/independent_eval/konark_sun_temple_indep_01.jpg filter=lfs diff=lfs merge=lfs -text
 /backend/datasets/independent_eval/sanchi_stupa_indep_02.jpg filter=lfs diff=lfs merge=lfs -text
-*.jpg filter=lfs diff=lfs merge=lfs -text
-*.jpeg filter=lfs diff=lfs merge=lfs -text
-*.png filter=lfs diff=lfs merge=lfs -text
 *.exe filter=lfs diff=lfs merge=lfs -text
-
-# Bundled production sample images - preserve as native binary files (prevent Git LFS pointer degradation on Railway and Vercel)
-/backend/assets/heritage/* !filter !diff !merge text=auto
-/frontend/public/assets/heritage/* !filter !diff !merge text=auto

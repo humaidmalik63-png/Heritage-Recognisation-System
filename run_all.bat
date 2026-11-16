@@ -17,8 +17,8 @@ if not exist ".venv\Scripts\python.exe" (
     exit /b 1
 )
 
-echo [1/2] Launching FastAPI Backend on http://127.0.0.1:8000 ...
-start "Heritage API - FastAPI Server (Port 8000)" cmd /k "cd /d ""%~dp0"" && echo Starting Backend... && .venv\Scripts\python.exe -m uvicorn main:app --app-dir backend --host 127.0.0.1 --port 8000 --reload"
+echo [1/2] Launching FastAPI Backend on http://127.0.0.1:8001 ...
+start "Heritage API - FastAPI Server (Port 8001)" cmd /k "cd /d ""%~dp0"" && echo Starting Backend... && .venv\Scripts\python.exe -m uvicorn main:app --app-dir backend --host 127.0.0.1 --port 8001 --reload"
 
 timeout /t 3 /nobreak >nul
 
@@ -29,9 +29,9 @@ echo.
 echo ==============================================================================
 echo   PLATFORM SERVICES RUNNING CONCURRENTLY:
 echo   - Web Application:       http://localhost:5173
-echo   - Backend REST API:      http://localhost:8000
-echo   - Interactive API Docs:  http://localhost:8000/docs
-echo   - Exceptions Endpoint:   http://localhost:8000/api/exceptions
+echo   - Backend REST API:      http://localhost:8001
+echo   - Interactive API Docs:  http://localhost:8001/docs
+echo   - Exceptions Endpoint:   http://localhost:8001/api/exceptions
 echo.
 echo   Demo Curator Credentials:
 echo     Email:    curator@asi.gov.in

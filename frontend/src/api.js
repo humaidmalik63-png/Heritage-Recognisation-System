@@ -5,6 +5,40 @@
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || 'http://localhost:8001';
 
+/**
+ * Admin token for the backend's admin-only endpoints (/api/exceptions,
+ * /api/exceptions/{id}/resolve, /api/telemetry/gemini). The backend verifies
+ * it against the ADMIN_TOKEN environment variable.
+ *
+ * The token lives ONLY in this module's memory: it is never written to
+ * localStorage, sessionStorage, or a cookie, and it is cleared when the
+ * page reloads. The user enters it in the Exceptions drawer unlock prompt
+ * (see ExceptionsDrawer.jsx). Do not persist it.
+ */
+let adminToken = null;
+
+export function setAdminToken(token) {
+  adminToken = token ? String(token) : null;
+}
+
+export function clearAdminToken() {
+  adminToken = null;
+}
+
+export function hasAdminToken() {
+  return Boolean(adminToken);
+}
+
+function adminHeaders(extra = {}) {
+  return adminToken ? { Authorization: `Bearer ${adminToken}`, ...extra } : { ...extra };
+}
+
+function httpError(message, status) {
+  const error = new Error(message);
+  error.status = status;
+  return error;
+}
+
 export async function checkHealth() {
   const response = await fetch(`${API_BASE_URL}/api/health`);
   if (!response.ok) {
@@ -21,84 +55,13 @@ export async function fetchMonumentsCatalog() {
   return response.json();
 }
 
-export async function verifyMonumentImage(file, timeoutMs = 25000, externalSignal = null) {
+export async function verifyMonumentImage(file) {
   const formData = new FormData();
   formData.append('file', file);
 
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => {
-    controller.abort();
-  }, timeoutMs);
-
-  if (externalSignal) {
-    if (externalSignal.aborted) {
-      controller.abort();
-    } else {
-      externalSignal.addEventListener('abort', () => controller.abort(), { once: true });
-    }
-  }
-
-  try {
-    const response = await fetch(`${API_BASE_URL}/api/verify-monument`, {
-      method: 'POST',
-      body: formData,
-      signal: controller.signal,
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.detail || `Server error (${response.status})`);
-    }
-
-    return await response.json();
-  } catch (err) {
-    if (err.name === 'AbortError') {
-      throw new Error(`Verification request timed out after ${Math.round(timeoutMs / 1000)} seconds. Please retry.`);
-    }
-    throw err;
-  } finally {
-    clearTimeout(timeoutId);
-  }
-}
-
-export async function fetchExceptionsSummary() {
-  const response = await fetch(`${API_BASE_URL}/api/exceptions/summary`);
-  if (!response.ok) {
-    throw new Error(`Failed to load exceptions summary: ${response.status}`);
-  }
-  return response.json();
-}
-
-export async function fetchExceptions(token = null) {
-  const headers = {};
-  if (token) headers['Authorization'] = `Bearer ${token}`;
-
-  const response = await fetch(`${API_BASE_URL}/api/exceptions`, {
-    headers,
-    credentials: 'include',
-  });
-  if (!response.ok) {
-    const err = await response.json().catch(() => ({}));
-    throw new Error(err.detail || `Failed to load exceptions (${response.status})`);
-  }
-  return response.json();
-}
-
-export async function resolveException(id, status, curatorNotes, token = null, csrfToken = null) {
-  const headers = {
-    'Content-Type': 'application/json',
-  };
-  if (token) headers['Authorization'] = `Bearer ${token}`;
-  if (csrfToken) headers['X-CSRF-Token'] = csrfToken;
-
-  const response = await fetch(`${API_BASE_URL}/api/exceptions/${id}/resolve`, {
+  const response = await fetch(`${API_BASE_URL}/api/verify-monument`, {
     method: 'POST',
-    headers,
-    credentials: 'include',
-    body: JSON.stringify({
-      status,
-      curator_notes: curatorNotes,
-    }),
+    body: formData,
   });
 
   if (!response.ok) {
@@ -109,64 +72,55 @@ export async function resolveException(id, status, curatorNotes, token = null, c
   return response.json();
 }
 
-export async function loginAdmin(username, password) {
-  const response = await fetch(`${API_BASE_URL}/api/admin/login`, {
+export async function fetchExceptions() {
+  const response = await fetch(`${API_BASE_URL}/api/exceptions`, {
+    headers: adminHeaders(),
+  });
+  if (!response.ok) {
+    if (response.status === 401) {
+      throw httpError('Admin token required to view exceptions.', 401);
+    }
+    throw httpError(`Failed to load exceptions: ${response.status}`, response.status);
+  }
+  return response.json();
+}
+
+export async function resolveException(id, status, curatorNotes) {
+  const response = await fetch(`${API_BASE_URL}/api/exceptions/${id}/resolve`, {
     method: 'POST',
-    headers: {
+    headers: adminHeaders({
       'Content-Type': 'application/json',
-    },
-    credentials: 'include',
+    }),
     body: JSON.stringify({
-      username,
-      password,
+      status,
+      curator_notes: curatorNotes,
     }),
   });
 
   if (!response.ok) {
-    const err = await response.json().catch(() => ({}));
-    throw new Error(err.detail || 'Authentication failed. Please check credentials.');
+    const errorData = await response.json().catch(() => ({}));
+    if (response.status === 401) {
+      throw httpError('Admin token required to resolve exceptions.', 401);
+    }
+    throw httpError(
+      errorData.detail || `Server error (${response.status})`,
+      response.status
+    );
   }
 
   return response.json();
 }
 
-export async function logoutAdmin() {
-  const response = await fetch(`${API_BASE_URL}/api/admin/logout`, {
-    method: 'POST',
-    credentials: 'include',
-  });
-  return response.ok;
-}
-
-export async function fetchAdminMe(token = null) {
-  const headers = {};
-  if (token) headers['Authorization'] = `Bearer ${token}`;
-
-  const response = await fetch(`${API_BASE_URL}/api/admin/me`, {
-    headers,
-    credentials: 'include',
-  });
-  if (!response.ok) return null;
-  return response.json();
-}
-
-export async function fetchGeminiTelemetry(token = null) {
-  const headers = {};
-  if (token) headers['Authorization'] = `Bearer ${token}`;
-
+export async function fetchGeminiTelemetry() {
   const response = await fetch(`${API_BASE_URL}/api/telemetry/gemini`, {
-    headers,
-    credentials: 'include',
+    headers: adminHeaders(),
   });
   if (!response.ok) {
-    throw new Error(`Failed to load Gemini telemetry: ${response.status}`);
+    if (response.status === 401) {
+      throw httpError('Admin token required to view telemetry.', 401);
+    }
+    throw httpError(`Failed to load Gemini telemetry: ${response.status}`, response.status);
   }
-  return response.json();
-}
-
-export async function fetchGeminiPublicStatus() {
-  const response = await fetch(`${API_BASE_URL}/api/telemetry/status`);
-  if (!response.ok) return { status: 'unknown' };
   return response.json();
 }
 

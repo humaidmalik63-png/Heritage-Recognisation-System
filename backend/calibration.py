@@ -33,7 +33,6 @@ DEFAULT_CONFIG: Dict[str, Any] = {
     "uncertainty_margin_threshold": 0.05,
     "gatekeeper_threshold_verified": 0.55,
     "gatekeeper_threshold_ambiguous": 0.45,
-    "gatekeeper_threshold_rejection": 0.35,
     "gatekeeper_scale": 18.0,
     "geo_boost_distance_km": 5.0,
     "geo_conflict_distance_km": 150.0,
@@ -120,7 +119,6 @@ class CalibrationEngine:
             "uncertainty_margin_threshold",
             "gatekeeper_threshold_verified",
             "gatekeeper_threshold_ambiguous",
-            "gatekeeper_threshold_rejection",
             "gatekeeper_scale",
             "geo_boost_distance_km",
             "geo_conflict_distance_km",
@@ -168,10 +166,6 @@ class CalibrationEngine:
     @property
     def gatekeeper_threshold_ambiguous(self) -> float:
         return float(self.config.get("gatekeeper_threshold_ambiguous", 0.45))
-
-    @property
-    def gatekeeper_threshold_rejection(self) -> float:
-        return float(self.config.get("gatekeeper_threshold_rejection", 0.35))
 
     @property
     def geo_boost_distance_km(self) -> float:

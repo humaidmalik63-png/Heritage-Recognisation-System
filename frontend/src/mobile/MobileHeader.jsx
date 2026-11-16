@@ -66,12 +66,12 @@ export default function MobileHeader({
             </button>
           )}
 
-          {/* Institutional Access Badge */}
+          {/* Local-session badge (no sign-in in this app) */}
           <div
-            className="w-7 h-7 rounded-full bg-[#171816] text-[#B99A5B] flex items-center justify-center text-[10px] font-mono font-bold border border-[#E3DFD5]"
-            title="ASI Curatorial Public Archive"
+            className="w-7 h-7 rounded-full bg-[#171816] text-[#F5F3ED] flex items-center justify-center text-[10px] font-mono font-bold border border-[#E3DFD5]"
+            title="Heritage — local session, no sign-in"
           >
-            ASI
+            H
           </div>
         </div>
       </div>

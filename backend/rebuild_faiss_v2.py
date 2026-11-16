@@ -43,7 +43,9 @@ if sys.platform == "win32":
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("rebuild_faiss_v2")
 
-GALLERY_DIR = BASE_DIR / "datasets" / "reference_gallery_v2"
+GALLERY_DIR = Path(
+    os.environ.get("HERITAGE_GALLERY_DIR", str(BASE_DIR / "datasets" / "reference_gallery_v2"))
+)
 MANIFEST_FILE = BASE_DIR / "reference_gallery_manifest.json"
 METADATA_FILE = BASE_DIR / "monuments_metadata.json"
 ACTIVE_INDEX_PATH = BASE_DIR / "monument_index.faiss"
@@ -80,10 +82,35 @@ def extract_clip_embedding(
     return vec
 
 
+def is_readable_image_file(path: Path) -> bool:
+    """True when the file starts with a real image magic number (JPEG/PNG/
+    WebP). A plain `git clone` of this repo leaves Git LFS pointer text
+    files in place of photos; those must be skipped with a clear warning
+    instead of crashing the build or silently dropping the monument."""
+    try:
+        with open(path, "rb") as f:
+            head = f.read(12)
+    except OSError:
+        return False
+    if head[:2] == b"\xff\xd8":  # JPEG
+        return True
+    if head[:8] == b"\x89PNG\r\n\x1a\n":  # PNG (some gallery files are PNGs with .jpg names)
+        return True
+    if head[:4] == b"RIFF" and head[8:12] == b"WEBP":  # WebP
+        return True
+    return False
+
+
 def rebuild_index_v2() -> Tuple[int, int, int]:
     logger.info("=" * 80)
     logger.info("REBUILDING FAISS INDEX WITH MULTI-VIEW REFERENCE GALLERY (v2.0)")
     logger.info("=" * 80)
+    logger.info(f"Gallery directory: {GALLERY_DIR} (override with HERITAGE_GALLERY_DIR)")
+    logger.info(
+        "To rebuild the LIVE 577-vector index, point the gallery at "
+        "datasets/reference_gallery_100 (477 photos + 100 centroids) and "
+        "ensure real photos are present (git lfs pull) — see FIXES_APPLIED.md."
+    )
 
     if not GALLERY_DIR.exists():
         raise FileNotFoundError(f"Reference gallery directory not found: {GALLERY_DIR}")
@@ -115,17 +142,37 @@ def rebuild_index_v2() -> Tuple[int, int, int]:
 
     total_images_indexed = 0
     total_centroids_indexed = 0
+    skipped_pointer_files = 0
+    monuments_with_no_readable_images: List[str] = []
 
     for monument_key in monument_keys:
         mon_dir = GALLERY_DIR / monument_key
         if not mon_dir.is_dir():
             logger.warning(f"Monument directory {mon_dir} not found. Skipping.")
+            monuments_with_no_readable_images.append(monument_key)
             continue
 
         image_files = sorted(list(mon_dir.glob("*.jpg")) + list(mon_dir.glob("*.jpeg")) + list(mon_dir.glob("*.png")))
         if not image_files:
             logger.warning(f"No image files in {mon_dir}. Skipping.")
+            monuments_with_no_readable_images.append(monument_key)
             continue
+
+        readable_files = []
+        for img_path in image_files:
+            if is_readable_image_file(img_path):
+                readable_files.append(img_path)
+            else:
+                skipped_pointer_files += 1
+                logger.warning(
+                    f"Skipping {img_path}: not a readable image file (likely a Git LFS "
+                    f"pointer — run `git lfs pull` in a full clone to fetch the photo)."
+                )
+        if not readable_files:
+            logger.warning(f"No readable images in {mon_dir}. Skipping.")
+            monuments_with_no_readable_images.append(monument_key)
+            continue
+        image_files = readable_files
 
         logger.info(f"[{monument_key}] Embedding {len(image_files)} reference photographs...")
 
@@ -160,7 +207,7 @@ def rebuild_index_v2() -> Tuple[int, int, int]:
                     "monument_key": monument_key,
                     "monument_name": metadata[monument_key]["monument_name"],
                     "source": f"{monument_key}/{fname}",
-                    "file_path": f"datasets/reference_gallery_v2/{monument_key}/{fname}",
+                    "file_path": f"datasets/{GALLERY_DIR.name}/{monument_key}/{fname}",
                     "is_centroid": False,
                     "view_type": view_type,
                     "is_structural_view": is_structural,
@@ -194,7 +241,7 @@ def rebuild_index_v2() -> Tuple[int, int, int]:
                 "monument_key": monument_key,
                 "monument_name": metadata[monument_key]["monument_name"],
                 "source": f"{monument_key}/centroid",
-                "file_path": f"datasets/reference_gallery_v2/{monument_key}/centroid",
+                "file_path": f"datasets/{GALLERY_DIR.name}/{monument_key}/centroid",
                 "is_centroid": True,
                 "view_type": "centroid_anchor",
                 "is_structural_view": True,
@@ -205,6 +252,23 @@ def rebuild_index_v2() -> Tuple[int, int, int]:
             logger.info(f"[{monument_key}] -> Added {len(image_files)} image vectors + 1 structural centroid anchor.")
 
     # Assemble and build FAISS index
+    if not all_vectors:
+        raise RuntimeError(
+            "No readable reference images were found in the gallery "
+            f"({GALLERY_DIR}). If the files are Git LFS pointers, run "
+            "`git lfs pull` in a full clone first, then re-run this script. "
+            "Refusing to write an empty index."
+        )
+    if monuments_with_no_readable_images:
+        logger.warning(
+            f"Monuments skipped (no readable images): {len(monuments_with_no_readable_images)} — "
+            + ", ".join(monuments_with_no_readable_images)
+        )
+    if skipped_pointer_files:
+        logger.warning(
+            f"Skipped {skipped_pointer_files} unreadable/pointer file(s). "
+            "The rebuilt index is PARTIAL unless every gallery photo is a real image."
+        )
     vectors_matrix = np.vstack(all_vectors).astype(np.float32)
     total_vectors, dim = vectors_matrix.shape
     logger.info(f"Total vector matrix shape: {vectors_matrix.shape}")
@@ -229,9 +293,11 @@ def rebuild_index_v2() -> Tuple[int, int, int]:
 
     logger.info("=" * 80)
     logger.info("FAISS INDEX REBUILD V2 COMPLETE!")
-    logger.info(f"  - Monuments indexed: {len(monument_keys)}")
+    logger.info(f"  - Gallery dir        : {GALLERY_DIR}")
+    logger.info(f"  - Monuments indexed: {total_centroids_indexed} of {len(monument_keys)} in metadata")
     logger.info(f"  - Reference images : {total_images_indexed}")
     logger.info(f"  - Centroids        : {total_centroids_indexed}")
+    logger.info(f"  - Skipped pointers : {skipped_pointer_files}")
     logger.info(f"  - Total vectors    : {index.ntotal}")
     logger.info("=" * 80)
 

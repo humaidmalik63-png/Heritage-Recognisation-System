@@ -36,21 +36,6 @@
   touch-action: manipulation;
 }
 
-/* Enforce accessible minimum touch targets (WCAG 2.5.5 - 44px min) */
-.mobile-touch-target {
-  min-height: 44px;
-  min-width: 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Smooth mobile scrolling */
-.mobile-smooth-scroll {
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
-}
-
 /* Restrained tap highlight */
 * {
   -webkit-tap-highlight-color: transparent;

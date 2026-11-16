@@ -15,7 +15,6 @@ const componentsToCheck = [
   'Header.jsx',
   'PipelineInspector.jsx',
   'ProcessingOverlay.jsx',
-  'ProtectedRoute.jsx',
   'UploadSection.jsx',
   'App.jsx'
 ];

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import HeritageHero from '../components/HeritageHero';
 import FeaturedHeritage from '../components/FeaturedHeritage';
 import UploadSection from '../components/UploadSection';
@@ -17,14 +17,11 @@ const LOCAL_HERITAGE_IMAGES = {
   taj_mahal: '/assets/heritage/taj-mahal.jpg',
   charminar: '/assets/heritage/charminar.jpg',
   hampi_stone_chariot: '/assets/heritage/hampi.jpg',
-  hampi: '/assets/heritage/hampi.jpg',
   brihadeeswarar_temple: '/assets/heritage/brihadeeswarar.jpg',
-  brihadeeswarar: '/assets/heritage/brihadeeswarar.jpg',
   petra: '/assets/heritage/petra.jpg',
   colosseum: '/assets/heritage/colosseum.jpg',
   angkor_wat: '/assets/heritage/angkor-wat.jpg',
   great_wall_of_china: '/assets/heritage/great-wall.jpg',
-  great_wall: '/assets/heritage/great-wall.jpg',
   qutub_minar: '/assets/heritage/qutub-minar.jpg',
   hawa_mahal: '/assets/heritage/hawa-mahal.jpg',
   machu_picchu: '/assets/heritage/machu-picchu.jpg',
@@ -32,14 +29,10 @@ const LOCAL_HERITAGE_IMAGES = {
   ellora_caves: '/assets/heritage/ellora-caves.jpg',
   golden_temple: '/assets/heritage/golden-temple.jpg',
   humayuns_tomb: '/assets/heritage/humayuns-tomb.jpg',
-  humayun: '/assets/heritage/humayuns-tomb.jpg',
   konark_sun_temple: '/assets/heritage/konark-sun-temple.jpg',
-  konark: '/assets/heritage/konark-sun-temple.jpg',
   mysore_palace: '/assets/heritage/mysore-palace.jpg',
-  mysore: '/assets/heritage/mysore-palace.jpg',
   parthenon: '/assets/heritage/parthenon.jpg',
   great_pyramid_of_giza: '/assets/heritage/pyramids-giza.jpg',
-  pyramids_giza: '/assets/heritage/pyramids-giza.jpg',
   red_fort: '/assets/heritage/red-fort.jpg',
   eiffel_tower: '/assets/heritage/eiffel-tower.jpg',
 };
@@ -55,17 +48,6 @@ export default function Dashboard({
   const [imagePreview, setImagePreview] = useState(null);
   const [verificationResult, setVerificationResult] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [lastSubmittedFile, setLastSubmittedFile] = useState(null);
-  const abortControllerRef = useRef(null);
-
-  // Auto-dismiss transient error alerts after 6 seconds
-  useEffect(() => {
-    if (!errorMessage) return;
-    const timer = setTimeout(() => {
-      setErrorMessage(null);
-    }, 6000);
-    return () => clearTimeout(timer);
-  }, [errorMessage]);
 
   const scrollToRecognition = () => {
     const el = document.getElementById('recognition');
@@ -81,31 +63,18 @@ export default function Dashboard({
     }
   };
 
-  const handleRetry = async () => {
-    if (lastSubmittedFile) {
-      await handleFileSubmission(lastSubmittedFile);
-    }
-  };
-
   const handleFileSubmission = async (file) => {
-    // Abort any in-flight verification
-    if (abortControllerRef.current) {
-      abortControllerRef.current.abort();
-    }
-    abortControllerRef.current = new AbortController();
-
     setErrorMessage(null);
     setIsLoading(true);
-    setLastSubmittedFile(file);
 
     const previewUrl = URL.createObjectURL(file);
     setImagePreview(previewUrl);
 
     try {
-      const result = await verifyMonumentImage(file, 25000, abortControllerRef.current.signal);
+      const result = await verifyMonumentImage(file);
       setVerificationResult(result);
 
-      // Automatically append verified monument scans to user's history
+      // Automatically append verified monument scans to authenticated user's history
       if (result && result.is_monument && !result.is_uncertain) {
         addScanToHistory(result, previewUrl);
       }
@@ -115,22 +84,17 @@ export default function Dashboard({
         onExceptionCreated();
       }
     } catch (err) {
-      if (err.name !== 'AbortError') {
-        console.error('Verification failed:', err);
-        setErrorMessage(err.message || 'Failed to verify monument. Please check backend connection.');
-      }
+      console.error('Verification failed:', err);
+      // Clear any stale result and preview on failure
+      setVerificationResult(null);
+      setImagePreview(null);
+      setErrorMessage(err.message || 'Failed to verify monument. Please check backend connection.');
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleSampleSelect = async (sampleKey) => {
-    // Abort any in-flight verification
-    if (abortControllerRef.current) {
-      abortControllerRef.current.abort();
-    }
-    abortControllerRef.current = new AbortController();
-
     setErrorMessage(null);
     setIsLoading(true);
 
@@ -160,19 +124,26 @@ export default function Dashboard({
         ctx.font = '16px monospace';
         ctx.fillText('NON-ARCHITECTURAL RECEIPT', 50, 72);
 
-        const blob = await new Promise((resolve, reject) => {
-          canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('Canvas conversion failed'))), 'image/jpeg');
-        });
-        const file = new File([blob], 'synthetic_sample.jpg', { type: 'image/jpeg' });
-        const previewUrl = URL.createObjectURL(file);
-        setImagePreview(previewUrl);
-        setLastSubmittedFile(file);
-
-        const result = await verifyMonumentImage(file, 25000, abortControllerRef.current.signal);
-        setVerificationResult(result);
-        if (result?.human_review_flagged && onExceptionCreated) {
-          onExceptionCreated();
-        }
+        canvas.toBlob(async (blob) => {
+          try {
+            if (!blob) throw new Error('Canvas conversion failed');
+            const file = new File([blob], 'synthetic_sample.jpg', { type: 'image/jpeg' });
+            const previewUrl = URL.createObjectURL(file);
+            setImagePreview(previewUrl);
+            const result = await verifyMonumentImage(file);
+            setVerificationResult(result);
+            if (result?.human_review_flagged && onExceptionCreated) {
+              onExceptionCreated();
+            }
+          } catch (err) {
+            console.error('Sample processing failed:', err);
+            setVerificationResult(null);
+            setImagePreview(null);
+            setErrorMessage(err.message || 'Sample test failed.');
+          } finally {
+            setIsLoading(false);
+          }
+        }, 'image/jpeg');
       } else {
         // 1. Check local heritage assets first (instantaneous, guaranteed on Vercel CDN)
         let sampleUrl = LOCAL_HERITAGE_IMAGES[sampleKey];
@@ -216,17 +187,11 @@ export default function Dashboard({
         }
 
         const blob = await res.blob();
-        if (blob.size < 200) {
-          throw new Error(
-            `Sample photograph for "${sampleKey.replace(/_/g, ' ')}" is unavailable in remote storage. Please upload an image directly to test recognition.`
-          );
-        }
         const file = new File([blob], `${sampleKey}_ref.jpg`, { type: 'image/jpeg' });
         const previewUrl = URL.createObjectURL(file);
         setImagePreview(previewUrl);
-        setLastSubmittedFile(file);
 
-        const result = await verifyMonumentImage(file, 25000, abortControllerRef.current.signal);
+        const result = await verifyMonumentImage(file);
         setVerificationResult(result);
 
         // Sync to user history
@@ -237,13 +202,14 @@ export default function Dashboard({
         if (result?.human_review_flagged && onExceptionCreated) {
           onExceptionCreated();
         }
+
+        setIsLoading(false);
       }
     } catch (err) {
-      if (err.name !== 'AbortError') {
-        console.error('Sample processing failed:', err);
-        setErrorMessage(err.message || 'Sample test failed.');
-      }
-    } finally {
+      console.error('Sample processing failed:', err);
+      setVerificationResult(null);
+      setImagePreview(null);
+      setErrorMessage(err.message || 'Sample test failed.');
       setIsLoading(false);
     }
   };
@@ -281,46 +247,26 @@ export default function Dashboard({
               </h2>
             </div>
             <p className="max-w-md text-sm sm:text-base text-[#6E7069] leading-relaxed font-sans">
-              Deposit a photograph of any monument, temple, fort, or architectural fragment. Our hybrid pipeline matches 512-D visual vectors against 100 indexed cultural landmarks.
+              Deposit a photograph of any monument, temple, fort, or architectural fragment. Our hybrid pipeline matches 512-D visual vectors against the indexed cultural landmarks.
             </p>
           </div>
 
           {/* Processing Scanner Overlay */}
-          {isLoading && (
-            <ProcessingOverlay
-              previewUrl={imagePreview}
-              onCancel={() => {
-                if (abortControllerRef.current) {
-                  abortControllerRef.current.abort();
-                }
-                setIsLoading(false);
-              }}
-            />
-          )}
+          {isLoading && <ProcessingOverlay previewUrl={imagePreview} />}
 
           {/* Error Alert Banner */}
           {errorMessage && (
-            <div className="mb-6 bg-rose-50 border border-rose-200 text-rose-800 p-4 rounded-2xl flex items-center justify-between text-sm shadow-sm gap-4">
+            <div className="mb-6 bg-rose-50 border border-rose-200 text-rose-800 p-4 rounded-2xl flex items-center justify-between text-sm shadow-sm">
               <div className="flex items-center gap-2">
                 <AlertCircle className="w-5 h-5 text-rose-600 flex-shrink-0" />
                 <span>{errorMessage}</span>
               </div>
-              <div className="flex items-center gap-3">
-                {lastSubmittedFile && (
-                  <button
-                    onClick={handleRetry}
-                    className="text-xs font-mono uppercase font-bold text-rose-900 bg-rose-100 hover:bg-rose-200 px-2.5 py-1 rounded transition-colors cursor-pointer"
-                  >
-                    Retry
-                  </button>
-                )}
-                <button
-                  onClick={() => setErrorMessage(null)}
-                  className="text-xs font-mono uppercase underline hover:no-underline cursor-pointer"
-                >
-                  Dismiss
-                </button>
-              </div>
+              <button
+                onClick={() => setErrorMessage(null)}
+                className="text-xs font-mono uppercase underline hover:no-underline cursor-pointer"
+              >
+                Dismiss
+              </button>
             </div>
           )}
 
@@ -336,7 +282,6 @@ export default function Dashboard({
               result={verificationResult}
               imagePreview={imagePreview}
               onReset={handleReset}
-              onRetry={lastSubmittedFile ? handleRetry : null}
             />
           )}
         </div>

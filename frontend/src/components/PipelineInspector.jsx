@@ -117,28 +117,6 @@ export default function PipelineInspector({
         </div>
       </div>
 
-      {/* 1B. Engine Attribution & Decision Explanation Bar */}
-      <div className="bg-white border border-archive-hairline rounded p-3 text-xs font-mono flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 shadow-xs">
-        <div className="flex items-center gap-2">
-          <Cpu className="w-4 h-4 text-archive-terracotta flex-shrink-0" />
-          <span className="text-archive-stone">ENGINE ATTRIBUTION:</span>
-          <span className={`px-2 py-0.5 rounded font-bold text-[11px] ${
-            telemetry?.is_offline_fallback
-              ? 'bg-amber-50 text-amber-900 border border-amber-300'
-              : telemetry?.engine_attribution?.includes('Gemini')
-              ? 'bg-blue-50 text-blue-900 border border-blue-300'
-              : 'bg-emerald-50 text-emerald-900 border border-emerald-300'
-          }`}>
-            {telemetry?.engine_attribution || (telemetry?.is_offline_fallback ? 'Tier-1 Deterministic Grounded Fallback' : 'Tier-1 CLIP ViT-B/32 + FAISS Index')}
-          </span>
-        </div>
-        {telemetry?.stage_latencies_ms?.total_ms && (
-          <span className="text-[10px] text-archive-muted">
-            Total Pipeline Latency: <strong>{telemetry.stage_latencies_ms.total_ms}ms</strong> (CLIP: {telemetry.stage_latencies_ms.clip_ms}ms, FAISS: {telemetry.stage_latencies_ms.faiss_ms}ms)
-          </span>
-        )}
-      </div>
-
       {/* 2. Calibration Invariant Warning Bar */}
       <div className="bg-archive-parchment/60 border border-archive-hairline rounded p-3 text-xs font-mono flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
         <div className="flex items-center gap-2 text-archive-stone">

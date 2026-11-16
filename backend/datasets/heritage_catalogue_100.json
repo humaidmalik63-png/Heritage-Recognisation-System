@@ -1583,10 +1583,7 @@
     "monument_name": "Petra",
     "alternate_names": [
       "Al-Khazneh",
-      "Rose City of Petra",
-      "Petra Archaeological Park",
-      "Petra World Heritage Site",
-      "Al-Khazneh (The Treasury)"
+      "Rose City of Petra"
     ],
     "country": "Jordan",
     "state_province": "Ma'an Governorate",
@@ -2654,5 +2651,23 @@
     ],
     "preservation_status": "California Historical Landmark \u2022 ASCE Civil Engineering Wonder",
     "recognition_readiness": "RECOGNITION_READY"
+  },
+  "jama_masjid": {
+    "monument_id": "jama_masjid",
+    "monument_name": "Jama Masjid",
+    "alternate_names": [
+      "Masjid-i Jahan-Numa"
+    ],
+    "country": "India",
+    "state_province": "Delhi",
+    "city_region": "Delhi",
+    "coordinates": null,
+    "category": "mosque",
+    "historical_period": "Mughal Empire (17th century)",
+    "architectural_style": "Mughal Architecture",
+    "verified_description": "One of the largest mosques in India, built by Mughal Emperor Shah Jahan between 1650 and 1656. The mosque's courtyard can accommodate over 25,000 people.",
+    "sources": [],
+    "preservation_status": "UNESCO World Heritage Site (part of Red Fort Complex); ASI-protected monument",
+    "recognition_readiness": "METADATA_ONLY"
   }
 }

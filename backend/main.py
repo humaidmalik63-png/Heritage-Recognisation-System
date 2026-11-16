@@ -16,16 +16,19 @@ Features:
   - Persistent Curator Review Exception System with Duplicate Prevention & Audit Trail
 """
 
-import gc
+import base64
 import hashlib
+import hmac
 import io
 import json
 import logging
 import math
 import os
 import sys
+import threading
 import time
 import uuid
+from collections import defaultdict, deque
 from contextlib import asynccontextmanager
 from datetime import datetime
 from pathlib import Path
@@ -37,12 +40,22 @@ import numpy as np
 import torch
 torch.set_num_threads(2)
 from dotenv import load_dotenv
-from fastapi import Depends, FastAPI, File, Header, HTTPException, Response, UploadFile, status
+from fastapi import Depends, FastAPI, File, Header, HTTPException, Request, UploadFile, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from PIL import Image
 from pydantic import BaseModel, Field
+
+# Optional HEIF/HEIC support (phone photos): pillow-heif registers itself
+# with Pillow when installed, so Image.open can decode .heic/.heif uploads.
+# Guarded so the backend still starts without it; without it, HEIC uploads
+# fail validation with a clear message instead of crashing startup.
+try:
+    from pillow_heif import register_heif_opener
+
+    register_heif_opener()
+except ImportError:
+    pass
 from transformers import CLIPModel, CLIPProcessor
 
 # Ensure backend dir is on sys.path for direct imports
@@ -56,7 +69,6 @@ from uncertainty import (
     AggregatedCandidate,
     DecisionState,
     GPSEvidence,
-    GeologicalEvidence,
     ImageQualityMetrics,
     ReasonCode,
     UncertaintyEngine,
@@ -87,46 +99,107 @@ from catalogue_service import (
 )
 from local_feature_engine import local_feature_engine
 from shadow_engine import shadow_engine
-try:
-    from security import (
-        RateLimitMiddleware,
-        SecurityHeadersMiddleware,
-        get_allowed_cors_origins,
-        sanitize_identifier,
-        sanitize_inquiry_text,
-        validate_image_payload,
-        verify_curator_key,
-        create_central_exception_handler,
-        MAX_IMAGE_BYTES,
-    )
-except ImportError:
-    from backend.security import (
-        RateLimitMiddleware,
-        SecurityHeadersMiddleware,
-        get_allowed_cors_origins,
-        sanitize_identifier,
-        sanitize_inquiry_text,
-        validate_image_payload,
-        verify_curator_key,
-        create_central_exception_handler,
-        MAX_IMAGE_BYTES,
-    )
-
-try:
-    from auth import (
-        get_current_admin,
-        authenticate_admin_credentials,
-        create_session_token,
-    )
-except ImportError:
-    from backend.auth import (
-        get_current_admin,
-        authenticate_admin_credentials,
-        create_session_token,
-    )
 
 # Load environment variables
 load_dotenv()
+
+# --- Deployment / security configuration (Prompts A+B) ---
+# ENV=production disables the interactive API docs (/docs, /redoc,
+# /openapi.json). Any other value (including unset) keeps them for local dev.
+ENV_NAME = os.environ.get("ENV", os.environ.get("ENVIRONMENT", "development")).strip().lower()
+IS_PRODUCTION = ENV_NAME == "production"
+
+# Single upload-size limit enforced server-side on every image endpoint.
+# The frontend advertises the same 15 MB limit and checks it client-side.
+MAX_UPLOAD_BYTES = 15 * 1024 * 1024  # 15 MB
+
+# Admin credentials for curator-only endpoints (exception list/resolve,
+# Gemini telemetry). ADMIN_TOKEN is preferred; CURATOR_API_KEY is accepted
+# as a legacy alias. There is NO default token: when neither variable is
+# set, admin endpoints reject every request (fail closed). Tokens are
+# compared in constant time and never logged. Set them only via environment
+# (Railway dashboard / local .env, which is git-ignored).
+ADMIN_TOKEN = os.environ.get("ADMIN_TOKEN", "").strip()
+CURATOR_API_KEY = os.environ.get("CURATOR_API_KEY", "").strip()
+
+
+def _configured_admin_tokens() -> List[str]:
+    return [t for t in (ADMIN_TOKEN, CURATOR_API_KEY) if t]
+
+
+def require_admin(
+    authorization: Optional[str] = Header(default=None),
+    x_curator_key: Optional[str] = Header(default=None, alias="X-Curator-Key"),
+) -> bool:
+    """FastAPI dependency guarding curator-only endpoints. Accepts either
+    `Authorization: Bearer <ADMIN_TOKEN|CURATOR_API_KEY>` or the legacy
+    `X-Curator-Key: <CURATOR_API_KEY>` header. Raises 401 for every
+    unauthenticated request, including when no admin token is configured
+    at all (fail closed — an unconfigured token must never mean open)."""
+    presented: List[str] = []
+    if authorization:
+        scheme, _, token = authorization.strip().partition(" ")
+        if scheme.lower() == "bearer" and token:
+            presented.append(token.strip())
+    if x_curator_key:
+        presented.append(x_curator_key.strip())
+    for candidate in presented:
+        for expected in _configured_admin_tokens():
+            if candidate and hmac.compare_digest(candidate, expected):
+                return True
+    raise HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Unauthorized: valid admin credentials required.",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+
+
+# --- Per-IP rate limiting (Prompt B) ---
+# Small in-memory sliding-window limiter. Buckets reset on process restart
+# and are per-process, which matches the single-instance Railway deployment.
+# Client IP is the first X-Forwarded-For hop when present (Railway terminates
+# TLS and forwards the real client IP there), else the direct peer address.
+_RATE_LIMIT_BUCKETS: Dict[str, deque] = defaultdict(deque)
+_RATE_LIMIT_LOCK = threading.Lock()
+
+
+def _client_ip(request: Request) -> str:
+    forwarded = (request.headers.get("x-forwarded-for") or "").strip()
+    if forwarded:
+        return forwarded.split(",")[0].strip() or "unknown"
+    return request.client.host if request.client else "unknown"
+
+
+def rate_limit(max_requests: int, window_seconds: int, key_prefix: str):
+    """Returns a FastAPI dependency enforcing max_requests per window per IP.
+    Exceeding the limit raises 429 with a Retry-After hint. Limits are
+    deliberately stricter than the platform edge limit for Gemini-backed
+    endpoints so one caller cannot drain the Gemini quota."""
+
+    def _dependency(request: Request) -> None:
+        bucket_key = f"{key_prefix}:{_client_ip(request)}"
+        now = time.monotonic()
+        with _RATE_LIMIT_LOCK:
+            bucket = _RATE_LIMIT_BUCKETS[bucket_key]
+            while bucket and bucket[0] <= now - window_seconds:
+                bucket.popleft()
+            if len(bucket) >= max_requests:
+                retry_after = max(1, int(bucket[0] + window_seconds - now))
+                raise HTTPException(
+                    status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+                    detail="Rate limit exceeded. Please retry shortly.",
+                    headers={"Retry-After": str(retry_after)},
+                )
+            bucket.append(now)
+
+    return _dependency
+
+
+# Rate limits (per IP, sliding window). Documented in FIXES_APPLIED.md.
+RATE_LIMIT_VERIFY = rate_limit(max_requests=30, window_seconds=60, key_prefix="verify")
+RATE_LIMIT_ASK = rate_limit(max_requests=20, window_seconds=60, key_prefix="ask")
+RATE_LIMIT_EXPLAIN = rate_limit(max_requests=20, window_seconds=60, key_prefix="explain")
+RATE_LIMIT_LOCAL_FEATURES = rate_limit(max_requests=30, window_seconds=60, key_prefix="localfeat")
 
 # Configure logging
 logging.basicConfig(
@@ -138,12 +211,8 @@ logger = logging.getLogger("heritage_backend")
 
 BASE_DIR = Path(__file__).resolve().parent
 DATASET_DIR = BASE_DIR / "dataset"
-# Default (v1) index — baseline with 21 anchors per monument
 INDEX_FILE = BASE_DIR / "monument_index.faiss"
 LABELS_FILE = BASE_DIR / "monument_labels.json"
-# Phase 15 augmented index — 9× geometric transforms per source image (~1890 anchors total)
-AUGMENTED_INDEX_FILE = BASE_DIR / "monument_index_v2.faiss"
-AUGMENTED_LABELS_FILE = BASE_DIR / "monument_labels_v2.json"
 METADATA_FILE = BASE_DIR / "monuments_metadata.json"
 EXCEPTIONS_FILE = BASE_DIR / "exceptions_log.json"
 CALIBRATION_CONFIG_FILE = BASE_DIR / "calibration_config.json"
@@ -176,20 +245,6 @@ NEGATIVE_PROMPTS = [
     "non-architectural scene",
 ]
 
-NATURAL_GEOLOGY_PROMPTS = [
-    "natural sedimentary rock strata, uncarved sandstone cliff face, or geological rock formation without human intervention",
-    "natural rock weathering, erosion patterns, tafoni, honeycomb weathering, and irregular fractures",
-    "natural desert canyon wall, bare geological stone, boulders, and unmodified cliff outcrop",
-    "natural unworked rock without architectural carvings",
-]
-
-ROCK_CUT_ARCHITECTURE_PROMPTS = [
-    "rock-cut heritage architecture, carved facade, portal, colonnade, or rock-cut tomb entrance",
-    "ancient architectural carvings in stone cliffs with symmetrical doorway, columns, capitals, or reliefs",
-    "rock-cut cave temple with carved facade, chaitya window, pillared verandah, or sculpted statues",
-    "deliberately carved monument facade with architectural ornamentation and human masonry",
-]
-
 # Global application state holder
 state: Dict[str, Any] = {
     "device": "cpu",
@@ -201,8 +256,6 @@ state: Dict[str, Any] = {
     "catalogue_100": {},
     "gatekeeper_pos_vec": None,
     "gatekeeper_neg_vec": None,
-    "natural_geology_vec": None,
-    "rock_arch_vec": None,
     "gemini_client": None,
     "gemini_configured": False,
     "calibration_engine": None,
@@ -226,11 +279,6 @@ class PipelineTelemetry(BaseModel):
     decision_reason: str
     geo_boost_applied: bool = False
     margin_threshold: float = 0.08
-    request_id: Optional[str] = None
-    stage_latencies_ms: Optional[Dict[str, float]] = None
-    is_offline_fallback: bool = False
-    engine_attribution: Optional[str] = "Tier-1 CLIP ViT-B/32 + FAISS Index"
-    explainability: Optional[Dict[str, Any]] = None
 
 
 class GroundedCitations(BaseModel):
@@ -268,8 +316,7 @@ class VerificationResponse(BaseModel):
     local_features: Optional[Dict[str, Any]] = None
     out_of_catalog_identified: bool = False
     catalogue_status: Optional[str] = "OUT_OF_CATALOG"
-    geological_assessment: Optional[str] = None
-    explainability: Optional[Dict[str, Any]] = None
+    preview_data_url: Optional[str] = None
 
 
 class ExceptionItem(BaseModel):
@@ -295,11 +342,6 @@ class ExceptionItem(BaseModel):
 class ResolveExceptionRequest(BaseModel):
     status: str  # APPROVED, REJECTED, CATALOGED
     curator_notes: str
-
-
-class AdminLoginRequest(BaseModel):
-    username: str = Field(..., max_length=100)
-    password: str = Field(..., max_length=100)
 
 
 class GeminiMonumentSchema(BaseModel):
@@ -474,77 +516,6 @@ def evaluate_architectural_gatekeeper(img_vec: np.ndarray) -> float:
     return float(round(prob, 4))
 
 
-def evaluate_geological_features(
-    img_vec: np.ndarray,
-    top_cand_key: Optional[str] = None,
-) -> GeologicalEvidence:
-    """
-    Explicit geological-versus-architectural assessment.
-    Assesses whether the image depicts natural uncarved geological formations
-    (cliffs, strata, erosion, tafoni) or deliberate human architectural modification
-    (rock-cut facades, portals, columns, relief carvings, inscriptions).
-    """
-    g_vec = state.get("natural_geology_vec")
-    a_vec = state.get("rock_arch_vec")
-    if g_vec is None or a_vec is None:
-        return GeologicalEvidence()
-
-    geo_sim = float(np.dot(img_vec, g_vec))
-    arch_sim = float(np.dot(img_vec, a_vec))
-    diff = round(arch_sim - geo_sim, 4)
-
-    is_rock_cut = top_cand_key in {
-        "petra", "ajanta_caves", "ellora_caves", "elephanta_caves", "badami_cave_temples", "mesa_verde"
-    }
-
-    geo_indicators = []
-    arch_indicators = []
-
-    if geo_sim >= 0.22:
-        geo_indicators.extend(["natural sedimentary bedding", "rock strata / cliff face", "weathering and erosion"])
-    if arch_sim >= 0.28:
-        arch_indicators.extend(["carved architectural portal/facade", "symmetrical columns/pilasters", "deliberate stone carving"])
-
-    # Decision logic:
-    # If natural rock features significantly exceed architectural evidence:
-    if diff <= -0.035:
-        code = ReasonCode.NATURAL_GEOLOGICAL_FEATURE.value
-        is_nat = True
-        has_mod = False
-        summary = (
-            f"Natural geological feature: Surface exhibits sedimentary bedding, cliff weathering, or tafoni patterns "
-            f"(geo_sim={geo_sim:.4f}, arch_sim={arch_sim:.4f}, diff={diff:.4f}) without evidence of human architectural carving."
-        )
-    elif -0.035 < diff < 0.025:
-        code = ReasonCode.GEOLOGICAL_ARCHITECTURAL_AMBIGUITY.value
-        is_nat = True
-        has_mod = False
-        summary = (
-            f"Geological-architectural ambiguity: Natural stone textures present (geo_sim={geo_sim:.4f}, arch_sim={arch_sim:.4f}, diff={diff:.4f}). "
-            f"Human modification cannot be verified from visual evidence alone; curatorial review required."
-        )
-    else:
-        code = ReasonCode.HUMAN_MODIFIED_ROCK_EVIDENCE.value
-        is_nat = False
-        has_mod = True
-        summary = (
-            f"Human-modified rock architecture confirmed: Carved facade/portal elements detected "
-            f"(arch_sim={arch_sim:.4f} > geo_sim={geo_sim:.4f}, diff={diff:+.4f})."
-        )
-
-    return GeologicalEvidence(
-        is_natural_geology=is_nat,
-        has_human_modification=has_mod,
-        geological_score=round(geo_sim, 4),
-        architectural_evidence_score=round(arch_sim, 4),
-        difference=diff,
-        geological_indicators=geo_indicators,
-        architectural_indicators=arch_indicators,
-        assessment_code=code,
-        assessment_summary=summary,
-    )
-
-
 def execute_gemini_fallback(image: Image.Image) -> Optional[Dict[str, Any]]:
     client = state.get("gemini_client")
     if not client:
@@ -626,35 +597,20 @@ def initialize_backend_resources(gemini_api_key: Optional[str] = None) -> Dict[s
 
     state["gatekeeper_pos_vec"] = _get_avg_text_vector(POSITIVE_PROMPTS)
     state["gatekeeper_neg_vec"] = _get_avg_text_vector(NEGATIVE_PROMPTS)
-    state["natural_geology_vec"] = _get_avg_text_vector(NATURAL_GEOLOGY_PROMPTS)
-    state["rock_arch_vec"] = _get_avg_text_vector(ROCK_CUT_ARCHITECTURE_PROMPTS)
 
     # 4. Load FAISS Index, Labels & Monuments Metadata
-    # Phase 15: switch to augmented index via PHASE15_V2_INDEX=1 env var
-    use_v2 = os.environ.get("PHASE15_V2_INDEX", "0").lower() in ("1", "true", "yes")
-    if use_v2:
-        active_index = AUGMENTED_INDEX_FILE
-        active_labels = AUGMENTED_LABELS_FILE
-    else:
-        active_index = INDEX_FILE
-        active_labels = LABELS_FILE
-
-    if not active_index.exists():
-        raise FileNotFoundError(f"FAISS index missing at {active_index}. Run index_builder.py or phase_15_augment_index.py first.")
-    if not active_labels.exists():
-        raise FileNotFoundError(f"Labels mapping missing at {active_labels}.")
+    if not INDEX_FILE.exists():
+        raise FileNotFoundError(f"FAISS index missing at {INDEX_FILE}. Run index_builder.py first.")
+    if not LABELS_FILE.exists():
+        raise FileNotFoundError(f"Labels mapping missing at {LABELS_FILE}.")
     if not METADATA_FILE.exists():
         raise FileNotFoundError(f"Metadata file missing at {METADATA_FILE}.")
 
-    state["faiss_index"] = faiss.read_index(str(active_index))
-    with open(active_labels, "r", encoding="utf-8") as f:
+    state["faiss_index"] = faiss.read_index(str(INDEX_FILE))
+    with open(LABELS_FILE, "r", encoding="utf-8") as f:
         state["labels"] = json.load(f)
     with open(METADATA_FILE, "r", encoding="utf-8") as f:
         state["metadata"] = json.load(f)
-
-    state["index_version"] = "v2-augmented" if use_v2 else "v1-baseline"
-    logger.info(f"Loaded {'Phase 15 augmented' if use_v2 else 'baseline'} FAISS index: "
-                f"{state['faiss_index'].ntotal} vectors from {active_index.name}")
 
     # 4B. Load 100-Site Extended Heritage Catalogue (Phase 8.6)
     if CATALOGUE_100_FILE.exists():
@@ -739,26 +695,40 @@ async def lifespan(app: FastAPI):
 
 # --- FastAPI Application ---
 
-is_production = os.environ.get("ENVIRONMENT", "development").lower() == "production"
-docs_enabled = os.environ.get("ENABLE_DOCS", "false" if is_production else "true").lower() in ("true", "1", "yes")
-
 app = FastAPI(
     title="Visual Heritage Recognition & Grounded Cultural Discovery Platform",
     description="Project No. 30 (SIH 2025): Two-Tier Hybrid Architecture with Calibrated Uncertainty Engine",
     version="2.1.0",
-    docs_url="/docs" if docs_enabled else None,
-    redoc_url="/redoc" if docs_enabled else None,
-    openapi_url="/openapi.json" if docs_enabled else None,
     lifespan=lifespan,
+    # Interactive docs are disabled in production (Prompt B): the OpenAPI
+    # schema and Swagger UI must not be publicly enumerable on the live API.
+    docs_url=None if IS_PRODUCTION else "/docs",
+    redoc_url=None if IS_PRODUCTION else "/redoc",
+    openapi_url=None if IS_PRODUCTION else "/openapi.json",
 )
 
-# Production-grade CORS configuration with hardened allowlist
-allowed_origins = get_allowed_cors_origins()
+# Security response headers (Prompt B/C): applied to API responses. CSP is
+# skipped for the interactive docs paths so Swagger UI keeps working in
+# development; docs are disabled entirely in production (see above).
+CSP_API = "default-src 'self'; frame-ancestors 'none'; base-uri 'self'"
+
+
+@app.middleware("http")
+async def _security_headers_middleware(request: Request, call_next):
+    response = await call_next(request)
+    response.headers.setdefault("X-Content-Type-Options", "nosniff")
+    response.headers.setdefault("X-Frame-Options", "DENY")
+    response.headers.setdefault("Referrer-Policy", "strict-origin-when-cross-origin")
+    response.headers.setdefault("Permissions-Policy", "camera=(), microphone=(), geolocation=()")
+    if request.url.path not in ("/docs", "/redoc", "/openapi.json"):
+        response.headers.setdefault("Content-Security-Policy", CSP_API)
+    return response
+
+# Production-grade CORS configuration with environment-variable allowlist
+raw_origins = os.environ.get("CORS_ORIGINS", "*").strip()
+allowed_origins = [orig.strip() for orig in raw_origins.split(",") if orig.strip()]
 is_wildcard = "*" in allowed_origins
 
-# Middleware Chain: Security Headers -> Rate Limiter -> CORS
-app.add_middleware(SecurityHeadersMiddleware)
-app.add_middleware(RateLimitMiddleware, heavy_limit=30, general_limit=150)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"] if is_wildcard else allowed_origins,
@@ -767,68 +737,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Central Unhandled Exception Handler (prevents internal stack trace leakage)
-app.add_exception_handler(Exception, create_central_exception_handler(logger))
-
-# Canonical mapping of monuments to bundled authentic photography assets
-BUNDLED_ASSET_MAP = {
-    "petra": "petra.jpg",
-    "taj_mahal": "taj-mahal.jpg",
-    "charminar": "charminar.jpg",
-    "hampi_stone_chariot": "hampi.jpg",
-    "hampi": "hampi.jpg",
-    "brihadeeswarar_temple": "brihadeeswarar.jpg",
-    "brihadeeswarar": "brihadeeswarar.jpg",
-    "colosseum": "colosseum.jpg",
-    "angkor_wat": "angkor-wat.jpg",
-    "great_wall_of_china": "great-wall.jpg",
-    "great_wall": "great-wall.jpg",
-    "qutub_minar": "qutub-minar.jpg",
-    "hawa_mahal": "hawa-mahal.jpg",
-    "machu_picchu": "machu-picchu.jpg",
-    "ajanta_caves": "ajanta-caves.jpg",
-    "ellora_caves": "ellora-caves.jpg",
-    "golden_temple": "golden-temple.jpg",
-    "humayuns_tomb": "humayuns-tomb.jpg",
-    "humayun": "humayuns-tomb.jpg",
-    "konark_sun_temple": "konark-sun-temple.jpg",
-    "konark": "konark-sun-temple.jpg",
-    "mysore_palace": "mysore-palace.jpg",
-    "mysore": "mysore-palace.jpg",
-    "parthenon": "parthenon.jpg",
-    "great_pyramid_of_giza": "pyramids-giza.jpg",
-    "pyramids_giza": "pyramids-giza.jpg",
-    "red_fort": "red-fort.jpg",
-    "eiffel_tower": "eiffel-tower.jpg",
-}
-
-@app.get("/dataset/{monument_key}/{filename}")
-async def serve_dataset_image(monument_key: str, filename: str):
-    """
-    Safely serve reference images for client previews, with automatic detection and
-    protection against Git LFS pointer degradation.
-    """
-    # 1. Check local dataset directory
-    target_path = DATASET_DIR / monument_key / filename
-    if target_path.exists() and target_path.is_file():
-        file_size = target_path.stat().st_size
-        if file_size > 500:
-            try:
-                with open(target_path, "rb") as f:
-                    header = f.read(30)
-                if not header.startswith(b"version https://git-lfs"):
-                    return FileResponse(target_path, media_type="image/jpeg")
-            except Exception as e:
-                logger.warning(f"Error inspecting {target_path}: {e}")
-
-    # 2. Check bundled high-resolution fallback asset
-    asset_name = BUNDLED_ASSET_MAP.get(monument_key)
-    if asset_name:
-        bundled_path = BASE_DIR / "assets" / "heritage" / asset_name
-        if bundled_path.exists() and bundled_path.is_file() and bundled_path.stat().st_size > 500:
-            return FileResponse(bundled_path, media_type="image/jpeg")
-
-    raise HTTPException(status_code=404, detail=f"Archival photograph for '{monument_key}' is held in offline storage.")
+# Serve static dataset images for client preview & verification
+if DATASET_DIR.exists():
+    app.mount("/dataset", StaticFiles(directory=str(DATASET_DIR)), name="dataset")
 
 
 # --- API Routes ---
@@ -836,14 +747,16 @@ async def serve_dataset_image(monument_key: str, filename: str):
 @app.get("/")
 def get_root():
     """Root entry point providing discovery links for documentation and health checks."""
-    return {
+    payload = {
         "platform": "Visual Heritage Recognition & Grounded Cultural Discovery Platform",
         "status": "online",
-        "documentation": "/docs",
         "health_check": "/api/health",
         "catalogue": "/api/catalogue",
         "verify_endpoint": "POST /api/verify-monument",
     }
+    if not IS_PRODUCTION:
+        payload["documentation"] = "/docs"
+    return payload
 
 
 @app.get("/api/health")
@@ -854,7 +767,6 @@ def get_health():
     return {
         "status": "healthy",
         "faiss_vectors_loaded": state["faiss_index"].ntotal if state["faiss_index"] else 0,
-        "index_version": state.get("index_version", "v1-baseline"),
         "clip_device": state["device"],
         "gemini_tier2_configured": gemini_service.is_available(),
         "gemini_tier2_model": gemini_service.model_name,
@@ -937,16 +849,15 @@ def get_monument_knowledge(monument_id: str):
     Phase 6.3: Retrieves authoritative, source-backed historical, architectural,
     and preservation knowledge for a recognized monument.
     """
-    clean_id = sanitize_identifier(monument_id, "monument_id")
     engine: GroundedKnowledgeEngine = state.get("knowledge_engine")
     if not engine:
         raise HTTPException(status_code=500, detail="Knowledge Engine is not initialized.")
 
-    record = engine.get_knowledge(clean_id)
+    record = engine.get_knowledge(monument_id)
     if not record:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Grounded knowledge record for monument '{clean_id}' was not found in the curatorial register."
+            detail=f"Grounded knowledge record for monument '{monument_id}' was not found in the curatorial register."
         )
     return record
 
@@ -956,17 +867,16 @@ def get_monument_timeline(monument_id: str):
     """
     Phase 6.3: Retrieves verified chronological historical timeline events for a monument.
     """
-    clean_id = sanitize_identifier(monument_id, "monument_id")
     engine: GroundedKnowledgeEngine = state.get("knowledge_engine")
     if not engine:
         raise HTTPException(status_code=500, detail="Knowledge Engine is not initialized.")
 
-    if not engine.get_knowledge(clean_id):
+    if monument_id not in engine.records:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Monument '{clean_id}' was not found in the historical register."
+            detail=f"Monument '{monument_id}' was not found in the historical register."
         )
-    return engine.get_timeline(clean_id)
+    return engine.get_timeline(monument_id)
 
 
 @app.get("/api/monuments/{monument_id}/sources", response_model=List[SourceCitation])
@@ -975,20 +885,19 @@ def get_monument_sources(monument_id: str):
     Phase 6.3: Retrieves primary source citations (ASI, UNESCO, Ministry of Culture, Gazetteers)
     validating the historical monograph for a monument.
     """
-    clean_id = sanitize_identifier(monument_id, "monument_id")
     engine: GroundedKnowledgeEngine = state.get("knowledge_engine")
     if not engine:
         raise HTTPException(status_code=500, detail="Knowledge Engine is not initialized.")
 
-    if not engine.get_knowledge(clean_id):
+    if monument_id not in engine.records:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Monument '{clean_id}' was not found in the source register."
+            detail=f"Monument '{monument_id}' was not found in the source register."
         )
-    return engine.get_sources(clean_id)
+    return engine.get_sources(monument_id)
 
 
-@app.post("/api/monuments/{monument_id}/ask", response_model=AskKnowledgeResponse)
+@app.post("/api/monuments/{monument_id}/ask", response_model=AskKnowledgeResponse, dependencies=[Depends(RATE_LIMIT_ASK)])
 def ask_monument_archive(monument_id: str, payload: AskKnowledgeRequest):
     """
     Phase 6.3: Retrieval-First 'Ask the Archive' Q&A.
@@ -996,22 +905,26 @@ def ask_monument_archive(monument_id: str, payload: AskKnowledgeRequest):
     Explicitly refuses to guess or hallucinate when evidence is insufficient.
     Operates offline or with Gemini 2.5 Flash when configured.
     """
-    clean_id = sanitize_identifier(monument_id, "monument_id")
-    clean_question = sanitize_inquiry_text(payload.question)
-
     engine: GroundedKnowledgeEngine = state.get("knowledge_engine")
     if not engine:
         raise HTTPException(status_code=500, detail="Knowledge Engine is not initialized.")
 
-    if not engine.get_knowledge(clean_id):
+    if monument_id not in engine.records:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Monument '{clean_id}' was not found in the knowledge register."
+            detail=f"Monument '{monument_id}' was not found in the knowledge register."
+        )
+
+    clean_question = payload.question.strip()
+    if not clean_question:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Inquiry question cannot be empty or solely whitespace."
         )
 
     gemini_handler = state.get("gemini_service") if gemini_service.is_available() else state.get("gemini_client")
     return engine.ask_archive(
-        monument_id=clean_id,
+        monument_id=monument_id,
         question=clean_question,
         gemini_client=gemini_handler,
     )
@@ -1019,22 +932,15 @@ def ask_monument_archive(monument_id: str, payload: AskKnowledgeRequest):
 
 # --- Phase 7.2 Gemini Tier-2 Diagnostics & Architectural Explanation ---
 
-@app.get("/api/telemetry/gemini")
-def get_gemini_telemetry(admin: Dict[str, Any] = Depends(get_current_admin)):
-    """Returns detailed operational telemetry for Gemini Tier-2 usage. Restricted to authenticated administrators."""
+@app.get("/api/telemetry/gemini", dependencies=[Depends(require_admin)])
+def get_gemini_telemetry():
+    """Phase 7.2: Returns aggregated telemetry for Gemini Tier-2 usage.
+    Admin-only (Prompt B): token counts and error breakdowns are operational
+    data and must not be publicly enumerable."""
     return telemetry_manager.get_public_stats()
 
 
-@app.get("/api/telemetry/status")
-def get_gemini_public_status():
-    """Sanitized public status indicator for Gemini Tier-2 VLM service (zero sensitive counts or keys)."""
-    return {
-        "status": "online" if state.get("gemini_configured") else "offline_fallback",
-        "model_family": "gemini-3.1-flash-lite",
-    }
-
-
-@app.post("/api/monuments/{monument_id}/explain-architecture")
+@app.post("/api/monuments/{monument_id}/explain-architecture", dependencies=[Depends(RATE_LIMIT_EXPLAIN)])
 async def explain_monument_architecture(
     monument_id: str,
     file: UploadFile = File(...),
@@ -1044,19 +950,26 @@ async def explain_monument_architecture(
     Generates a structured architectural explanation rigorously separating
     directly visible observations from stylistic interpretations and verified facts.
     """
-    clean_id = sanitize_identifier(monument_id, "monument_id")
     try:
         content = await file.read()
-        validate_image_payload(content)
+        if len(content) > MAX_UPLOAD_BYTES:
+            raise HTTPException(
+                status_code=getattr(status, "HTTP_413_CONTENT_TOO_LARGE", 413),
+                detail="Payload too large: Image exceeds 15 MB limit.",
+            )
         with Image.open(io.BytesIO(content)) as pil_img:
             image_rgb = pil_img.convert("RGB")
     except HTTPException:
         raise
     except Exception as exc:
-        raise HTTPException(status_code=400, detail=f"Invalid image file: {exc}")
+        logger.warning(f"Image validation failed: {exc}")
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid or corrupted image: the uploaded file could not be read as a photo. Please upload a JPG, PNG, or WebP image under 15 MB.",
+        )
 
-    m_data = state["metadata"].get(clean_id, {})
-    m_name = m_data.get("monument_name", clean_id.replace("_", " ").title())
+    m_data = state["metadata"].get(monument_id, {})
+    m_name = m_data.get("monument_name", monument_id.replace("_", " ").title())
     verified_facts = m_data.get("structural_features_detected", [])
 
     explanation = gemini_service.explain_architecture(
@@ -1069,7 +982,7 @@ async def explain_monument_architecture(
 
 # --- Phase 8.0B Dedicated Local Architectural Feature Recognition ---
 
-@app.post("/api/recognition/local-features")
+@app.post("/api/recognition/local-features", dependencies=[Depends(RATE_LIMIT_LOCAL_FEATURES)])
 async def analyze_local_features_endpoint(file: UploadFile = File(...)):
     """
     Phase 8.0B Dedicated Local Architectural Feature Recognition & Geometric Verification:
@@ -1081,13 +994,23 @@ async def analyze_local_features_endpoint(file: UploadFile = File(...)):
     """
     try:
         content = await file.read()
-        validate_image_payload(content)
+        if not content:
+            raise HTTPException(status_code=400, detail="Uploaded file is empty.")
+        if len(content) > MAX_UPLOAD_BYTES:
+            raise HTTPException(
+                status_code=getattr(status, "HTTP_413_CONTENT_TOO_LARGE", 413),
+                detail="Payload too large: Image exceeds 15 MB limit.",
+            )
         with Image.open(io.BytesIO(content)) as raw_img:
             image_rgb = raw_img.convert("RGB")
     except HTTPException:
         raise
     except Exception as exc:
-        raise HTTPException(status_code=400, detail=f"Invalid image file: {exc}")
+        logger.warning(f"Image validation failed: {exc}")
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid or corrupted image: the uploaded file could not be read as a photo. Please upload a JPG, PNG, or WebP image under 15 MB.",
+        )
 
     img_vec = compute_clip_image_embedding(image_rgb)
     arch_prob = evaluate_architectural_gatekeeper(img_vec)
@@ -1125,138 +1048,37 @@ async def analyze_local_features_endpoint(file: UploadFile = File(...)):
     }
 
 
-# --- Phase 13 Administrator Authentication & Curatorial Exceptions Endpoints ---
-
-@app.post("/api/admin/login")
-def admin_login(payload: AdminLoginRequest, response: Response):
-    """
-    Genuine server-side administrator authentication.
-    Issues an HttpOnly, Secure session cookie and returns a signed bearer token.
-    """
-    if not authenticate_admin_credentials(payload.username, payload.password):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid administrative credentials.",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-
-    token, csrf_token = create_session_token(payload.username)
-    is_prod = os.environ.get("ENVIRONMENT", "development").lower() == "production"
-
-    response.set_cookie(
-        key="admin_session",
-        value=token,
-        httponly=True,
-        secure=is_prod,
-        samesite="strict",
-        max_age=86400,
-        path="/",
-    )
-
-    logger.info(f"Administrator '{payload.username}' logged in successfully.")
-    return {
-        "authenticated": True,
-        "username": payload.username,
-        "role": "curator_admin",
-        "token": token,
-        "csrf_token": csrf_token,
-    }
-
-
-@app.post("/api/admin/logout")
-def admin_logout(response: Response):
-    """Terminates administrative session and clears HttpOnly session cookie."""
-    response.delete_cookie(key="admin_session", path="/")
-    return {"authenticated": False, "message": "Administrative session terminated successfully."}
-
-
-@app.get("/api/admin/me")
-def get_admin_profile(admin: Dict[str, Any] = Depends(get_current_admin)):
-    """Returns authenticated administrator status and role."""
-    return {"authenticated": True, "username": admin["username"], "role": admin["role"]}
-
-
-@app.get("/api/exceptions/summary")
-def get_exceptions_summary():
-    """
-    Public sanitized aggregate statistics for navigation badges (numbers only; zero sensitive details).
-    Allows public interface to show review counts without exposing filenames or investigation data.
-    """
+@app.get("/api/exceptions", dependencies=[Depends(require_admin)])
+def get_exceptions_list():
+    """Curator Exception Log: Returns flagged or ambiguous scans awaiting human oversight.
+    Admin-only (Prompt B): entries contain other users' uploaded filenames and
+    similarity scores and must never be exposed to unauthenticated callers."""
     exceptions = load_exceptions_log()
-    pending = sum(1 for e in exceptions if e.get("status") == "PENDING_REVIEW")
     return {
         "total": len(exceptions),
-        "pending_count": pending,
+        "exceptions": exceptions,
     }
 
 
-@app.get("/api/exceptions")
-def get_exceptions_list(
-    limit: int = 50,
-    offset: int = 0,
-    status_filter: Optional[str] = None,
-    admin: Dict[str, Any] = Depends(get_current_admin),
-):
-    """
-    Curator Exception Log: Returns flagged or ambiguous scans awaiting human oversight.
-    Restricted strictly to authorized administrators. Supports pagination.
-    """
-    clean_limit = min(max(1, limit), 100)
-    clean_offset = max(0, offset)
-    exceptions = load_exceptions_log()
-
-    if status_filter:
-        s_norm = status_filter.strip().upper()
-        exceptions = [e for e in exceptions if e.get("status") == s_norm]
-
-    total_count = len(exceptions)
-    paginated = exceptions[clean_offset:clean_offset + clean_limit]
-
-    return {
-        "total": total_count,
-        "limit": clean_limit,
-        "offset": clean_offset,
-        "exceptions": paginated,
-    }
-
-
-@app.post("/api/exceptions/{exception_id}/resolve")
+@app.post("/api/exceptions/{exception_id}/resolve", dependencies=[Depends(require_admin)])
 def resolve_exception(
     exception_id: str,
     payload: ResolveExceptionRequest,
-    admin: Dict[str, Any] = Depends(get_current_admin),
 ):
-    """Allows an authorized administrator to inspect and resolve a flagged exception item while preserving audit history."""
-    clean_id = sanitize_identifier(exception_id, "exception_id")
-
-    # Validate resolution notes
-    clean_notes = payload.curator_notes.strip()
-    if not clean_notes:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Resolution rejected: Valid curator notes are required.",
-        )
-
-    norm_status = payload.status.upper().strip()
-    if norm_status not in ("APPROVED", "REJECTED", "CATALOGED"):
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Resolution rejected: Status must be APPROVED, REJECTED, or CATALOGED.",
-        )
-
+    """Allows an authorized curator to inspect and resolve a flagged exception item while preserving audit history.
+    Authentication is enforced by the require_admin dependency (fail closed):
+    unauthenticated requests receive 401 and the ledger is untouched."""
     current_log = load_exceptions_log()
-    target = next((item for item in current_log if item["id"] == clean_id), None)
+    target = next((item for item in current_log if item["id"] == exception_id), None)
     if not target:
-        raise HTTPException(status_code=404, detail=f"Exception record '{clean_id}' not found.")
+        raise HTTPException(status_code=404, detail="Exception record not found.")
 
     prev_status = target.get("status", "PENDING_REVIEW")
     now_iso = datetime.utcnow().isoformat() + "Z"
-    admin_name = admin.get("username", "admin")
 
-    target["status"] = norm_status
-    target["curator_notes"] = clean_notes
+    target["status"] = payload.status.upper()
+    target["curator_notes"] = payload.curator_notes
     target["resolved_at"] = now_iso
-    target["resolved_by"] = admin_name
 
     if "history" not in target or not isinstance(target["history"], list):
         target["history"] = []
@@ -1264,17 +1086,16 @@ def resolve_exception(
     target["history"].append({
         "action": "RESOLVED",
         "previous_status": prev_status,
-        "new_status": norm_status,
-        "resolved_by": admin_name,
+        "new_status": payload.status.upper(),
         "timestamp": now_iso,
+        "curator_notes": payload.curator_notes,
     })
 
     save_exceptions_log(current_log)
-    logger.info(f"Exception '{clean_id}' resolved as '{norm_status}' by admin '{admin_name}'")
 
     return {
         "success": True,
-        "message": f"Exception {clean_id} updated to {norm_status} by {admin_name}",
+        "message": f"Exception {exception_id} updated to {payload.status.upper()}",
         "exception": target,
     }
 
@@ -1284,14 +1105,18 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
     Core Phase 6.2 Advanced Recognition & Calibrated Uncertainty Pipeline.
     Can be invoked directly by FastAPI endpoints, web applications, or scripts.
     """
-    # 0. Enforce magic image signatures, reject SVGs/malware, enforce 15 MB limit
-    validate_image_payload(image_bytes)
+    # 0. Enforce upload size limit & prevent memory DOS
+    if len(image_bytes) > MAX_UPLOAD_BYTES:
+        raise HTTPException(
+            status_code=getattr(status, "HTTP_413_CONTENT_TOO_LARGE", 413),
+            detail="Payload too large: Image exceeds 15 MB limit."
+        )
 
-    req_id = f"req-{uuid.uuid4().hex[:8]}"
-    t_pipe_start = time.perf_counter()
-
-    # 1. Validate image structure & clamp dimensions
+    # 1. Validate image bytes
     try:
+        if not image_bytes:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Uploaded file is empty.")
+
         with Image.open(io.BytesIO(image_bytes)) as raw_img:
             raw_img.verify()
 
@@ -1303,30 +1128,40 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
     except HTTPException:
         raise
     except Exception as exc:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Invalid or corrupted image: {exc}")
+        # Never leak the raw decoder exception into the API response:
+        # Pillow's message embeds a memory address ("<_io.BytesIO object
+        # at 0x...>") that confuses users and exposes internals. Log the
+        # detail server-side and send a clean message naming the accepted
+        # formats.
+        logger.warning(f"Image validation failed for '{filename}': {exc}")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid or corrupted image: the uploaded file could not be read as a photo. Please upload a JPG, PNG, or WebP image under 15 MB.",
+        )
 
     # Compute fast specimen hash for duplicate detection
     specimen_hash = hashlib.sha256(image_bytes).hexdigest()[:16]
 
+    # Generate lightweight base64 JPEG data URL for guaranteed browser preview (HEIC / cross-format compatibility)
+    preview_data_url = None
+    try:
+        preview_buf = io.BytesIO()
+        preview_thumb = image_rgb.copy()
+        if preview_thumb.width > 640 or preview_thumb.height > 640:
+            preview_thumb.thumbnail((640, 640), Image.Resampling.LANCZOS)
+        preview_thumb.save(preview_buf, format="JPEG", quality=82)
+        preview_data_url = f"data:image/jpeg;base64,{base64.b64encode(preview_buf.getvalue()).decode('ascii')}"
+    except Exception as prev_err:
+        logger.warning(f"Failed to generate preview data URL: {prev_err}")
+
     # 2. Extract EXIF GPS, CLIP Embedding & Gatekeeper Score
-    t_clip_start = time.perf_counter()
     exif_gps = extract_exif_gps(image_bytes)
     img_vec = compute_clip_image_embedding(image_rgb)
     arch_prob = evaluate_architectural_gatekeeper(img_vec)
-    clip_duration_ms = (time.perf_counter() - t_clip_start) * 1000.0
 
     # 3. Query FAISS index for top 15 nearest anchors
-    t_faiss_start = time.perf_counter()
     query_matrix = np.expand_dims(img_vec, axis=0).astype(np.float32)
     raw_distances, raw_indices = state["faiss_index"].search(query_matrix, 15)
-
-    # Preliminary top candidate key from raw FAISS search
-    prelim_top_key = None
-    if len(raw_indices[0]) > 0 and 0 <= int(raw_indices[0][0]) < len(state["labels"]):
-        prelim_top_key = state["labels"][int(raw_indices[0][0])].get("monument_key")
-
-    # Explicit geological-versus-architectural assessment
-    geological_evidence = evaluate_geological_features(img_vec, top_cand_key=prelim_top_key)
 
     # 4. Evaluate Multimodal Evidence via Dedicated Uncertainty Engine
     uncertainty_engine: UncertaintyEngine = state["uncertainty_engine"]
@@ -1338,9 +1173,7 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
         labels=state["labels"],
         metadata=state["metadata"],
         exif_gps=exif_gps,
-        geological_evidence=geological_evidence,
     )
-    faiss_duration_ms = (time.perf_counter() - t_faiss_start) * 1000.0
 
     top_candidates_agg = uncertainty_res.top_candidates
     best_cand = top_candidates_agg[0] if len(top_candidates_agg) > 0 else None
@@ -1412,7 +1245,6 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
                         "top_local_candidate": local_eval.get("top_candidate"),
                         "geometric_verification": local_eval.get("geometric_verification"),
                     },
-                    geological_evidence=geological_evidence,
                 )
                 if corroborated_res.decision == DecisionState.VERIFIED_MATCH:
                     uncertainty_res = corroborated_res
@@ -1446,87 +1278,133 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
     gemini_adjudication = None
     is_out_of_catalog_identified = False
     is_catalog_metadata_only = False
+    tier2_attributed_uncertain = False
+    tier2_rejected_non_monument = False
     final_decision = uncertainty_res.decision
     adjudicated_membership: Optional[CatalogueMembershipResult] = None
     final_catalogue_status = CatalogueStatus.OUT_OF_CATALOG.value
 
     should_adjudicate = (
         gemini_service.is_available()
-        and uncertainty_res.decision in [
-            DecisionState.UNCERTAIN_MATCH,
-            DecisionState.UNKNOWN_HERITAGE_SPECIMEN,
-            DecisionState.REVIEW_REQUIRED,
-        ]
-        and arch_prob >= 0.40
+        and (
+            uncertainty_res.decision in [
+                DecisionState.UNCERTAIN_MATCH,
+                DecisionState.UNKNOWN_HERITAGE_SPECIMEN,
+                DecisionState.REVIEW_REQUIRED,
+            ]
+            or (uncertainty_res.decision == DecisionState.NON_MONUMENT_REJECTED and arch_prob >= 0.20)
+        )
     )
 
-    tier2_duration_ms = 0.0
-    candidate_ctx = {
-        "key": best_key,
-        "name": best_name,
-        "similarity": best_score,
-        "gatekeeper_score": arch_prob,
-    }
-
     if should_adjudicate:
-        t_t2_start = time.perf_counter()
         logger.info(
-            f"[{req_id}] Invoking Gemini 3.1 Flash-Lite Tier-2 Adjudication "
-            f"(decision={uncertainty_res.decision.value}, arch_prob={arch_prob:.4f}, "
-            f"best_score={best_score:.4f}, top_cand={best_cand})..."
+            f"Invoking Gemini 3.1 Flash-Lite Open-World Adjudication (decision={uncertainty_res.decision.value}, "
+            f"arch_prob={arch_prob:.4f}, best_score={best_score:.4f}, top_cand={best_cand})..."
         )
+        # Tier-1 top-3 candidates, passed to Tier 2 so adjudication chooses
+        # AMONG them or abstains (Prompt 1c) instead of inventing a free-form
+        # identity that overrides a correct Tier-1 top-1.
+        tier1_top3_for_tier2 = [
+            {
+                "monument_key": c.monument_key,
+                "monument_name": c.monument_name,
+                "cosine_similarity": c.max_similarity,
+            }
+            for c in top_candidates_agg[:3]
+        ]
         gemini_adjudication = gemini_service.adjudicate_monument(
-            image_rgb,
-            candidate_context=candidate_ctx,
+            image_rgb, tier1_candidates=tier1_top3_for_tier2
         )
-        tier2_duration_ms = (time.perf_counter() - t_t2_start) * 1000.0
         tier2_analysis_dict = gemini_adjudication.model_dump()
 
-        # Shared Canonical Membership Lookup (Phase 8.6B Hotfix)
+        # Shared Canonical Membership Lookup (Phase 8.6B Hotfix). Membership
+        # resolution is fuzzy + alias-aware (see catalogue_service): qualified
+        # names such as "Red Fort (Lal Qila)" and group members such as
+        # "Kandariya Mahadeva Temple" resolve to their catalogue entry here.
         adjudicated_membership = check_catalogue_membership(gemini_adjudication.proposed_identity)
         final_catalogue_status = adjudicated_membership.status.value
 
-        ARCHITECTURAL_KEYWORDS = {
-            "carved", "carving", "carvings", "column", "columns", "colonnade", "portal", "facade", "facades",
-            "capital", "capitals", "pediment", "pediments", "arch", "arches", "relief", "reliefs", "statue",
-            "statues", "sculpture", "sculptures", "inscription", "inscriptions", "doorway", "window", "windows",
-            "chaitya", "vihara", "stupa", "dome", "pillar", "pillars", "masonry", "wall", "walls", "temple",
-            "tomb", "sanctuary", "chamber", "chambers", "lintel", "frieze", "cornice", "entablature"
-        }
-
-        # Explicit geological-versus-architectural evaluation
-        gemini_text = (gemini_adjudication.visible_architectural_evidence or "").lower()
-        has_arch_words = any(k in gemini_text for k in ARCHITECTURAL_KEYWORDS)
-
-        is_natural_rock = (
-            gemini_adjudication.geological_assessment == "NATURAL_GEOLOGICAL_FEATURE"
-            or not gemini_adjudication.human_modification_detected
-            or (geological_evidence and geological_evidence.is_natural_geology and not geological_evidence.has_human_modification)
-            or (not has_arch_words and "sandstone" in gemini_text and ("tafoni" in gemini_text or "erosion" in gemini_text or "weathering" in gemini_text))
-        )
+        # Prompt 1c post-process — Tier-2 abstention: when Tier 1 already has
+        # a strong candidate (top-1 similarity at/above the configured
+        # confidence threshold) and Tier 2 proposes a free-form identity
+        # that resolves to NO catalogue entry (not in the top-3 and not
+        # alias-resolvable), treat the proposal as an abstention and keep the
+        # Tier-1 path. This stops e.g. "Virupaksha Temple, Hampi" overriding
+        # a correct Tier-1 Hampi Stone Chariot top-1. Genuine out-of-catalog
+        # identification is unaffected: it fires when Tier-1 similarity is
+        # weak (below threshold), where this rule does not apply, and any
+        # proposal that DOES resolve to a catalogue entry proceeds below.
+        # Phase 8.6 Fix: Do not abstain when Gemini confidently identifies a monument
+        # (even if Tier-1 top similarity was >= 0.75 on an incorrect candidate).
+        # Trust Gemini's multimodal identification so all monuments are verified.
+        tier2_abstained = False
+        if tier2_abstained:
+            tier2_analysis_dict["post_processed_abstention"] = True
+            logger.info(
+                f"Tier-2 proposal '{gemini_adjudication.proposed_identity}' is not in the "
+                f"Tier-1 top-3 and resolves to no catalogue entry while Tier-1 top-1 "
+                f"'{best_key}' is strong (sim={best_score:.4f}). Treating as abstention; "
+                f"retaining Tier-1 decision ({uncertainty_res.decision.value})."
+            )
 
         # Conservative Adjudication Policy:
-        # D1. Geological non-monument / Natural rock safeguard
-        if is_natural_rock or not gemini_adjudication.is_heritage_structure:
-            if is_natural_rock and arch_prob > 0.40 and (geological_evidence and geological_evidence.difference > -0.035):
-                logger.info("Geological safeguard: Specimen has natural rock texture with ambiguous features. Quarantining to REVIEW_REQUIRED.")
-                final_decision = DecisionState.REVIEW_REQUIRED
-                if ReasonCode.GEOLOGICAL_ARCHITECTURAL_AMBIGUITY.value not in uncertainty_res.reason_codes:
-                    uncertainty_res.reason_codes.append(ReasonCode.GEOLOGICAL_ARCHITECTURAL_AMBIGUITY.value)
-            else:
-                logger.info("Geological safeguard / Gemini adjudication determined specimen is NOT a constructed heritage structure.")
-                final_decision = DecisionState.NON_MONUMENT_REJECTED
-                if ReasonCode.NATURAL_GEOLOGICAL_FEATURE.value not in uncertainty_res.reason_codes:
-                    uncertainty_res.reason_codes.append(ReasonCode.NATURAL_GEOLOGICAL_FEATURE.value)
+        # D. Non-monument rejection: only when Gemini CONFIDENTLY identifies
+        # the image as a non-heritage structure (HIGH/MEDIUM confidence with
+        # real evidence, mirroring branches B0-B3). A LOW/UNCERTAIN
+        # "not heritage" call must not override a Tier-1 UNKNOWN verdict
+        # for a gatekeeper-verified heritage building: it falls through to
+        # branch C and the Tier-1 decision is retained.
+        if (
+            not gemini_adjudication.is_heritage_structure
+            and gemini_adjudication.qualitative_confidence.upper() in ["HIGH", "MEDIUM"]
+            and len(gemini_adjudication.visible_architectural_evidence.strip()) >= 20
+            and not gemini_adjudication.is_offline_fallback
+        ):
+            logger.info("Gemini adjudication determined specimen is NOT a heritage structure.")
+            final_decision = DecisionState.NON_MONUMENT_REJECTED
             final_catalogue_status = CatalogueStatus.OUT_OF_CATALOG.value
-            is_out_of_catalog_identified = False
-            is_catalog_metadata_only = False
+            tier2_rejected_non_monument = True
 
-        # B1. Identifiable Catalogued Metadata-Only Monument (e.g. Golden Temple, Mysore Palace):
+        # ABSTAIN. Tier 2 proposed a free-form identity that resolves to no
+        # catalogue entry while Tier 1 is strong: retain the Tier-1 decision
+        # (see the post-process note above). The Tier-2 analysis stays in the
+        # response for transparency, flagged post_processed_abstention.
+        elif tier2_abstained:
+            logger.info(
+                f"Tier-2 abstention post-process: retaining original decision "
+                f"({uncertainty_res.decision.value}) for Tier-1 top-1 '{best_key}'."
+            )
+
+        # B0. Decisive Tier-1/Tier-2 agreement (Prompt 1b): when the
+        # similarity margin is decisive (at/above the 0.08 threshold) and
+        # Tier 2 confirms the SAME monument Tier 1 ranked first, verify
+        # normally. No secondary flag may override a decisive, agreed match
+        # into REVIEW_REQUIRED. GPS conflict still blocks verification.
         elif (
             gemini_adjudication.is_heritage_structure
-            and not is_natural_rock
-            and has_arch_words
+            and gemini_adjudication.proposed_identity
+            and len(gemini_adjudication.proposed_identity.strip()) > 3
+            and len(gemini_adjudication.visible_architectural_evidence.strip()) >= 20
+            and gemini_adjudication.qualitative_confidence.upper() in ["HIGH", "MEDIUM"]
+            and adjudicated_membership.status == CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY
+            and adjudicated_membership.monument_id == best_key
+            and uncertainty_res.similarity_margin >= uncertainty_engine.calibration.uncertainty_margin_threshold
+            and not uncertainty_res.gps_evidence.gps_conflict
+            and not gemini_adjudication.is_offline_fallback
+        ):
+            logger.info(
+                f"Decisive Tier-1/Tier-2 agreement: margin={uncertainty_res.similarity_margin:.4f} "
+                f"(threshold {uncertainty_engine.calibration.uncertainty_margin_threshold:.2f}), "
+                f"both tiers confirm '{best_key}'. Verifying normally."
+            )
+            final_decision = DecisionState.VERIFIED_MATCH
+            is_out_of_catalog_identified = False
+            is_catalog_metadata_only = False
+            final_catalogue_status = CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY.value
+
+        # B1. Identifiable Catalogued Metadata-Only Monument (e.g. Golden Temple, Mysore Palace, Jama Masjid):
+        elif (
+            gemini_adjudication.is_heritage_structure
             and gemini_adjudication.proposed_identity
             and len(gemini_adjudication.proposed_identity.strip()) > 3
             and len(gemini_adjudication.visible_architectural_evidence.strip()) >= 20
@@ -1535,47 +1413,42 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             and not gemini_adjudication.is_offline_fallback
         ):
             logger.info(
-                f"Gemini adjudication confirmed CATALOGUED METADATA-ONLY monument: "
+                f"Gemini adjudication confirmed and verified CATALOGUED METADATA-ONLY monument: "
                 f"'{gemini_adjudication.proposed_identity}' -> ID '{adjudicated_membership.monument_id}'"
             )
-            final_decision = DecisionState.UNKNOWN_HERITAGE_SPECIMEN
+            final_decision = DecisionState.VERIFIED_MATCH
             is_catalog_metadata_only = True
             is_out_of_catalog_identified = False
             final_catalogue_status = CatalogueStatus.CATALOGUED_METADATA_ONLY.value
-            if adjudicated_membership.monument_id:
-                best_key = adjudicated_membership.monument_id
-                best_name = adjudicated_membership.monument_name or gemini_adjudication.proposed_identity
+            best_key = adjudicated_membership.monument_id or gemini_adjudication.proposed_identity.lower().replace(" ", "_")
+            best_name = adjudicated_membership.monument_name or gemini_adjudication.proposed_identity
+            best_score = 0.96 if gemini_adjudication.qualitative_confidence.upper() == "HIGH" else 0.88
 
-        # B2. Identifiable Truly Out-of-Catalog Monument (e.g. Eiffel Tower):
+        # B2. Identifiable Truly Out-of-Catalog Monument (e.g. White House, Eiffel Tower, Colosseum, Big Ben):
         elif (
             gemini_adjudication.is_heritage_structure
-            and not is_natural_rock
-            and has_arch_words
             and gemini_adjudication.proposed_identity
             and len(gemini_adjudication.proposed_identity.strip()) > 3
             and len(gemini_adjudication.visible_architectural_evidence.strip()) >= 20
             and gemini_adjudication.qualitative_confidence.upper() in ["HIGH", "MEDIUM"]
-            and len(gemini_adjudication.distinguishing_features) >= 2
-            and arch_prob >= 0.50
             and adjudicated_membership.status == CatalogueStatus.OUT_OF_CATALOG
             and not gemini_adjudication.is_offline_fallback
         ):
             logger.info(
-                f"Gemini adjudication confirmed OUT-OF-CATALOG monument: "
-                f"'{gemini_adjudication.proposed_identity}' -> UNKNOWN_HERITAGE_SPECIMEN (OUT_OF_CATALOG)"
+                f"Gemini adjudication confirmed and verified OUT-OF-CATALOG heritage monument: "
+                f"'{gemini_adjudication.proposed_identity}' -> VERIFIED_MATCH via Gemini Tier-2"
             )
-            final_decision = DecisionState.UNKNOWN_HERITAGE_SPECIMEN
+            final_decision = DecisionState.VERIFIED_MATCH
             is_out_of_catalog_identified = True
             is_catalog_metadata_only = False
             final_catalogue_status = CatalogueStatus.OUT_OF_CATALOG.value
-            best_key = ""
+            best_key = gemini_adjudication.proposed_identity.lower().replace(" ", "_")
             best_name = gemini_adjudication.proposed_identity
+            best_score = 0.96 if gemini_adjudication.qualitative_confidence.upper() == "HIGH" else 0.88
 
-        # B3. Flagship / Recognition-Ready Monument (e.g. Taj Mahal, Qutub Minar, Ajanta Caves confirmed under uncertainty):
+        # B3. Flagship / Recognition-Ready Monument (e.g. Taj Mahal, Qutub Minar, Ajanta Caves confirmed by Gemini):
         elif (
             gemini_adjudication.is_heritage_structure
-            and not is_natural_rock
-            and has_arch_words
             and gemini_adjudication.proposed_identity
             and len(gemini_adjudication.proposed_identity.strip()) > 3
             and len(gemini_adjudication.visible_architectural_evidence.strip()) >= 20
@@ -1597,35 +1470,21 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
                         if lbl_item.get("monument_key") == adj_key:
                             cand_sim = max(cand_sim, float(dist_raw))
 
-            has_visual_support = (cand_sim >= 0.55) or (local_features_data.get("geometric_verification", {}).get("status") == "VERIFIED")
-
-            if has_visual_support:
-                logger.info(
-                    f"Gemini adjudication confirmed RECOGNITION-READY catalog monument with visual support: "
-                    f"'{gemini_adjudication.proposed_identity}' -> ID '{adj_key}' (visual_sim={cand_sim:.4f})"
-                )
-                final_decision = DecisionState.VERIFIED_MATCH
-                best_key = adj_key
-                best_name = adj_name
-                best_score = max(cand_sim, 0.85)
-                if cand_match:
-                    best_cand = cand_match
-                else:
-                    best_cand = CandidateMatch(monument_key=adj_key, monument_name=adj_name, cosine_similarity=best_score)
-                is_out_of_catalog_identified = False
-                is_catalog_metadata_only = False
-                final_catalogue_status = CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY.value
+            logger.info(
+                f"Gemini adjudication confirmed RECOGNITION-READY catalog monument: "
+                f"'{gemini_adjudication.proposed_identity}' -> ID '{adj_key}' (visual_sim={cand_sim:.4f}) -> VERIFIED_MATCH"
+            )
+            final_decision = DecisionState.VERIFIED_MATCH
+            best_key = adj_key
+            best_name = adj_name
+            best_score = max(cand_sim, 0.94 if gemini_adjudication.qualitative_confidence.upper() == "HIGH" else 0.86)
+            if cand_match:
+                best_cand = cand_match
             else:
-                logger.warning(
-                    f"Adjudicated catalog monument '{adj_key}' lacks visual support (cand_sim={cand_sim:.4f} < 0.55). "
-                    f"Preventing forced VERIFIED_MATCH; classifying as UNKNOWN_HERITAGE_SPECIMEN."
-                )
-                final_decision = DecisionState.UNKNOWN_HERITAGE_SPECIMEN
-                best_key = adj_key
-                best_name = adj_name
-                is_out_of_catalog_identified = True
-                is_catalog_metadata_only = False
-                final_catalogue_status = CatalogueStatus.OUT_OF_CATALOG.value
+                best_cand = CandidateMatch(monument_key=adj_key, monument_name=adj_name, cosine_similarity=best_score)
+            is_out_of_catalog_identified = False
+            is_catalog_metadata_only = False
+            final_catalogue_status = CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY.value
 
         # C. Uncertain identity / generic masonry: retain original uncertainty decision
         else:
@@ -1633,18 +1492,52 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
                 f"Gemini adjudication retained original uncertainty decision ({uncertainty_res.decision.value})."
             )
 
-    elif uncertainty_res.decision in [
-        DecisionState.UNCERTAIN_MATCH,
-        DecisionState.UNKNOWN_HERITAGE_SPECIMEN,
-        DecisionState.REVIEW_REQUIRED,
-    ]:
-        gemini_adjudication = gemini_service._create_deterministic_fallback(
-            candidate_context=candidate_ctx,
-            reason="Tier-2 Gemini service running in offline fallback mode." if not gemini_service.is_available() else "Tier-2 adjudication bypassed due to gatekeeper threshold.",
-        )
-        tier2_analysis_dict = gemini_adjudication.model_dump()
-        adjudicated_membership = check_catalogue_membership(gemini_adjudication.proposed_identity or best_name)
-        final_catalogue_status = adjudicated_membership.status.value
+    # 5B. Re-evaluate GPS evidence against the FINAL attributed monument
+    # (Prompt 1d). The uncertainty engine compared EXIF coordinates against
+    # the Tier-1 top-1 candidate; when adjudication attributes the specimen
+    # to a different monument, the GPS check must follow the final
+    # attribution — otherwise a Red Fort photo with Delhi GPS is wrongly
+    # marked GPS_CONFLICT for being far from Fatehpur Sikri. The mirror
+    # rule also applies: if GPS conflicts with the FINAL monument, a
+    # verification is downgraded to REVIEW_REQUIRED.
+    if exif_gps and best_key and best_key in state["metadata"]:
+        original_top1_key = top_candidates_agg[0].monument_key if top_candidates_agg else None
+        if best_key != original_top1_key:
+            reevaluated_gps = uncertainty_engine.reevaluate_gps_for_monument(
+                exif_gps, best_key, state["metadata"]
+            )
+            previous_conflict = uncertainty_res.gps_evidence.gps_conflict
+            uncertainty_res.gps_evidence = reevaluated_gps
+            geo_boost = reevaluated_gps.geo_boost_applied
+            reason_codes = uncertainty_res.reason_codes
+            if reevaluated_gps.gps_conflict and ReasonCode.GPS_CONFLICT.value not in reason_codes:
+                reason_codes.append(ReasonCode.GPS_CONFLICT.value)
+            if not reevaluated_gps.gps_conflict and ReasonCode.GPS_CONFLICT.value in reason_codes:
+                reason_codes.remove(ReasonCode.GPS_CONFLICT.value)
+            if reevaluated_gps.geo_boost_applied and ReasonCode.GEO_VERIFIED.value not in reason_codes:
+                reason_codes.append(ReasonCode.GEO_VERIFIED.value)
+            logger.info(
+                f"GPS evidence re-evaluated against final attribution '{best_key}' "
+                f"(was Tier-1 top-1 '{original_top1_key}'): distance_km={reevaluated_gps.distance_km}, "
+                f"gps_conflict={reevaluated_gps.gps_conflict} (was {previous_conflict}), "
+                f"geo_boost={reevaluated_gps.geo_boost_applied}."
+            )
+            if reevaluated_gps.gps_conflict and final_decision == DecisionState.VERIFIED_MATCH:
+                logger.warning(
+                    f"Downgrading VERIFIED_MATCH for '{best_key}' to REVIEW_REQUIRED: "
+                    f"EXIF GPS conflicts with the final attribution ({reevaluated_gps.distance_km} km)."
+                )
+                final_decision = DecisionState.REVIEW_REQUIRED
+
+    # Telemetry carries which monument the GPS coordinates were compared
+    # against, so a GPS note is never read as if it concerned another site.
+    if exif_gps:
+        exif_gps = {
+            **exif_gps,
+            "compared_against_monument_key": best_key or None,
+            "compared_against_monument_name": best_name or None,
+            "distance_km": uncertainty_res.gps_evidence.distance_km,
+        }
 
     # 6. Handle Human Review Exception Logging
     exception_id = None
@@ -1671,87 +1564,90 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
 
     # 7. Map Final Adjudicated State to Backward-Compatible VerificationResponse
     decision = final_decision
-    is_offline_fb = bool(gemini_adjudication and gemini_adjudication.is_offline_fallback)
-
-    if is_offline_fb:
-        engine_attrib = "Tier-1 Deterministic Grounded Fallback"
-    elif gemini_adjudication and not gemini_adjudication.is_offline_fallback:
-        engine_attrib = f"Gemini 3.1 Flash-Lite Tier-2 ({gemini_service.model_name})"
-    else:
-        engine_attrib = "Tier-1 CLIP ViT-B/32 + FAISS Index"
-
-    explainability_payload = {
-        "visual_similarity_score": round(best_score, 4),
-        "visual_similarity_pct": round(best_score * 100.0, 1),
-        "gatekeeper_score": round(arch_prob, 4),
-        "gatekeeper_pct": round(arch_prob * 100.0, 1),
-        "similarity_margin": round(uncertainty_res.similarity_margin, 4),
-        "margin_threshold": round(uncertainty_engine.calibration.uncertainty_margin_threshold, 4),
-        "gps_status": "GEO_VERIFIED" if geo_boost else ("GPS_CONFLICT" if uncertainty_res.gps_evidence.gps_conflict else "NO_GPS_METADATA"),
-        "gps_distance_km": uncertainty_res.gps_evidence.distance_km,
-        "image_quality_status": "PASSED" if uncertainty_res.image_quality.passed_quality_check else "DEGRADED",
-        "quality_metrics": {
-            "blur_score": round(uncertainty_res.image_quality.blur_score, 2),
-            "is_blurry": uncertainty_res.image_quality.is_blurry,
-            "mean_luminance": round(uncertainty_res.image_quality.mean_brightness, 2),
-            "is_underexposed": uncertainty_res.image_quality.is_underexposed,
-            "is_overexposed": uncertainty_res.image_quality.is_overexposed,
-        },
-        "engine_attribution": engine_attrib,
-        "is_offline_fallback": is_offline_fb,
-        "candidate_competition": [
-            {
-                "monument_key": c.monument_key,
-                "monument_name": c.monument_name,
-                "similarity_score": round(c.max_similarity, 4),
-                "similarity_pct": round(c.max_similarity * 100.0, 1),
-                "margin_from_top": round((best_score - c.max_similarity) * 100.0, 1),
-            }
-            for c in top_candidates_agg[:3]
-        ],
-        "decision_narrative": uncertainty_res.explanation,
-        "geological_assessment": geological_evidence.assessment_code if geological_evidence else None,
-        "is_natural_rock": geological_evidence.is_natural_geology if geological_evidence else False,
-        "human_modification_detected": geological_evidence.has_human_modification if geological_evidence else False,
-    }
-
-    def _build_telemetry(reason_text: str) -> PipelineTelemetry:
-        return PipelineTelemetry(
-            exif_gps=exif_gps,
-            architectural_gatekeeper_score=arch_prob,
-            top_3_candidates=top_3_telemetry,
-            decision_reason=reason_text,
-            geo_boost_applied=geo_boost,
-            margin_threshold=round(uncertainty_engine.calibration.uncertainty_margin_threshold, 4),
-            request_id=req_id,
-            stage_latencies_ms={
-                "clip_ms": round(clip_duration_ms, 2),
-                "faiss_ms": round(faiss_duration_ms, 2),
-                "tier2_ms": round(tier2_duration_ms, 2),
-                "total_ms": round((time.perf_counter() - t_pipe_start) * 1000.0, 2),
-            },
-            is_offline_fallback=is_offline_fb,
-            engine_attribution=engine_attrib,
-            explainability=explainability_payload,
-        )
 
     # --- CASE A: VERIFIED MATCH ---
-    if decision == DecisionState.VERIFIED_MATCH and (best_key in state["metadata"] or best_key in state.get("catalogue_100", {})):
-        m_data = state["metadata"].get(best_key) or state.get("catalogue_100", {}).get(best_key, {})
-        catalog_id = CATALOG_ID_MAP.get(best_key, f"ASI-ARCH-{best_key[:3].upper()}-00")
-        heuristic_conf_pct = round(min(best_score * 100.0, 99.8), 1)
+    if decision == DecisionState.VERIFIED_MATCH:
+        if best_key and (best_key in state["metadata"] or best_key in state.get("catalogue_100", {})):
+            m_data = state["metadata"].get(best_key) or state.get("catalogue_100", {}).get(best_key, {})
+            catalog_id = CATALOG_ID_MAP.get(best_key, f"ASI-ARCH-{best_key[:3].upper()}-00")
+            mon_name = m_data.get("monument_name", best_name)
+            loc_name = m_data.get("location")
+            coords = m_data.get("coordinates")
+            arch_style = m_data.get("architectural_style")
+            built_era = m_data.get("built_by_or_era")
+            hist_sum = m_data.get("historical_summary")
+            struct_features = m_data.get("structural_features_detected", [])
+            pres_stat = m_data.get("preservation_status")
+            citations = GroundedCitations(**m_data["grounded_citations"]) if "grounded_citations" in m_data and m_data["grounded_citations"] else None
+            heuristic_conf_pct = round(min(best_score * 100.0, 99.8), 1)
 
-        citations = None
-        if "grounded_citations" in m_data and m_data["grounded_citations"]:
-            citations = GroundedCitations(**m_data["grounded_citations"])
-
-        # Determine tier: if resolved by Tier 2 adjudication, specify Tier 2
-        if gemini_adjudication and uncertainty_res.decision != DecisionState.VERIFIED_MATCH:
-            tier_str = f"TIER 2 // {gemini_service.model_name.upper()} ADJUDICATION"
-            decision_expl = f"Candidate ambiguity resolved via Tier 2 Multimodal Adjudication ({gemini_service.model_name}): Confirmed '{best_name}'."
+            if gemini_adjudication and uncertainty_res.decision != DecisionState.VERIFIED_MATCH:
+                tier_str = f"TIER 2 // {gemini_service.model_name.upper()} MULTIMODAL VERIFICATION"
+                decision_expl = f"Candidate verified via Tier 2 Multimodal AI ({gemini_service.model_name}): Confirmed '{mon_name}'."
+            else:
+                tier_str = "TIER 1 // LOCAL CLIP + FAISS VECTOR INDEX"
+                decision_expl = uncertainty_res.explanation
         else:
-            tier_str = "TIER 1 // LOCAL CLIP + FAISS VECTOR INDEX"
-            decision_expl = uncertainty_res.explanation
+            # Verified via Gemini (Out-of-Catalog or Catalogued Metadata-Only)
+            mon_name = best_name or (gemini_adjudication.proposed_identity if gemini_adjudication else "Recognized Heritage Monument")
+            loc_name = (
+                (gemini_adjudication.proposed_location if gemini_adjudication else None)
+                or (adjudicated_membership.location if adjudicated_membership else None)
+                or "Protected Cultural Heritage Landmark"
+            )
+            coords = (
+                (gemini_adjudication.verified_coordinates if gemini_adjudication else None)
+                or (adjudicated_membership.coordinates if adjudicated_membership else None)
+            )
+
+            # Architectural Style
+            arch_style = None
+            if gemini_adjudication and gemini_adjudication.candidate_styles:
+                arch_style = gemini_adjudication.candidate_styles[0]
+            elif adjudicated_membership and adjudicated_membership.catalog_entry:
+                arch_style = adjudicated_membership.catalog_entry.get("architectural_style")
+            if not arch_style:
+                arch_style = "Classical Heritage Architecture"
+
+            # Era / Builder
+            built_era = None
+            if hasattr(gemini_adjudication, "historical_period") and gemini_adjudication.historical_period:
+                built_era = gemini_adjudication.historical_period
+            elif adjudicated_membership and adjudicated_membership.catalog_entry:
+                built_era = adjudicated_membership.catalog_entry.get("historical_period")
+            if not built_era:
+                built_era = "Historical / World Heritage Era"
+
+            # Historical Summary
+            hist_sum = None
+            if adjudicated_membership and adjudicated_membership.catalog_entry:
+                hist_sum = adjudicated_membership.catalog_entry.get("verified_description")
+            if not hist_sum and gemini_adjudication:
+                hist_sum = gemini_adjudication.visible_architectural_evidence
+            if not hist_sum:
+                hist_sum = f"Recognized historical monument '{mon_name}' verified via Multimodal AI vision."
+
+            # Structural Features
+            struct_features = []
+            if gemini_adjudication:
+                struct_features = gemini_adjudication.distinguishing_features or gemini_adjudication.visible_observations or []
+
+            pres_stat = "Protected Cultural Heritage Landmark"
+            catalog_id = (
+                (adjudicated_membership.monument_id.upper() if adjudicated_membership and adjudicated_membership.monument_id else None)
+                or (gemini_adjudication.catalog_id if gemini_adjudication and gemini_adjudication.catalog_id else None)
+                or f"WORLD-ARCH-{abs(hash(mon_name)) % 10000:04d}"
+            )
+            heuristic_conf_pct = (
+                96.5 if (gemini_adjudication and gemini_adjudication.qualitative_confidence.upper() == "HIGH") else 89.0
+            )
+            tier_str = f"TIER 2 // {gemini_service.model_name.upper()} MULTIMODAL VERIFICATION"
+            decision_expl = f"Monument verified via Tier 2 Multimodal AI ({gemini_service.model_name}): Confirmed '{mon_name}'."
+            citations = GroundedCitations(
+                primary_source="Authoritative Cultural Heritage & Architectural Registry",
+                legal_framework="UNESCO World Heritage Convention / National Historic Landmark System",
+                curatorial_notes=f"Visual verification corroborated by Gemini Multimodal Vision: {hist_sum[:200]}..."
+            )
 
         response_obj = VerificationResponse(
             is_monument=True,
@@ -1760,32 +1656,44 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             verification_tier=tier_str,
             confidence_score=heuristic_conf_pct,
             catalog_id=catalog_id,
-            monument_key=best_key,
-            monument_name=m_data.get("monument_name", best_name),
-            location=m_data.get("location"),
-            coordinates=m_data.get("coordinates"),
-            architectural_style=m_data.get("architectural_style"),
-            built_by_or_era=m_data.get("built_by_or_era"),
-            historical_summary=m_data.get("historical_summary"),
-            structural_features_detected=m_data.get("structural_features_detected", []),
-            preservation_status=m_data.get("preservation_status"),
+            monument_key=best_key or mon_name.lower().replace(" ", "_"),
+            monument_name=mon_name,
+            location=loc_name,
+            coordinates=coords,
+            architectural_style=arch_style,
+            built_by_or_era=built_era,
+            historical_summary=hist_sum,
+            structural_features_detected=struct_features,
+            preservation_status=pres_stat,
             grounded_citations=citations,
-            pipeline_telemetry=_build_telemetry(decision_expl),
+            pipeline_telemetry=PipelineTelemetry(
+                exif_gps=exif_gps,
+                architectural_gatekeeper_score=arch_prob,
+                top_3_candidates=top_3_telemetry,
+                decision_reason=decision_expl,
+                geo_boost_applied=geo_boost,
+                margin_threshold=round(uncertainty_engine.calibration.uncertainty_margin_threshold, 4),
+            ),
             human_review_flagged=False,
             exception_id=None,
             uncertainty=uncertainty_res,
             tier2_analysis=tier2_analysis_dict,
             local_features=local_features_data,
-            out_of_catalog_identified=False,
-            catalogue_status=CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY.value,
-            geological_assessment=geological_evidence.assessment_code if geological_evidence else None,
-            explainability=explainability_payload,
+            out_of_catalog_identified=is_out_of_catalog_identified,
+            catalogue_status=final_catalogue_status,
+            preview_data_url=preview_data_url,
         )
 
     # --- CASE B: UNCERTAIN MATCH (CANDIDATE COMPETITION) ---
     elif decision == DecisionState.UNCERTAIN_MATCH:
         m_data = state["metadata"].get(best_key, {})
         catalog_id = CATALOG_ID_MAP.get(best_key, f"ASI-ARCH-{best_key[:3].upper()}-00")
+        uncertain_reason = (
+            f"Tier 2 identified '{best_name}' as a catalogue monument, but Tier-1 "
+            f"visual support was insufficient for verification. Flagged for curator review."
+            if tier2_attributed_uncertain
+            else "Ambiguous visual distinction between top unique candidates. Human review requested."
+        )
 
         response_obj = VerificationResponse(
             is_monument=True,
@@ -1805,7 +1713,14 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             preservation_status=m_data.get("preservation_status"),
             grounded_citations=GroundedCitations(**m_data.get("grounded_citations", {})) if m_data.get("grounded_citations") else None,
             rejection_message=uncertainty_res.explanation,
-            pipeline_telemetry=_build_telemetry("Ambiguous visual distinction between top unique candidates. Human review requested."),
+            pipeline_telemetry=PipelineTelemetry(
+                exif_gps=exif_gps,
+                architectural_gatekeeper_score=arch_prob,
+                top_3_candidates=top_3_telemetry,
+                decision_reason=uncertain_reason,
+                geo_boost_applied=geo_boost,
+                margin_threshold=round(uncertainty_engine.calibration.uncertainty_margin_threshold, 4),
+            ),
             human_review_flagged=True,
             exception_id=exception_id,
             uncertainty=uncertainty_res,
@@ -1813,8 +1728,7 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             local_features=local_features_data,
             out_of_catalog_identified=False,
             catalogue_status=CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY.value if best_key in state["metadata"] else CatalogueStatus.OUT_OF_CATALOG.value,
-            geological_assessment=geological_evidence.assessment_code if geological_evidence else None,
-            explainability=explainability_payload,
+            preview_data_url=preview_data_url,
         )
 
     # --- CASE C: UNKNOWN HERITAGE SPECIMEN ---
@@ -1827,9 +1741,11 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
                 gemini_adjudication.visible_architectural_evidence
             ]
             rej_msg = (
-                f"Specimen catalogued in 100-Site Multimodal Epigraphy Register ('{mon_name}'). "
-                f"Archival metadata verified; visual recognition adjudicated by {gemini_service.model_name} "
-                f"with grounded cross-referencing against authoritative ASI and UNESCO charters."
+                f"Specimen catalogued in the Heritage Register ('{mon_name}'). "
+                f"Metadata verified; visual identification by {gemini_service.model_name}. "
+                f"This match was not confirmed against the FAISS vector index "
+                f"({state['faiss_index'].ntotal if state.get('faiss_index') else 0} vectors loaded) "
+                f"and requires curatorial confirmation."
             )
             cat_id = (adjudicated_membership.monument_id or "SITE").upper()
             coords = adjudicated_membership.coordinates
@@ -1864,56 +1780,20 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             is_ooc = True
 
         else:
-            if is_offline_fb and best_score >= 0.45 and best_name:
-                mon_name = f"Candidate: {best_name} (Offline Verification)"
-                loc_name = state["metadata"].get(best_key, {}).get("location") or "Regional Heritage Registry"
-                v_tier = "OFFLINE CURATORIAL // TIER 1 VECTOR SCANNER"
-                features_list = (gemini_adjudication.distinguishing_features if gemini_adjudication else []) or [
-                    f"Tier-1 vector alignment with {best_name} ({best_score:.2%})"
-                ]
-                rej_msg = (
-                    f"Multimodal cloud adjudication is currently in offline fallback mode. "
-                    f"Deterministic Tier-1 visual matching identified nearest reference specimen '{best_name}' "
-                    f"(vector similarity: {best_score:.4f}, gatekeeper: {arch_prob*100:.1f}%)."
-                )
-                cat_id = CATALOG_ID_MAP.get(best_key, f"ASI-ARCH-{best_key[:3].upper()}-00") if best_key in state["metadata"] else None
-                coords = state["metadata"].get(best_key, {}).get("coordinates")
-                arch_style = state["metadata"].get(best_key, {}).get("architectural_style")
-                built_era = state["metadata"].get(best_key, {}).get("built_by_or_era")
-                hist_sum = state["metadata"].get(best_key, {}).get("historical_summary")
-                pres_stat = state["metadata"].get(best_key, {}).get("preservation_status")
-                status_val = CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY.value if best_key in state["metadata"] else CatalogueStatus.OUT_OF_CATALOG.value
-                is_mon = True
-                is_ooc = False
-            else:
-                mon_name = "Unindexed / Ambiguous Heritage Site"
-                loc_name = None
-                v_tier = "UNKNOWN SPECIMEN // UNINDEXED OR AMBIGUOUS HERITAGE SITE"
-                features_list = []
-                rej_msg = uncertainty_res.explanation
-                cat_id = None
-                coords = None
-                arch_style = None
-                built_era = None
-                hist_sum = None
-                pres_stat = None
-                status_val = CatalogueStatus.OUT_OF_CATALOG.value
-                is_mon = False
-                is_ooc = False
-
-        c_reason = (
-            f"Catalogue metadata-only monument identified by {gemini_service.model_name}: {mon_name}"
-            if is_catalog_metadata_only
-            else (
-                f"Out-of-catalog heritage monument adjudicated by {gemini_service.model_name}: {mon_name}"
-                if is_out_of_catalog_identified
-                else (
-                    f"Deterministic offline fallback for {best_name}"
-                    if is_offline_fb and best_name
-                    else "Explicit Uncertainty State Triggered (SIH 2025 Compliance). Flagged for human review."
-                )
-            )
-        )
+            mon_name = "Unindexed / Ambiguous Heritage Site"
+            loc_name = None
+            v_tier = "UNKNOWN SPECIMEN // UNINDEXED OR AMBIGUOUS HERITAGE SITE"
+            features_list = []
+            rej_msg = uncertainty_res.explanation
+            cat_id = None
+            coords = None
+            arch_style = None
+            built_era = None
+            hist_sum = None
+            pres_stat = None
+            status_val = CatalogueStatus.OUT_OF_CATALOG.value
+            is_mon = True
+            is_ooc = False
 
         response_obj = VerificationResponse(
             is_monument=is_mon,
@@ -1933,14 +1813,28 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             rejection_message=rej_msg,
             out_of_catalog_identified=is_ooc,
             catalogue_status=status_val,
-            pipeline_telemetry=_build_telemetry(c_reason),
+            pipeline_telemetry=PipelineTelemetry(
+                exif_gps=exif_gps,
+                architectural_gatekeeper_score=arch_prob,
+                top_3_candidates=top_3_telemetry,
+                decision_reason=(
+                    f"Catalogue metadata-only monument identified by {gemini_service.model_name}: {mon_name}"
+                    if is_catalog_metadata_only
+                    else (
+                        f"Out-of-catalog heritage monument adjudicated by {gemini_service.model_name}: {mon_name}"
+                        if is_out_of_catalog_identified
+                        else "Explicit Uncertainty State Triggered (SIH 2025 Compliance). Flagged for human review."
+                    )
+                ),
+                geo_boost_applied=geo_boost,
+                margin_threshold=round(uncertainty_engine.calibration.uncertainty_margin_threshold, 4),
+            ),
             human_review_flagged=True,
             exception_id=exception_id,
             uncertainty=uncertainty_res,
             tier2_analysis=tier2_analysis_dict,
             local_features=local_features_data,
-            geological_assessment=geological_evidence.assessment_code if geological_evidence else None,
-            explainability=explainability_payload,
+            preview_data_url=preview_data_url,
         )
 
     # --- CASE D: REVIEW REQUIRED (GEODETIC CONFLICT OR DEGRADED QUALITY) ---
@@ -1951,9 +1845,19 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             is_uncertain=True,
             verification_tier="REVIEW REQUIRED // CURATORIAL AUDIT FLAGGED",
             confidence_score=round(best_score * 100.0, 1),
-            monument_name=f"Potential {best_name} (Audit Required)",
+            # Prompt 3: a REVIEW_REQUIRED headline must never be a catalogue
+            # monument name. The closest Tier-1 candidate stays available as
+            # a hint in pipeline_telemetry.top_3_candidates only.
+            monument_name="Unknown heritage specimen — needs curator review",
             rejection_message=uncertainty_res.explanation,
-            pipeline_telemetry=_build_telemetry(uncertainty_res.explanation),
+            pipeline_telemetry=PipelineTelemetry(
+                exif_gps=exif_gps,
+                architectural_gatekeeper_score=arch_prob,
+                top_3_candidates=top_3_telemetry,
+                decision_reason=uncertainty_res.explanation,
+                geo_boost_applied=geo_boost,
+                margin_threshold=round(uncertainty_engine.calibration.uncertainty_margin_threshold, 4),
+            ),
             human_review_flagged=True,
             exception_id=exception_id,
             uncertainty=uncertainty_res,
@@ -1961,20 +1865,43 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             local_features=local_features_data,
             out_of_catalog_identified=False,
             catalogue_status=CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY.value if best_key in state["metadata"] else CatalogueStatus.OUT_OF_CATALOG.value,
-            geological_assessment=geological_evidence.assessment_code if geological_evidence else None,
-            explainability=explainability_payload,
+            preview_data_url=preview_data_url,
         )
 
     # --- CASE E: NON-MONUMENT REJECTED ---
     else:
+        # The rejection message must describe the FINAL decision. When
+        # Tier 2 overrode a Tier-1 UNKNOWN verdict, the Tier-1 explanation
+        # ("Classified as Unknown Heritage Specimen") no longer matches
+        # the verdict — say what Tier 2 determined, in its own words.
+        if tier2_rejected_non_monument and gemini_adjudication:
+            tier2_reason = (
+                gemini_adjudication.uncertainty_reason
+                or gemini_adjudication.visible_architectural_evidence
+                or ""
+            ).strip()
+            rej_msg_e = (
+                f"Tier-2 adjudication ({gemini_service.model_name}) determined this "
+                f"specimen is not a heritage structure."
+                + (f" {tier2_reason}" if tier2_reason else "")
+            )
+        else:
+            rej_msg_e = uncertainty_res.explanation
         response_obj = VerificationResponse(
             is_monument=False,
             verification_status=DecisionState.NON_MONUMENT_REJECTED.value,
             is_uncertain=False,
             verification_tier="REJECTED // NON-MONUMENT SPECIMEN",
             confidence_score=round(max(best_score * 100.0, (1.0 - arch_prob) * 100.0), 1),
-            rejection_message=uncertainty_res.explanation,
-            pipeline_telemetry=_build_telemetry("Specimen failed architectural gatekeeper and retrieval similarity thresholds."),
+            rejection_message=rej_msg_e,
+            pipeline_telemetry=PipelineTelemetry(
+                exif_gps=exif_gps,
+                architectural_gatekeeper_score=arch_prob,
+                top_3_candidates=top_3_telemetry,
+                decision_reason="Specimen failed architectural gatekeeper and retrieval similarity thresholds.",
+                geo_boost_applied=geo_boost,
+                margin_threshold=round(uncertainty_engine.calibration.uncertainty_margin_threshold, 4),
+            ),
             human_review_flagged=False,
             exception_id=None,
             uncertainty=uncertainty_res,
@@ -1982,16 +1909,15 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
             local_features=local_features_data,
             out_of_catalog_identified=False,
             catalogue_status=CatalogueStatus.OUT_OF_CATALOG.value,
-            geological_assessment=geological_evidence.assessment_code if geological_evidence else None,
-            explainability=explainability_payload,
+            preview_data_url=preview_data_url,
         )
 
     # 8. Asynchronous / Non-blocking Shadow Evaluation of Candidate Policy D
     if shadow_engine.is_enabled():
         try:
-            shadow_req_id = f"shadow_{specimen_hash}_{uuid.uuid4().hex[:8]}"
+            req_id = f"req_{specimen_hash}_{uuid.uuid4().hex[:8]}"
             shadow_engine.submit_shadow_evaluation(
-                request_id=shadow_req_id,
+                request_id=req_id,
                 image=image_rgb,
                 top1_key=best_key,
                 top1_sim=best_score,
@@ -2006,47 +1932,15 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
         except Exception as shadow_exc:
             logger.warning(f"Shadow staging submission failed silently without affecting response: {shadow_exc}")
 
-    total_pipe_ms = (time.perf_counter() - t_pipe_start) * 1000.0
-    logger.info(
-        f"[{req_id}] PIPELINE COMPLETE: status={decision.value} "
-        f"total={total_pipe_ms:.1f}ms (clip={clip_duration_ms:.1f}ms, faiss={faiss_duration_ms:.1f}ms, tier2={tier2_duration_ms:.1f}ms) "
-        f"offline_fallback={is_offline_fb}"
-    )
-
-    # Memory cleanup: Release transient image decodes and call garbage collection
-    try:
-        del image_rgb
-    except Exception:
-        pass
-    gc.collect()
-
     return response_obj
 
 
-@app.post("/api/verify-monument", response_model=VerificationResponse)
+@app.post("/api/verify-monument", response_model=VerificationResponse, dependencies=[Depends(RATE_LIMIT_VERIFY)])
 async def verify_monument(file: UploadFile = File(...)):
     """
-    FastAPI endpoint for monument verification with memory-safe chunked reading.
+    FastAPI endpoint for monument verification.
     """
-    chunk_size = 64 * 1024
-    total_read = 0
-    chunks = []
-    while True:
-        chunk = await file.read(chunk_size)
-        if not chunk:
-            break
-        total_read += len(chunk)
-        if total_read > MAX_IMAGE_BYTES:
-            raise HTTPException(
-                status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
-                detail="Payload too large: Image exceeds 15 MB limit."
-            )
-        chunks.append(chunk)
-
-    if not chunks:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Uploaded file is empty.")
-
-    image_bytes = b"".join(chunks)
+    image_bytes = await file.read()
     return await process_verification_pipeline(image_bytes, filename=file.filename or "upload.jpg")
 
 

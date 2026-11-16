@@ -15,44 +15,84 @@ import {
   History,
   Layers,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Lock,
+  KeyRound
 } from 'lucide-react';
-import { fetchExceptions, resolveException } from '../api';
+import { fetchExceptions, resolveException, setAdminToken, clearAdminToken, hasAdminToken } from '../api';
 
 export default function ExceptionsDrawer({ isOpen, onClose, onCountChange }) {
   const [exceptions, setExceptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [authError, setAuthError] = useState(false);
   const [filter, setFilter] = useState('ALL'); // ALL, PENDING_REVIEW, APPROVED, REJECTED, CATALOGED
   const [selectedResolutions, setSelectedResolutions] = useState({}); // { [id]: { status: 'APPROVED', notes: '' } }
   const [expandedHistories, setExpandedHistories] = useState({});
   const [submittingId, setSubmittingId] = useState(null);
   const [statusMessage, setStatusMessage] = useState(null);
-
-  const loadData = async () => {
-    setIsLoading(true);
-    setAuthError(false);
-    try {
-      const data = await fetchExceptions();
-      const list = Array.isArray(data?.exceptions) ? data.exceptions : Array.isArray(data) ? data : [];
-      setExceptions(list);
-      const pendingCount = list.filter((e) => e.status === 'PENDING_REVIEW').length;
-      if (onCountChange) onCountChange(pendingCount);
-    } catch (err) {
-      console.warn('Could not load exceptions:', err.message);
-      if (err.message?.includes('401') || err.message?.toLowerCase().includes('unauthorized')) {
-        setAuthError(true);
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // Admin unlock: the exceptions list is admin-only on the backend
+  // (ADMIN_TOKEN). The token is held in memory only and never persisted.
+  const [needsAuth, setNeedsAuth] = useState(false);
+  const [unlocked, setUnlocked] = useState(false);
+  const [tokenInput, setTokenInput] = useState('');
+  const [authError, setAuthError] = useState(null);
 
   useEffect(() => {
     if (isOpen) {
       loadData();
     }
   }, [isOpen]);
+
+  const loadData = async () => {
+    setIsLoading(true);
+    try {
+      const data = await fetchExceptions();
+      const list = Array.isArray(data?.exceptions) ? data.exceptions : Array.isArray(data) ? data : [];
+      setExceptions(list);
+      setNeedsAuth(false);
+      setAuthError(null);
+      setUnlocked(hasAdminToken());
+      const pendingCount = list.filter((e) => e.status === 'PENDING_REVIEW').length;
+      if (onCountChange) onCountChange(pendingCount);
+      return true;
+    } catch (err) {
+      if (err.status === 401) {
+        // Token missing or rejected: drop it so a stale token is never retried.
+        clearAdminToken();
+        setNeedsAuth(true);
+        setUnlocked(false);
+        setExceptions([]);
+        if (onCountChange) onCountChange(0);
+      } else {
+        console.warn('Could not load exceptions:', err.message);
+      }
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleUnlock = async (event) => {
+    event.preventDefault();
+    const token = tokenInput.trim();
+    if (!token) return;
+    setAdminToken(token);
+    setTokenInput('');
+    setAuthError(null);
+    const ok = await loadData();
+    if (!ok) {
+      setAuthError('That token was rejected by the server. Check ADMIN_TOKEN on the backend and try again.');
+    }
+  };
+
+  const handleLock = () => {
+    clearAdminToken();
+    setUnlocked(false);
+    setNeedsAuth(true);
+    setExceptions([]);
+    setTokenInput('');
+    setAuthError(null);
+    if (onCountChange) onCountChange(0);
+  };
 
   if (!isOpen) return null;
 
@@ -84,7 +124,15 @@ export default function ExceptionsDrawer({ isOpen, onClose, onCountChange }) {
       setTimeout(() => setStatusMessage(null), 3000);
       await loadData();
     } catch (err) {
-      alert(`Resolution failed: ${err.message}`);
+      if (err.status === 401) {
+        clearAdminToken();
+        setUnlocked(false);
+        setNeedsAuth(true);
+        setExceptions([]);
+        setAuthError('Your admin session was rejected. Enter the admin token again to continue.');
+      } else {
+        alert(`Resolution failed: ${err.message}`);
+      }
     } finally {
       setSubmittingId(null);
     }
@@ -129,6 +177,16 @@ export default function ExceptionsDrawer({ isOpen, onClose, onCountChange }) {
               </h2>
             </div>
             <div className="flex items-center gap-2">
+              {unlocked && (
+                <button
+                  onClick={handleLock}
+                  className="p-2 text-archive-stone hover:text-archive-charcoal hover:bg-white rounded border border-transparent hover:border-archive-hairline transition-all flex items-center gap-1.5 font-mono text-[10px] uppercase"
+                  title="Lock — forget the admin token"
+                >
+                  <Lock className="w-4 h-4" />
+                  <span>Lock</span>
+                </button>
+              )}
               <button
                 onClick={loadData}
                 disabled={isLoading}
@@ -185,21 +243,51 @@ export default function ExceptionsDrawer({ isOpen, onClose, onCountChange }) {
 
           {/* Exception Items List */}
           <div className="flex-1 overflow-y-auto p-6 space-y-4">
+            {needsAuth ? (
+              <div className="bg-white border border-archive-hairline rounded p-6 space-y-4 max-w-md mx-auto mt-6">
+                <div className="flex items-center gap-2">
+                  <KeyRound className="w-5 h-5 text-archive-terracotta" />
+                  <h4 className="font-serif text-lg font-bold text-archive-charcoal">
+                    Admin token required
+                  </h4>
+                </div>
+                <p className="text-xs text-archive-stone font-sans leading-relaxed">
+                  The exception log is admin-only. Enter the backend&apos;s admin token
+                  (<span className="font-mono">ADMIN_TOKEN</span>) to view and resolve
+                  exceptions. The token is kept in memory only for this page session —
+                  it is never saved in the browser — and is forgotten when you lock the
+                  drawer or reload the page.
+                </p>
+                <form onSubmit={handleUnlock} className="space-y-2.5">
+                  <input
+                    type="password"
+                    value={tokenInput}
+                    onChange={(e) => setTokenInput(e.target.value)}
+                    placeholder="Enter admin token"
+                    autoComplete="off"
+                    className="w-full px-3 py-2 bg-archive-alabaster/40 border border-archive-hairline rounded text-sm font-mono text-archive-charcoal focus:outline-none focus:border-archive-terracotta"
+                  />
+                  {authError && (
+                    <p className="text-xs font-sans text-rose-700 bg-rose-50 border border-rose-200 rounded p-2.5">
+                      {authError}
+                    </p>
+                  )}
+                  <button
+                    type="submit"
+                    disabled={isLoading || !tokenInput.trim()}
+                    className="w-full px-3 py-2 bg-archive-charcoal hover:bg-black text-white text-xs font-mono uppercase tracking-wider rounded shadow transition-colors disabled:opacity-50"
+                  >
+                    {isLoading ? 'Checking…' : 'Unlock exception log'}
+                  </button>
+                </form>
+              </div>
+            ) : (
+              <>
             <p className="text-xs text-archive-stone font-sans leading-relaxed bg-archive-alabaster p-3.5 rounded border border-archive-hairline">
               Curator Review satisfies the human-oversight protocol of SIH Project No. 30. Scans flagged for close candidate competition, unindexed architectural motifs, degraded image focus, or geodetic location conflicts are held here for manual verification.
             </p>
 
-            {authError ? (
-              <div className="text-center py-12 border-2 border-dashed border-amber-300 rounded bg-amber-50/50 p-6 space-y-3">
-                <ShieldAlert className="w-8 h-8 text-amber-700 mx-auto" />
-                <h4 className="font-serif text-lg font-bold text-archive-charcoal">
-                  Curatorial Authorization Required
-                </h4>
-                <p className="text-xs text-archive-stone max-w-sm mx-auto font-sans leading-relaxed">
-                  Access to sensitive human-review specimens requires an authenticated institutional curator session. Anonymous or unauthorized public access is restricted.
-                </p>
-              </div>
-            ) : filteredItems.length === 0 ? (
+            {filteredItems.length === 0 ? (
               <div className="text-center py-12 border-2 border-dashed border-archive-hairline rounded bg-white p-6 space-y-2">
                 <ShieldAlert className="w-8 h-8 text-archive-muted mx-auto" />
                 <h4 className="font-serif text-lg font-bold text-archive-charcoal">
@@ -394,6 +482,8 @@ export default function ExceptionsDrawer({ isOpen, onClose, onCountChange }) {
                   );
                 })}
               </div>
+            )}
+              </>
             )}
           </div>
 

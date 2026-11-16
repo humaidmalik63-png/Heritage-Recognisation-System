@@ -87,7 +87,7 @@ export default function MobileArchive({ monuments = {}, onTestSample, onSelectMo
           Heritage Catalogue
         </h1>
         <p className="text-xs text-[#6E7069] mt-0.5">
-          100 indexed landmarks with 512-D visual vectors and grounded historical dossiers.
+          Indexed landmarks with 512-D visual vectors and grounded historical dossiers.
         </p>
       </div>
 
@@ -131,11 +131,18 @@ export default function MobileArchive({ monuments = {}, onTestSample, onSelectMo
         })}
       </div>
 
-      {/* Counter Label */}
+      {/* Counter Label (FIX 7: Never flash 0 of 0) */}
       <div className="flex items-center justify-between text-[11px] font-mono text-[#6E7069]">
-        <span>
-          Showing <span className="font-bold text-[#171816]">{displayed.length}</span> of {filtered.length} monuments
-        </span>
+        {entries.length === 0 ? (
+          <span className="flex items-center gap-1.5 text-[#6E7069]">
+            <span className="w-2 h-2 rounded-full border border-[#A9472D] border-t-transparent animate-spin inline-block" />
+            <span>Loading catalog...</span>
+          </span>
+        ) : (
+          <span>
+            Showing <span className="font-bold text-[#171816]">{displayed.length}</span> of {filtered.length} monuments
+          </span>
+        )}
         {searchQuery && (
           <button
             onClick={() => setSearchQuery('')}

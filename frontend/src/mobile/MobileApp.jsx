@@ -14,14 +14,11 @@ const LOCAL_SAMPLE_IMAGES = {
   taj_mahal: '/assets/heritage/taj-mahal.jpg',
   charminar: '/assets/heritage/charminar.jpg',
   hampi_stone_chariot: '/assets/heritage/hampi.jpg',
-  hampi: '/assets/heritage/hampi.jpg',
   brihadeeswarar_temple: '/assets/heritage/brihadeeswarar.jpg',
-  brihadeeswarar: '/assets/heritage/brihadeeswarar.jpg',
   petra: '/assets/heritage/petra.jpg',
   colosseum: '/assets/heritage/colosseum.jpg',
   angkor_wat: '/assets/heritage/angkor-wat.jpg',
   great_wall_of_china: '/assets/heritage/great-wall.jpg',
-  great_wall: '/assets/heritage/great-wall.jpg',
   qutub_minar: '/assets/heritage/qutub-minar.jpg',
   hawa_mahal: '/assets/heritage/hawa-mahal.jpg',
   machu_picchu: '/assets/heritage/machu-picchu.jpg',
@@ -29,14 +26,10 @@ const LOCAL_SAMPLE_IMAGES = {
   ellora_caves: '/assets/heritage/ellora-caves.jpg',
   golden_temple: '/assets/heritage/golden-temple.jpg',
   humayuns_tomb: '/assets/heritage/humayuns-tomb.jpg',
-  humayun: '/assets/heritage/humayuns-tomb.jpg',
   konark_sun_temple: '/assets/heritage/konark-sun-temple.jpg',
-  konark: '/assets/heritage/konark-sun-temple.jpg',
   mysore_palace: '/assets/heritage/mysore-palace.jpg',
-  mysore: '/assets/heritage/mysore-palace.jpg',
   parthenon: '/assets/heritage/parthenon.jpg',
   great_pyramid_of_giza: '/assets/heritage/pyramids-giza.jpg',
-  pyramids_giza: '/assets/heritage/pyramids-giza.jpg',
   red_fort: '/assets/heritage/red-fort.jpg',
   eiffel_tower: '/assets/heritage/eiffel-tower.jpg',
 };
@@ -135,9 +128,6 @@ export default function MobileApp({
       }
 
       const blob = await res.blob();
-      if (blob.size < 200) {
-        throw new Error(`Sample photo for "${sampleKey.replace(/_/g, ' ')}" is unavailable in remote storage. Please upload a photo directly.`);
-      }
       const file = new File([blob], `${sampleKey}_ref.jpg`, { type: 'image/jpeg' });
       const previewUrl = URL.createObjectURL(file);
       setImagePreview(previewUrl);
@@ -290,12 +280,21 @@ export default function MobileApp({
                   >
                     <div className="w-16 h-16 rounded-xl overflow-hidden bg-neutral-200 flex-shrink-0">
                       <img
-                        src={scan.thumbnail || '/assets/heritage/taj-mahal.jpg'}
+                        src={
+                          scan.thumbnail ||
+                          scan.preview_data_url ||
+                          (scan.monument_key && LOCAL_SAMPLE_IMAGES[scan.monument_key]) ||
+                          '/assets/heritage/taj-mahal.jpg'
+                        }
                         alt={scan.monument_name}
                         className="w-full h-full object-cover"
                         onError={(e) => {
                           e.target.onerror = null;
-                          e.target.src = '/assets/heritage/taj-mahal.jpg';
+                          const fallback =
+                            (scan.monument_key && LOCAL_SAMPLE_IMAGES[scan.monument_key]) ||
+                            scan.preview_data_url ||
+                            '/assets/heritage/taj-mahal.jpg';
+                          e.target.src = fallback;
                         }}
                       />
                     </div>
@@ -306,7 +305,7 @@ export default function MobileApp({
                           {scan.catalog_id || 'ASI-RECORD'}
                         </span>
                         <span className="font-mono text-[9px] font-bold px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-700">
-                          {scan.confidence_score ? `${scan.confidence_score.toFixed(1)}%` : 'VERIFIED'}
+                          {`${Number(scan.confidence_score || 0).toFixed(1)}% CONFIDENCE`}
                         </span>
                       </div>
 
@@ -380,13 +379,13 @@ export default function MobileApp({
 
             <div className="p-4 rounded-2xl bg-[#ECE8DD] border border-[#E3DFD5] space-y-2 text-xs">
               <span className="font-mono text-[9px] uppercase tracking-wider text-[#A9472D] font-bold">
-                INSTITUTIONAL REGISTRY
+                LOCAL SESSION
               </span>
               <p className="font-medium text-[#171816]">
-                Archaeological Survey & UNESCO World Heritage Register
+                No sign-in. Scans stay in this browser only.
               </p>
               <p className="text-[11px] text-[#6E7069]">
-                Access: Open Public Heritage Discovery • SIH 2025 Edition
+                Scan history is stored locally on this device and is not synced or shared.
               </p>
             </div>
           </motion.div>

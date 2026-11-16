@@ -26,12 +26,76 @@ logger = logging.getLogger(__name__)
 BASE_DIR = Path(__file__).resolve().parent
 CATALOGUE_100_FILE = BASE_DIR / "datasets" / "heritage_catalogue_100.json"
 
-# All 100 catalogue monuments are now indexed with reference vectors in local FAISS
+# All catalogue monuments whose recognition_readiness is RECOGNITION_READY are
+# indexed with reference vectors in local FAISS. Entries marked METADATA_ONLY
+# (e.g. a monument added to the catalogue before its FAISS anchors are built)
+# resolve as CATALOGUED_METADATA_ONLY until the index is rebuilt and their
+# readiness flag is flipped to RECOGNITION_READY.
 def get_faiss_recognition_ready_keys() -> Set[str]:
     cat = get_catalogue_100()
-    return set(cat.keys()) if cat else set()
+    if not cat:
+        return set()
+    return {
+        mid
+        for mid, entry in cat.items()
+        if isinstance(entry, dict)
+        and entry.get("recognition_readiness", "RECOGNITION_READY") == "RECOGNITION_READY"
+    }
 
 FAISS_RECOGNITION_READY_KEYS: Set[str] = set()
+
+# Group-alias map (Prompt 1e / Prompt 2): Tier-2 adjudication often names an
+# individual temple inside a group site, or a well-known alternate name, and
+# the exact-name / spelling steps below cannot resolve it to the single group
+# catalogue entry. Keys are normalized with _normalize_alias_key() (lowercase,
+# parenthetical qualifiers stripped, punctuation -> spaces): e.g. Tier 2
+# proposing "Red Fort (Lal Qila)" or "Kandariya Mahadeva Temple" resolves to
+# the group entry instead of falling to OUT_OF_CATALOG.
+# Deliberately NOT mapped: "Virupaksha Temple" is a different temple in Hampi,
+# not the Hampi Stone Chariot (a Garuda shrine in the Vittala complex), so it
+# must never alias to hampi_stone_chariot. A Tier-2 Virupaksha proposal is
+# handled by the top-3 abstention rule in main.py instead.
+GROUP_ALIAS_MAP: Dict[str, str] = {
+    # Khajuraho Western Group temples -> the one group catalogue entry.
+    "vamana temple": "khajuraho_temples",
+    "vamana temple khajuraho": "khajuraho_temples",
+    "vamana": "khajuraho_temples",
+    "kandariya mahadeva temple": "khajuraho_temples",
+    "kandariya mahadeva temple khajuraho": "khajuraho_temples",
+    "kandariya mahadeva": "khajuraho_temples",
+    "kandariya temple": "khajuraho_temples",
+    "lakshmana temple": "khajuraho_temples",
+    "lakshmana temple khajuraho": "khajuraho_temples",
+    "lakshmana": "khajuraho_temples",
+    "chitragupta temple": "khajuraho_temples",
+    "chitragupta temple khajuraho": "khajuraho_temples",
+    "chitragupta": "khajuraho_temples",
+    "vishwanath temple": "khajuraho_temples",
+    "vishwanath temple khajuraho": "khajuraho_temples",
+    "khajuraho vishwanath temple": "khajuraho_temples",
+    # Red Fort alternate name (also listed in alternate_names; kept here so
+    # qualified forms such as "Red Fort (Lal Qila)" resolve deterministically).
+    "lal qila": "red_fort",
+    "red fort lal qila": "red_fort",
+    # Jama Masjid alternate name (Masjid-i Jahan-Numa, as in the verified
+    # expansion-pack metadata entry).
+    "masjid i jahan numa": "jama_masjid",
+    "jama masjid delhi": "jama_masjid",
+}
+
+
+def _normalize_alias_key(s: str) -> str:
+    """Normalizes a proposed identity for alias lookup: strips parenthetical
+    qualifiers, lowercases, folds unicode, and collapses punctuation to single
+    spaces. 'Red Fort (Lal Qila)' -> 'red fort'; 'Masjid-i Jahan-Numa' ->
+    'masjid i jahan numa'."""
+    if not s:
+        return ""
+    s = re.sub(r"\([^)]*\)", " ", str(s))
+    s = unicodedata.normalize("NFKD", s).lower()
+    s = re.sub(r"[^a-z0-9\s]", " ", s)
+    return " ".join(s.split())
+
 
 # Generic words that cannot independently trigger a monument match without distinctive proper nouns
 GENERIC_WORDS: Set[str] = {
@@ -140,6 +204,22 @@ def check_catalogue_membership(query: Optional[str]) -> CatalogueMembershipResul
         match_method = "exact_id"
         matched_alias = matched_entry.get("monument_name")
 
+    # Step 1.5: Group-alias match (Prompt 1e). Individual group members and
+    # well-known alternate names resolve to their group catalogue entry.
+    # The full normalized query is tried first (so "Red Fort (Lal Qila)"
+    # matches via its unparenthesised form), then the parenthetical-stripped
+    # form. Only exact normalized matches count: subset matching here would
+    # wrongly map e.g. "Kashi Vishwanath Temple" onto the Khajuraho group.
+    if not matched_mid:
+        for candidate_key in {_normalize_alias_key(q_raw), _normalize_alias_key(q_unparen)}:
+            alias_mid = GROUP_ALIAS_MAP.get(candidate_key)
+            if alias_mid and alias_mid in catalogue:
+                matched_mid = alias_mid
+                matched_entry = catalogue[alias_mid]
+                match_method = "group_alias"
+                matched_alias = candidate_key
+                break
+
     # Step 2: Exact Name or Exact Alternate Name Match
     if not matched_mid:
         for mid, item in catalogue.items():
@@ -218,7 +298,9 @@ def check_catalogue_membership(query: Optional[str]) -> CatalogueMembershipResul
     if not matched_mid or not matched_entry:
         return CatalogueMembershipResult(status=CatalogueStatus.OUT_OF_CATALOG)
 
-    # Determine recognition readiness (all 100 catalogue members are now FAISS-indexed)
+    # Determine recognition readiness from the catalogue entry's own flag:
+    # RECOGNITION_READY entries have FAISS vectors; METADATA_ONLY entries are
+    # catalogued with verified metadata but no index vectors yet.
     is_ready = matched_mid in get_faiss_recognition_ready_keys()
     status = (
         CatalogueStatus.CATALOGUED_AND_RECOGNITION_READY
