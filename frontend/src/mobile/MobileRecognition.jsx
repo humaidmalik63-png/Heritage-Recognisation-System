@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { Camera, Image as ImageIcon, RefreshCw, X, AlertCircle, Sparkles, CheckCircle2 } from 'lucide-react';
+import React, { useRef, useState, useEffect } from 'react';
+import { Camera, Image as ImageIcon, RefreshCw, X, AlertCircle, AlertTriangle, RefreshCcw } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 // Must match the backend's MAX_UPLOAD_BYTES (15 MB) in backend/main.py.
@@ -11,15 +11,29 @@ export default function MobileRecognition({
   errorMessage,
   onImageSelected,
   onReset,
+  onCancel,
   onDismissError,
 }) {
   const cameraInputRef = useRef(null);
   const galleryInputRef = useRef(null);
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
+
+  useEffect(() => {
+    let timer;
+    if (isLoading) {
+      setElapsedSeconds(0);
+      timer = setInterval(() => {
+        setElapsedSeconds((s) => s + 1);
+      }, 1000);
+    } else {
+      setElapsedSeconds(0);
+    }
+    return () => clearInterval(timer);
+  }, [isLoading]);
 
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    // Matches the backend's 15 MB server-side limit (413 above this size).
     if (file.size > MAX_UPLOAD_BYTES) {
       alert(
         `This image is ${(file.size / (1024 * 1024)).toFixed(1)} MB, over the 15 MB limit. ` +
@@ -135,16 +149,32 @@ export default function MobileRecognition({
 
             {/* In-Flight Processing Spinner Overlay */}
             {isLoading && (
-              <div className="absolute inset-0 bg-black/75 backdrop-blur-xs flex flex-col items-center justify-center text-white p-4 text-center space-y-3">
+              <div className="absolute inset-0 bg-black/80 backdrop-blur-xs flex flex-col items-center justify-center text-white p-4 text-center space-y-3">
                 <div className="w-10 h-10 border-3 border-white/20 border-t-[#B99A5B] rounded-full animate-spin" />
                 <div className="space-y-1">
                   <p className="font-mono text-xs uppercase tracking-wider font-bold text-[#F5F3ED]">
-                    Analyzing Vector Embeddings
+                    Analyzing Vector Embeddings ({elapsedSeconds}s)
                   </p>
                   <p className="text-[11px] text-white/70">
-                    Extracting 512-D CLIP features & querying 577 centroids...
+                    Extracting 512-D CLIP features & searching 595 vectors...
                   </p>
                 </div>
+
+                {elapsedSeconds >= 25 && (
+                  <p className="text-[10px] text-amber-300 font-mono">
+                    Deep curatorial synthesis in progress...
+                  </p>
+                )}
+
+                {onCancel && (
+                  <button
+                    onClick={onCancel}
+                    className="mt-2 px-4 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white font-mono text-[11px] uppercase tracking-wider flex items-center gap-1.5 active:scale-95"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                    <span>Cancel Scan</span>
+                  </button>
+                )}
               </div>
             )}
           </div>
@@ -174,4 +204,3 @@ export default function MobileRecognition({
     </div>
   );
 }
-

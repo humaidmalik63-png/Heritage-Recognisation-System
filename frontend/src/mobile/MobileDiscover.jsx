@@ -70,7 +70,7 @@ const FEATURED_MONUMENTS = [
   },
 ];
 
-export default function MobileDiscover({ onSelectTab, onTestSample, onSelectMonument }) {
+export default function MobileDiscover({ onSelectTab, onTestSample, onSelectMonument, readyCount = 101 }) {
   const { history } = useAuth();
   const recentScans = Array.isArray(history) ? history.slice(0, 5) : [];
 
@@ -138,7 +138,7 @@ export default function MobileDiscover({ onSelectTab, onTestSample, onSelectMonu
           className="flex items-center justify-center gap-2 py-3 px-3 rounded-xl bg-[#FFFEFA] hover:bg-[#F5F3ED] text-[#171816] border border-[#E3DFD5] font-mono text-xs font-semibold tracking-wider uppercase shadow-2xs transition-transform active:scale-97 cursor-pointer"
         >
           <Compass className="w-4 h-4 text-[#B99A5B]" />
-          <span>100 Sites</span>
+          <span>{readyCount || 101} Sites</span>
         </button>
       </div>
 

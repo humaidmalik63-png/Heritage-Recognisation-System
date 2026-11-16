@@ -1084,25 +1084,29 @@ export default function MonographResult({ result, imagePreview, onReset }) {
               </div>
             </div>
 
-            {/* Classical SIFT / RANSAC Geometric Verification */}
-            <div className="bg-archive-alabaster/70 border border-archive-hairline p-3 rounded space-y-1">
-              <span className="text-[10px] text-archive-muted uppercase tracking-wider block">
-                SIFT / RANSAC Homography
-              </span>
-              <div className="flex items-center gap-1.5">
-                <span className={`w-2 h-2 rounded-full ${
-                  local_features.geometric_verification?.status === 'VERIFIED'
-                    ? 'bg-emerald-500'
-                    : 'bg-amber-400'
-                }`} />
-                <span className="text-sm font-semibold text-archive-charcoal">
-                  {local_features.geometric_verification?.status || 'PENDING'}
+            {/* Classical SIFT / RANSAC Geometric Verification (A9: Rendered only when active with real inliers) */}
+            {local_features.geometric_verification && 
+             local_features.geometric_verification.status !== 'BYPASSED' && 
+             (local_features.geometric_verification.inliers_count > 0 || local_features.geometric_verification.good_matches_count > 0) && (
+              <div className="bg-archive-alabaster/70 border border-archive-hairline p-3 rounded space-y-1">
+                <span className="text-[10px] text-archive-muted uppercase tracking-wider block">
+                  SIFT / RANSAC Homography
                 </span>
+                <div className="flex items-center gap-1.5">
+                  <span className={`w-2 h-2 rounded-full ${
+                    local_features.geometric_verification?.status === 'VERIFIED'
+                      ? 'bg-emerald-500'
+                      : 'bg-amber-400'
+                  }`} />
+                  <span className="text-sm font-semibold text-archive-charcoal">
+                    {local_features.geometric_verification?.status || 'PENDING'}
+                  </span>
+                </div>
+                <div className="text-[10px] text-archive-stone">
+                  Inliers: {local_features.geometric_verification?.inliers_count || 0} / {local_features.geometric_verification?.good_matches_count || 0} ({((local_features.geometric_verification?.inlier_ratio || 0) * 100).toFixed(1)}%)
+                </div>
               </div>
-              <div className="text-[10px] text-archive-stone">
-                Inliers: {local_features.geometric_verification?.inliers_count || 0} / {local_features.geometric_verification?.good_matches_count || 0} ({((local_features.geometric_verification?.inlier_ratio || 0) * 100).toFixed(1)}%)
-              </div>
-            </div>
+            )}
           </div>
 
           {/* Curatorial Explanation Strip */}

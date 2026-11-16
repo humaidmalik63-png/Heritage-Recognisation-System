@@ -9,35 +9,35 @@ import {
   buttonTapVariants,
 } from '../utils/animations';
 
-// Authenticated genuine heritage photographs for the desktop continuous mosaic
+// Authenticated genuine heritage photographs for the desktop continuous mosaic (A8: all placeholders replaced with real photos)
 const COLUMN_1 = [
   { type: 'photo', src: '/assets/heritage/taj-mahal.jpg', label: 'Taj Mahal', location: 'Agra, Uttar Pradesh, India', aspect: 'tall' },
-  { type: 'color', bg: '#A9472D', label: 'Mughal Brick & Terracotta' },
+  { type: 'photo', src: '/assets/heritage/charminar.jpg', label: 'Charminar', location: 'Hyderabad, Telangana, India', aspect: 'standard' },
   { type: 'photo', src: '/assets/heritage/colosseum.jpg', label: 'The Colosseum', location: 'Rome, Lazio, Italy', aspect: 'standard' },
-  { type: 'color', bg: '#AAB9A4', label: 'Living Earth Pigment' },
+  { type: 'photo', src: '/assets/heritage/konark-sun-temple.jpg', label: 'Konark Sun Temple', location: 'Konark, Odisha, India', aspect: 'standard' },
   { type: 'photo', src: '/assets/heritage/red-fort.jpg', label: 'Red Fort', location: 'Delhi, India', aspect: 'standard' },
   { type: 'photo', src: '/assets/heritage/ellora-caves.jpg', label: 'Kailasa Temple, Ellora', location: 'Maharashtra, India', aspect: 'tall' },
 ];
 
 const COLUMN_2 = [
-  { type: 'color', bg: '#B99A5B', label: 'Gilded Epigraphical Script' },
+  { type: 'photo', src: '/assets/heritage/hampi-stone-chariot.jpg', label: 'Stone Chariot, Hampi', location: 'Vijayanagara, Karnataka, India', aspect: 'tall' },
   { type: 'photo', src: '/assets/heritage/petra.jpg', label: 'Al-Khazneh, Petra', location: "Ma'an Governorate, Jordan", aspect: 'tall' },
-  { type: 'color', bg: '#171816', label: 'Basalt & Obsidian Shading' },
+  { type: 'photo', src: '/assets/heritage/machu-picchu.jpg', label: 'Machu Picchu', location: 'Cusco, Peru', aspect: 'tall' },
   { type: 'photo', src: '/assets/heritage/qutub-minar.jpg', label: 'Qutub Minar', location: 'New Delhi, India', aspect: 'standard' },
   { type: 'photo', src: '/assets/heritage/golden-temple.jpg', label: 'Sri Harmandir Sahib', location: 'Amritsar, Punjab, India', aspect: 'standard' },
-  { type: 'color', bg: '#A9C8D4', label: 'Celestial Mineral Tint' },
+  { type: 'photo', src: '/assets/heritage/brihadeeswarar-temple.jpg', label: 'Brihadeeswarar Temple', location: 'Thanjavur, Tamil Nadu, India', aspect: 'tall' },
 ];
 
 const COLUMN_3 = [
-  { type: 'color', bg: '#A9C8D4', label: 'Sky-well Reflectance' },
+  { type: 'photo', src: '/assets/heritage/sanchi-stupa.jpg', label: 'Great Stupa at Sanchi', location: 'Raisen, Madhya Pradesh, India', aspect: 'tall' },
   { type: 'photo', src: '/assets/heritage/great-wall.jpg', label: 'Great Wall of China', location: 'Beijing, China', aspect: 'tall' },
-  { type: 'color', bg: '#FFFEFA', border: true, label: 'Alabaster Plinth' },
+  { type: 'photo', src: '/assets/heritage/pyramids-giza.jpg', label: 'Great Pyramid of Giza', location: 'Giza, Cairo, Egypt', aspect: 'standard' },
   { type: 'photo', src: '/assets/heritage/angkor-wat.jpg', label: 'Angkor Wat', location: 'Siem Reap, Cambodia', aspect: 'standard' },
   { type: 'photo', src: '/assets/heritage/hawa-mahal.jpg', label: 'Hawa Mahal', location: 'Jaipur, Rajasthan, India', aspect: 'standard' },
   { type: 'photo', src: '/assets/heritage/ajanta-caves.jpg', label: 'Ajanta Cave Temples', location: 'Maharashtra, India', aspect: 'tall' },
 ];
 
-export default function HeritageHero({ onRecognizeClick, onExploreClick }) {
+export default function HeritageHero({ onRecognizeClick, onExploreClick, readyCount = 101 }) {
   const shouldReduceMotion = useReducedMotion();
 
   const renderColumn = (items, direction = 'down', speed = 28) => {
@@ -197,7 +197,7 @@ export default function HeritageHero({ onRecognizeClick, onExploreClick }) {
               <Compass className="w-4 h-4 text-[#B99A5B]" />
               <span>Explore the Archive</span>
               <span className="font-mono text-[10px] text-[#A9472D] bg-[#A9472D]/10 px-2 py-0.5 rounded-full font-bold">
-                100 Sites
+                {readyCount || 101} Sites
               </span>
             </button>
           </div>
@@ -287,7 +287,7 @@ export default function HeritageHero({ onRecognizeClick, onExploreClick }) {
                 <Compass className="w-5 h-5 text-[#B99A5B] transition-transform group-hover:rotate-45 duration-300" />
                 <span>Explore the Archive</span>
                 <span className="font-mono text-[10px] text-[#A9472D] bg-[#A9472D]/10 px-2 py-0.5 rounded-full font-bold ml-0.5">
-                  100 Sites
+                  {readyCount || 101} Sites
                 </span>
               </motion.button>
             </motion.div>

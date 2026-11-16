@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MobileLayout from './MobileLayout';
 import MobileDiscover from './MobileDiscover';
@@ -16,21 +16,50 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8001
 export default function MobileApp({
   health,
   monuments = {},
+  readyCount = 101,
   onOpenCatalog,
   onOpenExceptions,
   pendingExceptionsCount = 0,
+  isLoading: propIsLoading,
+  setIsLoading: propSetIsLoading,
+  imagePreview: propImagePreview,
+  setImagePreview: propSetImagePreview,
+  verificationResult: propVerificationResult,
+  setVerificationResult: propSetVerificationResult,
+  errorMessage: propErrorMessage,
+  setErrorMessage: propSetErrorMessage,
 }) {
-  const { history, addScanToHistory } = useAuth();
+  const { history, addScanToHistory, clearHistory } = useAuth();
   const [activeTab, setActiveTab] = useState('discover');
 
-  // Recognition state
-  const [isLoading, setIsLoading] = useState(false);
-  const [imagePreview, setImagePreview] = useState(null);
-  const [verificationResult, setVerificationResult] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
+  // Local fallback if not passed as lifted props
+  const [localIsLoading, localSetIsLoading] = useState(false);
+  const [localImagePreview, localSetImagePreview] = useState(null);
+  const [localVerificationResult, localSetVerificationResult] = useState(null);
+  const [localErrorMessage, localSetErrorMessage] = useState(null);
+
+  const isLoading = propIsLoading !== undefined ? propIsLoading : localIsLoading;
+  const setIsLoading = propSetIsLoading || localSetIsLoading;
+  const imagePreview = propImagePreview !== undefined ? propImagePreview : localImagePreview;
+  const setImagePreview = propSetImagePreview || localSetImagePreview;
+  const verificationResult = propVerificationResult !== undefined ? propVerificationResult : localVerificationResult;
+  const setVerificationResult = propSetVerificationResult || localSetVerificationResult;
+  const errorMessage = propErrorMessage !== undefined ? propErrorMessage : localErrorMessage;
+  const setErrorMessage = propSetErrorMessage || localSetErrorMessage;
+
+  const abortControllerRef = useRef(null);
 
   // Selected monument for bottom sheet detail dossier
   const [selectedMonumentKey, setSelectedMonumentKey] = useState(null);
+
+  const handleCancelScan = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    setIsLoading(false);
+    setErrorMessage(null);
+  };
 
   // Handle direct file upload from camera or gallery
   const handleImageSelected = async (file) => {
@@ -39,21 +68,24 @@ export default function MobileApp({
     setVerificationResult(null);
     setIsLoading(true);
 
+    abortControllerRef.current = new AbortController();
     const previewUrl = URL.createObjectURL(file);
     setImagePreview(previewUrl);
 
     try {
-      const result = await verifyMonumentImage(file);
+      const result = await verifyMonumentImage(file, abortControllerRef.current.signal);
       setVerificationResult(result);
 
       if (result && result.is_monument && !result.is_uncertain) {
         addScanToHistory(result, previewUrl);
       }
     } catch (err) {
+      if (err.name === 'AbortError') return;
       console.error('Mobile verification failed:', err);
       setErrorMessage(err.message || 'Recognition scan failed. Please check network connection.');
     } finally {
       setIsLoading(false);
+      abortControllerRef.current = null;
     }
   };
 
@@ -63,6 +95,8 @@ export default function MobileApp({
     setErrorMessage(null);
     setVerificationResult(null);
     setIsLoading(true);
+
+    abortControllerRef.current = new AbortController();
 
     try {
       // 1. Resolve to bundled photo directly from LOCAL_HERITAGE_IMAGES
@@ -92,17 +126,19 @@ export default function MobileApp({
       const previewUrl = URL.createObjectURL(file);
       setImagePreview(previewUrl);
 
-      const result = await verifyMonumentImage(file);
+      const result = await verifyMonumentImage(file, abortControllerRef.current?.signal);
       setVerificationResult(result);
 
       if (result && result.is_monument && !result.is_uncertain) {
         addScanToHistory(result, previewUrl);
       }
     } catch (err) {
+      if (err.name === 'AbortError') return;
       console.error('Sample processing failed:', err);
       setErrorMessage(err.message || 'Sample test failed.');
     } finally {
       setIsLoading(false);
+      abortControllerRef.current = null;
     }
   };
 
@@ -116,7 +152,7 @@ export default function MobileApp({
     <MobileLayout
       health={health}
       onOpenCatalog={onOpenCatalog}
-      monumentsCount={Object.keys(monuments).length}
+      monumentsCount={readyCount || 101}
       onOpenExceptions={onOpenExceptions}
       pendingExceptionsCount={pendingExceptionsCount}
       activeTab={activeTab}
@@ -139,6 +175,7 @@ export default function MobileApp({
               onSelectTab={setActiveTab}
               onTestSample={handleTestSample}
               onSelectMonument={(key) => setSelectedMonumentKey(key)}
+              readyCount={readyCount}
             />
           </motion.div>
         )}
@@ -154,6 +191,7 @@ export default function MobileApp({
           >
             <MobileArchive
               monuments={monuments}
+              readyCount={readyCount}
               onTestSample={handleTestSample}
               onSelectMonument={(key) => setSelectedMonumentKey(key)}
             />
@@ -176,6 +214,7 @@ export default function MobileApp({
               errorMessage={errorMessage}
               onImageSelected={handleImageSelected}
               onReset={handleResetRecognition}
+              onCancel={handleCancelScan}
               onDismissError={() => setErrorMessage(null)}
             />
 
@@ -208,9 +247,24 @@ export default function MobileApp({
                   Recognition History
                 </h1>
               </div>
-              <span className="px-2.5 py-1 rounded-full bg-[#171816] text-[#FFFEFA] font-mono text-xs font-bold">
-                {history?.length || 0} Scans
-              </span>
+              <div className="flex items-center gap-2">
+                {history?.length > 0 && (
+                  <button
+                    onClick={() => {
+                      if (window.confirm('Clear all scans from your local scan register?')) {
+                        clearHistory();
+                      }
+                    }}
+                    className="p-1.5 rounded-lg border border-red-200 bg-red-50 text-red-700 font-mono text-[11px] uppercase flex items-center gap-1"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>Clear</span>
+                  </button>
+                )}
+                <span className="px-2.5 py-1 rounded-full bg-[#171816] text-[#FFFEFA] font-mono text-xs font-bold">
+                  {history?.length || 0} Scans
+                </span>
+              </div>
             </div>
 
             {(!history || history.length === 0) ? (
@@ -221,7 +275,7 @@ export default function MobileApp({
                     No Monograph Scans Recorded
                   </h3>
                   <p className="text-xs text-[#6E7069] leading-relaxed">
-                    Deposited specimens and verified monuments will be indexed here with their official ASI catalog stamps and geodetic coordinates.
+                    Deposited specimens and verified monuments will be indexed here with their official catalog stamps and geodetic coordinates.
                   </p>
                 </div>
                 <button
@@ -248,38 +302,23 @@ export default function MobileApp({
                         }
                         alt={scan.monument_name}
                         className="w-full h-full object-cover"
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          const fallback =
-                            (scan.monument_key && LOCAL_HERITAGE_IMAGES[scan.monument_key]) ||
-                            scan.preview_data_url ||
-                            '/assets/heritage/taj-mahal.jpg';
-                          e.target.src = fallback;
-                        }}
                       />
                     </div>
-
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-1">
-                        <span className="font-mono text-[9px] font-bold text-[#A9472D] uppercase">
-                          {scan.catalog_id || 'ASI-RECORD'}
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono text-[9px] uppercase tracking-wider text-[#A9472D] font-bold">
+                          {scan.catalog_id || 'CATALOG'}
                         </span>
-                        <span className="font-mono text-[9px] font-bold px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-700">
-                          {`${Number(scan.confidence_score || 0).toFixed(1)}% CONFIDENCE`}
+                        <span className="font-mono text-[9px] text-[#6E7069]">
+                          {scan.confidence_score ? `${scan.confidence_score}%` : 'VERIFIED'}
                         </span>
                       </div>
-
-                      <h3 className="font-display font-semibold text-xs text-[#171816] truncate mt-0.5">
+                      <h4 className="font-serif text-sm font-semibold text-[#171816] truncate mt-0.5">
                         {scan.monument_name}
-                      </h3>
-
-                      <div className="flex items-center gap-1 text-[11px] text-[#6E7069] truncate mt-0.5">
-                        <MapPin className="w-2.5 h-2.5 text-[#A9472D] flex-shrink-0" />
-                        <span className="truncate">{scan.location}</span>
-                      </div>
-
-                      <p className="text-[9px] font-mono text-[#6E7069]/70 mt-1">
-                        {new Date(scan.timestamp).toLocaleString()}
+                      </h4>
+                      <p className="text-[11px] text-[#6E7069] truncate flex items-center gap-1 mt-0.5">
+                        <MapPin className="w-2.5 h-2.5 text-[#B99A5B] flex-shrink-0" />
+                        <span>{scan.location || 'Location Recorded'}</span>
                       </p>
                     </div>
                   </div>
@@ -333,7 +372,7 @@ export default function MobileApp({
               <div className="p-3 rounded-xl bg-[#FFFEFA] border border-[#E3DFD5] space-y-1">
                 <Database className="w-4 h-4 text-[#B99A5B]" />
                 <p className="font-bold text-[#171816] text-[11px]">FAISS Vector Index</p>
-                <p className="text-[#6E7069] text-[10px]">577 pre-computed monument centroid vectors</p>
+                <p className="text-[#6E7069] text-[10px]">595 pre-computed monument centroid vectors</p>
               </div>
             </div>
 
@@ -364,4 +403,3 @@ export default function MobileApp({
     </MobileLayout>
   );
 }
-

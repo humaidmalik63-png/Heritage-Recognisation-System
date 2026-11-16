@@ -1,9 +1,9 @@
 import React from 'react';
 import { ShieldCheck, Database, Cpu, Sparkles, Scale, Server, CheckCircle2, Award } from 'lucide-react';
 
-export default function AboutPlatform({ health, monumentsCount = 100 }) {
+export default function AboutPlatform({ health, monumentsCount = 101 }) {
   const isHealthy = health?.status === 'ok' || health?.status === 'healthy';
-  const vectorCount = health?.faiss_vectors || health?.vectors_count || 577;
+  const vectorCount = health?.faiss_vectors_loaded || health?.faiss_vectors || health?.vectors_count || 595;
   const clipModel = health?.clip_model || 'openai/clip-vit-base-patch32';
   const tier2Model = health?.gemini_model || 'gemini-3.1-flash-lite';
 
@@ -129,7 +129,7 @@ export default function AboutPlatform({ health, monumentsCount = 100 }) {
 
                 <div className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/5">
                   <span className="text-[#6E7069]">Acceptance Threshold</span>
-                  <span className="text-white font-bold">τ ≥ 0.72 (Margin Δ ≥ 0.05)</span>
+                  <span className="text-white font-bold">τ ≥ 0.75 (Margin Δ ≥ 0.08)</span>
                 </div>
               </div>
 

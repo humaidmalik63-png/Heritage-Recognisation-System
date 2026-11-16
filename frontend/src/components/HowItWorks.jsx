@@ -20,8 +20,8 @@ const STAGES = [
     icon: ShieldCheck,
     color: '#536B57',
     description:
-      'Cosine similarity scores are evaluated against a calibrated acceptance threshold (τ = 0.72). The system enforces candidate margin separation (Δ ≥ 0.05) to eliminate ambiguous ties, immediately rejecting non-architectural photos, modern receipts, and synthetic noise.',
-    specs: ['τ_accept = 0.72 Threshold', 'Δ_margin ≥ 0.05 Separation', 'Zero Hallucination'],
+      'Cosine similarity scores are evaluated against a calibrated acceptance threshold (τ = 0.75). The system enforces candidate margin separation (Δ ≥ 0.08) to eliminate ambiguous ties, immediately rejecting non-architectural photos, modern receipts, and synthetic noise.',
+    specs: ['τ_accept = 0.75 Threshold', 'Δ_margin ≥ 0.08 Separation', 'Zero Hallucination'],
   },
   {
     step: '03',
@@ -31,7 +31,7 @@ const STAGES = [
     color: '#B99A5B',
     description:
       'Confirmed identifications link immediately to structured historical monographs, verified dynasties, architectural taxonomy, material composition, construction timelines, and geospatial coordinates referenced from official archival charters.',
-    specs: ['100 Catalog Sites', 'Dynasty & Period Metadata', 'Architectural Taxonomy'],
+    specs: ['Authoritative Catalog Sites', 'Dynasty & Period Metadata', 'Architectural Taxonomy'],
   },
   {
     step: '04',

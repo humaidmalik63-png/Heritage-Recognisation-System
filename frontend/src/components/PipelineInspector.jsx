@@ -39,7 +39,9 @@ export default function PipelineInspector({
   const decision = uncertainty?.decision || 'VERIFIED_MATCH';
   const calibrationStatus = uncertainty?.calibration_status || 'UNCALIBRATED';
   const top1Sim = uncertainty?.top1_similarity ?? (top_3_candidates[0]?.cosine_similarity || 0);
-  const top2Sim = uncertainty?.top2_similarity ?? (top_3_candidates[1]?.cosine_similarity || 0);
+  const top2Candidate = uncertainty?.top_candidates?.[1] || top_3_candidates[1];
+  const top2Name = top2Candidate?.monument_name && top2Candidate.monument_name !== 'None' ? top2Candidate.monument_name : null;
+  const top2Sim = top2Name ? (uncertainty?.top2_similarity ?? (top_3_candidates[1]?.cosine_similarity || 0)) : 0;
   const margin = uncertainty?.similarity_margin ?? Math.max(0, top1Sim - top2Sim);
   const marginThreshold = uncertainty?.margin_threshold ?? 0.08;
   const quality = uncertainty?.image_quality;
@@ -165,12 +167,18 @@ export default function PipelineInspector({
           <div className="bg-archive-alabaster/70 border border-archive-hairline p-3 rounded">
             <span className="text-[10px] text-archive-muted uppercase block">Top-2 Unique Candidate</span>
             <div className="font-serif font-bold text-sm text-archive-charcoal mt-0.5 truncate">
-              {uncertainty?.top_candidates?.[1]?.monument_name || top_3_candidates[1]?.monument_name || 'None'}
+              {top2Name ? top2Name : 'Sole candidate match'}
             </div>
-            <div className="flex items-center justify-between mt-1 text-[11px]">
-              <span className="text-archive-stone">Cosine Similarity:</span>
-              <span className="font-bold text-archive-charcoal">{(top2Sim * 100).toFixed(2)}% ({top2Sim.toFixed(4)})</span>
-            </div>
+            {top2Name ? (
+              <div className="flex items-center justify-between mt-1 text-[11px]">
+                <span className="text-archive-stone">Cosine Similarity:</span>
+                <span className="font-bold text-archive-charcoal">{(top2Sim * 100).toFixed(2)}% ({top2Sim.toFixed(4)})</span>
+              </div>
+            ) : (
+              <div className="mt-1 text-[11px] text-archive-stone italic">
+                No competing candidate retrieved
+              </div>
+            )}
           </div>
 
           {/* Margin */}
@@ -186,11 +194,13 @@ export default function PipelineInspector({
               <div className={`font-mono text-lg font-bold mt-0.5 ${
                 margin >= marginThreshold ? 'text-emerald-800' : 'text-amber-800'
               }`}>
-                +{margin.toFixed(4)}
+                {top2Name ? `+${margin.toFixed(4)}` : 'Sole match'}
               </div>
             </div>
             <span className="text-[10px] font-sans text-archive-stone mt-1">
-              {margin >= marginThreshold
+              {!top2Name
+                ? 'Sole candidate match with zero competing candidates in corpus retrieval.'
+                : margin >= marginThreshold
                 ? `Decisive candidate separation (Threshold: ${marginThreshold.toFixed(4)}).`
                 : `Narrow margin (Threshold: ${marginThreshold.toFixed(4)}); potential visual ambiguity.`}
             </span>

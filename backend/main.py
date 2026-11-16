@@ -1569,7 +1569,7 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
     if decision == DecisionState.VERIFIED_MATCH:
         if best_key and (best_key in state["metadata"] or best_key in state.get("catalogue_100", {})):
             m_data = state["metadata"].get(best_key) or state.get("catalogue_100", {}).get(best_key, {})
-            catalog_id = CATALOG_ID_MAP.get(best_key, f"ASI-ARCH-{best_key[:3].upper()}-00")
+            catalog_id = m_data.get("catalog_id") or CATALOG_ID_MAP.get(best_key, f"ASI-ARCH-{best_key[:3].upper()}-00")
             mon_name = m_data.get("monument_name", best_name)
             loc_name = m_data.get("location")
             coords = m_data.get("coordinates")
@@ -1686,8 +1686,8 @@ async def process_verification_pipeline(image_bytes: bytes, filename: str = "upl
 
     # --- CASE B: UNCERTAIN MATCH (CANDIDATE COMPETITION) ---
     elif decision == DecisionState.UNCERTAIN_MATCH:
-        m_data = state["metadata"].get(best_key, {})
-        catalog_id = CATALOG_ID_MAP.get(best_key, f"ASI-ARCH-{best_key[:3].upper()}-00")
+        m_data = state["metadata"].get(best_key, {}) or state.get("catalogue_100", {}).get(best_key, {})
+        catalog_id = m_data.get("catalog_id") or CATALOG_ID_MAP.get(best_key, f"ASI-ARCH-{best_key[:3].upper()}-00")
         uncertain_reason = (
             f"Tier 2 identified '{best_name}' as a catalogue monument, but Tier-1 "
             f"visual support was insufficient for verification. Flagged for curator review."

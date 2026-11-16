@@ -137,7 +137,7 @@ export default function FeaturedHeritage({ onTestSample }) {
             </h2>
           </div>
           <p className="max-w-md text-sm sm:text-base text-[#6E7069] leading-relaxed font-sans">
-            A curated cross-section from our 100-site multi-epoch archive. Each site is fully indexed with 512-dimensional CLIP embeddings and verified against historical ASI and UNESCO charters.
+            A curated cross-section from our authoritative multi-epoch archive. Each site is fully indexed with 512-dimensional CLIP embeddings and verified against historical ASI and UNESCO charters.
           </p>
         </div>
 

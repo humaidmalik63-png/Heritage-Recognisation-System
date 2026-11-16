@@ -55,13 +55,14 @@ export async function fetchMonumentsCatalog() {
   return response.json();
 }
 
-export async function verifyMonumentImage(file) {
+export async function verifyMonumentImage(file, signal) {
   const formData = new FormData();
   formData.append('file', file);
 
   const response = await fetch(`${API_BASE_URL}/api/verify-monument`, {
     method: 'POST',
     body: formData,
+    signal,
   });
 
   if (!response.ok) {

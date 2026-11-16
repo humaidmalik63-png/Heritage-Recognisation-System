@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import MonumentMap from './MonumentMap';
 
-export default function CatalogDrawer({ isOpen, onClose, monuments }) {
+export default function CatalogDrawer({ isOpen, onClose, monuments, readyCount = 101 }) {
   const [selectedKey, setSelectedKey] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [regionFilter, setRegionFilter] = useState('ALL'); // 'ALL', 'INDIA', 'INTERNATIONAL'
@@ -100,7 +100,7 @@ export default function CatalogDrawer({ isOpen, onClose, monuments }) {
                 <span>ASI & GLOBAL HERITAGE REGISTRY // PHASE 8.6</span>
               </div>
               <h2 className="font-serif text-2xl font-bold text-archive-charcoal mt-0.5">
-                Authoritative 100-Site Catalogue
+                Authoritative {readyCount || 101}-Site Catalogue
               </h2>
               <div className="text-xs font-mono text-archive-stone mt-0.5">
                 50 Indian Flagship Monuments • 50 International Wonders
@@ -408,7 +408,7 @@ export default function CatalogDrawer({ isOpen, onClose, monuments }) {
           <div className="p-4 bg-archive-parchment/70 border-t border-archive-hairline flex items-center justify-between text-xs font-mono text-archive-muted">
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700" />
-              <span>100 UNIQUE SITES • 100% AUDITED REPOSITORY</span>
+              <span>{readyCount || 101} UNIQUE SITES • 100% AUDITED REPOSITORY</span>
             </span>
             <button
               onClick={onClose}

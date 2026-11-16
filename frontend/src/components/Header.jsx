@@ -7,8 +7,6 @@ import {
   ShieldAlert,
   History,
   ScanLine,
-  LogOut,
-  User,
   Menu,
   X,
 } from 'lucide-react';
@@ -16,11 +14,11 @@ import {
 export default function Header({
   health,
   onOpenCatalog,
-  monumentsCount = 100,
+  monumentsCount = 101,
   onOpenExceptions,
   pendingExceptionsCount = 0,
 }) {
-  const { user, logout, history } = useAuth();
+  const { history } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -97,9 +95,9 @@ export default function Header({
             </div>
 
             <span className="hidden md:inline-flex items-center gap-1 text-[#6E7069] text-[10px] font-mono border-l border-[#E3DFD5] pl-2.5">
-              <span>{health?.faiss_vectors_loaded || 577} Vectors</span>
+              <span>{health?.faiss_vectors_loaded || 595} Vectors</span>
               <span>•</span>
-              <span>{monumentsCount || 100} Sites</span>
+              <span>{monumentsCount} Sites</span>
             </span>
           </div>
         </div>
@@ -165,12 +163,12 @@ export default function Header({
               <button
                 onClick={onOpenCatalog}
                 className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full hover:bg-white text-[#171816] transition-all cursor-pointer font-medium"
-                title="Open Complete 100-Site Catalogue Drawer"
+                title="Open Complete Catalogue Drawer"
               >
                 <BookOpen className="w-3 h-3 text-[#A9472D]" />
                 <span className="uppercase">Catalogue</span>
                 <span className="font-bold text-[#A9472D] bg-[#A9472D]/10 px-1.5 py-0.2 rounded-full text-[10px]">
-                  {monumentsCount || 100}
+                  {monumentsCount}
                 </span>
               </button>
 
@@ -211,35 +209,6 @@ export default function Header({
               <ScanLine className="w-3.5 h-3.5 text-[#B99A5B]" />
               <span className="whitespace-nowrap">Recognise a Monument</span>
             </button>
-
-            {/* FIX 4: User Session Profile & Sign Out / Sign In */}
-            {user ? (
-              <div className="hidden sm:flex items-center gap-2 pl-2.5 border-l border-[#E3DFD5]">
-                <div
-                  className="w-7 h-7 rounded-full bg-[#171816] text-[#B99A5B] flex items-center justify-center font-mono text-xs font-bold uppercase shadow-xs"
-                  title={user.name || user.email}
-                >
-                  {user.name?.charAt(0) || 'C'}
-                </div>
-                <button
-                  onClick={() => {
-                    logout();
-                    navigate('/login');
-                  }}
-                  className="p-1.5 text-[#6E7069] hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
-                  title="Sign Out of Session"
-                  aria-label="Logout"
-                >
-                  <LogOut className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            ) : (
-              <Link to="/login" className="hidden sm:inline-block pl-2.5 border-l border-[#E3DFD5]">
-                <span className="text-xs font-mono uppercase tracking-wider text-[#6E7069] hover:text-[#A9472D] transition-colors font-medium">
-                  Sign In
-                </span>
-              </Link>
-            )}
 
             {/* Mobile Hamburger Menu Toggle */}
             <button
@@ -314,27 +283,6 @@ export default function Header({
                   <History className="w-3.5 h-3.5 text-[#A9472D]" />
                   <span>Archival Log ({history.length})</span>
                 </Link>
-
-                {user ? (
-                  <button
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                      logout();
-                      navigate('/login');
-                    }}
-                    className="text-rose-700 font-semibold cursor-pointer text-xs uppercase"
-                  >
-                    Sign Out ({user.name?.split(' ')[0] || 'Curator'})
-                  </button>
-                ) : (
-                  <Link
-                    to="/login"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="text-[#A9472D] font-semibold text-xs uppercase"
-                  >
-                    Sign In
-                  </Link>
-                )}
               </div>
             </motion.div>
           )}

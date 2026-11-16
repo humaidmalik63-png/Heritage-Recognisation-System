@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import HeritageHero from '../components/HeritageHero';
 import FeaturedHeritage from '../components/FeaturedHeritage';
 import UploadSection from '../components/UploadSection';
@@ -17,14 +17,45 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_A
 export default function Dashboard({
   onExceptionCreated,
   monuments = {},
+  readyCount = 101,
   health = null,
   onOpenCatalog = () => {},
+  isLoading: propIsLoading,
+  setIsLoading: propSetIsLoading,
+  imagePreview: propImagePreview,
+  setImagePreview: propSetImagePreview,
+  verificationResult: propVerificationResult,
+  setVerificationResult: propSetVerificationResult,
+  errorMessage: propErrorMessage,
+  setErrorMessage: propSetErrorMessage,
 }) {
   const { addScanToHistory } = useAuth();
-  const [isLoading, setIsLoading] = useState(false);
-  const [imagePreview, setImagePreview] = useState(null);
-  const [verificationResult, setVerificationResult] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
+  
+  // Local fallback if props not provided
+  const [localIsLoading, localSetIsLoading] = useState(false);
+  const [localImagePreview, localSetImagePreview] = useState(null);
+  const [localVerificationResult, localSetVerificationResult] = useState(null);
+  const [localErrorMessage, localSetErrorMessage] = useState(null);
+
+  const isLoading = propIsLoading !== undefined ? propIsLoading : localIsLoading;
+  const setIsLoading = propSetIsLoading || localSetIsLoading;
+  const imagePreview = propImagePreview !== undefined ? propImagePreview : localImagePreview;
+  const setImagePreview = propSetImagePreview || localSetImagePreview;
+  const verificationResult = propVerificationResult !== undefined ? propVerificationResult : localVerificationResult;
+  const setVerificationResult = propSetVerificationResult || localSetVerificationResult;
+  const errorMessage = propErrorMessage !== undefined ? propErrorMessage : localErrorMessage;
+  const setErrorMessage = propSetErrorMessage || localSetErrorMessage;
+
+  const abortControllerRef = useRef(null);
+
+  const handleCancelScan = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    setIsLoading(false);
+    setErrorMessage(null);
+  };
 
   const scrollToRecognition = () => {
     const el = document.getElementById('recognition');
@@ -44,11 +75,12 @@ export default function Dashboard({
     setErrorMessage(null);
     setIsLoading(true);
 
+    abortControllerRef.current = new AbortController();
     const previewUrl = URL.createObjectURL(file);
     setImagePreview(previewUrl);
 
     try {
-      const result = await verifyMonumentImage(file);
+      const result = await verifyMonumentImage(file, abortControllerRef.current.signal);
       setVerificationResult(result);
 
       // Automatically append verified monument scans to authenticated user's history
@@ -61,13 +93,17 @@ export default function Dashboard({
         onExceptionCreated();
       }
     } catch (err) {
+      if (err.name === 'AbortError') {
+        console.log('Scan cancelled by user.');
+        return;
+      }
       console.error('Verification failed:', err);
-      // Clear any stale result and preview on failure
       setVerificationResult(null);
       setImagePreview(null);
       setErrorMessage(err.message || 'Failed to verify monument. Please check backend connection.');
     } finally {
       setIsLoading(false);
+      abortControllerRef.current = null;
     }
   };
 
@@ -77,6 +113,7 @@ export default function Dashboard({
 
     // Scroll to recognition scanner smoothly
     scrollToRecognition();
+    abortControllerRef.current = new AbortController();
 
     try {
       if (sampleKey === 'non_monument') {
@@ -107,12 +144,13 @@ export default function Dashboard({
             const file = new File([blob], 'synthetic_sample.jpg', { type: 'image/jpeg' });
             const previewUrl = URL.createObjectURL(file);
             setImagePreview(previewUrl);
-            const result = await verifyMonumentImage(file);
+            const result = await verifyMonumentImage(file, abortControllerRef.current?.signal);
             setVerificationResult(result);
             if (result?.human_review_flagged && onExceptionCreated) {
               onExceptionCreated();
             }
           } catch (err) {
+            if (err.name === 'AbortError') return;
             console.error('Sample processing failed:', err);
             setVerificationResult(null);
             setImagePreview(null);
@@ -150,7 +188,7 @@ export default function Dashboard({
         const previewUrl = URL.createObjectURL(file);
         setImagePreview(previewUrl);
 
-        const result = await verifyMonumentImage(file);
+        const result = await verifyMonumentImage(file, abortControllerRef.current?.signal);
         setVerificationResult(result);
 
         // Sync to user history
@@ -165,6 +203,7 @@ export default function Dashboard({
         setIsLoading(false);
       }
     } catch (err) {
+      if (err.name === 'AbortError') return;
       console.error('Sample processing failed:', err);
       setVerificationResult(null);
       setImagePreview(null);
@@ -186,6 +225,7 @@ export default function Dashboard({
       <HeritageHero
         onRecognizeClick={scrollToRecognition}
         onExploreClick={scrollToDiscover}
+        readyCount={readyCount}
       />
 
       {/* 2. Curated Highlights (#discover) */}
@@ -210,8 +250,8 @@ export default function Dashboard({
             </p>
           </div>
 
-          {/* Processing Scanner Overlay */}
-          {isLoading && <ProcessingOverlay previewUrl={imagePreview} />}
+          {/* Processing Scanner Overlay with cancel button & Escape listener (A4) */}
+          {isLoading && <ProcessingOverlay previewUrl={imagePreview} onCancel={handleCancelScan} />}
 
           {/* Error Alert Banner */}
           {errorMessage && (
@@ -249,17 +289,18 @@ export default function Dashboard({
       {/* 4. Complete Indexed Corpus Explorer (#archive) */}
       <ExploreArchive
         monuments={monuments}
+        readyCount={readyCount}
         onTestSample={handleSampleSelect}
         onOpenCatalogDrawer={onOpenCatalog}
       />
 
       {/* 5. 4-Stage Methodology & Architecture (#how-it-works) */}
-      <HowItWorks />
+      <HowItWorks readyCount={readyCount} />
 
       {/* 6. Institutional Charter & Live Telemetry (#about) */}
       <AboutPlatform
         health={health}
-        monumentsCount={Object.keys(monuments).length || 100}
+        monumentsCount={readyCount}
       />
     </div>
   );

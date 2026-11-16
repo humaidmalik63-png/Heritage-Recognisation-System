@@ -4,11 +4,9 @@ import { LOCAL_HERITAGE_IMAGES } from '../constants/heritageImages';
 const AuthContext = createContext(null);
 
 const HISTORY_KEY = 'heritage_scan_history';
-const CURRENT_USER_KEY = 'heritage_current_user';
-const USERS_KEY = 'heritage_users';
 const HISTORY_LIMIT = 50;
 
-// Initial archival demo scans for user history visualization
+// Initial archival demo scans for user history visualization on initial first visit
 const INITIAL_DEMO_SCANS = [
   {
     id: 'scan_init_01',
@@ -37,144 +35,55 @@ const INITIAL_DEMO_SCANS = [
     location: 'Hyderabad, Telangana',
     architectural_style: 'Indo-Islamic / Qutb Shahi Architecture',
     built_by_or_era: 'Muhammad Quli Qutb Shah (c. 1591)',
-    thumbnail: '/assets/heritage/charminar.jpg', // FIX 2: Correct Charminar photo
+    thumbnail: '/assets/heritage/charminar.jpg',
     coordinates: { lat: 17.3616, lng: 78.4747 },
     historical_summary: 'Charminar is a monumental mosque and landmark situated in the heart of Hyderabad, built in 1591 by Muhammad Quli Qutb Shah.',
     structural_features_detected: ['Four 56-meter-tall fluted minarets', 'Four colossal grand pointed arches', 'Stucco ornamentation'],
   },
 ];
 
-async function hashPassword(plainText) {
-  try {
-    const enc = new TextEncoder().encode(plainText);
-    const buf = await window.crypto.subtle.digest('SHA-256', enc);
-    return Array.from(new Uint8Array(buf))
-      .map((b) => b.toString(16).padStart(2, '0'))
-      .join('');
-  } catch {
-    return btoa(plainText);
-  }
-}
-
 function loadStoredHistory() {
-  const entries = [];
-  const seen = new Set();
-
-  const collect = (raw) => {
+  const stored = localStorage.getItem(HISTORY_KEY);
+  if (stored !== null) {
     try {
-      const parsed = JSON.parse(raw);
+      const parsed = JSON.parse(stored);
       if (Array.isArray(parsed)) {
+        // Fix any legacy Charminar thumbnail mapping if present
         for (const entry of parsed) {
-          if (entry && entry.id && !seen.has(entry.id)) {
-            // FIX 2: Fix legacy mapping where Charminar had Qutub Minar photo
-            if (entry.monument_key === 'charminar' && String(entry.thumbnail || '').includes('qutub-minar')) {
-              entry.thumbnail = '/assets/heritage/charminar.jpg';
-            }
-            seen.add(entry.id);
-            entries.push(entry);
+          if (entry && entry.monument_key === 'charminar' && String(entry.thumbnail || '').includes('qutub-minar')) {
+            entry.thumbnail = '/assets/heritage/charminar.jpg';
           }
         }
+        return parsed.slice(0, HISTORY_LIMIT);
       }
     } catch {
-      // Ignore unparseable stored values
-    }
-  };
-
-  collect(localStorage.getItem(HISTORY_KEY));
-
-  // Also collect from legacy per-user keys if present
-  for (let i = 0; i < localStorage.length; i += 1) {
-    const key = localStorage.key(i);
-    if (key && key.startsWith('heritage_history_')) {
-      collect(localStorage.getItem(key));
+      // If parsing fails, fall through to demo scans
     }
   }
 
-  if (entries.length === 0) {
-    return INITIAL_DEMO_SCANS;
-  }
-
-  entries.sort((a, b) => String(b.timestamp || '').localeCompare(String(a.timestamp || '')));
-  return entries.slice(0, HISTORY_LIMIT);
+  // Only return initial demo scans if HISTORY_KEY was never initialized (new visitor)
+  return INITIAL_DEMO_SCANS;
 }
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
   const [history, setHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Initialize session and scan history from localStorage
+  // Initialize scan history and perform one-time cleanup of legacy localStorage identity keys
   useEffect(() => {
     try {
-      const storedUser = localStorage.getItem(CURRENT_USER_KEY);
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
-      }
+      // One-time cleanup of legacy identity keys
+      localStorage.removeItem('heritage_users');
+      localStorage.removeItem('heritage_current_user');
+      
       setHistory(loadStoredHistory());
     } catch (e) {
-      console.error('Failed to parse auth/history state:', e);
-      setUser(null);
+      console.error('Failed to parse history state:', e);
     } finally {
       setIsLoading(false);
     }
   }, []);
 
-  const login = async (email, password) => {
-    const trimmedEmail = email.trim().toLowerCase();
-    const storedUsers = JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
-    const passwordHash = await hashPassword(password);
-
-    const found = storedUsers.find(
-      (u) => u.email.toLowerCase() === trimmedEmail && u.passwordHash === passwordHash
-    );
-
-    if (!found) {
-      throw new Error('Invalid curatorial credentials. Please check your email and password.');
-    }
-
-    const { passwordHash: _, ...userProfile } = found;
-    setUser(userProfile);
-    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(userProfile));
-    return userProfile;
-  };
-
-  const signup = async (name, email, password) => {
-    const trimmedEmail = email.trim().toLowerCase();
-    const storedUsers = JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
-
-    if (storedUsers.some((u) => u.email.toLowerCase() === trimmedEmail)) {
-      throw new Error('An archival account with this official email address already exists.');
-    }
-
-    const passwordHash = await hashPassword(password);
-    const newUser = {
-      id: `usr_${Date.now()}`,
-      name: name.trim() || 'Curator',
-      email: trimmedEmail,
-      title: 'Field Research Associate',
-      role: 'Curatorial Registry Associate',
-      badgeNumber: `ASI-REG-${Math.floor(1000 + Math.random() * 9000)}`,
-      department: 'Field Survey & Heritage Digital Register',
-      passwordHash,
-    };
-
-    storedUsers.push(newUser);
-    localStorage.setItem(USERS_KEY, JSON.stringify(storedUsers));
-
-    const { passwordHash: _, ...userProfile } = newUser;
-    setUser(userProfile);
-    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(userProfile));
-    return userProfile;
-  };
-
-  // FIX 4: Logout clears user session completely so header reflects signed-out state,
-  // but NEVER deletes survey log entries — history remains intact!
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem(CURRENT_USER_KEY);
-  };
-
-  // FIX 3: Persistent specimen photo for each scan entry
   const addScanToHistory = (scanResult, thumbnailSrc) => {
     const key = scanResult.monument_key;
     const persistentThumbnail =
@@ -222,18 +131,31 @@ export function AuthProvider({ children }) {
 
   const clearHistory = () => {
     setHistory([]);
-    localStorage.removeItem(HISTORY_KEY);
+    // Persist empty array so cleared state survives page reload
+    localStorage.setItem(HISTORY_KEY, JSON.stringify([]));
+    
+    // Also remove any legacy per-user history keys
+    try {
+      const keysToRemove = [];
+      for (let i = 0; i < localStorage.length; i += 1) {
+        const k = localStorage.key(i);
+        if (k && k.startsWith('heritage_history_')) {
+          keysToRemove.push(k);
+        }
+      }
+      for (const k of keysToRemove) {
+        localStorage.removeItem(k);
+      }
+    } catch {
+      // Ignore errors in legacy cleanup
+    }
   };
 
   return (
     <AuthContext.Provider
       value={{
-        user,
         history,
         isLoading,
-        login,
-        signup,
-        logout,
         addScanToHistory,
         clearHistory,
       }}

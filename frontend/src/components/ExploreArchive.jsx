@@ -1,43 +1,65 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Filter, MapPin, ScanLine, ArrowUpRight, Compass, Database, Globe, ChevronDown, Check } from 'lucide-react';
+import { Search, Filter, MapPin, ScanLine, ArrowUpRight, Compass, Database, Globe, ChevronDown, Check, RefreshCw } from 'lucide-react';
 import { cardStaggerContainer, cardStaggerItem } from '../utils/animations';
+import { LOCAL_HERITAGE_IMAGES } from '../constants/heritageImages';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || 'http://localhost:8001';
 
-export default function ExploreArchive({ monuments = {}, onTestSample, onOpenCatalogDrawer }) {
+export default function ExploreArchive({ monuments = {}, readyCount = 101, onTestSample, onOpenCatalogDrawer }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [regionFilter, setRegionFilter] = useState('ALL'); // 'ALL' | 'INDIA' | 'INTERNATIONAL'
   const [categoryFilter, setCategoryFilter] = useState('ALL');
   const [visibleCount, setVisibleCount] = useState(12);
+  const [loadingTimedOut, setLoadingTimedOut] = useState(false);
 
   const entries = useMemo(() => Object.entries(monuments), [monuments]);
+
+  // Loading timeout guard (A11: 10s fallback instead of endless spinner)
+  useEffect(() => {
+    if (entries.length > 0) {
+      setLoadingTimedOut(false);
+      return;
+    }
+    const timer = setTimeout(() => {
+      if (entries.length === 0) {
+        setLoadingTimedOut(true);
+      }
+    }, 10000);
+    return () => clearTimeout(timer);
+  }, [entries.length]);
 
   // Extract categories dynamically
   const categories = useMemo(() => {
     const set = new Set();
     entries.forEach(([_, item]) => {
-      if (item.category) set.add(item.category);
+      if (item.category) {
+        // Ensure Title Case
+        const formatted = item.category.charAt(0).toUpperCase() + item.category.slice(1);
+        set.add(formatted);
+      }
     });
     return Array.from(set).sort();
   }, [entries]);
 
-  // Filtered monuments
+  // Filtered monuments (A5)
   const filtered = useMemo(() => {
     return entries.filter(([key, item]) => {
       const isIndia = (item.country || '').toLowerCase() === 'india';
       if (regionFilter === 'INDIA' && !isIndia) return false;
       if (regionFilter === 'INTERNATIONAL' && isIndia) return false;
 
-      if (categoryFilter !== 'ALL' && item.category !== categoryFilter) return false;
+      const itemCat = item.category ? (item.category.charAt(0).toUpperCase() + item.category.slice(1)) : '';
+      if (categoryFilter !== 'ALL' && itemCat !== categoryFilter && item.category !== categoryFilter) return false;
 
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase().trim();
         const nameMatch = (item.monument_name || '').toLowerCase().includes(q);
+        const countryMatch = (item.country || '').toLowerCase().includes(q);
         const locMatch = (item.location || `${item.city_region || ''} ${item.country || ''}`).toLowerCase().includes(q);
         const styleMatch = (item.architectural_style || '').toLowerCase().includes(q);
         const catMatch = (item.category || '').toLowerCase().includes(q);
-        return nameMatch || locMatch || styleMatch || catMatch;
+        return nameMatch || locMatch || styleMatch || catMatch || countryMatch;
       }
       return true;
     });
@@ -63,7 +85,7 @@ export default function ExploreArchive({ monuments = {}, onTestSample, onOpenCat
           <div>
             <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider text-[#A9472D] font-bold mb-2 sm:mb-3">
               <Database className="w-3.5 h-3.5 text-[#A9472D]" />
-              <span>THE RECOGNITION ARCHIVE // 100 SITES</span>
+              <span>THE RECOGNITION ARCHIVE // {readyCount || entries.length || 101} SITES</span>
             </div>
             <h2 className="font-display font-semibold text-2xl sm:text-4xl lg:text-5xl text-[#171816] tracking-tight leading-[1.08]">
               Explore the Indexed Corpus.
@@ -89,7 +111,7 @@ export default function ExploreArchive({ monuments = {}, onTestSample, onOpenCat
               <Search className="w-4 h-4 text-[#6E7069] absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
-                placeholder="Search landmark, city, dynasty, or style..."
+                placeholder="Search landmark, city, country, or style..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-10 pr-12 py-2.5 text-xs sm:text-sm bg-[#FFFEFA] border border-[#E3DFD5] rounded-xl text-[#171816] placeholder:text-[#6E7069] focus:outline-none focus:border-[#A9472D] focus:ring-1 focus:ring-[#A9472D]"
@@ -154,7 +176,7 @@ export default function ExploreArchive({ monuments = {}, onTestSample, onOpenCat
             </div>
           )}
 
-          {/* Telemetry Indicator (FIX 7: Show loading state, never flash 0 of 0) */}
+          {/* Telemetry Indicator */}
           <div className="flex items-center justify-between text-[10px] font-mono text-[#6E7069] pt-1 border-t border-[#E3DFD5]/40">
             {entries.length === 0 ? (
               <span className="flex items-center gap-1.5 text-[#6E7069]">
@@ -175,15 +197,34 @@ export default function ExploreArchive({ monuments = {}, onTestSample, onOpenCat
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
           {entries.length === 0 ? (
             <div className="col-span-full py-16 flex flex-col items-center justify-center gap-3 text-center bg-[#F5F3ED]/40 border border-dashed border-[#E3DFD5] rounded-2xl">
-              <div className="w-6 h-6 rounded-full border-2 border-[#E3DFD5] border-t-[#A9472D] animate-spin" />
-              <span className="font-mono text-xs uppercase tracking-wider text-[#6E7069]">
-                Loading Registered Monuments Corpus...
-              </span>
+              {loadingTimedOut ? (
+                <div className="space-y-3">
+                  <p className="font-mono text-xs uppercase tracking-wider text-amber-800">
+                    Corpus loading took longer than expected.
+                  </p>
+                  <button
+                    onClick={() => window.location.reload()}
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#171816] text-white text-xs font-mono uppercase"
+                  >
+                    <RefreshCw className="w-3.5 h-3.5 text-[#B99A5B]" />
+                    <span>Retry Loading</span>
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <div className="w-6 h-6 rounded-full border-2 border-[#E3DFD5] border-t-[#A9472D] animate-spin" />
+                  <span className="font-mono text-xs uppercase tracking-wider text-[#6E7069]">
+                    Loading Registered Monuments Corpus...
+                  </span>
+                </>
+              )}
             </div>
           ) : (
             displayed.map(([key, item]) => {
             const isReady = item.recognition_readiness === 'RECOGNITION_READY';
-            const locationStr = item.location || `${item.city_region || ''}, ${item.country || ''}`;
+            const locationStr = item.location || [item.city_region, item.state_province, item.country].filter(Boolean).join(', ') || 'Global Landmark';
+            const thumb = LOCAL_HERITAGE_IMAGES[key] || null;
+            const categoryLabel = item.category ? (item.category.charAt(0).toUpperCase() + item.category.slice(1)) : 'HERITAGE';
 
             return (
               <div
@@ -191,13 +232,31 @@ export default function ExploreArchive({ monuments = {}, onTestSample, onOpenCat
                 className="group bg-[#FFFEFA] border border-[#E3DFD5] rounded-xl sm:rounded-2xl p-3 sm:p-4 flex flex-col justify-between transition-all duration-200 hover:border-[#171816]/30 hover:shadow-md"
               >
                 <div>
+                  {/* Card Thumbnail Header (A8: Desktop cards now have thumbnails) */}
+                  {thumb && (
+                    <div
+                      onClick={() => handleTestInScanner(key)}
+                      className="relative aspect-16/10 w-full overflow-hidden rounded-xl mb-3 bg-neutral-100 border border-[#E3DFD5]/50 cursor-pointer group"
+                    >
+                      <img
+                        src={thumb}
+                        alt={item.monument_name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                      />
+                      <span className="absolute top-1.5 left-1.5 px-1.5 py-0.2 rounded bg-black/60 backdrop-blur-xs text-[8px] font-mono text-white uppercase font-bold">
+                        {item.is_asi_protected ? 'ASI' : (item.is_unesco_site ? 'UNESCO' : (item.country || 'HERITAGE'))}
+                      </span>
+                    </div>
+                  )}
+
                   {/* Card Header with Category & Readiness */}
                   <div className="flex items-center justify-between text-[9px] sm:text-[10px] font-mono pb-2 border-b border-[#E3DFD5]/70 mb-2">
-                    <span className="uppercase text-[#A9472D] font-bold tracking-wider truncate max-w-[90px] sm:max-w-[140px]">
-                      {item.category || 'HERITAGE'}
+                    <span className="uppercase text-[#A9472D] font-bold tracking-wider leading-tight">
+                      {categoryLabel}
                     </span>
                     <span
-                      className={`px-1.5 py-0.5 rounded text-[8px] sm:text-[9px] uppercase font-bold ${
+                      className={`px-1.5 py-0.5 rounded text-[8px] sm:text-[9px] uppercase font-bold flex-shrink-0 ${
                         isReady
                           ? 'bg-[#536B57]/10 text-[#536B57]'
                           : 'bg-[#B99A5B]/15 text-[#8A6F27]'
@@ -226,20 +285,16 @@ export default function ExploreArchive({ monuments = {}, onTestSample, onOpenCat
                 {/* Card Action */}
                 <div className="pt-2.5 mt-2.5 border-t border-[#E3DFD5]/70 flex items-center justify-between gap-1.5">
                   <span className="font-mono text-[9px] sm:text-[10px] text-[#6E7069]">
-                    {item.anchor_image_count ? `${item.anchor_image_count} Anchors` : 'Catalog'}
+                    {item.catalog_id || (item.anchor_image_count ? `${item.anchor_image_count} Anchors` : 'Catalog')}
                   </span>
-                  {isReady ? (
-                    <button
-                      onClick={() => handleTestInScanner(key)}
-                      className="inline-flex items-center gap-1 px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-lg bg-[#F5F3ED] hover:bg-[#171816] text-[#171816] hover:text-[#F5F3ED] text-[9px] sm:text-[11px] font-mono uppercase tracking-wider font-semibold transition-colors duration-200 cursor-pointer active:scale-95"
-                      title="Load and verify in scanner"
-                    >
-                      <ScanLine className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#B99A5B]" />
-                      <span>Test</span>
-                    </button>
-                  ) : (
-                    <span className="text-[9px] font-mono text-[#6E7069]/60 uppercase">Indexed</span>
-                  )}
+                  <button
+                    onClick={() => handleTestInScanner(key)}
+                    className="inline-flex items-center gap-1 px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-lg bg-[#F5F3ED] hover:bg-[#171816] text-[#171816] hover:text-[#F5F3ED] text-[9px] sm:text-[11px] font-mono uppercase tracking-wider font-semibold transition-colors duration-200 cursor-pointer active:scale-95"
+                    title="Load and verify in scanner"
+                  >
+                    <ScanLine className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#B99A5B]" />
+                    <span>Test</span>
+                  </button>
                 </div>
               </div>
             );

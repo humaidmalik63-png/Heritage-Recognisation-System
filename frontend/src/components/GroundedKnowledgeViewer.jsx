@@ -120,20 +120,9 @@ export default function GroundedKnowledgeViewer({ monumentKey, monumentName }) {
     );
   }
 
+  // Graceful omission if extended monograph record does not exist (A10)
   if (error || !knowledge) {
-    return (
-      <div className="bg-archive-ivory border border-archive-hairline rounded p-6 font-mono text-xs text-archive-stone flex items-start gap-3">
-        <AlertCircle className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
-        <div>
-          <span className="font-bold uppercase text-archive-charcoal block mb-1">
-            Grounded Knowledge Register Unavailable
-          </span>
-          <p className="font-sans text-xs text-archive-muted">
-            The extended historical monograph for monument '{monumentKey}' could not be loaded from the local ASI knowledge layer.
-          </p>
-        </div>
-      </div>
-    );
+    return null;
   }
 
   const {

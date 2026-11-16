@@ -9,15 +9,15 @@ export default function MobileMonumentDetails({ monumentKey, monumentData, onClo
   const item = monumentData;
   const thumb = LOCAL_HERITAGE_IMAGES[monumentKey] || null;
 
-  const locationStr = typeof item.location === 'object'
-    ? `${item.location?.district ? item.location.district + ', ' : ''}${item.location?.state || ''}, ${item.location?.country || ''}`
-    : item.location || 'India';
+  const locationStr = typeof item.location === 'string' && item.location.trim()
+    ? item.location
+    : [item.city_region, item.state_province, item.country].filter(Boolean).join(', ') || 'Global Landmark';
 
   const coords = item.coordinates || null;
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 backdrop-blur-xs">
+      <div className="fixed inset-0 z-[60] flex items-end justify-center bg-black/60 backdrop-blur-xs">
         <motion.div
           initial={{ y: '100%' }}
           animate={{ y: 0 }}
@@ -51,7 +51,7 @@ export default function MobileMonumentDetails({ monumentKey, monumentData, onClo
             {/* Top Badge */}
             <div className="absolute top-3 left-3 flex items-center gap-1.5">
               <span className="px-2 py-0.5 rounded-full bg-white/90 text-[9px] font-mono text-[#171816] font-bold uppercase tracking-wider">
-                {item.catalog_id || 'CATALOGUED SITE'}
+                {item.catalog_id || (item.is_asi_protected ? 'ASI NATIONAL MONUMENT' : (item.is_unesco_site ? 'UNESCO WORLD HERITAGE' : 'CATALOGUED SITE'))}
               </span>
             </div>
 
@@ -101,47 +101,24 @@ export default function MobileMonumentDetails({ monumentKey, monumentData, onClo
               </p>
             </div>
 
-            {/* Detected Structural Features */}
-            {Array.isArray(item.structural_features_detected) && item.structural_features_detected.length > 0 && (
-              <div className="space-y-1.5">
-                <span className="text-[10px] font-mono text-[#6E7069] uppercase font-bold tracking-wider">
-                  CANONICAL ARCHITECTURAL MOTIFS
-                </span>
-                <div className="flex flex-wrap gap-1.5">
-                  {item.structural_features_detected.map((feat, idx) => (
-                    <span
-                      key={idx}
-                      className="px-2 py-1 rounded-lg bg-[#ECE8DD] text-[#171816] text-[10px] font-medium"
-                    >
-                      {feat}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Geodetic Cartography */}
-            {coords && (
-              <div className="p-3 rounded-xl bg-[#FFFEFA] border border-[#E3DFD5] flex items-center justify-between text-xs">
-                <div>
-                  <span className="text-[9px] font-mono text-[#6E7069] uppercase block">
-                    GEODETIC COORDINATES
-                  </span>
-                  <span className="font-mono text-xs font-semibold text-[#171816]">
-                    {coords.lat ? `${coords.lat.toFixed(4)}° N, ${coords.lng.toFixed(4)}° E` : 'Geolocated'}
+            {/* Coordinates / Map Pin Bar */}
+            {coords && coords.lat && coords.lng && (
+              <div className="p-2.5 rounded-xl bg-[#FFFEFA] border border-[#E3DFD5] flex items-center justify-between font-mono text-[10px]">
+                <div className="flex items-center gap-1.5 text-[#6E7069]">
+                  <Compass className="w-3.5 h-3.5 text-[#B99A5B]" />
+                  <span>
+                    LAT {Number(coords.lat).toFixed(4)}° • LNG {Number(coords.lng).toFixed(4)}°
                   </span>
                 </div>
-                {coords.lat && coords.lng && (
-                  <a
-                    href={`https://www.openstreetmap.org/?mlat=${coords.lat}&mlon=${coords.lng}&zoom=16`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-[#F5F3ED] hover:bg-[#171816] text-[#171816] hover:text-white font-mono text-[10px] font-semibold transition-colors"
-                  >
-                    <span>OSM Map</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                )}
+                <a
+                  href={`https://www.openstreetmap.org/?mlat=${coords.lat}&mlon=${coords.lng}#map=16/${coords.lat}/${coords.lng}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#A9472D] hover:underline flex items-center gap-0.5 uppercase font-semibold"
+                >
+                  <span>OSM Map</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
               </div>
             )}
 
@@ -150,17 +127,17 @@ export default function MobileMonumentDetails({ monumentKey, monumentData, onClo
               <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
               <div className="text-[11px]">
                 <p className="font-semibold text-[#171816]">
-                  {item.preservation_status || 'UNESCO / ASI Protected Cultural Heritage'}
+                  {item.preservation_status || (item.is_asi_protected ? 'ASI Protected Monument' : (item.is_unesco_site ? 'UNESCO World Heritage Site' : 'Protected Cultural Heritage'))}
                 </p>
                 <p className="text-[10px] text-[#6E7069]">
-                  Protected under AMASR Act 1958 & UNESCO World Heritage Convention.
+                  {item.is_asi_protected ? 'Protected under AMASR Act 1958.' : (item.is_unesco_site ? 'Protected under UNESCO World Heritage Convention.' : 'Official Heritage Inscription.')}
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Action Footer Plate */}
-          <div className="p-3 bg-[#FFFEFA] border-t border-[#E3DFD5] flex items-center gap-2 mobile-safe-bottom">
+          {/* Action Footer Plate with safe bottom spacing so Dismiss is always tappable above bottom nav (A8) */}
+          <div className="p-3 pb-8 sm:pb-3 bg-[#FFFEFA] border-t border-[#E3DFD5] flex items-center gap-2">
             <button
               onClick={() => {
                 onClose();
@@ -173,7 +150,7 @@ export default function MobileMonumentDetails({ monumentKey, monumentData, onClo
             </button>
             <button
               onClick={onClose}
-              className="py-3 px-4 rounded-xl border border-[#E3DFD5] bg-[#F5F3ED] text-[#171816] font-mono text-xs uppercase font-semibold active:scale-98"
+              className="py-3 px-4 rounded-xl border border-[#E3DFD5] bg-[#F5F3ED] text-[#171816] font-mono text-xs uppercase font-semibold active:scale-98 cursor-pointer hover:bg-[#E3DFD5]"
             >
               Dismiss
             </button>
@@ -183,4 +160,3 @@ export default function MobileMonumentDetails({ monumentKey, monumentData, onClo
     </AnimatePresence>
   );
 }
-
