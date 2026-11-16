@@ -32,33 +32,39 @@ export default function UploadSection({ onFileSelected, isLoading, onSampleSelec
   const startFieldCamera = async () => {
     setCameraError(null);
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      // Fallback directly to file picker with camera capture hint
-      cameraInputRef.current?.click();
+      setCameraError(
+        'Camera access is not supported by your browser or environment. Please use Select Photo to upload an image.'
+      );
       return;
     }
 
     try {
-      const constraints = {
-        video: {
-          facingMode: { ideal: 'environment' },
-          width: { ideal: 1920 },
-          height: { ideal: 1080 },
-        },
-      };
-      const stream = await navigator.mediaDevices.getUserMedia(constraints);
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
       streamRef.current = stream;
       setIsCameraActive(true);
+      setCameraError(null);
       setTimeout(() => {
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
-          videoRef.current.play().catch(() => {});
+          videoRef.current.play().catch((playErr) => {
+            console.warn('Video stream playback warning:', playErr);
+          });
         }
-      }, 50);
+      }, 100);
     } catch (err) {
-      console.warn('Direct camera stream failed, falling back to OS capture dialog:', err);
-      // Fallback directly to file input with capture="environment"
+      console.warn('Direct camera stream failed:', err);
       stopCameraStream();
-      cameraInputRef.current?.click();
+      let msg = 'Unable to access field camera. Please select a photo from your files instead.';
+      if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+        msg = 'Camera permission was denied. Please allow camera permissions in your browser or select a photo from your files.';
+      } else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
+        msg = 'No camera hardware detected on this device. Please select a photo from your files instead.';
+      } else if (err.name === 'NotReadableError' || err.name === 'TrackStartError') {
+        msg = 'Camera is currently in use by another application. Please select a photo from your files instead.';
+      } else if (err.message) {
+        msg = `Camera access error: ${err.message}. Please select a photo from your files instead.`;
+      }
+      setCameraError(msg);
     }
   };
 
@@ -195,6 +201,39 @@ export default function UploadSection({ onFileSelected, isLoading, onSampleSelec
         <p className="text-xs text-[#6E7069] mt-1.5 max-w-lg font-sans leading-relaxed">
           Supports field camera captures, archival reproductions, and uncompressed photos. EXIF GPS coordinates will be parsed automatically for geodetic verification.
         </p>
+
+        {/* On-screen Camera Message / Fallback banner (Defect 3) */}
+        {cameraError && (
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-lg mt-4 p-3.5 rounded-xl bg-amber-50 border border-amber-300 text-amber-950 text-xs flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xs"
+          >
+            <div className="flex items-center gap-2 text-left">
+              <Camera className="w-4 h-4 text-amber-700 flex-shrink-0" />
+              <span>{cameraError}</span>
+            </div>
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <button
+                type="button"
+                onClick={() => {
+                  fileInputRef.current?.click();
+                  setCameraError(null);
+                }}
+                className="px-3 py-1 bg-[#171816] text-white hover:bg-[#A9472D] rounded-lg font-mono text-[11px] uppercase tracking-wider font-semibold cursor-pointer whitespace-nowrap"
+              >
+                Select Photo Instead
+              </button>
+              <button
+                type="button"
+                onClick={() => setCameraError(null)}
+                className="p-1 text-amber-800 hover:text-black rounded cursor-pointer"
+                title="Dismiss"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Action Buttons for Mobile & Desktop (FIX 9: Immediate feedback and live camera modal) */}
         <div className="flex flex-wrap items-center justify-center gap-3 mt-6 w-full sm:w-auto" onClick={(e) => e.stopPropagation()}>

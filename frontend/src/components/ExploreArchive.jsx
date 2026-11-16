@@ -243,8 +243,7 @@ export default function ExploreArchive({ monuments = {}, onTestSample, onOpenCat
                 </div>
               </div>
             );
-          })
-          )}
+          }))}
         </div>
 
         {/* Load More Button */}

@@ -1,33 +1,13 @@
 import React from 'react';
 import { X, MapPin, ScanLine, Compass, ShieldCheck, BookOpen, ExternalLink, Calendar, Landmark } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const LOCAL_THUMBNAILS = {
-  taj_mahal: '/assets/heritage/taj-mahal.jpg',
-  petra: '/assets/heritage/petra.jpg',
-  colosseum: '/assets/heritage/colosseum.jpg',
-  angkor_wat: '/assets/heritage/angkor-wat.jpg',
-  great_wall_of_china: '/assets/heritage/great-wall.jpg',
-  qutub_minar: '/assets/heritage/qutub-minar.jpg',
-  hawa_mahal: '/assets/heritage/hawa-mahal.jpg',
-  machu_picchu: '/assets/heritage/machu-picchu.jpg',
-  ajanta_caves: '/assets/heritage/ajanta-caves.jpg',
-  ellora_caves: '/assets/heritage/ellora-caves.jpg',
-  golden_temple: '/assets/heritage/golden-temple.jpg',
-  humayuns_tomb: '/assets/heritage/humayuns-tomb.jpg',
-  konark_sun_temple: '/assets/heritage/konark-sun-temple.jpg',
-  mysore_palace: '/assets/heritage/mysore-palace.jpg',
-  parthenon: '/assets/heritage/parthenon.jpg',
-  great_pyramid_of_giza: '/assets/heritage/pyramids-giza.jpg',
-  red_fort: '/assets/heritage/red-fort.jpg',
-  eiffel_tower: '/assets/heritage/eiffel-tower.jpg',
-};
+import { LOCAL_HERITAGE_IMAGES } from '../constants/heritageImages';
 
 export default function MobileMonumentDetails({ monumentKey, monumentData, onClose, onTestSample }) {
   if (!monumentKey || !monumentData) return null;
 
   const item = monumentData;
-  const thumb = LOCAL_THUMBNAILS[monumentKey] || null;
+  const thumb = LOCAL_HERITAGE_IMAGES[monumentKey] || null;
 
   const locationStr = typeof item.location === 'object'
     ? `${item.location?.district ? item.location.district + ', ' : ''}${item.location?.state || ''}, ${item.location?.country || ''}`

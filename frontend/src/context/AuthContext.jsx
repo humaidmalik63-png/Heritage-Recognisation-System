@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { LOCAL_HERITAGE_IMAGES } from '../constants/heritageImages';
 
 const AuthContext = createContext(null);
 
@@ -6,30 +7,6 @@ const HISTORY_KEY = 'heritage_scan_history';
 const CURRENT_USER_KEY = 'heritage_current_user';
 const USERS_KEY = 'heritage_users';
 const HISTORY_LIMIT = 50;
-
-const LOCAL_HERITAGE_IMAGES = {
-  taj_mahal: '/assets/heritage/taj-mahal.jpg',
-  charminar: '/assets/heritage/charminar.jpg',
-  hampi_stone_chariot: '/assets/heritage/hampi.jpg',
-  brihadeeswarar_temple: '/assets/heritage/brihadeeswarar.jpg',
-  petra: '/assets/heritage/petra.jpg',
-  colosseum: '/assets/heritage/colosseum.jpg',
-  angkor_wat: '/assets/heritage/angkor-wat.jpg',
-  great_wall_of_china: '/assets/heritage/great-wall.jpg',
-  qutub_minar: '/assets/heritage/qutub-minar.jpg',
-  hawa_mahal: '/assets/heritage/hawa-mahal.jpg',
-  machu_picchu: '/assets/heritage/machu-picchu.jpg',
-  ajanta_caves: '/assets/heritage/ajanta-caves.jpg',
-  ellora_caves: '/assets/heritage/ellora-caves.jpg',
-  golden_temple: '/assets/heritage/golden-temple.jpg',
-  humayuns_tomb: '/assets/heritage/humayuns-tomb.jpg',
-  konark_sun_temple: '/assets/heritage/konark-sun-temple.jpg',
-  mysore_palace: '/assets/heritage/mysore-palace.jpg',
-  parthenon: '/assets/heritage/parthenon.jpg',
-  great_pyramid_of_giza: '/assets/heritage/pyramids-giza.jpg',
-  red_fort: '/assets/heritage/red-fort.jpg',
-  eiffel_tower: '/assets/heritage/eiffel-tower.jpg',
-};
 
 // Initial archival demo scans for user history visualization
 const INITIAL_DEMO_SCANS = [
@@ -147,22 +124,9 @@ export function AuthProvider({ children }) {
     const storedUsers = JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
     const passwordHash = await hashPassword(password);
 
-    // Accept default curator credentials or registered user
-    let found = storedUsers.find(
-      (u) => u.email.toLowerCase() === trimmedEmail && (u.passwordHash === passwordHash || password === 'curator2026')
+    const found = storedUsers.find(
+      (u) => u.email.toLowerCase() === trimmedEmail && u.passwordHash === passwordHash
     );
-
-    if (!found && trimmedEmail.includes('curator')) {
-      found = {
-        id: 'usr_curator_default',
-        name: 'Senior Curator',
-        email: trimmedEmail,
-        title: 'Archival Verification Officer',
-        role: 'Curatorial Registry Associate',
-        badgeNumber: 'ASI-REG-1001',
-        department: 'Field Survey & Heritage Digital Register',
-      };
-    }
 
     if (!found) {
       throw new Error('Invalid curatorial credentials. Please check your email and password.');

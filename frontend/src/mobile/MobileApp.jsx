@@ -9,30 +9,7 @@ import MobileMonumentDetails from './MobileMonumentDetails';
 import { useAuth } from '../context/AuthContext';
 import { verifyMonumentImage } from '../api';
 import { BookOpen, ShieldCheck, Cpu, Database, Info, Trash2, MapPin } from 'lucide-react';
-
-const LOCAL_SAMPLE_IMAGES = {
-  taj_mahal: '/assets/heritage/taj-mahal.jpg',
-  charminar: '/assets/heritage/charminar.jpg',
-  hampi_stone_chariot: '/assets/heritage/hampi.jpg',
-  brihadeeswarar_temple: '/assets/heritage/brihadeeswarar.jpg',
-  petra: '/assets/heritage/petra.jpg',
-  colosseum: '/assets/heritage/colosseum.jpg',
-  angkor_wat: '/assets/heritage/angkor-wat.jpg',
-  great_wall_of_china: '/assets/heritage/great-wall.jpg',
-  qutub_minar: '/assets/heritage/qutub-minar.jpg',
-  hawa_mahal: '/assets/heritage/hawa-mahal.jpg',
-  machu_picchu: '/assets/heritage/machu-picchu.jpg',
-  ajanta_caves: '/assets/heritage/ajanta-caves.jpg',
-  ellora_caves: '/assets/heritage/ellora-caves.jpg',
-  golden_temple: '/assets/heritage/golden-temple.jpg',
-  humayuns_tomb: '/assets/heritage/humayuns-tomb.jpg',
-  konark_sun_temple: '/assets/heritage/konark-sun-temple.jpg',
-  mysore_palace: '/assets/heritage/mysore-palace.jpg',
-  parthenon: '/assets/heritage/parthenon.jpg',
-  great_pyramid_of_giza: '/assets/heritage/pyramids-giza.jpg',
-  red_fort: '/assets/heritage/red-fort.jpg',
-  eiffel_tower: '/assets/heritage/eiffel-tower.jpg',
-};
+import { LOCAL_HERITAGE_IMAGES } from '../constants/heritageImages';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8001';
 
@@ -88,46 +65,29 @@ export default function MobileApp({
     setIsLoading(true);
 
     try {
-      // 1. Try local asset first
-      let sampleUrl = LOCAL_SAMPLE_IMAGES[sampleKey];
-      let res = null;
-
-      if (sampleUrl) {
-        try {
-          const check = await fetch(sampleUrl);
-          if (check.ok) res = check;
-        } catch {
-          res = null;
-        }
+      // 1. Resolve to bundled photo directly from LOCAL_HERITAGE_IMAGES
+      const sampleUrl = LOCAL_HERITAGE_IMAGES[sampleKey];
+      if (!sampleUrl) {
+        throw new Error('Sample photo not available for this monument. Please upload an image directly.');
       }
 
-      // 2. Try backend static dataset img_1.jpg
-      if (!res) {
-        sampleUrl = `${API_BASE_URL}/dataset/${sampleKey}/img_1.jpg`;
-        try {
-          const check = await fetch(sampleUrl);
-          if (check.ok) res = check;
-        } catch {
-          res = null;
-        }
-      }
-
-      // 3. Fallback to ref_01.jpg
-      if (!res) {
-        sampleUrl = `${API_BASE_URL}/dataset/${sampleKey}/ref_01.jpg`;
-        try {
-          const check = await fetch(sampleUrl);
-          if (check.ok) res = check;
-        } catch {
-          res = null;
-        }
-      }
-
-      if (!res || !res.ok) {
-        throw new Error(`Sample photo for "${sampleKey.replace(/_/g, ' ')}" could not be loaded. Please upload a photo directly.`);
+      const res = await fetch(sampleUrl);
+      if (!res.ok) {
+        throw new Error('Sample photo not available for this monument. Please upload an image directly.');
       }
 
       const blob = await res.blob();
+      if (!blob || blob.size < 10240) {
+        throw new Error('Sample photo not available for this monument. Please upload an image directly.');
+      }
+
+      const headerBuffer = await blob.slice(0, 3).arrayBuffer();
+      const headerBytes = new Uint8Array(headerBuffer);
+      const isJpeg = headerBytes[0] === 0xff && headerBytes[1] === 0xd8 && headerBytes[2] === 0xff;
+      if (!isJpeg) {
+        throw new Error('Sample photo not available for this monument. Please upload an image directly.');
+      }
+
       const file = new File([blob], `${sampleKey}_ref.jpg`, { type: 'image/jpeg' });
       const previewUrl = URL.createObjectURL(file);
       setImagePreview(previewUrl);
@@ -283,7 +243,7 @@ export default function MobileApp({
                         src={
                           scan.thumbnail ||
                           scan.preview_data_url ||
-                          (scan.monument_key && LOCAL_SAMPLE_IMAGES[scan.monument_key]) ||
+                          (scan.monument_key && LOCAL_HERITAGE_IMAGES[scan.monument_key]) ||
                           '/assets/heritage/taj-mahal.jpg'
                         }
                         alt={scan.monument_name}
@@ -291,7 +251,7 @@ export default function MobileApp({
                         onError={(e) => {
                           e.target.onerror = null;
                           const fallback =
-                            (scan.monument_key && LOCAL_SAMPLE_IMAGES[scan.monument_key]) ||
+                            (scan.monument_key && LOCAL_HERITAGE_IMAGES[scan.monument_key]) ||
                             scan.preview_data_url ||
                             '/assets/heritage/taj-mahal.jpg';
                           e.target.src = fallback;

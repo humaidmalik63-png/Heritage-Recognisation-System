@@ -16,30 +16,7 @@ import {
   Compass
 } from 'lucide-react';
 import MonographResult from '../components/MonographResult';
-
-const LOCAL_HERITAGE_IMAGES = {
-  taj_mahal: '/assets/heritage/taj-mahal.jpg',
-  charminar: '/assets/heritage/charminar.jpg',
-  hampi_stone_chariot: '/assets/heritage/hampi.jpg',
-  brihadeeswarar_temple: '/assets/heritage/brihadeeswarar.jpg',
-  petra: '/assets/heritage/petra.jpg',
-  colosseum: '/assets/heritage/colosseum.jpg',
-  angkor_wat: '/assets/heritage/angkor-wat.jpg',
-  great_wall_of_china: '/assets/heritage/great-wall.jpg',
-  qutub_minar: '/assets/heritage/qutub-minar.jpg',
-  hawa_mahal: '/assets/heritage/hawa-mahal.jpg',
-  machu_picchu: '/assets/heritage/machu-picchu.jpg',
-  ajanta_caves: '/assets/heritage/ajanta-caves.jpg',
-  ellora_caves: '/assets/heritage/ellora-caves.jpg',
-  golden_temple: '/assets/heritage/golden-temple.jpg',
-  humayuns_tomb: '/assets/heritage/humayuns-tomb.jpg',
-  konark_sun_temple: '/assets/heritage/konark-sun-temple.jpg',
-  mysore_palace: '/assets/heritage/mysore-palace.jpg',
-  parthenon: '/assets/heritage/parthenon.jpg',
-  great_pyramid_of_giza: '/assets/heritage/pyramids-giza.jpg',
-  red_fort: '/assets/heritage/red-fort.jpg',
-  eiffel_tower: '/assets/heritage/eiffel-tower.jpg',
-};
+import { LOCAL_HERITAGE_IMAGES } from '../constants/heritageImages';
 
 export default function History() {
   const { history, clearHistory } = useAuth();
